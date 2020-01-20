@@ -1,7 +1,6 @@
 <template>
   <div class="container">
-    <h1>Tjääna</h1>   
-    <MovieList/>
+      <MovieList /> 
   </div>
 </template>
 
@@ -21,4 +20,5 @@ export default {
 </script>
 
 <style>
+
 </style>

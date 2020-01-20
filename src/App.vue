@@ -75,6 +75,9 @@
 </script>
 
 <style>
+  * {
+    box-sizing: border-box;
+  }
   .logo {
     width: 5rem;
   }
