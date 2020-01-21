@@ -33,6 +33,11 @@ const routes = [
     name: 'login',
     component: Login
   },
+  {
+    path: '/movie:movie',
+    name: 'movie',
+    component: Movie
+  }
 ]
 
 const router = new VueRouter({
