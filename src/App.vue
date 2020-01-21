@@ -20,7 +20,7 @@
             <router-link to="#">All Movies</router-link>
           </li>
           <li>
-            <router-link to="#">Contact</router-link>
+            <router-link to="/contact">Contact</router-link>
           </li>
           <li>
             <router-link to="#">Login</router-link>
@@ -35,7 +35,7 @@
             <router-link to="#">All Movies</router-link>
           </li>
           <li>
-            <router-link to="#">Contact</router-link>
+            <router-link to="/contact">Contact</router-link>
           </li>
           <li>
             <router-link to="#">Login</router-link>
@@ -44,7 +44,7 @@
       </div>
     </nav>
 
-    <router-view />
+    <router-view></router-view>
 
     <footer class="page-footer black">
       <div class="container center">
