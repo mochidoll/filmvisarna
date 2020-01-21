@@ -1,15 +1,16 @@
 <template>
-  <div class="container">
+  <div class="" >
 
-    <div class="row">
-      <div class="col s12 m12">
-        <div class="card" v-for="(movie, id) in movies" :key="id">
+    <div class="row" >
+      <div class="col s12 m6 l4" v-for="(movie, id) in movies" :key="id">
+        <div class="card" >
           <div class="card-image waves-effect waves-block waves-light">
             <img class="activator" :src="movie.image">
           </div>
           <div class="card-content">
             <span class="card-title activator grey-text text-darken-4">{{movie.title}}<i class="material-icons right">more_vert</i></span>
             <p><a href="#">This is a link</a></p>
+            
           </div>
           <div class="card-reveal">
             <span class="card-title grey-text text-darken-4">{{movie.title}}<i class="material-icons right">close</i></span>

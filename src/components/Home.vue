@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Tjääna</h1>   
+    <h3><b>NOW SHOWING</b></h3>   
     <MovieList/>
   </div>
 </template>
@@ -16,7 +16,8 @@ export default {
 
   created() {
     this.$store.dispatch('getMovies')
-  }
+  }, 
+  
 }
 </script>
 
