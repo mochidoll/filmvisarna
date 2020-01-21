@@ -14,37 +14,37 @@
 
         <ul class="right hide-on-med-and-down">
           <li>
-            <router-link to="#">Showing Now</router-link>
+            <router-link to="/">Now Showing</router-link>
           </li>
           <li>
-            <router-link to="#">All Movies</router-link>
+            <router-link to="/allMovies">All Movies</router-link>
           </li>
           <li>
-            <router-link to="#">Contact</router-link>
+            <router-link to="/contact">Contact</router-link>
           </li>
           <li>
-            <router-link to="#">Login</router-link>
+            <router-link to="/login">Login</router-link>
           </li>
         </ul>
 
         <ul id="slide-out" class="sidenav">
           <li>
-            <router-link to="#">Showing Now</router-link>
+            <router-link to="/">Now Showing</router-link>
           </li>
           <li>
-            <router-link to="#">All Movies</router-link>
+            <router-link to="/allMovies">All Movies</router-link>
           </li>
           <li>
-            <router-link to="#">Contact</router-link>
+            <router-link to="/contact">Contact</router-link>
           </li>
           <li>
-            <router-link to="#">Login</router-link>
+            <router-link to="/login">Login</router-link>
           </li>
         </ul>
       </div>
     </nav>
 
-    <router-view />
+    <router-view></router-view>
 
     <footer class="page-footer black">
       <div class="container center">
@@ -78,6 +78,9 @@
   * {
     box-sizing: border-box;
   }
+  #app {
+    background: #ececec;
+  }
   .logo {
     width: 5rem;
   }
@@ -97,5 +100,4 @@
   .page-footer {
     padding-bottom: 20px;
   }
-
 </style>

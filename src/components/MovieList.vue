@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="" >
 
     <div class="row">
       <div class="col s12 m4" v-for="(movie, id) in movies" :key="id">
@@ -10,6 +10,7 @@
           <div class="card-content">
             <span class="card-title activator grey-text text-darken-4">{{movie.title}}</span>
             <p><a href="#">This is a link</a></p>
+            
           </div>
           <div class="card-reveal">
             <span class="card-title grey-text text-darken-4">{{movie.title}}<i class="material-icons right">close</i></span>
