@@ -12,7 +12,7 @@
             <p><a href="#">This is a link</a></p>
           </div>
           <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4 opa">{{movie.title}}<i class="material-icons right">close</i></span>
+            <span class="card-title grey-text text-darken-4">{{movie.title}}<i class="material-icons right">close</i></span>
             <p>{{movie.description}}</p>
           </div>
         </div>
@@ -38,8 +38,5 @@ export default {
 <style>
  .row {
    display: inline-block;
- }
- .card{
-   height: 35rem;
  }
 </style>
