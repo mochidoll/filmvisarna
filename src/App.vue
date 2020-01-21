@@ -75,6 +75,9 @@
 </script>
 
 <style>
+  * {
+    box-sizing: border-box;
+  }
   #app {
     background: #ececec;
   }

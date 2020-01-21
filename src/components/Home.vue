@@ -1,7 +1,6 @@
 <template>
   <div class="container">
-    <h3><b>NOW SHOWING</b></h3>   
-    <MovieList/>
+      <MovieList /> 
   </div>
 </template>
 
@@ -22,4 +21,5 @@ export default {
 </script>
 
 <style>
+
 </style>
