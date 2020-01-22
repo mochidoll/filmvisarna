@@ -9,7 +9,7 @@
           </div>
           <div class="card-content">
             <span class="card-title activator grey-text text-darken-4">{{movie.title}}</span>
-            <router-link to="/booking" class="btn waves-effect waves-light center red darken-4" :movie="movie">Book now!</router-link>
+            <router-link to="/booking/selectTickets" class="btn waves-effect waves-light center red darken-4" :movie="movie">Book now!</router-link>
           </div>
           <div class="card-reveal">
             <span class="card-title grey-text text-darken-4">{{movie.title}}<i class="material-icons right">close</i></span>

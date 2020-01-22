@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2 class="center">Select Tickets</h2>
+    <h4>Select Tickets</h4>
 
     <div class="row">
       <div class="col s6 right-align">Adult Tickets</div>
@@ -46,6 +46,7 @@
       </div>
       <div class="col s12 center">Total Price: {{totalTicketPrice}}</div>
     </div>
+    <button class="btn waves-effect waves-light black white-text right">Next</button>
   </div>
 </template>
 
@@ -90,4 +91,11 @@ export default {
 </script>
 
 <style scoped>
+
+.container {
+  padding: 20px;
+}
+h2 {
+  margin: 2%;
+}
 </style>

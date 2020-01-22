@@ -1,14 +1,10 @@
 <template>
   <div class="container">
-  <div class="container navbar" >
-    <div class="nav-wrapper">
+  
       <h2>Select seats</h2>
-    </div>
-    </div>
 
+      <button class="btn waves-effect waves-light black white-text right">Next</button>
     
-
-    <button class="btn waves-effect waves-light">Change Active</button>
   </div>
 </template>
 
@@ -21,6 +17,6 @@ export default {};
   padding: 10px;
 }
 .container {
-  padding: 10px;
+  padding: 20px;
 }
 </style>
