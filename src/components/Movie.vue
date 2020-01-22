@@ -20,13 +20,16 @@
       <p>Movie length: {{movie.length}} minutes</p>
       </div>
       <div class="col s12 m6 right">
-      <p>Actors: {{movie.actors}}</p>
+        <span>Actors: </span>
+      <span v-for="actor of movie.actors" :key="actor">{{actor}}, </span>
       </div>
       <div class="col s12 m6 right">
-      <p>Directors: {{movie.directors}}</p>
+      <span>Directors: </span>
+       <span v-for="director of movie.directors" :key="director">{{director}}, </span>
       </div>
     <div class="col s12 m6 right">
-      <p>Genres: {{movie.genre}}</p>
+      <span>Genre: </span> 
+     <span v-for="genre of movie.genre" :key="genre">{{genre}}, </span>
     </div>
 
 </div>
