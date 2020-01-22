@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Start from '@/components/Start'
+import Booking from '@/components/Booking'
 
 Vue.use(VueRouter)
 
@@ -10,6 +11,11 @@ const routes = [
     name: 'start',
     component: Start
   },
+  {
+    path: '/booking',
+    name: 'booking',
+    component: Booking
+  }
   // {
   //   path: '/about',
   //   name: 'about',
