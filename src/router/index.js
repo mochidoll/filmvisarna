@@ -5,6 +5,8 @@ import AllMovies from '@/components/AllMovies'
 import Contact from '@/components/Contact'
 import Login from '@/components/Login'
 import Booking from '@/components/Booking'
+import Movie from '@/components/Movie'
+import SelectSeats from '@/components/SelectSeats'
 
 Vue.use(VueRouter)
 
@@ -18,7 +20,7 @@ const routes = [
     path: '/booking',
     name: 'booking',
     component: Booking
-  }
+  },
   // {
   //   path: '/about',
   //   name: 'about',
@@ -43,7 +45,18 @@ const routes = [
     path: '/movie:movie',
     name: 'movie',
     component: Movie
-  }
+  },
+  {
+    path: '/booking',
+    name: 'booking',
+    component: Booking
+  },
+  {
+    path: '/selectSeats',
+    name: 'selectSeats',
+    component: SelectSeats
+  },
+  
 ]
 
 const router = new VueRouter({

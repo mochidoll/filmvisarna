@@ -8,7 +8,7 @@
         <a href="#!" class="breadcrumb">Confirm details</a>
         <a href="#!" class="breadcrumb">Booking complete</a>
       </div>
-      <h2></h2>
+      <h2>Select seats</h2>
     </div>
     </div>
 
