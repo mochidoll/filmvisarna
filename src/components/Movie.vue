@@ -1,12 +1,10 @@
 <template>
-  <div class="start-page">
-
-  </div>
+  <h1>Movie component</h1>
 </template>
 
 <script>
 export default {
-  name: 'Start',
+
 }
 </script>
 
