@@ -5,6 +5,7 @@ import AllMovies from '@/components/AllMovies'
 import Contact from '@/components/Contact'
 import Login from '@/components/Login'
 import Booking from '@/components/Booking'
+import Movie from '@/components/Movie'
 
 Vue.use(VueRouter)
 
@@ -18,7 +19,7 @@ const routes = [
     path: '/booking',
     name: 'booking',
     component: Booking
-  }
+  },
   // {
   //   path: '/about',
   //   name: 'about',
