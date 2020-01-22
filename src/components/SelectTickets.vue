@@ -3,8 +3,8 @@
     <h2>Select Tickets</h2>
 
     <div class="row">
-      <div class="col s4 offset-s2">Adult Tickets</div>
-      <div class="col s4">
+      <div class="col s6">Adult Tickets</div>
+      <div class="col s6">
         <a class="btn-floating">
           <i class="material-icons red" @click="removeAdultTicket()">remove</i>
         </a>
@@ -14,8 +14,8 @@
         </a>
       </div>
 
-      <div class="col s4 offset-s2">Child Tickets</div>
-      <div class="col s4">
+      <div class="col s6">Child Tickets</div>
+      <div class="col s6">
         <a class="btn-floating">
           <i class="material-icons red" @click="removeChildTicket()">remove</i>
         </a>
@@ -25,8 +25,8 @@
         </a>
       </div>
 
-      <div class="col s4 offset-s2">Adult Tickets</div>
-      <div class="col s4">
+      <div class="col s6">Senior Tickets</div>
+      <div class="col s6">
         <a class="btn-floating">
           <i class="material-icons red" @click="removeSeniorTicket()">remove</i>
         </a>
