@@ -1,42 +1,43 @@
 <template>
   <div class="container">
-    <h2>Select Tickets</h2>
+    <h4>Select Tickets</h4>
 
     <div class="row">
       <div class="col s6">Adult Tickets</div>
       <div class="col s6">
         <a class="btn-floating">
-          <i class="material-icons red" @click="removeAdultTicket()">remove</i>
+          <i class="material-icons red darken-4" @click="removeAdultTicket()">remove</i>
         </a>
         {{adultTickets}}
         <a class="btn-floating" @click="addAdultTicket()">
-          <i class="material-icons red">add</i>
+          <i class="material-icons red darken-4">add</i>
         </a>
       </div>
 
       <div class="col s6">Child Tickets</div>
       <div class="col s6">
         <a class="btn-floating">
-          <i class="material-icons red" @click="removeChildTicket()">remove</i>
+          <i class="material-icons red darken-4" @click="removeChildTicket()">remove</i>
         </a>
         {{childTickets}}
         <a class="btn-floating" @click="addChildTicket()">
-          <i class="material-icons red">add</i>
+          <i class="material-icons red darken-4">add</i>
         </a>
       </div>
 
       <div class="col s6">Senior Tickets</div>
       <div class="col s6">
         <a class="btn-floating">
-          <i class="material-icons red" @click="removeSeniorTicket()">remove</i>
+          <i class="material-icons red darken-4" @click="removeSeniorTicket()">remove</i>
         </a>
         {{seniorTickets}}
         <a class="btn-floating" @click="addSeniorTicket()">
-          <i class="material-icons red">add</i>
+          <i class="material-icons red darken-4">add</i>
         </a>
       </div>
       <div class="col s12">Total Price: {{totalTicketPrice}}</div>
     </div>
+    <button class="btn waves-effect waves-light black white-text right">Next</button>
   </div>
 </template>
 
@@ -81,4 +82,11 @@ export default {
 </script>
 
 <style scoped>
+
+.container {
+  padding: 20px;
+}
+h2 {
+  margin: 2%;
+}
 </style>

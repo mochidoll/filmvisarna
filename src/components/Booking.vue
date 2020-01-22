@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="container white navbar z-depth-2">
+    <div class="container white navbar z-depth-1">
       <div class="nav-wrapper">
         <div class="col s12 center">
           <router-link to="/booking/selectTickets" class="breadcrumb black-text">Select Tickets</router-link>
@@ -10,7 +10,7 @@
         </div>
 
         <div>
-          <h2> <!--{{movie.title}}--></h2>
+          <!--<h4>{{movie.title}}</h4>-->
         </div>
 
         <router-view></router-view>
