@@ -4,9 +4,13 @@ import Home from '@/components/Home'
 import AllMovies from '@/components/AllMovies'
 import Contact from '@/components/Contact'
 import Login from '@/components/Login'
-import Booking from '@/components/Booking'
 import Movie from '@/components/Movie'
+import Booking from '@/components/Booking'
+import SelectTickets from '@/components/SelectTickets'
 import SelectSeats from '@/components/SelectSeats'
+import ConfirmDetails from '@/components/ConfirmDetails'
+import BookingComplete from '@/components/BookingComplete'
+
 
 Vue.use(VueRouter)
 
@@ -52,10 +56,26 @@ const routes = [
     component: Booking
   },
   {
+    path: '/selectTickets',
+    name: 'selectTickets',
+    component: SelectTickets
+  },
+  {
     path: '/selectSeats',
     name: 'selectSeats',
     component: SelectSeats
   },
+  {
+    path: '/confirmDetails',
+    name: 'confirmDetails',
+    component: ConfirmDetails
+  },
+  {
+    path: '/bookingComplete',
+    name: 'bookingComplete',
+    component: BookingComplete
+  },
+  
   
 ]
 
