@@ -9,6 +9,10 @@
           <router-link to="/booking/bookingComplete" class="breadcrumb">Booking complete</router-link>
         </div>
 
+        <div>
+
+        </div>
+
         <router-view></router-view>
       </div>
     </div>
@@ -18,7 +22,11 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    movie: Object
+  }
+};
 </script>
 
 <style scoped>
