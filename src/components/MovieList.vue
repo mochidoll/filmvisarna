@@ -1,7 +1,7 @@
 <template>
   <div class="movie-list">
     <div>
-      <p>Showing today ({{ day }}, {{ date }})</p>
+      <p>Today's date: ({{ day }}, {{ date }})</p>
     </div>
 
     <div class="filters">

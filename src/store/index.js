@@ -20,11 +20,14 @@ export default new Vuex.Store({
   actions: {
     async getMovies({ commit }) {
       let snapshot = await db.collection('movies').get()
-      let data = []
-      snapshot.forEach(document => {
-        data.push(document.data())
+      let movies = []
+      snapshot.forEach(movie => {
+        let data = movie.data(); // alla egenskaper utom id:t
+        data.id = movie.id; // lägg till id
+        movies.push(data)
       })
-      commit('setMovies', data)
+      window.console.log("movies with ids", movies);
+      commit('setMovies', movies)
     }
   },
   modules: {
