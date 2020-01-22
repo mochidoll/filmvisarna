@@ -19,11 +19,11 @@ export default {
       tickets: 0,
       seniorTickets: 0,
       childTickets: 0
-    };
+    }
   },
-  methods() {
+  methods: {
     addAdultTicket() {
-      tickets++;
+      this.tickets++;
     }
   },
 };
