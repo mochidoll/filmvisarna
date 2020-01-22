@@ -4,16 +4,13 @@
     <h4>Insert trailer here later</h4>
   </div>
   <div class="row">
-    <div class="col s12 center">
-      <h3>{{movie.title}}</h3>
-      </div>
-      <div class="col s12 center">
-      <h4>{{movie.productionYear}}</h4>
+    <div class="left col s12 center">
+      <h3 class="left">{{movie.title}}</h3> <p class="left">{{movie.productionYear}}</p>
       </div>
       <div class="col s12 m4 center">
       <img :src="movie.image" alt="Movie poster">
       </div>
-      <div class="col s12 m6 right">
+      <div class=" left col s12 m6 right">
       <p>{{movie.description}}</p>
     </div>
      <div class="col s12 m6 right">
