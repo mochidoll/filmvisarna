@@ -1,43 +1,37 @@
 <template>
-  <div class="container">
-
-    <div class="trailer-container">
-      <h4>Insert trailer here later</h4>
-    </div>
+<div class="container">
+  <div class="trailer-container">
+    <h4 class="grey-text center">Insert trailer here later</h4>
+  </div>
 
     <div class="row">
 
-      <div class="left col s12 center">
-        <h3 class="left">{{movie.title}}</h3>
+      <div class="left col s12 center flex">
+        <h3 class="left">{{movie.title}} </h3>
         <span class="movie-year">({{movie.productionYear}})</span>
       </div>
 
-      <article>
-        <div class="col s12 m4 center">
+        <div class="col s12 m4 center image">
           <img :src="movie.image" alt="Movie poster" />
         </div>
         <div class="left col s12 m6 right">
+          <h4>Summary</h4>
+          <p class="grey-text">{{movie.length}} minutes</p>
           <p>{{movie.description}}</p>
         </div>
         <div class="col s12 m6 right">
-          <p>Movie length: {{movie.length}} minutes</p>
+          <span>Actors: {{movie.actors.join(", ")}}</span>
         </div>
         <div class="col s12 m6 right">
-          <span>Actors:</span>
-          <span v-for="actor of movie.actors" :key="actor">{{actor}},</span>
+          <span>Directors: {{movie.directors.join(", ")}}
+          </span>
         </div>
         <div class="col s12 m6 right">
-          <span>Directors:</span>
-          <span v-for="director of movie.directors" :key="director">{{director}},</span>
+          <span>Genre: {{movie.genre.join(", ")}}</span>
+         
         </div>
-        <div class="col s12 m6 right">
-          <span>Genre:</span>
-          <span v-for="genre of movie.genre" :key="genre">{{genre}},</span>
-          <h3>Add option to book with dates etc here</h3>
-        </div>
-      </article>
     </div>
-  </div>
+</div>
 </template>
 
 <script>
@@ -67,8 +61,12 @@ h3 {
 .movie-year {
   font-size: 2rem;
 }
-.col {
+.flex {
   display: flex;
   align-items: center;
+   margin-bottom: 1rem;
+}
+.image{
+min-width: 356px;
 }
 </style>
