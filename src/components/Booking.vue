@@ -36,4 +36,7 @@ export default {
   padding: 20px;
   border-radius: 20px;
 }
+.breadcrumb:before {
+  color: black;
+}
 </style>
