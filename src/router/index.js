@@ -21,16 +21,6 @@ const routes = [
     component: Home
   },
   {
-    path: '/booking',
-    name: 'booking',
-    component: Booking
-  },
-  // {
-  //   path: '/about',
-  //   name: 'about',
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  // }
-  {
     path: '/allMovies',
     name: 'allMovies',
     component: AllMovies
@@ -50,34 +40,38 @@ const routes = [
     name: 'movie',
     component: Movie
   },
+
+
   {
     path: '/booking',
     name: 'booking',
-    component: Booking
-  },
-  {
-    path: '/booking/selectTickets',
-    name: 'selectTickets',
-    component: SelectTickets
-  },
-  {
-    path: '/booking/selectSeats',
-    name: 'selectSeats',
-    component: SelectSeats
-  },
-  {
-    path: '/booking/confirmDetails',
-    name: 'confirmDetails',
-    component: ConfirmDetails
-  },
-  {
-    path: '/booking/bookingComplete',
-    name: 'bookingComplete',
-    component: BookingComplete
-  },
+    component: Booking,
+    children: [
+      {
+        path: 'selectTickets',
+        name: 'selectTickets',
+        component: SelectTickets
+      },
+      {
+        path: 'selectSeats',
+        name: 'selectSeats',
+        component: SelectSeats
+      },
+      {
+        path: 'confirmDetails', 
+        name: 'confirmDetails',
+        component: ConfirmDetails
+      },
+      {
+        path: 'bookingComplete',
+        name: 'bookingComplete',
+        component: BookingComplete
+      },
+    ]
+    }
   
-  
-]
+  ]
+   
 
 const router = new VueRouter({
   mode: 'history',

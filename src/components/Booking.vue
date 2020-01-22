@@ -6,7 +6,11 @@
           <router-link to="/booking/selectTickets" class="breadcrumb">Select Tickets</router-link>
           <router-link to="/booking/selectSeats" class="breadcrumb">Select Seats</router-link>
           <router-link to="/booking/confirmDetails" class="breadcrumb">Confirm details</router-link>
-          <router-link to="/booking/bookingCompleted" class="breadcrumb">Booking complete</router-link>
+          <router-link to="/booking/bookingComplete" class="breadcrumb">Booking complete</router-link>
+        </div>
+
+        <div>
+
         </div>
 
         <router-view></router-view>
@@ -18,7 +22,11 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    movie: Object
+  }
+};
 </script>
 
 <style scoped>

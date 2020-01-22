@@ -9,8 +9,7 @@
           </div>
           <div class="card-content">
             <span class="card-title activator grey-text text-darken-4">{{movie.title}}</span>
-            <a class="btn waves-effect waves-light center red darken-4" @click="goToMovie(movie)">Book now!</a>
-      
+            <router-link to="/booking" class="btn waves-effect waves-light center red darken-4" :movie="movie">Book now!</router-link>
           </div>
           <div class="card-reveal">
             <span class="card-title grey-text text-darken-4">{{movie.title}}<i class="material-icons right">close</i></span>
@@ -37,14 +36,12 @@ export default {
   },
 
   methods: {
-    goToMovie(){
-      alert('Go To Movie')
-    }
+  
   }
 } 
 </script>
 
-<style>
+<style scoped>
  .row {
    display: inline-block;
  }
@@ -53,8 +50,5 @@ export default {
  }
  .card .card-content {
    padding: 10px !important;
- }
- .card-image {
-   /* max-height: 15rem; */
  }
 </style>
