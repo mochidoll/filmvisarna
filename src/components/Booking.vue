@@ -1,18 +1,17 @@
 <template>
   <div class="container">
-  <div class="container black navbar" >
-    <div class="nav-wrapper">
-      <div class="col s12 center">
-        <a href="#!" class="breadcrumb">Select Tickets</a>
-        <a href="#!" class="breadcrumb">Select Seats</a>
-        <a href="#!" class="breadcrumb">Confirm details</a>
-        <a href="#!" class="breadcrumb">Booking complete</a>
-      </div>
-      <h2></h2>
-    </div>
-    </div>
+    <div class="container black navbar">
+      <div class="nav-wrapper">
+        <div class="col s12 center">
+          <router-link to="/booking/selectTickets" class="breadcrumb">Select Tickets</router-link>
+          <router-link to="/booking/selectSeats" class="breadcrumb">Select Seats</router-link>
+          <router-link to="/booking/confirmDetails" class="breadcrumb">Confirm details</router-link>
+          <router-link to="/booking/bookingCompleted" class="breadcrumb">Booking complete</router-link>
+        </div>
 
-    
+        <router-view></router-view>
+      </div>
+    </div>
 
     <button class="btn waves-effect waves-light">Change Active</button>
   </div>
@@ -22,7 +21,7 @@
 export default {};
 </script>
 
-<style scoped></style>
+<style scoped>
 .navbar {
   padding: 10px;
 }

@@ -56,22 +56,22 @@ const routes = [
     component: Booking
   },
   {
-    path: '/selectTickets',
+    path: '/booking/selectTickets',
     name: 'selectTickets',
     component: SelectTickets
   },
   {
-    path: '/selectSeats',
+    path: '/booking/selectSeats',
     name: 'selectSeats',
     component: SelectSeats
   },
   {
-    path: '/confirmDetails',
+    path: '/booking/confirmDetails',
     name: 'confirmDetails',
     component: ConfirmDetails
   },
   {
-    path: '/bookingComplete',
+    path: '/booking/bookingComplete',
     name: 'bookingComplete',
     component: BookingComplete
   },
