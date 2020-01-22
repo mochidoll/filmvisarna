@@ -43,11 +43,10 @@ export default {
     goToBooking(){
       alert('Go To Booking site')
     },
-     goToMovie(){
-      alert('Go To Movie information w/ trailers etc')
-    }
-  }
-} 
+     goToMovie(movie){
+      this.$router.push('/allMovies/'+ movie.title)}
+  },
+}
 </script>
 
 <style>
