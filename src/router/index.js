@@ -4,6 +4,7 @@ import Home from '@/components/Home'
 import AllMovies from '@/components/AllMovies'
 import Contact from '@/components/Contact'
 import Login from '@/components/Login'
+import Movie from '@/components/Movie'
 
 Vue.use(VueRouter)
 
@@ -34,7 +35,7 @@ const routes = [
     component: Login
   },
   {
-    path: '/movie:movie',
+    path: '/movie/:movie',
     name: 'movie',
     component: Movie
   }

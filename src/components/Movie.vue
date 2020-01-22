@@ -1,5 +1,5 @@
 <template>
-  
+  <h1>Movie component</h1>
 </template>
 
 <script>
