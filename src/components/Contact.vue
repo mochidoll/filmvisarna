@@ -9,31 +9,39 @@
         <div class="aside-text">
           <i class="material-icons tiny left">map</i>
 
-          <p> B-filmer AB, Gladafilmersvägen 69, 225 89 Skärmen, Sverige</p>
+          <p>B-filmer AB, Gladafilmersvägen 69, 225 89 Skärmen, Sverige</p>
         </div>
 
         <div class="aside-text">
           <i class="material-icons tiny left">email</i>
-          <p> bfilmer.info@bfilmer.com</p>
+          <p>bfilmer.info@bfilmer.com</p>
         </div>
 
         <div class="aside-text">
           <i class="material-icons tiny left">phone</i>
-          <p> +467012346789</p>
+          <p>+467012346789</p>
         </div>
       </div>
 
-      <div class="business-hours">
+      <div id="business-hours">
         <h5>Business hours</h5>
-        <ul>
-          <li>Mon: 08:00-24:00</li>
-          <li>Tue: 08:00-24:00</li>
-          <li>Wed: 08:00-24:00</li>
-          <li>Thu: 08:00-24:00</li>
-          <li>Fri: 08:00-24:00</li>
-          <li>Sat: 08:00-24:00</li>
-          <li>Sun: 08:00-24:00</li>
-        </ul>
+
+        <div class="left align">
+          <div id="days">
+            <ul class="left">
+              <li>Mon - Thu:</li>
+              <li>Fri - Sat:</li>
+              <li>Sun:</li>
+            </ul>
+          </div>
+          <div class="times">
+            <ul class="right">
+              <li>08:00 - 20:00</li>
+              <li>08:00 - 24:00</li>
+              <li>08:00 - 24:00</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </aside>
     <!--Google Map karta-->
@@ -46,13 +54,12 @@ export default {
 };
 </script>
 <style scoped>
-.aside-text{
-    display: flex;
-    align-items: center;
-    
+.aside-text {
+  display: flex;
+  align-items: center;
 }
-i{
-    margin-right: 1rem;
+i {
+  margin-right: 1rem;
 }
 aside {
   padding: 3rem;
@@ -65,7 +72,15 @@ ul {
   margin-left: 2rem;
 }
 .contact {
-  margin-right: 5rem;
+  margin-right: 3rem;
   margin-bottom: 2rem;
+}
+#business-hours {
+  display: flex;
+  
+  flex-flow: column wrap;
+}
+.align{
+  display: flex;
 }
 </style>
