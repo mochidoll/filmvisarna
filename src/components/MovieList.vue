@@ -9,12 +9,15 @@
           </div>
           <div class="card-content">
             <span class="card-title activator grey-text text-darken-4">{{movie.title}}</span>
-            <a class="btn waves-effect waves-light center red darken-4" @click="goToMovie(movie)">Book now!</a>
+            <a class="btn waves-effect waves-light center red darken-4" @click="goToBooking(movie)">08:00</a>
+            <a class="btn waves-effect waves-light center red darken-4" @click="goToBooking(movie)">15:00</a>
+            <a class="btn waves-effect waves-light center red darken-4" @click="goToBooking(movie)">20:00</a>
       
           </div>
           <div class="card-reveal">
             <span class="card-title grey-text text-darken-4">{{movie.title}}<i class="material-icons right">close</i></span>
             <p>{{movie.description}}</p>
+             <a class="btn waves-effect waves-light center red darken-4" @click="goToMovie(movie)">More information</a>
           </div>
         </div>
       </div>
@@ -37,8 +40,11 @@ export default {
   },
 
   methods: {
-    goToMovie(){
-      alert('Go To Movie')
+    goToBooking(){
+      alert('Go To Booking site')
+    },
+     goToMovie(){
+      alert('Go To Movie information w/ trailers etc')
     }
   }
 } 
