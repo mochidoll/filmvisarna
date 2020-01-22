@@ -44,7 +44,7 @@
       </div>
     </nav>
 
-    <router-view></router-view>
+  <div id="main"><router-view></router-view></div>
 
     <footer class="page-footer black">
       <div class="container center">
@@ -78,8 +78,15 @@
   * {
     box-sizing: border-box;
   }
+  
   #app {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
     background: #ececec;
+  }
+  #main {
+    flex: 1 0 auto;
   }
   .logo {
     width: 5rem;
@@ -92,7 +99,6 @@
   footer .footer-text {
     align-items: center;
     display: flex;
-    justify-content: center;
   }
   footer i {
     margin-right: 0.5rem;
