@@ -1,23 +1,21 @@
 <template>
   <div class="container">
-    <div class="container black navbar">
+    <div class="container white navbar z-depth-2">
       <div class="nav-wrapper">
         <div class="col s12 center">
-          <router-link to="/booking/selectTickets" class="breadcrumb">Select Tickets</router-link>
-          <router-link to="/booking/selectSeats" class="breadcrumb">Select Seats</router-link>
-          <router-link to="/booking/confirmDetails" class="breadcrumb">Confirm details</router-link>
-          <router-link to="/booking/bookingComplete" class="breadcrumb">Booking complete</router-link>
+          <router-link to="/booking/selectTickets" class="breadcrumb black-text">Select Tickets</router-link>
+          <router-link to="/booking/selectSeats" class="breadcrumb black-text">Select Seats</router-link>
+          <router-link to="/booking/confirmDetails" class="breadcrumb black-text">Confirm details</router-link>
+          <router-link to="/booking/bookingComplete" class="breadcrumb black-text">Booking complete</router-link>
         </div>
 
         <div>
-
+          <h2> <!--{{movie.title}}--></h2>
         </div>
 
         <router-view></router-view>
       </div>
     </div>
-
-    <button class="btn waves-effect waves-light">Change Active</button>
   </div>
 </template>
 
@@ -34,6 +32,8 @@ export default {
   padding: 10px;
 }
 .container {
-  padding: 10px;
+  width: 90%;
+  padding: 20px;
+  border-radius: 20px;
 }
 </style>

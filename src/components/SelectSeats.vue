@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-  <div class="container black navbar" >
+  <div class="container navbar" >
     <div class="nav-wrapper">
       <h2>Select seats</h2>
     </div>
