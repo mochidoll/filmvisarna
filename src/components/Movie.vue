@@ -30,7 +30,9 @@
     <div class="col s12 m6 right">
       <span>Genre: </span> 
      <span v-for="genre of movie.genre" :key="genre">{{genre}}, </span>
+     <h3>Add option to book with dates etc here</h3>
     </div>
+  
 
 </div>
 </div>
