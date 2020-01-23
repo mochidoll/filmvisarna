@@ -8,6 +8,7 @@
           <router-link to="/booking/confirmDetails" class="breadcrumb black-text">Confirm details</router-link>
           <router-link to="/booking/bookingComplete" class="breadcrumb black-text">Booking complete</router-link>
         </div>
+        <div class="divider"></div>
 
         <div>
           <!--<h4>{{movie.title}}</h4>-->

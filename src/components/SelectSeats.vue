@@ -1,7 +1,10 @@
 <template>
   <div class="container">
   
-      <h2>Select seats</h2>
+      <h4>Select seats</h4>
+      
+
+
 
       <button class="btn waves-effect waves-light black white-text right">Next</button>
     
