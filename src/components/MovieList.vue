@@ -24,7 +24,35 @@
     </div>
     </div>
     </div>
-    <div class="movie" v-for="(movie, id) in movies" :key="id">
+    <div class="container">
+      <div class="movie" v-for="(movie, id) in movies" :key="id">
+        <div class="movies">
+          <div class="row">
+            <div class="movie-info red darken-4">
+              <div class="movie-poste">
+               <img class="responive-img col s12 m6" :src="movie.image" alt="Movie poster" />
+               </div>
+            <div class="col s12 m6"> 
+            <div class="movie-title">
+              <span>{{movie.title}}</span>
+            </div>
+            </div>
+            <div class="col s12 m6">
+            <div class="movie-genre">
+              <span>{{movie.genre.join(', ')}} | {{movie.length}} minutes</span>
+              </div>
+            </div>
+            <div class="movie-buttons">
+              <button class="btn black waves-effect waves-light">Time</button>
+              <button class="btn black waves-effect waves-light">Time</button>
+              <button class="btn black waves-effect waves-light">Time</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    </div>
+    <!-- <div class="movie" v-for="(movie, id) in movies" :key="id">
      <div class="row">
       <div class="card red darken-4">
         <div class="col s12 m2">
@@ -63,15 +91,12 @@
             </div>
             </div>
             </div>
-            </div>
+            </div> -->
 
           <!-- <div class="card-action">
             <a class="white-text" href="#">This is a link</a>
           </div>-->
       </div>
-    </div>
-  </div>
-  </div>
 </template>
 
 <script>
@@ -122,27 +147,29 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 *{
   box-sizing: border-box;
 }
 .movie .card {
   border-radius: 20px !important;
 }
-
+.movies{
+  border-radius: 20px;
+  margin-bottom: 2%;
+}
 .card-stacked{
   display: inline-block;
-}
-.movie .card-image img {
-  width: 100%;
-  border-radius: 20px !important;
 }
 .movie-buttons button {
   border-radius: 10px;
   margin: 1rem;
 }
-.movie .movie-container {
-  
+img {
+  width: 150px !important;
+  position: relative;
+  bottom: -15px;
+  border-radius: 20px;
 }
 .movie .movie-title {
   font-size: 2rem;
