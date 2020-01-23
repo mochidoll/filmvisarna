@@ -21,6 +21,7 @@
         
         <button @click="addScreening">Lägg till visning</button>
 
+        <p class ="red-text" v-if="screeningAdded">The screening has been added.</p>
       </div>
 
       
@@ -38,6 +39,7 @@ export default {
       auditoriumId: '',
       date: '',
       time: '',
+      screeningAdded: false
     };
   },
 
@@ -57,6 +59,7 @@ export default {
 
   methods: {
     addScreening() {
+      this.screeningAdded = true
       let newStartTime = new Date(this.date + ' ' + this.time)
       db.collection("screenings").add({
         auditoriumId: this.auditoriumId,
@@ -68,6 +71,10 @@ export default {
       this.auditoriumId = ''
       this.date = ''
       this.time = ''
+
+      setTimeout( () => {
+        this.screeningAdded = false
+      }, 2000)
     },
   },
 
