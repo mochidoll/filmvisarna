@@ -35,7 +35,7 @@ const routes = [
     component: Login
   },
   {
-    path: '/movie/:movie',
+    path: '/allMovies/:movie',
     name: 'movie',
     component: Movie
   }
