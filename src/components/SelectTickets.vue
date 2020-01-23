@@ -3,8 +3,8 @@
     <h4 class="center">Select Tickets</h4>
 
     <div class="row">
-      <div class="col s6 right-align">Adult Tickets: {{adultTicketPrice}}:-</div>
-      <div class="col s6">
+      <div class="col s12 m6 right-align">Adult Tickets: {{adultTicketPrice}}:-</div>
+      <div class="col s12 m6">
         <a class="btn-floating disabled btn-small" v-if="adultTickets == 0">
           <i class="material-icons">remove</i>
         </a>
@@ -20,8 +20,8 @@
         </a>
       </div>
 
-      <div class="col s6 right-align">Child Tickets: {{childTicketPrice}}:-</div>
-      <div class="col s6">
+      <div class="col s12 m6 right-align">Child Tickets: {{childTicketPrice}}:-</div>
+      <div class="col s12 m6">
         <a class="btn-floating disabled btn-small" v-if="childTickets == 0">
           <i class="material-icons">remove</i>
         </a>
@@ -37,8 +37,8 @@
         </a>
       </div>
 
-      <div class="col s6 right-align">Senior Tickets{{seniorTicketPrice}}:-</div>
-      <div class="col s6">
+      <div class="col s12 m6 right-align">Senior Tickets{{seniorTicketPrice}}:-</div>
+      <div class="col s12 m6">
         <a class="btn-floating disabled btn-small" v-if="seniorTickets == 0">
           <i class="material-icons">remove</i>
         </a>
