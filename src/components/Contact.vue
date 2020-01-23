@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="row z-depth-2">
+    <div class="row z-depth-2 ">
 
       <div class="col s12 m6 l5 left">
         <h5>Contact</h5>
