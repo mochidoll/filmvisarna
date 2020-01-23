@@ -135,6 +135,7 @@ export default {
 }
 .movie .card-image img {
   width: 100%;
+  border-radius: 20px !important;
 }
 .movie-buttons button {
   border-radius: 10px;
