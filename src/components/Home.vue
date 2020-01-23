@@ -15,6 +15,7 @@ export default {
 
   created() {
     this.$store.dispatch("getMovies");
+    this.$store.dispatch("getScreenings");
   }
 };
 </script>

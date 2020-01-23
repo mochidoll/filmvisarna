@@ -7,17 +7,20 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     movies: [],
-    genres: []
+    screenings: []
   },
   mutations: {
+
     setMovies(state, data) {
       state.movies = data
+    }, 
+
+    setScreenings(state, data) {
+      state.screenings = data
     },
-    setGenres(state, data) {
-      state.genres = data
-    }
   },
   actions: {
+
     async getMovies({ commit }) {
       let snapshot = await db.collection('movies').get()
       let movies = []
@@ -26,9 +29,20 @@ export default new Vuex.Store({
         data.id = movie.id; // lägg till id
         movies.push(data)
       })
-      window.console.log("movies with ids", movies);
       commit('setMovies', movies)
-    }
+    },
+
+    async getScreenings({ commit }) {
+      let snapshot = await db.collection('screenings').get()
+      let screenings = []
+      snapshot.forEach(screening => {
+        let data = screening.data(); // alla egenskaper utom id:t
+        data.id = screening.id; // lägg till id
+        screenings.push(data)
+      })
+      commit('setScreenings', screenings)
+    },
+    
   },
   modules: {
   }

@@ -7,13 +7,14 @@
     <div class="filters">
       <div class="date-selector">
         <select name="date" id="choose-date">
-          <option value="" selected disabled hidden>Date</option>
+          <option value selected disabled hidden>Date</option>
+          <option value v-for="(date, id) in dates" :key="id">{{ date }}</option>
         </select>
       </div>
       <div class="genre-selector">
         <select name="genre" id="choose-genre">
-          <option value="" selected disabled hidden>Genre</option>
-          <option value="genre" v-for="(genre, id) in genres" :key="id">{{ genre }}</option>
+          <option value selected disabled hidden>Genre</option>
+          <option value v-for="(genre, id) in genres" :key="id">{{ genre }}</option>
         </select>
       </div>
     </div>
@@ -69,48 +70,66 @@ export default {
       // Sort alphanumeric
       genres.sort();
       return genres;
+    },
+    dates() {
+      let screenings = [];
+      for (let screening of this.$store.state.screenings) {
+        screenings.push(
+          screening.startTime
+            .toDate()
+            .toLocaleDateString("sv-SV", {
+              year: "numeric",
+              month: "numeric",
+              day: "numeric",
+              weekday: "long"
+            })
+        );
+      }
+      screenings = [...new Set(screenings)];
+      screenings.sort();
+      return screenings;
     }
   }
 };
 </script>
 
 <style>
-  .movie .card {
-    border-radius: 20px !important;
-  }
-  .movie .card-content {
-    display: flex;
-    justify-content: space-between;
-  }
-  .movie .card-image {
-    max-width: 10rem !important;
-  }
-  .movie-buttons button {
-    border-radius:10px;
-    display: flex;
-    flex-direction: column;
-    margin: 1rem;
-  }
-  .movie .movie-container {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-  }
-  .movie .movie-title {
-    font-size: 2rem;
-    font-weight: bold;
-  }
-  .movie-list .filters {
-    display: flex;
-    justify-content: start;
-  }
-  .filters select {
-    text-align: center;
-    display: block !important;
-    height: 2rem;
-    padding: 0;
-  }
-  .filters .date-selector {
-    margin-right: 1rem;
-  }
+.movie .card {
+  border-radius: 20px !important;
+}
+.movie .card-content {
+  display: flex;
+  justify-content: space-between;
+}
+.movie .card-image {
+  max-width: 10rem !important;
+}
+.movie-buttons button {
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+}
+.movie .movie-container {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+.movie .movie-title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+.movie-list .filters {
+  display: flex;
+  justify-content: start;
+}
+.filters select {
+  text-align: center;
+  display: block !important;
+  height: 2rem;
+  padding: 0;
+}
+.filters .date-selector {
+  margin-right: 1rem;
+}
 </style>
