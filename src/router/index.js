@@ -5,6 +5,7 @@ import AllMovies from '@/components/AllMovies'
 import Contact from '@/components/Contact'
 import Login from '@/components/Login'
 import Movie from '@/components/Movie'
+import CreateScreenings from '@/components/CreateScreenings'
 
 Vue.use(VueRouter)
 
@@ -38,7 +39,12 @@ const routes = [
     path: '/allMovies/:movie',
     name: 'movie',
     component: Movie
-  }
+  },
+  {
+    path: '/create',
+    name: 'createScreenings',
+    component: CreateScreenings
+  },
 ]
 
 const router = new VueRouter({
