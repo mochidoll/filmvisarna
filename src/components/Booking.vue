@@ -23,7 +23,8 @@
 <script>
 export default {
   props: {
-    movie: Object
+    movie: Object,
+    auditorium: Object 
   }
 };
 </script>

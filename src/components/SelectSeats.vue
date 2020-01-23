@@ -1,13 +1,17 @@
 <template>
   <div class="container">
-      <h4>Select seats</h4>
-    <button class="btn waves-effect waves-light black white-text right">Next</button>
+    <h4>Select seats from SALNAMN</h4>
+
     <div class="row">
-      <div class="col green" v-for="(row, id) in seatsPerRow" :key=id>
-        <p>{{row}}</p>
+      <div class=" margin-row col m12" v-for="(seats, id) in auditoriums[0].seatsPerRow" :key="'seats' + id">
+
+        <div class="col black white-text seats" v-for="(seat, id) in seats" :key="'seat' + id">
+          {{seat}}
+        </div>
+
       </div>
-    </div>
       <button class="btn waves-effect waves-light black white-text right">Next</button>
+    </div>
   </div>
 </template>
 
@@ -15,11 +19,20 @@
 export default {
   data() {
     return {
-      seatsPerRow: 10//this.$store.state.auditoriums[0].seatsPerRow
+      room: 0
+    };
+  },
+  methods: {},
+  computed: {
+    movies() {
+      return this.$store.state.movies;
+    },
+    auditoriums() {
+      return this.$store.state.auditoriums; //ERROR
     }
   },
-  methods: {
-    
+  created() {
+    this.$store.dispatch("getAuditoriums");
   }
 };
 </script>
@@ -30,5 +43,13 @@ export default {
 }
 .container {
   padding: 20px;
+}
+.seats {
+  margin: 1%;
+  border-radius: 10px;
+}
+.margin-row {
+  margin-left: 20px;
+  text-align: center !important;
 }
 </style>
