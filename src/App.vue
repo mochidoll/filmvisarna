@@ -49,19 +49,19 @@
     <footer class="page-footer black">
       <div class="container center">
         <div>
-          <p>B-Filmer AB</p>
+          <span class="logo-text">B-Filmer AB</span>
         </div>
         <div class="footer-text">
           <i class="material-icons tiny">map</i>
-          <p>Gladafilmersvägen 69, 225 89 Skärmen, Sverige</p>
+          <span>Gladafilmersvägen 69, 225 89 Skärmen, Sverige</span>
         </div>
         <div class="footer-text">
           <i class="material-icons tiny">email</i>
-          <p>bfilmer.info@bfilmer.com</p>
+          <span>bfilmer.info@bfilmer.com</span>
         </div>
         <div class="footer-text">
           <i class="material-icons tiny">phone</i>
-          <p>+467012346789</p>
+          <span>+467012346789</span>
         </div>
       </div>
     </footer>
@@ -80,9 +80,7 @@
   }
   
   #app {
-    display: flex;
     min-height: 100vh;
-    flex-direction: column;
     background: #ececec;
   }
   #main {
@@ -91,17 +89,19 @@
   .logo {
     width: 5rem;
   }
-  footer p {
+  .logo-text{
+    font-size: 1rem;
+  }
+  footer span {
     font-size: 0.8rem;
     margin: 0;
     padding: 0;
   }
-  footer .footer-text {
-    align-items: center;
-    display: flex;
-  }
   footer i {
     margin-right: 0.5rem;
+    display: inline-block;
+    position: relative;
+    bottom:-2px;
   }
   .page-footer {
     padding-bottom: 20px;
