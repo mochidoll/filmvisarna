@@ -14,37 +14,37 @@
 
         <ul class="right hide-on-med-and-down">
           <li>
-            <router-link to="#">Showing Now</router-link>
+            <router-link to="/">Now Showing</router-link>
           </li>
           <li>
-            <router-link to="#">All Movies</router-link>
+            <router-link to="/allMovies">All Movies</router-link>
           </li>
           <li>
-            <router-link to="#">Contact</router-link>
+            <router-link to="/contact">Contact</router-link>
           </li>
           <li>
-            <router-link to="#">Login</router-link>
+            <router-link to="/login">Login</router-link>
           </li>
         </ul>
 
         <ul id="slide-out" class="sidenav">
           <li>
-            <router-link to="#">Showing Now</router-link>
+            <router-link to="/">Now Showing</router-link>
           </li>
           <li>
-            <router-link to="#">All Movies</router-link>
+            <router-link to="/allMovies">All Movies</router-link>
           </li>
           <li>
-            <router-link to="#">Contact</router-link>
+            <router-link to="/contact">Contact</router-link>
           </li>
           <li>
-            <router-link to="#">Login</router-link>
+            <router-link to="/login">Login</router-link>
           </li>
         </ul>
       </div>
     </nav>
 
-    <router-view />
+  <div id="main"><router-view></router-view></div>
 
     <footer class="page-footer black">
       <div class="container center">
@@ -75,6 +75,19 @@
 </script>
 
 <style>
+  * {
+    box-sizing: border-box;
+  }
+  
+  #app {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    background: #ececec;
+  }
+  #main {
+    flex: 1 0 auto;
+  }
   .logo {
     width: 5rem;
   }
@@ -86,7 +99,6 @@
   footer .footer-text {
     align-items: center;
     display: flex;
-    justify-content: center;
   }
   footer i {
     margin-right: 0.5rem;
@@ -94,5 +106,4 @@
   .page-footer {
     padding-bottom: 20px;
   }
-
 </style>
