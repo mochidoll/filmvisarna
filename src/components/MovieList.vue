@@ -187,19 +187,7 @@ export default {
   font-size: 2rem;
   font-weight: bold;
 }
-.movie-list .filters {
-  display: flex;
-  justify-content: start;
-}
-.filters select {
-  text-align: center;
-  display: block !important;
-  height: 2rem;
-  padding: 0;
-}
-.filters .date-selector {
-  margin-right: 1rem;
-}
+
 .mobile{
   margin: 1% !important;
 }
