@@ -24,59 +24,54 @@
     </div>
     </div>
     </div>
-    <div class="hide-on-med-and-up blue">
-    <div class="container">
-      <div class="movies">
-      <div class="movie" v-for="(movie, id) in movies" :key="id">
-          <div class="row">
-            <div class="movie-info red darken-4">
-              <div class="movie-poster">
-               <img class="responive-img col s12 m6" :src="movie.image" alt="Movie poster" />
-               </div>
-            <div class="col s12 m6"> 
-            <div class="movie-title">
-              <span>{{movie.title}}</span>
-            </div>
-            </div>
-            <div class="col s12 m6">
-            <div class="movie-genre">
-              <span>{{movie.genre.join(', ')}} | {{movie.length}} minutes</span>
-              </div>
-            </div>
-            <div class="movie-buttons">
-              <button class="btn black waves-effect waves-light">Time</button>
-              <button class="btn black waves-effect waves-light">Time</button>
-              <button class="btn black waves-effect waves-light">Time</button>
-              </div>
-              </div>
-            </div>
-            </div>
-            </div>
-          </div>
-    </div>
-    <div class="hide-on-small-only red">
-    <div class="movie col s12 m7" v-for="(movie, id) in movies" :key="id">
-      <div class="card horizontal red darken-4">
-        <div class="card-image">
-          <img class :src="movie.image" />
+    <div class="movie" v-for="(movie, id) in movies" :key="id">
+     <div class="row">
+      <div class="card red darken-4">
+        <div class="col s12 m2">
+        <div class="card-image center">
+          <img class="responive-img" :src="movie.image" />
         </div>
+         </div>
         <div class="card-stacked">
-          <div class="card-content valign-wrapper">
-            <div>
-              <p class="movie-title">{{ movie.title }}</p>
-              <p>{{ movie.genre.toString() }} | {{ movie.length }} min</p>
+          <div class="card-content ">
+            <div class="col m4">
+              <span class="movie-title">{{ movie.title }}</span>
+              </div>
+            <div class="col s12">
+              <div>
+              <span>{{ movie.genre.toString() }} | {{ movie.length }} min</span>
             </div>
+            </div>
+            <div class="col s12 m12">
             <div class="movie-buttons">
+              <div class="center hide-on-med-and-up">
+                <div class="col s4">
+              <button class="btn black waves-effect waves-light">Time</button>
+              </div>
+              <div class="col s4">
+              <button class="btn black waves-effect waves-light">Time</button>
+              </div>
+              <div class="col s4">
+              <button class="btn black waves-effect waves-light">Time</button>
+              </div>
+              </div>
+              <div class="right hide-on-small-only">
               <button class="btn black waves-effect waves-light">Time</button>
               <button class="btn black waves-effect waves-light">Time</button>
               <button class="btn black waves-effect waves-light">Time</button>
+              </div>
             </div>
             </div>
-          </div>
-          </div>
-          </div>
-          </div>
+            </div>
+            </div>
+
+          <!-- <div class="card-action">
+            <a class="white-text" href="#">This is a link</a>
+          </div>-->
       </div>
+    </div>
+  </div>
+  </div>
 </template>
 
 <script>
@@ -127,29 +122,26 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 *{
   box-sizing: border-box;
 }
 .movie .card {
   border-radius: 20px !important;
 }
-.movies{
-  border-radius: 20px;
-  margin-bottom: 2%;
-}
+
 .card-stacked{
   display: inline-block;
+}
+.movie .card-image img {
+  width: 100%;
 }
 .movie-buttons button {
   border-radius: 10px;
   margin: 1rem;
 }
-img {
-  width: 150px !important;
-  position: relative;
-  bottom: -15px;
-  border-radius: 20px;
+.movie .movie-container {
+  
 }
 .movie .movie-title {
   font-size: 2rem;
