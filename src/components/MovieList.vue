@@ -24,10 +24,10 @@
     </div>
     </div>
     </div>
+    <div class="hide-on-med-and-up blue">
     <div class="container">
-      <div class="hide-on-med-only">
+      <div class="movies">
       <div class="movie" v-for="(movie, id) in movies" :key="id">
-        <div class="movies">
           <div class="row">
             <div class="movie-info red darken-4">
               <div class="movie-poster">
@@ -48,14 +48,13 @@
               <button class="btn black waves-effect waves-light">Time</button>
               <button class="btn black waves-effect waves-light">Time</button>
               </div>
+              </div>
+            </div>
             </div>
             </div>
           </div>
-          </div>
     </div>
-    </div>
-    <div>
-    <div class="hide-on-small-only">
+    <div class="hide-on-small-only red">
     <div class="movie col s12 m7" v-for="(movie, id) in movies" :key="id">
       <div class="card horizontal red darken-4">
         <div class="card-image">
@@ -77,7 +76,6 @@
           </div>
           </div>
           </div>
-      </div>
       </div>
 </template>
 
