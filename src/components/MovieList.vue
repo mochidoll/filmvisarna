@@ -198,5 +198,6 @@ export default {
   border-radius: 20px;
   position: relative;
   bottom:-10px;
+  width:75%;
 }
 </style>
