@@ -1,6 +1,7 @@
 <template>
   <div class="movie-list">
-    <div>
+    
+    <div class="date">
       <p>Today's date: ({{ day }}, {{ date }})</p>
     </div>
 
@@ -25,19 +26,19 @@
     </div>
     </div>
 
-    <div class="hide-on-med-and-up blue">
+    <div class="hide-on-med-and-up">
     <div class="movie" v-for="(movie, id) in movies" :key="id">
-     <div class="row">
+     <div class="row center">
       <div class="card red darken-4">
         <div class="col s12 m2">
-        <div class="card-image center">
-          <img class="responive-img" :src="movie.image" />
+        <div class="card-img ">
+          <img class="responive-img mobile-img" :src="movie.image" />
         </div>
          </div>
         <div class="card-stacked">
-          <div class="card-content ">
-            <div class="col m4">
-              <span class="movie-title">{{ movie.title }}</span>
+          <div class="card-con ">
+            <div class="col s12 m4">
+              <span class="movie-title center">{{ movie.title }}</span>
               </div>
             <div class="col s12">
               <div>
@@ -45,10 +46,10 @@
             </div>
             </div>
             <div class="col s12 m12">
-            <div class="movie-buttons">
-              <button class="btn black waves-effect waves-light">Time</button>
-              <button class="btn black waves-effect waves-light">Time</button>
-              <button class="btn black waves-effect waves-light">Time</button>
+            <div class="movie-buttons-mobile">
+              <button class="btn black waves-effect waves-light mobile">Time</button>
+              <button class="btn black waves-effect waves-light mobile">Time</button>
+              <button class="btn black waves-effect waves-light mobile">Time</button>
               </div>
             </div>
             </div>
@@ -57,11 +58,11 @@
     </div>
     </div>
     </div>
-  <div class="red">
+  <div class="hide-on-small-only">
    <div class="movie col s12 m7" v-for="(movie, id) in movies" :key="id">
       <div class="card horizontal red darken-4">
         <div class="card-image">
-          <img class :src="movie.image" />
+          <img class="responsive-img" :src="movie.image" />
         </div>
         <div class="card-stacked">
           <div class="card-content valign-wrapper">
@@ -130,7 +131,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 *{
   box-sizing: border-box;
 }
@@ -148,9 +149,7 @@ export default {
   border-radius: 10px;
   margin: 1rem;
 }
-.movie .movie-container {
-  
-}
+
 .movie .movie-title {
   font-size: 2rem;
   font-weight: bold;
@@ -165,7 +164,51 @@ export default {
 .filters .date-selector {
   margin-right: 1rem;
 }
-@media only screen and (min-width: 601px) {
 
+.movie .card-content {
+  display: flex;
+  justify-content: space-between;
+}
+.movie .card-image {
+  max-width: 10rem !important;
+}
+.movie-buttons button {
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+}
+.movie .movie-container {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+.movie .movie-title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+.movie-list .filters {
+  display: flex;
+  justify-content: start;
+}
+.filters select {
+  text-align: center;
+  display: block !important;
+  height: 2rem;
+  padding: 0;
+}
+.filters .date-selector {
+  margin-right: 1rem;
+}
+.mobile{
+  margin: 1% !important;
+}
+.responsive-img{
+  border-radius: 20px !important;
+}
+.mobile-img{
+  border-radius: 20px;
+  position: relative;
+  bottom:-10px;
 }
 </style>
