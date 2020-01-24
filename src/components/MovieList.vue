@@ -134,6 +134,37 @@ export default {
 .movie .card {
   border-radius: 20px !important;
 }
+
+.card-stacked{
+  display: inline-block;
+}
+.movie .card-image img {
+  width: 100%;
+  border-radius: 20px !important;
+}
+.movie-buttons button {
+  border-radius: 10px;
+  margin: 1rem;
+}
+.movie .movie-title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.filters select {
+  text-align: center;
+  display: block !important;
+  height: 2rem;
+  padding: 0;
+}
+.filters .date-selector {
+  margin-right: 1rem;
+}*{
+  box-sizing: border-box;
+}
+.movie .card {
+  border-radius: 20px !important;
+}
 .movies{
   border-radius: 20px;
   margin-bottom: 2%;
