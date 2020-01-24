@@ -24,6 +24,8 @@
     </div>
     </div>
     </div>
+
+    <div class="hide-on-med-and-up blue">
     <div class="movie" v-for="(movie, id) in movies" :key="id">
      <div class="row">
       <div class="card red darken-4">
@@ -44,33 +46,39 @@
             </div>
             <div class="col s12 m12">
             <div class="movie-buttons">
-              <div class="center hide-on-med-and-up">
-                <div class="col s4">
-              <button class="btn black waves-effect waves-light">Time</button>
-              </div>
-              <div class="col s4">
-              <button class="btn black waves-effect waves-light">Time</button>
-              </div>
-              <div class="col s4">
-              <button class="btn black waves-effect waves-light">Time</button>
-              </div>
-              </div>
-              <div class="right hide-on-small-only">
               <button class="btn black waves-effect waves-light">Time</button>
               <button class="btn black waves-effect waves-light">Time</button>
               <button class="btn black waves-effect waves-light">Time</button>
               </div>
             </div>
             </div>
+      </div>
+       </div>
+    </div>
+    </div>
+    </div>
+  <div class="red">
+   <div class="movie col s12 m7" v-for="(movie, id) in movies" :key="id">
+      <div class="card horizontal red darken-4">
+        <div class="card-image">
+          <img class :src="movie.image" />
+        </div>
+        <div class="card-stacked">
+          <div class="card-content valign-wrapper">
+            <div>
+              <p class="movie-title">{{ movie.title }}</p>
+              <p>{{ movie.genre.toString() }} | {{ movie.length }} min</p>
             </div>
+            <div class="movie-buttons">
+              <button class="btn black waves-effect waves-light">Time</button>
+              <button class="btn black waves-effect waves-light">Time</button>
+              <button class="btn black waves-effect waves-light">Time</button>
             </div>
-
-          <!-- <div class="card-action">
-            <a class="white-text" href="#">This is a link</a>
-          </div>-->
+          </div>
+        </div>
+        </div>
       </div>
     </div>
-  </div>
   </div>
 </template>
 
