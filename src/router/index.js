@@ -10,6 +10,7 @@ import SelectTickets from '@/components/SelectTickets'
 import SelectSeats from '@/components/SelectSeats'
 import ConfirmDetails from '@/components/ConfirmDetails'
 import BookingComplete from '@/components/BookingComplete'
+import CreateScreenings from '@/components/CreateScreenings'
 
 
 Vue.use(VueRouter)
@@ -40,6 +41,12 @@ const routes = [
     name: 'movie',
     component: Movie
   },
+  {
+    path: '/create',
+    name: 'createScreenings',
+    component: CreateScreenings
+  },
+]
 
 
   {
