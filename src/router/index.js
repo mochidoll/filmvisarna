@@ -46,9 +46,6 @@ const routes = [
     name: 'createScreenings',
     component: CreateScreenings
   },
-]
-
-
   {
     path: '/booking',
     name: 'booking',
@@ -76,7 +73,6 @@ const routes = [
       },
     ]
     }
-  
   ]
    
 

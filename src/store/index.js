@@ -7,7 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     auditoriums: [],
-    movies: []
+    movies: [],
     screenings: []
   },
   mutations: {
@@ -17,7 +17,6 @@ export default new Vuex.Store({
     setMovies(state, data) {
       state.movies = data
     }, 
-
     setScreenings(state, data) {
       state.screenings = data
     },
@@ -41,7 +40,6 @@ export default new Vuex.Store({
       })
       commit('setMovies', movies)
     },
-
     async getScreenings({ commit }) {
       let snapshot = await db.collection('screenings').get()
       let screenings = []
@@ -52,7 +50,6 @@ export default new Vuex.Store({
       })
       commit('setScreenings', screenings)
     },
-    
   },
   modules: {
   }
