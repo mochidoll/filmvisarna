@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import Seat from "@/components/Booking/Seat";
 export default {
   components: {
     Seat
