@@ -1,11 +1,13 @@
 <template>
   <div class="container">
+    <div class="booking-confirmation">
     <h4>Booking Complete!</h4>
     <!--Loops through all data inside user, if we want to add more or less information in an user -->
     <ul v-for="(user, id) in users" :key="'user' + id">
       <BookingInformation :data="user"></BookingInformation>
     </ul>
     <h2>Thanks for booking!</h2>
+  </div>
   </div>
 </template>
 
@@ -47,5 +49,8 @@ h2 {
 }
 .col {
   margin-bottom: 1%;
+}
+.booking-confirmation{
+  margin-left: 5%;
 }
 </style>
