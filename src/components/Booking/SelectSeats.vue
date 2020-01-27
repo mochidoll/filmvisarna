@@ -11,14 +11,12 @@
         v-for="(row, y, id) in auditoriums[0].seatsPerRow"
         :key="'row' + y + id"
       >
-        <!--FÅR TAG PÅ Y-värdet-->
         <Seat
           v-for="(seat, id) in row"
           :key="'seat' + id"
           :position="{x: seat, y: y}"
           @showPosition="showPosition"
         ></Seat>
-        <!--HÄR FÅR VI REDA PÅ X-värdet-->
       </div>
       {{this.position}}
       <button class="btn waves-effect waves-light black white-text right">Next</button>
@@ -27,7 +25,6 @@
 </template>
 
 <script>
-import Seat from "@/components/Booking/Seat";
 export default {
   components: {
     Seat
@@ -35,7 +32,6 @@ export default {
   data() {
     return {
       room: 0,
-      seats: [],
       position: {}
     };
   },
@@ -69,9 +65,5 @@ export default {
 .seats {
   margin: 1%;
   border-radius: 10px;
-}
-.margin-row {
-  margin-left: 20px;
-  text-align: center !important;
 }
 </style>
