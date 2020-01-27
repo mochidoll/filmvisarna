@@ -54,8 +54,10 @@
         </a>
       </div>
       <div class="col s12 center">Total Price: {{totalTicketPrice}}</div>
+      <div class="col m12 center">
+        <router-link to=/booking/selectSeats class="m1 btn waves-effect waves-light black white-text">Next</router-link>
+      </div>
     </div>
-    <button class="btn waves-effect waves-light black white-text right">Next</button>
   </div>
 </template>
 

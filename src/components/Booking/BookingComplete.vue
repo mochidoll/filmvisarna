@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Booking Complete!</h2>
+    <h4>Booking Complete!</h4>
     <!--Loops through all data inside user, if we want to add more or less information in an user -->
     <ul v-for="(user, id) in users" :key="'user' + id">
       <BookingInformation :data="user"></BookingInformation>
@@ -39,4 +39,13 @@ export default {
 </script>
 
 <style>
+.container {
+  padding: 20px;
+}
+h2 {
+  margin: 2%;
+}
+.col {
+  margin-bottom: 1%;
+}
 </style>

@@ -4,7 +4,7 @@
 
     <div class="row">
       <div
-        class="center col m12"
+        class="center col s12"
         v-for="(seats, id) in auditoriums[0].seatsPerRow"
         :key="'seats' + id"
       >
@@ -21,8 +21,9 @@
           Efteråt blir det blå eller röd beroende på om det är false eller true i elementet i grid-->
         </Seat>
       </div>
-
-      <button class="btn waves-effect waves-light black white-text right">Next</button>
+      <div class="col m12 center">
+        <router-link to="/booking/confirmDetails" class="m1 btn waves-effect waves-light black white-text">Next</router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -87,12 +88,7 @@ export default {
 </script>
 
 <style scoped>
-.navbar {
-  padding: 10px;
-}
-.container {
-  padding: 20px;
-}
+
 .seats {
   margin: 1%;
   border-radius: 10px;
