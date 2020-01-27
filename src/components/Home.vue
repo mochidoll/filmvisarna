@@ -1,25 +1,24 @@
 <template>
   <div class="container">
-      <MovieList /> 
+    <MovieList />
   </div>
 </template>
 
 <script>
-import MovieList from '@/components/MovieList'
+import MovieList from "@/components/MovieList";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
     MovieList
   },
 
   created() {
-    this.$store.dispatch('getMovies')
+    this.$store.dispatch("getMovies");
+    this.$store.dispatch("getScreenings");
   }
-  
-}
+};
 </script>
 
 <style>
-
 </style>

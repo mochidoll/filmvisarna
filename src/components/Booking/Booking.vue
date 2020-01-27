@@ -10,10 +10,6 @@
         </div>
         <div class="divider"></div>
 
-        <div>
-          <!--<h4>{{movie.title}}</h4>-->
-        </div>
-
         <router-view></router-view>
       </div>
     </div>
@@ -24,7 +20,7 @@
 export default {
   props: {
     movie: Object,
-    auditorium: Object 
+    auditorium: Object
   }
 };
 </script>

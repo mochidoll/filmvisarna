@@ -5,11 +5,12 @@ import AllMovies from '@/components/AllMovies'
 import Contact from '@/components/Contact'
 import Login from '@/components/Login'
 import Movie from '@/components/Movie'
-import Booking from '@/components/Booking'
-import SelectTickets from '@/components/SelectTickets'
-import SelectSeats from '@/components/SelectSeats'
-import ConfirmDetails from '@/components/ConfirmDetails'
-import BookingComplete from '@/components/BookingComplete'
+import CreateScreenings from '@/components/CreateScreenings'
+import Booking from '@/components/Booking/Booking'
+import SelectTickets from '@/components/Booking/SelectTickets'
+import SelectSeats from '@/components/Booking/SelectSeats'
+import ConfirmDetails from '@/components/Booking/ConfirmDetails'
+import BookingComplete from '@/components/Booking/BookingComplete'
 
 
 Vue.use(VueRouter)
@@ -40,8 +41,11 @@ const routes = [
     name: 'movie',
     component: Movie
   },
-
-
+  {
+    path: '/create',
+    name: 'createScreenings',
+    component: CreateScreenings
+  },
   {
     path: '/booking',
     name: 'booking',
@@ -69,7 +73,6 @@ const routes = [
       },
     ]
     }
-  
   ]
    
 
