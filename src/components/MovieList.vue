@@ -45,9 +45,7 @@
                 </div>
                 <div class="col s12 m12">
                   <div class="movie-buttons-mobile">
-                    <button class="btn black waves-effect waves-light mobile">Time</button>
-                    <button class="btn black waves-effect waves-light mobile">Time</button>
-                    <button class="btn black waves-effect waves-light mobile">Time</button>
+                    <button class="btn black waves-effect waves-light mobile">{{movie.id}}</button>
                   </div>
                 </div>
               </div>
@@ -68,10 +66,8 @@
                 <p class="movie-title">{{ movie.title }}</p>
                 <p>{{ movie.genre.toString() }} | {{ movie.length }} min</p>
               </div>
-              <div class="movie-buttons">
-                <button class="btn black waves-effect waves-light">Time</button>
-                <button class="btn black waves-effect waves-light">Time</button>
-                <button class="btn black waves-effect waves-light">Time</button>
+              <div class="movie-buttons" v-on="checkForTime(movie.id)">
+                <button class="btn black waves-effect waves-light">{{movieTime}}</button>
               </div>
             </div>
           </div>
@@ -87,7 +83,9 @@ import moment from "moment";
 export default {
   data() {
     return {
-      selectedDate: ""
+      selectedDate: "",
+      movieTime: "",
+      visibleScreens: []
     };
   },
 
@@ -147,7 +145,7 @@ export default {
     filteredScreens() {
       let date = new Date(this.selectedDate);
       let year = date.getFullYear();
-      let month = date.getMonth();
+      let month = date.getMonth(); //starts on 0 to 11
       let day = date.getDate();
 
       let screens = this.$store.state.screenings;
@@ -161,6 +159,7 @@ export default {
           sDate.getMonth() == month &&
           sDate.getDate() == day
         ) {
+          this.updateVisibleScreens(screen);
           return screen;
         }
       });
@@ -169,9 +168,21 @@ export default {
       return filteredArray.map(screen => screen.movieId);
     }
   },
+
   methods: {
-    
-  },
+    checkForTime(movie) {
+      for (let screen of this.visibleScreens) {
+        if (movie === screen.movieId) {
+          window.console.log(screen.startTime)
+          let time = new Date(screen.startTime.toDate())
+          this.movieTime = time;
+        }
+      }
+    },
+    updateVisibleScreens(screen) {
+      this.visibleScreens.push(screen);
+    }
+  }, 
   mounted() {
     this.initDate = setInterval(() => {
       //window.console.log(this.dates[0])
