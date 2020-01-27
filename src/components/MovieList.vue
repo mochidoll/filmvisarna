@@ -1,42 +1,40 @@
 <template>
   <div class="movie-list">
     <div class="date">
-      <p>Today's date: ({{ day }}, {{ date }})</p>
+      <p>Today's date: ({{ dayToday }}, {{ dateToday }})</p>
     </div>
 
     <div class="filters">
       <div class="row">
         <div class="col s12 m6">
-          <div class="date-selector">
-            <select name="date" id="choose-date">
-              <!--<option selected disabled hidden>Date</option>-->
-              <option
-                v-for="(date, id) in dates"
-                :key="id"
-                :value="date"
-                :v-model="chosenDate"
-              >{{ date }}</option>
-            </select>
-          </div>
-        </div>
-        <div class="col s12 m6">
-          <div class="genre-selector">
-            <select name="genre" id="choose-genre">
-              <option value selected disabled hidden>Genre</option>
-              <option value v-for="(genre, id) in genres" :key="id">{{ genre }}</option>
-            </select>
-          </div>
-        </div>
+      <div class="date-selector">
+        <select v-model="selectedDate" name="date" id="choose-date">
+          <option :value="date" v-for="(date, id) in dates" :key="id">{{ date }}</option>
+        </select>
+      </div>
+      </div>
+      <div class="col s12 m6">
+      <div class="genre-selector">
+        <select name="genre" id="choose-genre">
+          <option value selected disabled hidden>Genre</option>
+          <option v-for="(genre, id) in genres" :key="id">{{ genre }}</option>
+        </select>
       </div>
     </div>
 
     <div class="hide-on-med-and-up">
-      <div class="movie" v-for="(filteredMovie, id) in filteredMovies" :key="id">
-        <div class="row center">
-          <div class="card red darken-4">
-            <div class="col s12 m2">
-              <div class="card-img">
-                <img class="responive-img mobile-img" :src="filteredMovie.image" />
+    <div class="movie" v-for="movie in filteredMovies" :key="movie.id">
+     <div class="row center">
+      <div class="card red darken-4">
+        <div class="col s12 m2">
+        <div class="card-img ">
+          <img class="responive-img mobile-img" :src="movie.image" />
+        </div>
+         </div>
+        <div class="card-stacked">
+          <div class="card-con ">
+            <div class="col s12 m4">
+              <span class="movie-title center">{{ movie.title }}</span>
               </div>
             </div>
             <div class="card-stacked">
@@ -62,23 +60,19 @@
         </div>
       </div>
     </div>
-    <div class="hide-on-small-only">
-      <div class="movie col s12 m7" v-for="(filteredMovie, id) in filteredMovies" :key="id">
-        <div class="card horizontal red darken-4">
-          <div class="card-image">
-            <img class="responsive-img" :src="filteredMovie.image" />
-          </div>
-          <div class="card-stacked">
-            <div class="card-content valign-wrapper">
-              <div>
-                <p class="movie-title">{{ filteredMovie.title }}</p>
-                <p>{{ filteredMovie.genre.toString() }} | {{ filteredMovie.length }} min</p>
-              </div>
-              <div class="movie-buttons">
-                <button class="btn black waves-effect waves-light">Time</button>
-                <button class="btn black waves-effect waves-light">Time</button>
-                <button class="btn black waves-effect waves-light">Time</button>
-              </div>
+    </div>
+    </div>
+  <div class="hide-on-small-only">
+   <div class="movie col s12 m7" v-for="movie in filteredMovies" :key="movie.id">
+      <div class="card horizontal red darken-4">
+        <div class="card-image">
+          <img class="responsive-img" :src="movie.image" />
+        </div>
+        <div class="card-stacked">
+          <div class="card-content valign-wrapper">
+            <div>
+              <p class="movie-title">{{ movie.title }}</p>
+              <p>{{ movie.genre.toString() }} | {{ movie.length }} min</p>
             </div>
           </div>
         </div>
@@ -91,18 +85,20 @@
 import moment from "moment";
 
 export default {
-  data() {
+
+  data(){
     return {
-      filteredMovies: [],
-      chosenDate: '2020-01-29'
-    };
+      selectedDate: ''
+    }
   },
+
   computed: {
-    day() {
-      return moment().format("dddd");
+
+    dayToday() {
+      return moment().format("dddd")
     },
-    date() {
-      return moment().format("MMM Do YY");
+    dateToday() {
+      return moment().format("MMM Do YY")
     },
     movies() {
       return this.$store.state.movies;
@@ -137,29 +133,56 @@ export default {
           })
         );
       }
-      screenings = [...new Set(screenings)];
-      screenings.sort();
-      return screenings;
+      screenings = [...new Set(screenings)]
+      screenings.sort()      
+      return screenings
     },
-    filterMovies() {
-      let filteredMovies = []
-      window.console.log(this.chosenDate);
-      window.console.log(this.$store.state.screening[0].startTime);
+    filteredMovies(){
+      // filter movies where the movieID is 
+      // in the filtered array of movieIDs
+      return this.movies.filter(movie => {
+        if(this.filteredScreens.includes(movie.id)) {
+          return movie
+        }
+      })
+    },
+    filteredScreens() {
+      let date = new Date(this.selectedDate)
+      let year = date.getFullYear()
+      let month = date.getMonth()
+      let day = date.getDate()
+
+      let screens = this.$store.state.screenings
+
+      // filters array on date
+      let filteredArray = screens.filter(screen => {
+        let sDate = new Date(screen.startTime.toDate())
+
+        if(sDate.getFullYear() == year && 
+            sDate.getMonth() == month &&
+            sDate.getDate() == day) {
+              return screen
+            }
+      })
       
-      for (let screening of this.screenings) {
-        if (this.chosenDate === screening.startTime) {
-          filteredMovies.push(screening.movieId);
-        } 
-      }
-      return filteredMovies;
+      // convert array of screens to an array of string containing movieIds
+      return filteredArray.map(screen => screen.movieId)
     }
   },
   methods: {
     
   },
   mounted() {
-  },
-};
+    this.initDate = setInterval(() => {
+      //window.console.log(this.dates[0])
+      if(this.dates.length) {
+        this.selectedDate = this.dates[0]
+        clearInterval(this.initDate)
+      }        
+    }, 50);
+  }
+
+}
 </script>
 
 <style scoped>
