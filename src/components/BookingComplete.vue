@@ -22,6 +22,7 @@ export default {
         {
           userId: 20,
           movie: "Random film of greatest random times",
+          theatre: "Stora Salongen",
           tickets: {
             children: 0,
             adults: 1,

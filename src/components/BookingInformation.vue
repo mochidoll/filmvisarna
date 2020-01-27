@@ -2,7 +2,7 @@
   <li>
     <h4>Price: {{data.price}} SEK</h4>
     <h5>
-      UserId: {{data.userId}}
+      Salong: {{data.theatre}}
       <br />
       Movie: {{data.movie}}
       <br />
@@ -11,7 +11,9 @@
       {{data.tickets.adults}} adults,
       {{data.tickets.seniors}} seniors
       <br />
-      date: {{data.date}}
+      date: {{data.date}} <br>
+      UserId: {{data.userId}}
+      <br />
     </h5>
   </li>
 </template>
