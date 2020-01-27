@@ -18,8 +18,9 @@
           @showPosition="showPosition"
         ></Seat>
       </div>
-      {{this.position}}
-      <button class="btn waves-effect waves-light black white-text right">Next</button>
+      <div class="col m12 center">
+        <router-link to="/booking/confirmDetails" class="m1 btn waves-effect waves-light black white-text">Next</router-link>
+      </div>
     </div>
     <div class="center" v-else>
       <div class="preloader-wrapper active big">
@@ -76,13 +77,7 @@ export default {
 </script>
 
 <style scoped>
-.navbar {
-  padding: 10px;
-}
 
-.container {
-  padding: 20px;
-}
 .seats {
   margin: 1%;
   border-radius: 10px;

@@ -5,20 +5,13 @@
     <div class="row">
       <div class="col s12 m6 right-align">Adult Tickets: {{adultTicketPrice}}:-</div>
       <div class="col s12 m6">
-        <div class="col s2"  v-if="adultTickets == 0">
-        <a class="btn-floating disabled btn-small">
+        <a class="btn-floating disabled btn-small" v-if="adultTickets == 0">
           <i class="material-icons">remove</i>
         </a>
-        </div>
-        <div class="col s2" v-else>
-        <a class="btn-floating red btn-small darken-4"  @click="removeAdultTicket()">
+        <a class="btn-floating red btn-small darken-4" v-else @click="removeAdultTicket()">
           <i class="material-icons">remove</i>
         </a>
-        </div>
-        <div class="col s2 center-align">
         {{adultTickets}}
-        </div>
-        <div class="col s2">
         <a
           class="btn-floating red btn-small darken-4"
           @click="addAdultTicket()"
@@ -26,7 +19,6 @@
           <i class="material-icons">add</i>
         </a>
         </div>
-      </div>
 
       <div class="col s12 m6 right-align">Child Tickets: {{childTicketPrice}}:-</div>
       <div class="col s12 m6">
@@ -62,8 +54,10 @@
         </a>
       </div>
       <div class="col s12 center">Total Price: {{totalTicketPrice}}</div>
+      <div class="col m12 center">
+        <router-link to=/booking/selectSeats class="m1 btn waves-effect waves-light black white-text">Next</router-link>
+      </div>
     </div>
-    <button class="btn waves-effect waves-light black white-text right">Next</button>
   </div>
 </template>
 
