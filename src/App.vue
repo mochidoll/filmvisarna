@@ -82,6 +82,8 @@
   #app {
     min-height: 100vh;
     background: #ececec;
+    display: flex;
+    flex-direction: column;
   
   }
   #main {
