@@ -5,6 +5,7 @@ import AllMovies from '@/components/AllMovies'
 import Contact from '@/components/Contact'
 import Login from '@/components/Login'
 import Movie from '@/components/Movie'
+import CreateScreenings from '@/components/CreateScreenings'
 import Booking from '@/components/Booking'
 import SelectTickets from '@/components/SelectTickets'
 import SelectSeats from '@/components/SelectSeats'
@@ -40,6 +41,12 @@ const routes = [
     name: 'movie',
     component: Movie
   },
+  {
+    path: '/create',
+    name: 'createScreenings',
+    component: CreateScreenings
+  },
+]
 
 
   {
