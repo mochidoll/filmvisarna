@@ -18,7 +18,7 @@
         >
           <i class="material-icons">add</i>
         </a>
-      </div>
+        </div>
 
       <div class="col s12 m6 right-align">Child Tickets: {{childTicketPrice}}:-</div>
       <div class="col s12 m6">
