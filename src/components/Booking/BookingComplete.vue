@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import BookingInformation from "@/components/BookingInformation";
+import BookingInformation from "@/components/Booking/BookingInformation";
 
 export default {
   components: {
