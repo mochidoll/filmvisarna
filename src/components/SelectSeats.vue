@@ -8,19 +8,18 @@
         v-for="(seats, id) in auditoriums[0].seatsPerRow"
         :key="'seats' + id"
       >
-        <a
-          class="btn-floating btn-small waves-effect waves-black"
+        {{seats}}
+        <Seat
+          class="btn btn-small waves-effect waves-black blue"
           v-for="(seat, id) in seats"
-          :key="'seat' + id"
-          @click="value()"
-          :ref="seat"
-          :class="{ blue: empty, 
-                    red: booking}"
+          v-bind:position="seat"
+          :key="'seat' + id + seat.x + seat.y"
+          @selectedSeat="selectedSeat"
+          :class="{blue:empty, red:booking}"
         >
-          {{seat}}
           <!-- I metoder skapa en grid som har längden av antalet sittplatser. 
           Efteråt blir det blå eller röd beroende på om det är false eller true i elementet i grid-->
-        </a>
+        </Seat>
       </div>
 
       <button class="btn waves-effect waves-light black white-text right">Next</button>
@@ -29,17 +28,24 @@
 </template>
 
 <script>
+import Seat from "@/components/Seat";
 export default {
+  components: {
+    Seat
+  },
   data() {
     return {
       room: 0,
-      grid: [true, false],
+      seats: [],
       empty: true,
-      booking: false
+      booking: false,
+      seatsLength: 10,
+      xValue: 0,
+      yValue: 0
     };
   },
   methods: {
-    value() {
+    chooseSeat() {
       if (this.empty) {
         this.empty = false;
         this.booking = true;
@@ -48,15 +54,22 @@ export default {
         this.booking = false;
       }
     },
-    valuegrid() {
-      if (this.grid[0]) {
-        //NEED TO LOOK BACK TO FIND A SOLUTION ON THIS
-        this.grid[0] = false;
-        this.grid[1] = true;
-      } else {
-        this.grid[0] = true;
-        this.grid[1] = false;
+    selectedSeat(x, y) {
+      for (let row = 0; row < this.auditoriums[0].seatsPerRow.length; row++) {
+        this.seats[row] = [];
+        for (let col = 0; col < this.auditoriums[0].seatsPerRow[row]; col++) {
+          let position = {
+            x: col,
+            y: row
+          };
+
+          this.seats[row].push(position);
+        }
       }
+      window.console.log(this.seats);
+      this.xValue = x;
+      this.yValue = y;
+      this.chooseSeat();
     }
   },
   computed: {
