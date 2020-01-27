@@ -81,7 +81,7 @@ export default {
               year: "numeric",
               month: "numeric",
               day: "numeric",
-              weekday: "long"
+              // weekday: "long"
             })
         );
       }
