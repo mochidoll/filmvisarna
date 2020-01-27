@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     auditoriums: [],
     movies: [],
-    screenings: []
+    screenings: [],
+    auditoriums: []
   },
   mutations: {
     setAuditoriums(state, data) {
@@ -20,6 +21,11 @@ export default new Vuex.Store({
     setScreenings(state, data) {
       state.screenings = data
     },
+
+    setAuditoriums(state, data) {
+      state.auditoriums = data
+    },
+
   },
   actions: {
     async getAuditoriums({ commit }) {
@@ -50,6 +56,18 @@ export default new Vuex.Store({
       })
       commit('setScreenings', screenings)
     },
+
+    async getAuditoriums({ commit }) {
+      let snapshot = await db.collection('auditoriums').get()
+      let auditoriums = []
+      snapshot.forEach(auditorium => {
+        let data = auditorium.data(); // alla egenskaper utom id:t
+        data.id = auditorium.id; // lägg till id
+        auditoriums.push(data)
+      })
+      commit('setAuditoriums', auditoriums)
+    },
+    
   },
   modules: {
   }

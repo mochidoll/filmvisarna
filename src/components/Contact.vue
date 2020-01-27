@@ -55,4 +55,8 @@ export default {
   padding: 7%;
   margin: 2rem;
 }
+i{
+  position: relative;
+  bottom:-4px;
+}
 </style>
