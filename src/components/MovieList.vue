@@ -7,44 +7,40 @@
     <div class="filters">
       <div class="row">
         <div class="col s12 m6">
-      <div class="date-selector">
-        <select v-model="selectedDate" name="date" id="choose-date">
-          <option :value="date" v-for="(date, id) in dates" :key="id">{{ date }}</option>
-        </select>
-      </div>
-      </div>
-      <div class="col s12 m6">
-      <div class="genre-selector">
-        <select name="genre" id="choose-genre">
-          <option value selected disabled hidden>Genre</option>
-          <option v-for="(genre, id) in genres" :key="id">{{ genre }}</option>
-        </select>
+          <div class="date-selector">
+            <select v-model="selectedDate" name="date" id="choose-date">
+              <option :value="date" v-for="(date, id) in dates" :key="id">{{ date }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col s12 m6">
+          <div class="genre-selector">
+            <select name="genre" id="choose-genre">
+              <option value selected disabled hidden>Genre</option>
+              <option v-for="(genre, id) in genres" :key="id">{{ genre }}</option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="hide-on-med-and-up">
-    <div class="movie" v-for="movie in filteredMovies" :key="movie.id">
-     <div class="row center">
-      <div class="card red darken-4">
-        <div class="col s12 m2">
-        <div class="card-img ">
-          <img class="responive-img mobile-img" :src="movie.image" />
-        </div>
-         </div>
-        <div class="card-stacked">
-          <div class="card-con ">
-            <div class="col s12 m4">
-              <span class="movie-title center">{{ movie.title }}</span>
+      <div class="movie" v-for="movie in filteredMovies" :key="movie.id">
+        <div class="row center">
+          <div class="card red darken-4">
+            <div class="col s12 m2">
+              <div class="card-img">
+                <img class="responive-img mobile-img" :src="movie.image" />
               </div>
             </div>
             <div class="card-stacked">
               <div class="card-con">
                 <div class="col s12 m4">
-                  <span class="movie-title center">{{ filteredMovie.title }}</span>
+                  <span class="movie-title center">{{ movie.title }}</span>
                 </div>
                 <div class="col s12">
                   <div>
-                    <span>{{ filteredMovie.genre.toString() }} | {{ filteredMovie.length }} min</span>
+                    <span>{{ movie.genre.toString() }} | {{ movie.length }} min</span>
                   </div>
                 </div>
                 <div class="col s12 m12">
@@ -60,19 +56,23 @@
         </div>
       </div>
     </div>
-    </div>
-    </div>
-  <div class="hide-on-small-only">
-   <div class="movie col s12 m7" v-for="movie in filteredMovies" :key="movie.id">
-      <div class="card horizontal red darken-4">
-        <div class="card-image">
-          <img class="responsive-img" :src="movie.image" />
-        </div>
-        <div class="card-stacked">
-          <div class="card-content valign-wrapper">
-            <div>
-              <p class="movie-title">{{ movie.title }}</p>
-              <p>{{ movie.genre.toString() }} | {{ movie.length }} min</p>
+    <div class="hide-on-small-only">
+      <div class="movie col s12 m7" v-for="movie in filteredMovies" :key="movie.id">
+        <div class="card horizontal red darken-4">
+          <div class="card-image">
+            <img class="responsive-img" :src="movie.image" />
+          </div>
+          <div class="card-stacked">
+            <div class="card-content valign-wrapper">
+              <div>
+                <p class="movie-title">{{ movie.title }}</p>
+                <p>{{ movie.genre.toString() }} | {{ movie.length }} min</p>
+              </div>
+              <div class="movie-buttons">
+                <button class="btn black waves-effect waves-light">Time</button>
+                <button class="btn black waves-effect waves-light">Time</button>
+                <button class="btn black waves-effect waves-light">Time</button>
+              </div>
             </div>
           </div>
         </div>
@@ -85,20 +85,18 @@
 import moment from "moment";
 
 export default {
-
-  data(){
+  data() {
     return {
-      selectedDate: ''
-    }
+      selectedDate: ""
+    };
   },
 
   computed: {
-
     dayToday() {
-      return moment().format("dddd")
+      return moment().format("dddd");
     },
     dateToday() {
-      return moment().format("MMM Do YY")
+      return moment().format("MMM Do YY");
     },
     movies() {
       return this.$store.state.movies;
@@ -133,40 +131,42 @@ export default {
           })
         );
       }
-      screenings = [...new Set(screenings)]
-      screenings.sort()      
-      return screenings
+      screenings = [...new Set(screenings)];
+      screenings.sort();
+      return screenings;
     },
-    filteredMovies(){
-      // filter movies where the movieID is 
+    filteredMovies() {
+      // filter movies where the movieID is
       // in the filtered array of movieIDs
       return this.movies.filter(movie => {
-        if(this.filteredScreens.includes(movie.id)) {
-          return movie
+        if (this.filteredScreens.includes(movie.id)) {
+          return movie;
         }
-      })
+      });
     },
     filteredScreens() {
-      let date = new Date(this.selectedDate)
-      let year = date.getFullYear()
-      let month = date.getMonth()
-      let day = date.getDate()
+      let date = new Date(this.selectedDate);
+      let year = date.getFullYear();
+      let month = date.getMonth();
+      let day = date.getDate();
 
-      let screens = this.$store.state.screenings
+      let screens = this.$store.state.screenings;
 
       // filters array on date
       let filteredArray = screens.filter(screen => {
-        let sDate = new Date(screen.startTime.toDate())
+        let sDate = new Date(screen.startTime.toDate());
 
-        if(sDate.getFullYear() == year && 
-            sDate.getMonth() == month &&
-            sDate.getDate() == day) {
-              return screen
-            }
-      })
-      
+        if (
+          sDate.getFullYear() == year &&
+          sDate.getMonth() == month &&
+          sDate.getDate() == day
+        ) {
+          return screen;
+        }
+      });
+
       // convert array of screens to an array of string containing movieIds
-      return filteredArray.map(screen => screen.movieId)
+      return filteredArray.map(screen => screen.movieId);
     }
   },
   methods: {
@@ -175,14 +175,13 @@ export default {
   mounted() {
     this.initDate = setInterval(() => {
       //window.console.log(this.dates[0])
-      if(this.dates.length) {
-        this.selectedDate = this.dates[0]
-        clearInterval(this.initDate)
-      }        
+      if (this.dates.length) {
+        this.selectedDate = this.dates[0];
+        clearInterval(this.initDate);
+      }
     }, 50);
   }
-
-}
+};
 </script>
 
 <style scoped>
