@@ -33,6 +33,7 @@ export default {
 <style scoped>
 .row {
   padding-top: 7%;
+  width:70vw;
   margin: 2rem;
 }
 .breadcrumb:before {

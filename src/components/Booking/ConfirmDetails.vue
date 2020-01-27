@@ -1,13 +1,14 @@
 <template>
   <div class="container">
+    <div class="confirm-details">
+      <div class="col s12">
     <h4>Confirm Details!</h4>
-
-    <div class="col s12">
       <!--Loops through all data inside user, if we want to add more or less information in an user -->
       <ul v-for="(user, id) in users" :key="'user' + id">
         <BookingInformation :data="user"></BookingInformation>
       </ul>
-      <div class="m12">
+      </div>
+      <div class="col s12 center">
         <router-link
           to="/booking/bookingComplete"
           class="m1 btn waves-effect waves-light black white-text"
@@ -52,8 +53,10 @@ export default {
 }
 h2 {
   margin: 2%;
+
 }
-.col {
-  margin-bottom: 1%;
+.confirm-details{
+  margin-left: 5%;
 }
+
 </style>

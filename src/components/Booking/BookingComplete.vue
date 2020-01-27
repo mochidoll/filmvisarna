@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <h4>Booking Complete!</h4>
     <!--Loops through all data inside user, if we want to add more or less information in an user -->
     <ul v-for="(user, id) in users" :key="'user' + id">
