@@ -6,7 +6,11 @@
       <img src="@/assets/images/cinema.png" alt="cinema-screen" />
     </div>
     <div class="row" v-if="auditoriums.length">
-      <div class="center col s12" v-for="(row, y, id) in auditorium.seatsPerRow" :key="'row' + y + id">
+      <div
+        class="center col s12"
+        v-for="(row, y, id) in auditorium.seatsPerRow"
+        :key="'row' + y + id"
+      >
         <Seat
           v-for="(seat, id) in row"
           :key="'seat' + id"
@@ -17,8 +21,20 @@
       {{this.position}}
       <button class="btn waves-effect waves-light black white-text right">Next</button>
     </div>
-    <div v-else>
-      <p>IS LOADING...</p>
+    <div class="center" v-else>
+      <div class="preloader-wrapper active big">
+        <div class="spinner-layer spinner-red-only center">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div>
+          <div class="gap-patch">
+            <div class="circle"></div>
+          </div>
+          <div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -42,7 +58,9 @@ export default {
   },
   computed: {
     auditorium() {
-      return this.auditoriums.length ? this.auditoriums[0] : {seatsPerRow: [], name: ''};
+      return this.auditoriums.length
+        ? this.auditoriums[0]
+        : { seatsPerRow: [], name: "" };
     },
     movies() {
       return this.$store.state.movies;
