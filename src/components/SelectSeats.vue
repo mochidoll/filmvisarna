@@ -3,13 +3,26 @@
     <h4>Select seats from SALNAMN</h4>
 
     <div class="row">
-      <div class=" margin-row col m12" v-for="(seats, id) in auditoriums[0].seatsPerRow" :key="'seats' + id">
-
-        <div class="col black white-text seats" v-for="(seat, id) in seats" :key="'seat' + id">
+      <div
+        class="center col m12"
+        v-for="(seats, id) in auditoriums[0].seatsPerRow"
+        :key="'seats' + id"
+      >
+        <a
+          class="btn-floating btn-small waves-effect waves-black"
+          v-for="(seat, id) in seats"
+          :key="'seat' + id"
+          @click="value()"
+          :ref="seat"
+          :class="{ blue: empty, 
+                    red: booking}"
+        >
           {{seat}}
-        </div>
-
+          <!-- I metoder skapa en grid som har längden av antalet sittplatser. 
+          Efteråt blir det blå eller röd beroende på om det är false eller true i elementet i grid-->
+        </a>
       </div>
+
       <button class="btn waves-effect waves-light black white-text right">Next</button>
     </div>
   </div>
@@ -19,10 +32,33 @@
 export default {
   data() {
     return {
-      room: 0
+      room: 0,
+      grid: [true, false],
+      empty: true,
+      booking: false
     };
   },
-  methods: {},
+  methods: {
+    value() {
+      if (this.empty) {
+        this.empty = false;
+        this.booking = true;
+      } else {
+        this.empty = true;
+        this.booking = false;
+      }
+    },
+    valuegrid() {
+      if (this.grid[0]) {
+        //NEED TO LOOK BACK TO FIND A SOLUTION ON THIS
+        this.grid[0] = false;
+        this.grid[1] = true;
+      } else {
+        this.grid[0] = true;
+        this.grid[1] = false;
+      }
+    }
+  },
   computed: {
     movies() {
       return this.$store.state.movies;
@@ -47,9 +83,5 @@ export default {
 .seats {
   margin: 1%;
   border-radius: 10px;
-}
-.margin-row {
-  margin-left: 20px;
-  text-align: center !important;
 }
 </style>
