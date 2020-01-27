@@ -84,33 +84,33 @@
 </template>
 
 <script>
-import moment from "moment";
+import moment from "moment"
 
 export default {
   computed: {
     day() {
-      return moment().format("dddd");
+      return moment().format("dddd")
     },
     date() {
-      return moment().format("MMM Do YY");
+      return moment().format("MMM Do YY")
     },
     movies() {
-      return this.$store.state.movies;
+      return this.$store.state.movies
     },
     genres() {
       let genres = [];
       // Add genres from each movie to the genres array
       for (let movie of this.movies) {
-        genres = [...genres, ...movie.genre];
+        genres = [...genres, ...movie.genre]
       }
       // Remove duplicates from genres array
-      genres = [...new Set(genres)];
+      genres = [...new Set(genres)]
       // Sort alphanumeric
-      genres.sort();
-      return genres;
+      genres.sort()
+      return genres
     },
     dates() {
-      let screenings = [];
+      let screenings = []
       for (let screening of this.$store.state.screenings) {
         screenings.push(
           screening.startTime
@@ -119,14 +119,17 @@ export default {
               year: "numeric",
               month: "numeric",
               day: "numeric",
-              weekday: "long"
+              // weekday: "long"
             })
         );
       }
-      screenings = [...new Set(screenings)];
-      screenings.sort();
-      return screenings;
+      screenings = [...new Set(screenings)]
+      screenings.sort()
+      return screenings
     }
+  },
+
+  mounted() {
   }
 };
 </script>
