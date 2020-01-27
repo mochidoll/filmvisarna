@@ -5,19 +5,27 @@
     <div class="row">
       <div class="col s12 m6 right-align">Adult Tickets: {{adultTicketPrice}}:-</div>
       <div class="col s12 m6">
-        <a class="btn-floating disabled btn-small" v-if="adultTickets == 0">
+        <div class="col s2"  v-if="adultTickets == 0">
+        <a class="btn-floating disabled btn-small">
           <i class="material-icons">remove</i>
         </a>
-        <a class="btn-floating red btn-small darken-4" v-else @click="removeAdultTicket()">
+        </div>
+        <div class="col s2" v-else>
+        <a class="btn-floating red btn-small darken-4"  @click="removeAdultTicket()">
           <i class="material-icons">remove</i>
         </a>
+        </div>
+        <div class="col s2 center-align">
         {{adultTickets}}
+        </div>
+        <div class="col s2">
         <a
           class="btn-floating red btn-small darken-4"
           @click="addAdultTicket()"
         >
           <i class="material-icons">add</i>
         </a>
+        </div>
       </div>
 
       <div class="col s12 m6 right-align">Child Tickets: {{childTicketPrice}}:-</div>

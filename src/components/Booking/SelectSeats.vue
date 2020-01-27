@@ -1,28 +1,49 @@
 <template>
   <div class="container">
-    <h4>Select seats from SALNAMN</h4>
+    <h4>Select seats from {{auditoriums[0].name}}</h4>
 
+    <div class="center">
+      <img src="@/assets/images/cinema.png" alt="cinema-screen" />
+    </div>
     <div class="row">
-      <div class=" margin-row col m12" v-for="(seats, id) in auditoriums[0].seatsPerRow" :key="'seats' + id">
-
-        <div class="col black white-text seats" v-for="(seat, id) in seats" :key="'seat' + id">
-          {{seat}}
-        </div>
-
+      <div
+        class="center col s12"
+        v-for="(row, y, id) in auditoriums[0].seatsPerRow"
+        :key="'row' + y + id"
+      >
+        <!--FÅR TAG PÅ Y-värdet-->
+        <Seat
+          v-for="(seat, id) in row"
+          :key="'seat' + id"
+          :position="{x: seat, y: y}"
+          @showPosition="showPosition"
+        ></Seat>
+        <!--HÄR FÅR VI REDA PÅ X-värdet-->
       </div>
+      {{this.position}}
       <button class="btn waves-effect waves-light black white-text right">Next</button>
     </div>
   </div>
 </template>
 
 <script>
+import Seat from "@/components/Booking/Seat";
 export default {
+  components: {
+    Seat
+  },
   data() {
     return {
-      room: 0
+      room: 0,
+      seats: [],
+      position: {}
     };
   },
-  methods: {},
+  methods: {
+    showPosition(position) {
+      this.position = position;
+    }
+  },
   computed: {
     movies() {
       return this.$store.state.movies;
@@ -41,6 +62,7 @@ export default {
 .navbar {
   padding: 10px;
 }
+
 .container {
   padding: 20px;
 }
