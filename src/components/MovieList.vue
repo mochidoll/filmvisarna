@@ -6,7 +6,7 @@
 
     <div class="filters">
       <div class="row">
-        <div class="col s12">
+        <div class="col">
           <div class="date-selector">
             <select name="date" id="choose-date">
               <option value selected disabled hidden>Date</option>
@@ -25,6 +25,40 @@
       </div>
     </div>
 
+    <!-- <div class="hide-on-med-and-up">
+      <div class="movie" v-for="(movie, id) in movies" :key="id">
+
+        <div class="row">
+          <div class="col s12">
+            <div class="card">
+              
+              <div class="card-img">
+                <img class="responive-img mobile-img" :src="movie.image" />
+              </div>
+            </div>
+
+            <div class="card-stacked">
+              <div class="card-contact">
+                <div class="col s12">
+                  <span class="movie-title center">{{ movie.title }}</span>
+                </div>
+                <div class="col s12">
+                  <div>
+                    <span>{{ movie.genre.toString() }} | {{ movie.length }} min</span>
+                  </div>
+                </div>
+                <div class="col s12">
+                  <div class="movie-buttons-mobile">
+                    <button class="btn black waves-effect waves-light mobile">Time</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
     <div class="hide-on-med-and-up">
       <div class="movie" v-for="(movie, id) in movies" :key="id">
         <div class="row center">
@@ -35,8 +69,8 @@
               </div>
             </div>
             <div class="card-stacked">
-              <div class="card-con">
-                <div class="col s12 m4">
+              <div class="card-contact">
+                <div class="col s12">
                   <span class="movie-title center">{{ movie.title }}</span>
                 </div>
                 <div class="col s12">
@@ -44,9 +78,9 @@
                     <span>{{ movie.genre.toString() }} | {{ movie.length }} min</span>
                   </div>
                 </div>
-                <div class="col s12 m12">
+                <div class="col s12">
                   <div class="movie-buttons-mobile">
-                    <!--<button class="btn black waves-effect waves-light mobile">Time</button>-->
+                    <!-- <button class="btn black waves-effect waves-light mobile">Time</button> -->
                   </div>
                 </div>
               </div>
@@ -61,14 +95,14 @@
           <div class="card-image">
             <img class="responsive-img" :src="movie.image" />
           </div>
-          <div class="card-stacked">
+          <div class="card-stacked white">
             <div class="card-content valign-wrapper">
               <div>
                 <p class="movie-title">{{ movie.title }}</p>
                 <p>{{ movie.genre.toString() }} | {{ movie.length }} min</p>
               </div>
               <div class="movie-buttons">
-                <!--<button class="btn black waves-effect waves-light">Time</button>-->
+                <!-- <button class="btn black waves-effect waves-light">Time</button> -->
               </div>
             </div>
           </div>
@@ -132,13 +166,12 @@ export default {
 }
 .movie .card {
   border-radius: 5px !important;
+  padding-top:45px;
+  padding-bottom:45px;
 }
 
 .card-stacked {
   display: inline-block;
-}
-.movie .card-image img {
-  width: 100%;
 }
 .movie-buttons button {
   border-radius: 10px;
