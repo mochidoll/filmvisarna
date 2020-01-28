@@ -43,7 +43,12 @@
                     <span>{{ movie.genre.toString() }} | {{ movie.length }} min</span>
                   </div>
                 </div>
-                <div class="col s12 m12">
+                <div class="col s12">
+                  <p>
+                    {{ movie.description }}
+                  </p>
+                </div>
+                <div class="col s12">
                   <div class="movie-buttons-mobile">
                     <!--<button class="btn black waves-effect waves-light mobile">Time</button>-->
                   </div>
@@ -65,6 +70,7 @@
               <div>
                 <p class="movie-title">{{ movie.title }}</p>
                 <p>{{ movie.genre.toString() }} | {{ movie.length }} min</p>
+                <p>{{ movie.description }}</p>
               </div>
               <!-- <div class="movie-buttons" v-on="checkForTime(movie.id)">
                 <button class="btn black waves-effect waves-light">{{movieTime}}</button>
