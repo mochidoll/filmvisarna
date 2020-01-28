@@ -66,9 +66,9 @@
                 <p class="movie-title">{{ movie.title }}</p>
                 <p>{{ movie.genre.toString() }} | {{ movie.length }} min</p>
               </div>
-              <div class="movie-buttons" v-on="checkForTime(movie.id)">
+              <!-- <div class="movie-buttons" v-on="checkForTime(movie.id)">
                 <button class="btn black waves-effect waves-light">{{movieTime}}</button>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -85,7 +85,6 @@ export default {
     return {
       selectedDate: "",
       movieTime: "",
-      visibleScreens: []
     };
   },
 
@@ -98,12 +97,6 @@ export default {
     },
     movies() {
       return this.$store.state.movies;
-    },
-    moviesPlayingToday() {
-      // this.$store.state.screenings.filter( screening => {
-      //   return screening.startTime ===
-      // })
-      return null;
     },
     genres() {
       let genres = [];
@@ -159,30 +152,14 @@ export default {
           sDate.getMonth() == month &&
           sDate.getDate() == day
         ) {
-          this.updateVisibleScreens(screen);
           return screen;
         }
       });
-
       // convert array of screens to an array of string containing movieIds
       return filteredArray.map(screen => screen.movieId);
     }
   },
 
-  methods: {
-    checkForTime(movie) {
-      for (let screen of this.visibleScreens) {
-        if (movie === screen.movieId) {
-          window.console.log(screen.startTime)
-          let time = new Date(screen.startTime.toDate())
-          this.movieTime = time;
-        }
-      }
-    },
-    updateVisibleScreens(screen) {
-      this.visibleScreens.push(screen);
-    }
-  }, 
   mounted() {
     this.initDate = setInterval(() => {
       //window.console.log(this.dates[0])
