@@ -1,7 +1,7 @@
 <template>
 <div class="container">
   <div class="trailer-container">
-    <h4 class="grey-text center">Insert trailer here later</h4>
+    <!-- <h4 class="grey-text center">Insert trailer here later</h4> -->
   </div>
 
     <div class="row">

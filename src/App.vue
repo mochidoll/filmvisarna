@@ -23,7 +23,7 @@
             <router-link to="/contact">Contact</router-link>
           </li>
           <li>
-            <router-link to="/login">Login</router-link>
+            <!--<router-link to="/login">Login</router-link>-->
           </li>
         </ul>
 
@@ -49,19 +49,19 @@
     <footer class="page-footer black">
       <div class="container center">
         <div>
-          <span class="logo-text">B-Filmer AB</span>
+          <span class="logo-text">Filmvisarna AB</span>
         </div>
         <div class="footer-text">
           <i class="material-icons tiny">map</i>
-          <span>Gladafilmersvägen 69, 225 89 Skärmen, Sverige</span>
+          <span>Gladafilmersvägen 72, 225 89 Småstad, Sverige</span>
         </div>
         <div class="footer-text">
           <i class="material-icons tiny">email</i>
-          <span>bfilmer.info@bfilmer.com</span>
+          <span>info@filmvisarna.com</span>
         </div>
         <div class="footer-text">
           <i class="material-icons tiny">phone</i>
-          <span>+467012346789</span>
+          <span>+46 701 234 67 89</span>
         </div>
       </div>
     </footer>
@@ -81,7 +81,9 @@
   
   #app {
     min-height: 100vh;
-    background: #ececec;
+    background: #eeeeee;
+    display: flex;
+    flex-direction: column;
   }
   #main {
     flex: 1 0 auto;
