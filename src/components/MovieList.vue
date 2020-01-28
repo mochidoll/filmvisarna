@@ -60,7 +60,7 @@
       </div>
     </div>
     <div class="hide-on-small-only">
-      <div class="movie col s12 m7" v-for="movie in filteredMovies" :key="movie.id">
+      <div class="movie col m7" v-for="movie in filteredMovies" :key="movie.id">
         <div class="card horizontal white">
           <div class="card-image">
             <img class="responsive-img" :src="movie.image" />
