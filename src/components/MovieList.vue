@@ -1,16 +1,15 @@
 <template>
   <div class="movie-list">
     <div class="date">
-      <p>Today's date: ({{ day }}, {{ date }})</p>
+      <p>Today's date: ({{ dayToday }}, {{ dateToday }})</p>
     </div>
 
     <div class="filters">
       <div class="row">
         <div class="col">
           <div class="date-selector">
-            <select name="date" id="choose-date">
-              <option value selected disabled hidden>Date</option>
-              <option value v-for="(date, id) in dates" :key="id">{{ date }}</option>
+            <select v-model="selectedDate" name="date" id="choose-date">
+              <option :value="date" v-for="(date, id) in dates" :key="id">{{ date }}</option>
             </select>
           </div>
         </div>
@@ -60,7 +59,7 @@
     </div> -->
 
     <div class="hide-on-med-and-up">
-      <div class="movie" v-for="(movie, id) in movies" :key="id">
+      <div class="movie" v-for="movie in filteredMovies" :key="movie.id">
         <div class="row center">
           <div class="card white">
             <div class="col s12">
@@ -79,6 +78,11 @@
                   </div>
                 </div>
                 <div class="col s12">
+                  <p>
+                    {{ movie.description }}
+                  </p>
+                </div>
+                <div class="col s12">
                   <div class="movie-buttons-mobile">
                     <!-- <button class="btn black waves-effect waves-light mobile">Time</button> -->
                   </div>
@@ -90,7 +94,7 @@
       </div>
     </div>
     <div class="hide-on-small-only">
-      <div class="movie col s12 m7" v-for="(movie, id) in movies" :key="id">
+      <div class="movie col m7" v-for="movie in filteredMovies" :key="movie.id">
         <div class="card horizontal white">
           <div class="card-image">
             <img class="responsive-img" :src="movie.image" />
@@ -100,10 +104,11 @@
               <div>
                 <p class="movie-title">{{ movie.title }}</p>
                 <p>{{ movie.genre.toString() }} | {{ movie.length }} min</p>
+                <p>{{ movie.description }}</p>
               </div>
-              <div class="movie-buttons">
-                <!-- <button class="btn black waves-effect waves-light">Time</button> -->
-              </div>
+              <!-- <div class="movie-buttons" v-on="checkForTime(movie.id)">
+                <button class="btn black waves-effect waves-light">{{movieTime}}</button>
+              </div> -->
             </div>
           </div>
         </div>
@@ -116,11 +121,18 @@
 import moment from "moment";
 
 export default {
+  data() {
+    return {
+      selectedDate: "",
+      movieTime: "",
+    };
+  },
+
   computed: {
-    day() {
+    dayToday() {
       return moment().format("dddd");
     },
-    date() {
+    dateToday() {
       return moment().format("MMM Do YY");
     },
     movies() {
@@ -153,10 +165,50 @@ export default {
       screenings = [...new Set(screenings)];
       screenings.sort();
       return screenings;
+    },
+    filteredMovies() {
+      // filter movies where the movieID is
+      // in the filtered array of movieIDs
+      return this.movies.filter(movie => {
+        if (this.filteredScreens.includes(movie.id)) {
+          return movie;
+        }
+      });
+    },
+    filteredScreens() {
+      let date = new Date(this.selectedDate);
+      let year = date.getFullYear();
+      let month = date.getMonth(); //starts on 0 to 11
+      let day = date.getDate();
+
+      let screens = this.$store.state.screenings;
+
+      // filters array on date
+      let filteredArray = screens.filter(screen => {
+        let sDate = new Date(screen.startTime.toDate());
+
+        if (
+          sDate.getFullYear() == year &&
+          sDate.getMonth() == month &&
+          sDate.getDate() == day
+        ) {
+          return screen;
+        }
+      });
+      // convert array of screens to an array of string containing movieIds
+      return filteredArray.map(screen => screen.movieId);
     }
   },
 
-  mounted() {}
+  mounted() {
+    this.initDate = setInterval(() => {
+      //window.console.log(this.dates[0])
+      if (this.dates.length) {
+        this.selectedDate = this.dates[0];
+        clearInterval(this.initDate);
+      }
+    }, 50);
+  }
 };
 </script>
 
