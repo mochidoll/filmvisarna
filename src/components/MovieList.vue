@@ -24,44 +24,10 @@
       </div>
     </div>
 
-    <!-- <div class="hide-on-med-and-up">
-      <div class="movie" v-for="(movie, id) in movies" :key="id">
-
-        <div class="row">
-          <div class="col s12">
-            <div class="card">
-              
-              <div class="card-img">
-                <img class="responive-img mobile-img" :src="movie.image" />
-              </div>
-            </div>
-
-            <div class="card-stacked">
-              <div class="card-contact">
-                <div class="col s12">
-                  <span class="movie-title center">{{ movie.title }}</span>
-                </div>
-                <div class="col s12">
-                  <div>
-                    <span>{{ movie.genre.toString() }} | {{ movie.length }} min</span>
-                  </div>
-                </div>
-                <div class="col s12">
-                  <div class="movie-buttons-mobile">
-                    <button class="btn black waves-effect waves-light mobile">Time</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
     <div class="hide-on-med-and-up">
-      <div class="movie" v-for="movie in filteredMovies" :key="movie.id">
+      <div class="movie " v-for="movie in filteredMovies" :key="movie.id">
         <div class="row center">
-          <div class="card white">
+          <div class="card white small-movie-margin">
             <div class="col s12">
               <div class="card-img">
                 <img class="responive-img mobile-img" :src="movie.image" />
@@ -83,9 +49,6 @@
                   </p>
                 </div>
                 <div class="col s12">
-                  <div class="movie-buttons-mobile">
-                    <!-- <button class="btn black waves-effect waves-light mobile">Time</button> -->
-                  </div>
                 </div>
               </div>
             </div>
@@ -97,6 +60,7 @@
       <div class="movie col m7" v-for="movie in filteredMovies" :key="movie.id">
         <div class="card horizontal white">
           <div class="card-image">
+            
             <img class="responsive-img" :src="movie.image" />
           </div>
           <div class="card-stacked white">
@@ -106,9 +70,7 @@
                 <p>{{ movie.genre.toString() }} | {{ movie.length }} min</p>
                 <p>{{ movie.description }}</p>
               </div>
-              <!-- <div class="movie-buttons" v-on="checkForTime(movie.id)">
-                <button class="btn black waves-effect waves-light">{{movieTime}}</button>
-              </div> -->
+              
             </div>
           </div>
         </div>
@@ -216,10 +178,13 @@ export default {
 * {
   box-sizing: border-box;
 }
-.movie .card {
-  border-radius: 5px !important;
+.small-movie-margin {
   padding-top:45px;
   padding-bottom:45px;
+}
+.movie .card {
+  border-radius: 5px !important;
+  
 }
 
 .card-stacked {
