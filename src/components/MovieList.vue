@@ -44,7 +44,12 @@
                     <span>{{ movie.genre.toString() }} | {{ movie.length }} min</span>
                   </div>
                 </div>
-                <div class="col s12 m12">
+                <div class="col s12">
+                  <p>
+                    {{ movie.description }}
+                  </p>
+                </div>
+                <div class="col s12">
                   <div class="movie-buttons-mobile">
                     <!--<button class="btn black waves-effect waves-light mobile">Time</button>-->
                   </div>
@@ -56,7 +61,7 @@
       </div>
     </div>
     <div class="hide-on-small-only">
-      <div class="movie col s12 m7" v-for="(movie, id) in movies" :key="id">
+      <div class="movie col m7" v-for="(movie, id) in movies" :key="id">
         <div class="card horizontal white">
           <div class="card-image">
             <img class="responsive-img" :src="movie.image" />
@@ -66,6 +71,7 @@
               <div>
                 <p class="movie-title">{{ movie.title }}</p>
                 <p>{{ movie.genre.toString() }} | {{ movie.length }} min</p>
+                <p>{{ movie.description }}</p>
               </div>
               <div class="movie-buttons">
                 <!--<button class="btn black waves-effect waves-light">Time</button>-->
