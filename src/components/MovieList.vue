@@ -234,7 +234,7 @@ export default {
 }
 .responsive-img {
   border-radius: 20px !important;
-
+}
 .mobile-img {
   position: relative;
   bottom: -10px;
