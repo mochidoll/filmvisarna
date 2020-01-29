@@ -27,15 +27,15 @@
     <div class="hide-on-med-and-up">
       <div class="movie" v-for="movie in filteredMovies" :key="movie.id">
         <div class="row center">
-          <div class="card red darken-4">
-            <div class="col s12 m2">
+          <div class="card">
+            <div class="col s12">
               <div class="card-img">
                 <img class="responive-img mobile-img" :src="movie.image" />
               </div>
             </div>
             <div class="card-stacked">
               <div class="card-con">
-                <div class="col s12 m4">
+                <div class="col s12">
                   <span class="movie-title center">{{ movie.title }}</span>
                 </div>
                 <div class="col s12">
@@ -43,7 +43,7 @@
                     <span>{{ movie.genre.toString() }} | {{ movie.length }} min</span>
                   </div>
                 </div>
-                <div class="col s12 m12">
+                <div class="col s12">
                   <div class="movie-buttons-mobile">
                     <button class="btn black waves-effect waves-light mobile">{{movie.id}}</button>
                   </div>
@@ -55,8 +55,8 @@
       </div>
     </div>
     <div class="hide-on-small-only">
-      <div class="movie col s12 m7" v-for="movie in filteredMovies" :key="movie.id">
-        <div class="card horizontal red darken-4">
+      <div class="movie col m7" v-for="movie in filteredMovies" :key="movie.id">
+        <div class="card horizontal">
           <div class="card-image">
             <img class="responsive-img" :src="movie.image" />
           </div>
@@ -84,7 +84,7 @@ export default {
   data() {
     return {
       selectedDate: "",
-      selectedGenre: "",
+      selectedGenre: "All genres",
       movieTime: ""
     };
   },
@@ -152,12 +152,13 @@ export default {
       let screens = this.$store.state.screenings;
 
       // add the movie to each screening
-      // if we have movies in array called movies we could 
+      // if we have movies in array called movies we could
       // do it like this
       screens.forEach(screening => {
-        screening.movie = this.movies.filter(movie => movie.id === screening.movieId)[0];
+        screening.movie = this.movies.filter(movie => {
+          return movie.id === screening.movieId;
+        })[0];
       });
-
 
       // filters array on date
       let filteredArray = screens.filter(screen => {
@@ -166,8 +167,9 @@ export default {
           ((sDate.getFullYear() === year &&
             sDate.getMonth() === month &&
             sDate.getDate() === day) ||
-          !year) &&
-          (this.selectedGenre === 'All genres' || screen.movie.genres.includes(this.selectedGenre))
+            !year) &&
+          (this.selectedGenre === "All genres" ||
+            screen.movie.genre.includes(this.selectedGenre))
         ) {
           return screen;
         }
