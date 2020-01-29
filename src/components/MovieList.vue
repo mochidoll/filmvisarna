@@ -67,7 +67,9 @@
                 <p>{{ movie.genre.toString() }} | {{ movie.length }} min</p>
               </div>
               <div class="movie-buttons" v-on="checkForTime(movie.id)">
-                <button class="btn black waves-effect waves-light">{{movieTime}}</button>
+                <button
+                  class="btn black waves-effect waves-light"
+                >{{movieTime}}</button>
               </div>
             </div>
           </div>
@@ -85,7 +87,7 @@ export default {
     return {
       selectedDate: "",
       movieTime: "",
-      visibleScreens: []
+      //visibleScreens: []
     };
   },
 
@@ -150,7 +152,7 @@ export default {
 
       let screens = this.$store.state.screenings;
 
-      // filters array on date
+      // filters array with sceens so that only the wanted movies are left
       let filteredArray = screens.filter(screen => {
         let sDate = new Date(screen.startTime.toDate());
 
@@ -159,29 +161,48 @@ export default {
           sDate.getMonth() == month &&
           sDate.getDate() == day
         ) {
-          this.updateVisibleScreens(screen);
           return screen;
         }
       });
-
       // convert array of screens to an array of string containing movieIds
+      //console.log('filteredArray:' + filteredArray)
       return filteredArray.map(screen => screen.movieId);
+    },
+    filteredScreenObjectsbyDate() {
+      let date = new Date(this.selectedDate);
+      let year = date.getFullYear();
+      let month = date.getMonth(); //starts on 0 to 11
+      let day = date.getDate();
+
+      let screens = this.$store.state.screenings;
+
+      // filters array with sceens so that only the wanted movies are left
+      let filteredArray = screens.filter(screen => {
+        let sDate = new Date(screen.startTime.toDate());
+
+        if (
+          sDate.getFullYear() == year &&
+          sDate.getMonth() == month &&
+          sDate.getDate() == day
+        ) {
+          return screen;
+        }
+      });
+      return filteredArray;
     }
   },
 
   methods: {
     checkForTime(movie) {
-      for (let screen of this.visibleScreens) {
+      for (let screen of this.filteredScreenObjectsbyDate) {
         if (movie === screen.movieId) {
           window.console.log(screen.startTime)
           let time = new Date(screen.startTime.toDate())
-          this.movieTime = time;
+          window.console.log(time)
+          this.movieTime = time.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
         }
       }
     },
-    updateVisibleScreens(screen) {
-      this.visibleScreens.push(screen);
-    }
   }, 
   mounted() {
     this.initDate = setInterval(() => {
