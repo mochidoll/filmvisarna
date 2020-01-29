@@ -164,7 +164,7 @@ export default {
       let filteredArray = screens.filter(screen => {
         let sDate = new Date(screen.startTime.toDate());
         if (
-          ((sDate.getFullYear() === year &&
+          (sDate.getFullYear() === year &&
             sDate.getMonth() === month &&
             sDate.getDate() === day) ||
             !year) &&
