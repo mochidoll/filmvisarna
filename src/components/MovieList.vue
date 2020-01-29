@@ -151,23 +151,26 @@ export default {
 
       let screens = this.$store.state.screenings;
 
-      // add the movie to each screening
-      // if we have movies in array called movies we could 
-      // do it like this
       screens.forEach(screening => {
-        screening.movie = this.movies.filter(movie => movie.id === screening.movieId)[0];
+        screening.movie = this.$store.state.movies.filter(movie => {
+          return screening.movieId === movie.id;
+        })[0];
       });
 
+      window.console.log(screens);
+
+      // add the movie to each screening
+      // if we have movies in array called movies we could
+      // do it like this
 
       // filters array on date
       let filteredArray = screens.filter(screen => {
         let sDate = new Date(screen.startTime.toDate());
         if (
-          ((sDate.getFullYear() === year &&
+          (sDate.getFullYear() === year &&
             sDate.getMonth() === month &&
             sDate.getDate() === day) ||
-          !year) &&
-          (this.selectedGenre === 'All genres' || screen.movie.genres.includes(this.selectedGenre))
+          !year
         ) {
           return screen;
         }
