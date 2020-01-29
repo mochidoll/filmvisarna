@@ -16,7 +16,7 @@
         </div>
         <div class="col s12 m6">
           <div class="genre-selector">
-            <select name="genre" id="choose-genre">
+            <select name="genre" id="choose-genre" v-model="selectedGenre">
               <option value selected disabled hidden>Genre</option>
               <option v-for="(genre, id) in genres" :key="id">{{ genre }}</option>
             </select>
@@ -69,7 +69,7 @@
               </div>
               <!-- <div class="movie-buttons" v-on="checkForTime(movie.id)">
                 <button class="btn black waves-effect waves-light">{{movieTime}}</button>
-              </div> -->
+              </div>-->
             </div>
           </div>
         </div>
@@ -82,11 +82,11 @@
 import moment from "moment";
 
 export default {
-
   data() {
     return {
       selectedDate: "",
-      movieTime: "",
+      selectedGenre: "",
+      movieTime: ""
     };
   },
 
@@ -110,6 +110,8 @@ export default {
       genres = [...new Set(genres)];
       // Sort alphanumeric
       genres.sort();
+      // Add All genres at the top
+      genres.unshift("All genres");
       return genres;
     },
     dates() {
@@ -139,20 +141,34 @@ export default {
     },
     filteredScreens() {
       let date = new Date(this.selectedDate);
+      //let genre = this.selectedGenre; // ??
+
+      // maybe we do not want a selected date
+      // if so set year = 0/false
+
       let year = date.getFullYear();
       let month = date.getMonth(); //starts on 0 to 11
       let day = date.getDate();
 
       let screens = this.$store.state.screenings;
 
+      // add the movie to each screening
+      // if we have movies in array called movies we could 
+      // do it like this
+      screens.forEach(screening => {
+        screening.movie = this.movies.filter(movie => movie.id === screening.movieId)[0];
+      });
+
+
       // filters array on date
       let filteredArray = screens.filter(screen => {
         let sDate = new Date(screen.startTime.toDate());
-
         if (
-          sDate.getFullYear() === year &&
-          sDate.getMonth() === month &&
-          sDate.getDate() === day
+          ((sDate.getFullYear() === year &&
+            sDate.getMonth() === month &&
+            sDate.getDate() === day) ||
+          !year) &&
+          (this.selectedGenre === 'All genres' || screen.movie.genres.includes(this.selectedGenre))
         ) {
           return screen;
         }
@@ -161,7 +177,7 @@ export default {
       return filteredArray.map(screen => screen.movieId);
     },
 
-    screeningTimes() {  
+    screeningTimes() {
       let date = new Date(this.selectedDate);
       let year = date.getFullYear();
       let month = date.getMonth();
@@ -181,9 +197,8 @@ export default {
           return screen;
         }
       });
-      return filteredArray
-    },
-
+      return filteredArray;
+    }
   },
 
   mounted() {
@@ -194,7 +209,6 @@ export default {
         clearInterval(this.initDate);
       }
     }, 50);
-
   }
 };
 </script>
