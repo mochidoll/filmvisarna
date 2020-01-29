@@ -2,7 +2,6 @@
   <div class="movie-list">
     <div class="date">
       <p>Today's date: ({{ dayToday }}, {{ dateToday }})</p>
-      <p>{{this.screeningTimes}}</p>
     </div>
 
     <div class="filters">
@@ -175,29 +174,6 @@ export default {
       });
       // convert array of screens to an array of string containing movieIds
       return filteredArray.map(screen => screen.movieId);
-    },
-
-    screeningTimes() {
-      let date = new Date(this.selectedDate);
-      let year = date.getFullYear();
-      let month = date.getMonth();
-      let day = date.getDate();
-
-      let screens = this.$store.state.screenings;
-
-      // filters array on date
-      let filteredArray = screens.filter(screen => {
-        let sDate = new Date(screen.startTime.toDate());
-
-        if (
-          sDate.getFullYear() === year &&
-          sDate.getMonth() === month &&
-          sDate.getDate() === day
-        ) {
-          return screen;
-        }
-      });
-      return filteredArray;
     }
   },
 
