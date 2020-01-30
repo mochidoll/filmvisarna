@@ -31,12 +31,18 @@
       </div>
 
       <dropdown
-        :options="this.dates"
+        :options="dates"
         class="options"
         :selected="chosenDate"
         v-on:updateOption="updateChosenDate"
         :placeholder="'Select an Item'"
-      ></dropdown>
+      >
+
+      </dropdown>
+      <div v-for="time in times" :key="time.id">
+          <div v-if="time.d === chosenDate.name">{{time.t}}</div>
+        
+      </div>
     </div>
   </div>
 </template>
@@ -84,16 +90,38 @@ export default {
               day: "numeric"
               // weekday: "long"
             })
-          );
+          )
         }
       }
       screenings = [...new Set(screenings)];
       screenings
         .sort()
         .forEach(element => screeningsCopy.push({ name: element }));
-      window.console.log(screenings);
       window.console.log(screeningsCopy);
-      return screeningsCopy;
+      return screeningsCopy
+    },
+
+
+    times(){
+      let screenings = []
+      for (let screening of this.$store.state.screenings) {
+        if (this.movie.id === screening.movieId) {
+          screenings.push({d:
+            screening.startTime.toDate().toLocaleDateString("sv-SV", {
+              year: "numeric",
+              month: "numeric",
+              day: "numeric"
+              // weekday: "long"
+            }),
+            t: screening.startTime.toDate().toLocaleTimeString("sv-SV", {
+              hour: "numeric",
+              minute: "numeric",
+              // weekday: "long"
+            })}
+          )
+        }
+      }
+      return screenings
     }
   },
   mounted() {
