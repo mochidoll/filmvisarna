@@ -6,6 +6,7 @@ import Contact from '@/components/Contact'
 import Login from '@/components/Login'
 import Movie from '@/components/Movie'
 import CreateScreenings from '@/components/CreateScreenings'
+import Secure from '@/components/Secure'
 
 Vue.use(VueRouter)
 
@@ -44,6 +45,11 @@ const routes = [
     path: '/create',
     name: 'createScreenings',
     component: CreateScreenings
+  },
+  {
+    path: '/secure',
+    name: 'sceure',
+    component: Secure
   },
 ]
 

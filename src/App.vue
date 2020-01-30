@@ -37,9 +37,13 @@
           <li>
             <router-link to="/contact">Contact</router-link>
           </li>
-          <li>
+          <li v-if="this.loggedInUser">
+            {{this.loggedInUser.userName}}
+          </li>
+          <li v-else>
             <router-link to="/login">Login</router-link>
           </li>
+          
         </ul>
       </div>
     </nav>
@@ -70,6 +74,11 @@
 
 <script>
   export default {
+    computed: {
+      loggedInUser() {
+        return this.$store.state.loggedInUser
+      }
+    },
     created() {
     this.$store.dispatch("getMovies");
     this.$store.dispatch("getScreenings");

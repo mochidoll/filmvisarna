@@ -10,6 +10,7 @@ export default new Vuex.Store({
     screenings: [],
     auditoriums: [],
     users: [],
+    loggedInUser: {},
   },
   mutations: {
 
@@ -28,6 +29,10 @@ export default new Vuex.Store({
     setUsers(state, data) {
       state.users = data
     },
+
+    setLoggedInUser(state, data) {
+      state.loggedInUser = data
+    }
 
   },
   actions: {
