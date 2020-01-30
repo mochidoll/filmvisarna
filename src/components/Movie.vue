@@ -47,10 +47,7 @@ import dropdown from "vue-dropdowns";
 export default {
   data() {
     return {
-      viewingDates: [
-        { name: "23-09-2010"},
-      ],
-      
+      viewingDates: [],
       chosenDate: {
         name: "Choose Date"
       }
@@ -160,7 +157,8 @@ h4 {
   width: 100%;
   padding-right: 10% !important;
 }
-.options {
-  color: blue;
+.dropdown-menu {
+   height: 200px !important; 
+   overflow: auto !important;
 }
 </style>
