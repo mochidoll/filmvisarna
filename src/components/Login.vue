@@ -12,7 +12,7 @@
       <input type="password" id="password" class="active" v-model="password" />
     </div>
 
-    <a class="btn red darken-4" href>Log In</a>
+    <a class="btn waves-effect waves-light red darken-4" href>Log In</a>
   </div>
 </template>
 
@@ -32,10 +32,11 @@ export default {
      border-bottom: 1px solid #000 !important;
      box-shadow: 0 1px 0 0 #000 !important;
    }
-   .input-field input[type=text]:focus + label {
-     color: #000 !important;
-   }
-    .input-field input[type=password]:focus + label {
+ 
+    .input-field{
       color: black !important;
+    }
+    label{
+      color: #3f3f3f !important; 
     }
 </style>
