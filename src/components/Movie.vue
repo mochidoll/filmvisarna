@@ -31,7 +31,7 @@
       </div>
 
       <dropdown
-        :options="viewingDates"
+        :options="this.dates"
         class="options"
         :selected="chosenDate"
         v-on:updateOption="updateChosenDate"
@@ -47,7 +47,6 @@ import dropdown from "vue-dropdowns";
 export default {
   data() {
     return {
-      viewingDates: [],
       chosenDate: {
         name: "Choose Date"
       }
@@ -74,55 +73,29 @@ export default {
       return this.$store.state.movies;
     },
     dates() {
-      let screenings = this.viewingDates;
+      let screenings = [];
+      let screeningsCopy = [];
       for (let screening of this.$store.state.screenings) {
-        screenings.push({name:
-          screening.startTime.toDate().toLocaleDateString("sv-SV", {
-            year: "numeric",
-            month: "numeric",
-            day: "numeric"
-            // weekday: "long"
-          })}
-        );
+        if (this.movie.id === screening.movieId) {
+          screenings.push(
+            screening.startTime.toDate().toLocaleDateString("sv-SV", {
+              year: "numeric",
+              month: "numeric",
+              day: "numeric"
+              // weekday: "long"
+            })
+          );
+        }
       }
       screenings = [...new Set(screenings)];
-      screenings.sort();
-      return screenings;
-    },
-    filteredMovies() {
-      // filter movies where the movieID is
-      // in the filtered array of movieIDs
-      return this.movies.filter(movie => {
-        if (this.filteredScreens.includes(movie.id)) {
-          return movie;
-        }
-      });
-    },
-    filteredScreens() {
-      let date = new Date(this.selectedDate);
-      let year = date.getFullYear();
-      let month = date.getMonth(); //starts on 0 to 11
-      let day = date.getDate();
-
-      let screens = this.$store.state.screenings;
-
-      // filters array on date
-      let filteredArray = screens.filter(screen => {
-        let sDate = new Date(screen.startTime.toDate());
-
-        if (
-          sDate.getFullYear() == year &&
-          sDate.getMonth() == month &&
-          sDate.getDate() == day
-        ) {
-          return screen;
-        }
-      });
-      // convert array of screens to an array of string containing movieIds
-      return filteredArray.map(screen => screen.movieId);
+      screenings
+        .sort()
+        .forEach(element => screeningsCopy.push({ name: element }));
+      window.console.log(screenings);
+      window.console.log(screeningsCopy);
+      return screeningsCopy;
     }
   },
-
   mounted() {
     this.initDate = setInterval(() => {
       //window.console.log(this.dates[0])
@@ -158,7 +131,7 @@ h4 {
   padding-right: 10% !important;
 }
 .dropdown-menu {
-   height: 200px !important; 
-   overflow: auto !important;
+  height: 200px !important;
+  overflow: auto !important;
 }
 </style>
