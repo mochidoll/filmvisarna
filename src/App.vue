@@ -74,6 +74,7 @@
     this.$store.dispatch("getMovies");
     this.$store.dispatch("getScreenings");
     this.$store.dispatch("getAuditoriums");
+    this.$store.dispatch("getUsers");
   }
   };
 </script>
