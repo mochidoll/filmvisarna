@@ -50,6 +50,7 @@ export default {
       viewingDates: [
         { name: "23-09-2010"},
       ],
+      
       chosenDate: {
         name: "Choose Date"
       }
@@ -74,7 +75,65 @@ export default {
     },
     movies() {
       return this.$store.state.movies;
+    },
+    dates() {
+      let screenings = this.viewingDates;
+      for (let screening of this.$store.state.screenings) {
+        screenings.push({name:
+          screening.startTime.toDate().toLocaleDateString("sv-SV", {
+            year: "numeric",
+            month: "numeric",
+            day: "numeric"
+            // weekday: "long"
+          })}
+        );
+      }
+      screenings = [...new Set(screenings)];
+      screenings.sort();
+      return screenings;
+    },
+    filteredMovies() {
+      // filter movies where the movieID is
+      // in the filtered array of movieIDs
+      return this.movies.filter(movie => {
+        if (this.filteredScreens.includes(movie.id)) {
+          return movie;
+        }
+      });
+    },
+    filteredScreens() {
+      let date = new Date(this.selectedDate);
+      let year = date.getFullYear();
+      let month = date.getMonth(); //starts on 0 to 11
+      let day = date.getDate();
+
+      let screens = this.$store.state.screenings;
+
+      // filters array on date
+      let filteredArray = screens.filter(screen => {
+        let sDate = new Date(screen.startTime.toDate());
+
+        if (
+          sDate.getFullYear() == year &&
+          sDate.getMonth() == month &&
+          sDate.getDate() == day
+        ) {
+          return screen;
+        }
+      });
+      // convert array of screens to an array of string containing movieIds
+      return filteredArray.map(screen => screen.movieId);
     }
+  },
+
+  mounted() {
+    this.initDate = setInterval(() => {
+      //window.console.log(this.dates[0])
+      if (this.dates.length) {
+        this.selectedDate = this.dates[0];
+        clearInterval(this.initDate);
+      }
+    }, 50);
   }
 };
 </script>
