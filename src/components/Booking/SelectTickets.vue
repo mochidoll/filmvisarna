@@ -55,7 +55,8 @@
       </div>
       <div class="col s12 center">Total Price: {{totalTicketPrice}}</div>
       <div class="col m12 center">
-        <router-link to=/booking/selectSeats class="m1 btn waves-effect waves-light black white-text">Next</router-link>
+        <router-link to=/booking/selectSeats class="m1 btn waves-effect waves-light black white-text" 
+        :class="{disabled:numberOfTickets === 0}">Next</router-link>
       </div>
     </div>
   </div>
@@ -94,6 +95,9 @@ export default {
     }
   },
   computed: {
+    numberOfTickets() {
+      return this.adultTickets + this.childTickets + this.seniorTickets
+    },
     totalTicketPrice() {
       return (
         this.adultTickets * this.adultTicketPrice +
