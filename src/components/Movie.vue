@@ -30,12 +30,35 @@
           <span>Genre: {{movie.genre.join(", ")}}</span>
          
         </div>
+
+        <dropdown :options="arrayOfObjects" :selected="object" v-on:updateOption="methodToRunOnSelect"></dropdown>
+
     </div>
 </div>
 </template>
 
 <script>
+
+import dropdown from 'vue-dropdowns';
+
 export default {
+  data() {
+          return {
+            arrayOfObjects: [],
+            object: {
+              name: 'Choose Date',
+            }
+          }
+        },
+            components: {
+            'dropdown': dropdown,
+        },
+
+        methods: {
+          methodToRunOnSelect(payload) {
+            this.object = payload;
+          }
+        },
   computed: {
     movie() {
       let movies = this.movies;
