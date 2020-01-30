@@ -55,11 +55,11 @@
       </div>
       <div class="col s12 center">Total Price: {{totalTicketPrice}}</div>
       <div class="col m12 center">
-        <router-link
-          to="/booking/selectSeats"
+        <button
           class="m1 btn waves-effect waves-light black white-text"
           :class="{disabled:numberOfTickets === 0}"
-        >Next</router-link>
+          @click="enterToSelectSeats"
+        >Next</button>
       </div>
     </div>
   </div>
@@ -95,6 +95,14 @@ export default {
     },
     removeSeniorTicket() {
       this.seniorTickets--;
+    },
+    enterToSelectSeats() {
+      if (this.numberOfTickets) {
+        this.$router.push({
+          name: "selectSeats",
+          params: { numberOfTickets: this.numberOfTickets }
+        });
+      }
     }
   },
   computed: {

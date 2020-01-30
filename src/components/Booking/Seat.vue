@@ -1,27 +1,36 @@
 <template>
   <span>
     <span
-      @click="changeColor"
-      :class="{'red darken-4': isSelected, black: !isSelected}"
+      @click="changeSelectedState(); changeTicketSelected();"
+      @mouseover="hover = true"
+      @mouseleave="hover = false"
+      :class="{'red darken-4': isSelected, black: !isSelected,
+       disabled: disableSeat && !isSelected,
+       'red lighten-2': hover}"
       class="btn white-text seats"
-    >
-    {{this.position.x}}
-    </span>
+    >{{this.position.x}}</span>
   </span>
 </template>
 
 <script>
 export default {
-  props: ["position"],
+  props: ["position", "disableSeat"],
   data() {
     return {
       isSelected: false,
+      hover: false
     };
   },
   methods: {
-    changeColor() {
+    changeSelectedState() {
       this.isSelected = !this.isSelected;
-      this.$emit('showPosition', this.position)
+    },
+    changeTicketSelected() {
+      if (this.isSelected && !this.disableSeat) {
+        this.$emit("addToCurrentTicket");
+      } else {
+        this.$emit("removeFromCurrentTicket");
+      }
     }
   }
 };
