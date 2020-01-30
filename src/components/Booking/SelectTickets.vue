@@ -18,7 +18,7 @@
         >
           <i class="material-icons">add</i>
         </a>
-        </div>
+      </div>
 
       <div class="col s12 m6 right-align">Child Tickets: {{childTicketPrice}}:-</div>
       <div class="col s12 m6">
@@ -55,8 +55,11 @@
       </div>
       <div class="col s12 center">Total Price: {{totalTicketPrice}}</div>
       <div class="col m12 center">
-        <router-link to=/booking/selectSeats class="m1 btn waves-effect waves-light black white-text" 
-        :class="{disabled:numberOfTickets === 0}">Next</router-link>
+        <button
+          class="m1 btn waves-effect waves-light black white-text"
+          :class="{disabled:numberOfTickets === 0}"
+          @click="enterToSelectSeats"
+        >Next</button>
       </div>
     </div>
   </div>
@@ -92,11 +95,19 @@ export default {
     },
     removeSeniorTicket() {
       this.seniorTickets--;
+    },
+    enterToSelectSeats() {
+      if (this.numberOfTickets) {
+        this.$router.push({
+          name: "selectSeats",
+          params: { numberOfTickets: this.numberOfTickets }
+        });
+      }
     }
   },
   computed: {
     numberOfTickets() {
-      return this.adultTickets + this.childTickets + this.seniorTickets
+      return this.adultTickets + this.childTickets + this.seniorTickets;
     },
     totalTicketPrice() {
       return (

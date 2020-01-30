@@ -59,7 +59,8 @@ const routes = [
       {
         path: 'selectSeats',
         name: 'selectSeats',
-        component: SelectSeats
+        component: SelectSeats,
+        props: true
       },
       {
         path: 'confirmDetails', 
