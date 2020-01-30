@@ -97,10 +97,17 @@ export default {
       this.seniorTickets--;
     },
     enterToSelectSeats() {
+      let bookingObject = {
+        adultTickets: this.adultTickets,
+        childTickets: this.childTickets,
+        seniorTickets: this.seniorTickets,
+        numberOfTickets: this.numberOfTickets,
+        price: this.totalTicketPrice
+      };
       if (this.numberOfTickets) {
+        this.$store.commit("setBookingObject", bookingObject);
         this.$router.push({
-          name: "selectSeats",
-          params: { numberOfTickets: this.numberOfTickets }
+          name: "selectSeats"
         });
       }
     }

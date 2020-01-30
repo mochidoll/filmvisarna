@@ -1,13 +1,11 @@
 <template>
   <div class="container">
     <div class="booking-confirmation">
-    <h4>Booking Complete!</h4>
-    <!--Loops through all data inside user, if we want to add more or less information in an user -->
-    <ul v-for="(user, id) in users" :key="'user' + id">
-      <BookingInformation :data="user"></BookingInformation>
-    </ul>
-    <h2>Thanks for booking!</h2>
-  </div>
+      <h4>Booking Complete!</h4>
+      <!--Loops through all data inside user, if we want to add more or less information in an user -->
+      <BookingInformation :data="bookingObject"></BookingInformation>
+      <h2>Thanks for booking!</h2>
+    </div>
   </div>
 </template>
 
@@ -18,24 +16,10 @@ export default {
   components: {
     BookingInformation
   },
-  data() {
-    return {
-      users: [
-        {
-          userId: 20,
-          movie: "Random film of greatest random times",
-          theatre: "Stora Salongen",
-          tickets: {
-            children: 0,
-            adults: 1,
-            seniors: 0
-          },
-          seats: [2],
-          price: 85,
-          date: "2020-03-02 18:00"
-        }
-      ]
-    };
+  computed: {
+    bookingObject() {
+      return this.$store.state.bookingObject;
+    }
   }
 };
 </script>
@@ -50,7 +34,7 @@ h2 {
 .col {
   margin-bottom: 1%;
 }
-.booking-confirmation{
+.booking-confirmation {
   margin-left: 5%;
 }
 </style>

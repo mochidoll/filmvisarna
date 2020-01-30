@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     auditoriums: [],
     movies: [],
-    screenings: []
+    screenings: [],
+    bookingObject: {}
   },
   mutations: {
     setAuditoriums(state, data) {
@@ -17,10 +18,12 @@ export default new Vuex.Store({
     setMovies(state, data) {
       state.movies = data
     }, 
-
     setScreenings(state, data) {
       state.screenings = data
     },
+    setBookingObject(state, data) {
+      state.bookingObject = data
+    }
   },
   actions: {
     async getAuditoriums({ commit }) {

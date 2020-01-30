@@ -2,7 +2,7 @@
   <div class="container">
     <h4>Select seats from {{auditorium.name}}</h4>
 
-    <p>max numbers of tickets: {{numberOfTickets}}</p>
+    <p>max numbers of tickets: {{bookingObject.numberOfTickets}}</p>
     <p v-if="feedback">{{feedback}}</p>
     <div class="center">
       <img src="@/assets/images/cinema.png" alt="cinema-screen" />
@@ -17,16 +17,17 @@
           v-for="(seat, id) in row"
           :key="'seat' + id"
           :position="{x: seat, y: y}"
-          :disableSeat="disableSeat"
+          :disableSeat="hasSelectedAllSeats"
           @addToCurrentTicket="addToCurrentTicket"
           @removeFromCurrentTicket="removeFromCurrentTicket"
         ></Seat>
       </div>
       <div class="col m12 center">
-        <router-link
-          to="/booking/confirmDetails"
+        <button
+          @click="goToConfirmDetails"
           class="m1 btn waves-effect waves-light black white-text"
-        >Next</router-link>
+          :class="{disabled:!hasSelectedAllSeats}"
+        >Next</button>
       </div>
     </div>
     <div class="center" v-else>
@@ -50,7 +51,6 @@
 <script>
 import Seat from "@/components/Booking/Seat";
 export default {
-  props: ["numberOfTickets"],
   components: {
     Seat
   },
@@ -60,7 +60,7 @@ export default {
       position: {},
       currentTickets: 0,
       feedback: null,
-      disableSeat: false
+      hasSelectedAllSeats: false
     };
   },
   methods: {
@@ -72,6 +72,12 @@ export default {
     },
     addToCurrentTicket() {
       this.currentTickets++;
+    },
+    goToConfirmDetails() {
+      this.$store.commit("setBookingObject", this.bookingObject);
+      this.$router.push({
+        name: "confirmDetails"
+      });
     }
   },
   computed: {
@@ -85,6 +91,9 @@ export default {
     },
     auditoriums() {
       return this.$store.state.auditoriums;
+    },
+    bookingObject() {
+      return this.$store.state.bookingObject;
     }
   },
   created() {
@@ -92,12 +101,12 @@ export default {
   },
   watch: {
     currentTickets(val) {
-      if (val === this.numberOfTickets) {
+      if (val === this.bookingObject.numberOfTickets) {
         this.feedback = "Error: Du kan inte välja fler!";
-        this.disableSeat = true;
+        this.hasSelectedAllSeats = true;
       } else if (val < this.numberOfTickets) {
         this.feedback = null;
-        this.disableSeat = false;
+        this.hasSelectedAllSeats = false;
       }
     }
   }

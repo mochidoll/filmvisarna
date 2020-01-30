@@ -1,21 +1,19 @@
 <template>
-  <li>
+  <div>
     <h4>Price: {{data.price}} SEK</h4>
-    <h5>
-      Salong: {{data.theatre}}
-      <br />
-      Movie: {{data.movie}}
-      <br />
-      Tickets:
-      {{data.tickets.children}} children,
-      {{data.tickets.adults}} adults,
-      {{data.tickets.seniors}} seniors
-      <br />
-      date: {{data.date}} <br>
-      UserId: {{data.userId}}
-      <br />
-    </h5>
-  </li>
+    <h4>Tickets</h4>
+    <ul>
+      <li>
+        <h5>Adults: {{data.adultTickets}}</h5>
+      </li>
+      <li>
+        <h5>Children: {{data.childTickets}}</h5>
+      </li>
+      <li>
+        <h5>Seniors: {{data.seniorTickets}}</h5>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
