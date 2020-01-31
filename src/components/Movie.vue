@@ -1,8 +1,6 @@
 <template>
   <div class="container">
-    <div class="trailer-container">
-      <h4 class="grey-text center">Insert trailer here later</h4>
-    </div>
+    <div class="trailer-container"></div>
 
     <div class="row">
       <div class="left col s12 center flex">
@@ -30,18 +28,16 @@
         <span>Genre: {{movie.genre.join(", ")}}</span>
       </div>
 
-      <dropdown
-        :options="dates"
-        class="options"
-        :selected="chosenDate"
-        v-on:updateOption="updateChosenDate"
-        :placeholder="'Select an Item'"
-      >
-
-      </dropdown>
+        <dropdown
+          :options="dates"
+          class="options"
+          :selected="chosenDate"
+          v-on:updateOption="updateChosenDate"
+          :placeholder="'Select an Date'"
+        ></dropdown>
+    
       <div v-for="time in times" :key="time.id">
-          <div v-if="time.d === chosenDate.name">{{time.t}}</div>
-        
+        <div class="col timeButton btn red darken-2">{{time.name}}</div>
       </div>
     </div>
   </div>
@@ -55,6 +51,9 @@ export default {
     return {
       chosenDate: {
         name: "Choose Date"
+      },
+      chosenTime: {
+        name: "Choose Time"
       }
     };
   },
@@ -65,6 +64,9 @@ export default {
   methods: {
     updateChosenDate(date) {
       this.chosenDate = date;
+    },
+    updateChosenTime(time) {
+      this.chosenTime = time;
     }
   },
   computed: {
@@ -78,60 +80,51 @@ export default {
     movies() {
       return this.$store.state.movies;
     },
-    dates() {
+    screeningMovie() {
       let screenings = [];
-      let screeningsCopy = [];
-      for (let screening of this.$store.state.screenings) {
+      this.$store.state.screenings.forEach(screening => {
         if (this.movie.id === screening.movieId) {
-          screenings.push(
-            screening.startTime.toDate().toLocaleDateString("sv-SV", {
-              year: "numeric",
-              month: "numeric",
-              day: "numeric"
-              // weekday: "long"
-            })
-          )
+          screenings.push({
+            date: {
+              name: screening.startTime.toDate().toLocaleDateString("sv-SV", {
+                year: "numeric",
+                month: "numeric",
+                day: "numeric"
+              })
+            },
+            time: {
+              name: screening.startTime.toDate().toLocaleTimeString("sv-SV", {
+                hour: "numeric",
+                minute: "numeric"
+              })
+            }
+          });
         }
-      }
-      screenings = [...new Set(screenings)];
-      screenings
-        .sort()
-        .forEach(element => screeningsCopy.push({ name: element }));
-      window.console.log(screeningsCopy);
-      return screeningsCopy
+      });
+      return screenings;
     },
-
-
-    times(){
-      let screenings = []
-      for (let screening of this.$store.state.screenings) {
-        if (this.movie.id === screening.movieId) {
-          screenings.push({d:
-            screening.startTime.toDate().toLocaleDateString("sv-SV", {
-              year: "numeric",
-              month: "numeric",
-              day: "numeric"
-              // weekday: "long"
-            }),
-            t: screening.startTime.toDate().toLocaleTimeString("sv-SV", {
-              hour: "numeric",
-              minute: "numeric",
-              // weekday: "long"
-            })}
-          )
+    dates() {
+      let datesSorted = [];
+      let dateObject = [];
+      this.screeningMovie.forEach(screening =>
+        datesSorted.push(screening.date.name)
+      );
+      datesSorted = [...new Set(datesSorted)];
+      datesSorted.sort().forEach(date => dateObject.push({ name: date }));
+      return dateObject;
+    },
+    times() {
+      let timeSorted = [];
+      this.screeningMovie.forEach(screening => {
+        if (screening.date.name == this.chosenDate.name) {
+          timeSorted.push(screening.time);
         }
-      }
-      return screenings
+      });
+      timeSorted.sort((a, b) =>
+        a.name > b.name ? 1 : b.name > a.name ? -1 : 0
+      );
+      return timeSorted;
     }
-  },
-  mounted() {
-    this.initDate = setInterval(() => {
-      //window.console.log(this.dates[0])
-      if (this.dates.length) {
-        this.selectedDate = this.dates[0];
-        clearInterval(this.initDate);
-      }
-    }, 50);
   }
 };
 </script>
@@ -161,5 +154,9 @@ h4 {
 .dropdown-menu {
   height: 200px !important;
   overflow: auto !important;
+}
+.timeButton {
+  margin-top: 1.5rem;
+  margin-right: 1rem;
 }
 </style>
