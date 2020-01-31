@@ -1,9 +1,8 @@
 <template>
   <div class="container">
     <h4>Select seats from {{auditorium.name}}</h4>
-
     <p>max numbers of tickets: {{bookingObject.numberOfTickets}}</p>
-    <p>number of currentTickets: {{this.currentTickets}}</p>
+    <p>{{positions}}</p>
     <p v-if="feedback">{{feedback}}</p>
     <div class="center">
       <img src="@/assets/images/cinema.png" alt="cinema-screen" />
@@ -21,6 +20,8 @@
           :disableSeat="hasAllSeatsSelected"
           @addToCurrentTicket="addToCurrentTicket"
           @removeFromCurrentTicket="removeFromCurrentTicket"
+          @pushToPositions="pushToPositions"
+          @removeFromPositions="removeFromPositions"
         ></Seat>
       </div>
       <div class="col m12 center">
@@ -58,7 +59,7 @@ export default {
   data() {
     return {
       room: 0,
-      position: {},
+      positions: [],
       currentTickets: 0,
       feedback: null,
       hasAllSeatsSelected: false
@@ -74,7 +75,18 @@ export default {
     addToCurrentTicket() {
       this.currentTickets++;
     },
+    pushToPositions(position) {
+      this.positions.push(position);
+    },
+    removeFromPositions(position) {
+      this.positions.forEach((element, index) => {
+        if (element.x === position.x && element.y === position.y) {
+          this.positions.splice(index, 1);
+        }
+      });
+    },
     goToConfirmDetails() {
+      this.bookingObject.seatPositions = this.positions;
       this.$store.commit("setBookingObject", this.bookingObject);
       this.$router.push({
         name: "confirmDetails"
