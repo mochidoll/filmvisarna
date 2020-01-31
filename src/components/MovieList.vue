@@ -6,36 +6,36 @@
 
     <div class="filters">
       <div class="row">
-        <div class="col s12 m6">
+        <div class="col">
           <div class="date-selector">
             <select v-model="selectedDate" name="date" id="choose-date">
               <option :value="date" v-for="(date, id) in dates" :key="id">{{ date }}</option>
             </select>
           </div>
         </div>
-        <div class="col s12 m6">
-          <div class="genre-selector">
-            <select name="genre" id="choose-genre">
-              <option value selected disabled hidden>Genre</option>
-              <option v-for="(genre, id) in genres" :key="id">{{ genre }}</option>
-            </select>
-          </div>
-        </div>
+        <!--    <div class="col s12 m6">
+      <div class="genre-selector">
+        <select name="genre" id="choose-genre">
+          <option value selected disabled hidden>Genre</option>
+          <option value v-for="(genre, id) in genres" :key="id">{{ genre }}</option>
+        </select>
+      </div>
+        </div>-->
       </div>
     </div>
 
     <div class="hide-on-med-and-up">
-      <div class="movie" v-for="movie in filteredMovies" :key="movie.id">
+      <div class="movie " v-for="movie in filteredMovies" :key="movie.id">
         <div class="row center">
-          <div class="card red darken-4">
-            <div class="col s12 m2">
+          <div class="card white small-movie-margin">
+            <div class="col s12">
               <div class="card-img">
                 <img class="responive-img mobile-img" :src="movie.image" />
               </div>
             </div>
             <div class="card-stacked">
-              <div class="card-con">
-                <div class="col s12 m4">
+              <div class="card-contact">
+                <div class="col s12">
                   <span class="movie-title center">{{ movie.title }}</span>
                 </div>
                 <div class="col s12">
@@ -43,10 +43,12 @@
                     <span>{{ movie.genre.toString() }} | {{ movie.length }} min</span>
                   </div>
                 </div>
-                <div class="col s12 m12">
-                  <div class="movie-buttons-mobile">
-                    <button class="btn black waves-effect waves-light mobile">{{movie.id}}</button>
-                  </div>
+                <div class="col s12">
+                  <p>
+                    {{ movie.description }}
+                  </p>
+                </div>
+                <div class="col s12">
                 </div>
               </div>
             </div>
@@ -55,20 +57,20 @@
       </div>
     </div>
     <div class="hide-on-small-only">
-      <div class="movie col s12 m7" v-for="movie in filteredMovies" :key="movie.id">
-        <div class="card horizontal red darken-4">
+      <div class="movie col m7" v-for="movie in filteredMovies" :key="movie.id">
+        <div class="card horizontal white">
           <div class="card-image">
+            
             <img class="responsive-img" :src="movie.image" />
           </div>
-          <div class="card-stacked">
+          <div class="card-stacked white">
             <div class="card-content valign-wrapper">
               <div>
                 <p class="movie-title">{{ movie.title }}</p>
                 <p>{{ movie.genre.toString() }} | {{ movie.length }} min</p>
+                <p>{{ movie.description }}</p>
               </div>
-              <!-- <div class="movie-buttons" v-on="checkForTime(movie.id)">
-                <button class="btn black waves-effect waves-light">{{movieTime}}</button>
-              </div> -->
+              
             </div>
           </div>
         </div>
@@ -176,15 +178,17 @@ export default {
 * {
   box-sizing: border-box;
 }
+.small-movie-margin {
+  padding-top:45px;
+  padding-bottom:45px;
+}
 .movie .card {
-  border-radius: 20px !important;
+  border-radius: 5px !important;
+  
 }
 
 .card-stacked {
   display: inline-block;
-}
-.movie .card-image img {
-  width: 100%;
 }
 .movie-buttons button {
   border-radius: 10px;
@@ -232,13 +236,11 @@ export default {
 .mobile {
   margin: 1% !important;
 }
-.responsive-img {
-  border-radius: 20px !important;
-}
+
 .mobile-img {
-  border-radius: 20px;
   position: relative;
   bottom: -10px;
   width: 75%;
+  border-radius: 5px;
 }
 </style>
