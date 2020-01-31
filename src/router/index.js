@@ -48,7 +48,7 @@ const routes = [
   },
   {
     path: '/secure',
-    name: 'sceure',
+    name: 'secure',
     component: Secure
   },
 ]

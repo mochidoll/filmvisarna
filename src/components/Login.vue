@@ -24,19 +24,22 @@ export default {
   data() {
     return {
       username: "",
-      password: ""
+      password: "",
+      fetchedUserName: "",
     };
   },
   methods: {
     login() {
       let attemptUser = this.users.filter(user => {
-        return user.userName.toLowerCase() === this.username;
+        return user.userName === this.username;
       })[0];
-
       //window.console.log(attemptUser);
+      window.console.log(this.username)
 
-      if (this.username === "admin" && this.password === attemptUser.password) {
+      if (this.username.toLowerCase() === attemptUser.userName.toLowerCase() && this.password === attemptUser.password) {
+
         window.console.log("Correct");
+        window.console.log(this.username);
         this.$store.commit("setLoggedInUser", attemptUser);
         this.username = "";
         this.password = "";

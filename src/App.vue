@@ -37,8 +37,8 @@
           <li>
             <router-link to="/contact">Contact</router-link>
           </li>
-          <li v-if="this.loggedInUser">
-            {{this.loggedInUser.userName}}
+          <li v-if="this.loggedInUser.userName === 'Magnus'">
+            <router-link to="/secure">{{this.loggedInUser.userName}}</router-link>
           </li>
           <li v-else>
             <router-link to="/login">Login</router-link>
