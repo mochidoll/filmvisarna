@@ -1,9 +1,11 @@
 <template>
     <div id="secure">
-        <h1>Secure Area</h1>
+        <div class="container">
+        <h1 class="center">Your bookings</h1>
         <p>
             This is a secure area, you successfully logged in! 
         </p>
+    </div>
     </div>
 </template>
 
