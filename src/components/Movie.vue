@@ -125,6 +125,15 @@ export default {
       );
       return timeSorted;
     }
+  },
+  mounted() {
+    this.initDate = setInterval(() => {
+      //window.console.log(this.dates[0])
+      if (this.dates.length) {
+        this.selectedDate = this.dates[0];
+        clearInterval(this.initDate);
+      }
+    }, 50);
   }
 };
 </script>
