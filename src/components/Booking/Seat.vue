@@ -1,7 +1,7 @@
 <template>
   <span>
     <span
-      @click="changeSelectedState(); changeTicketSelected();"
+      @click="changeSelectedState()"
       @mouseover="hover = true"
       @mouseleave="hover = false"
       :class="{'red darken-4': isSelected, black: !isSelected,
@@ -24,11 +24,9 @@ export default {
   methods: {
     changeSelectedState() {
       this.isSelected = !this.isSelected;
-    },
-    changeTicketSelected() {
-      if (this.isSelected && !this.disableSeat) {
+      if (this.isSelected) {
         this.$emit("addToCurrentTicket");
-      } else {
+      } else if (!this.isSelected) {
         this.$emit("removeFromCurrentTicket");
       }
     }

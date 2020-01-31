@@ -3,6 +3,7 @@
     <h4>Select seats from {{auditorium.name}}</h4>
 
     <p>max numbers of tickets: {{bookingObject.numberOfTickets}}</p>
+    <p>number of currentTickets: {{this.currentTickets}}</p>
     <p v-if="feedback">{{feedback}}</p>
     <div class="center">
       <img src="@/assets/images/cinema.png" alt="cinema-screen" />
@@ -17,7 +18,7 @@
           v-for="(seat, id) in row"
           :key="'seat' + id"
           :position="{x: seat, y: y}"
-          :disableSeat="hasSelectedAllSeats"
+          :disableSeat="hasAllSeatsSelected"
           @addToCurrentTicket="addToCurrentTicket"
           @removeFromCurrentTicket="removeFromCurrentTicket"
         ></Seat>
@@ -26,7 +27,7 @@
         <button
           @click="goToConfirmDetails"
           class="m1 btn waves-effect waves-light black white-text"
-          :class="{disabled:!hasSelectedAllSeats}"
+          :class="{disabled:!hasAllSeatsSelected}"
         >Next</button>
       </div>
     </div>
@@ -60,7 +61,7 @@ export default {
       position: {},
       currentTickets: 0,
       feedback: null,
-      hasSelectedAllSeats: false
+      hasAllSeatsSelected: false
     };
   },
   methods: {
@@ -103,10 +104,10 @@ export default {
     currentTickets(val) {
       if (val === this.bookingObject.numberOfTickets) {
         this.feedback = "Error: Du kan inte välja fler!";
-        this.hasSelectedAllSeats = true;
-      } else if (val < this.numberOfTickets) {
+        this.hasAllSeatsSelected = true;
+      } else if (val < this.bookingObject.numberOfTickets) {
         this.feedback = null;
-        this.hasSelectedAllSeats = false;
+        this.hasAllSeatsSelected = false;
       }
     }
   }
