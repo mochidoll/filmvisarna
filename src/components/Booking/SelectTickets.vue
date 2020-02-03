@@ -74,7 +74,7 @@
       <div class="row col s12 nav-buttons">
         <button @click="goBackToHome" class="col s2 offset-s1 btn waves-effect waves-light red darken-4 white-text">Avbryt</button>
         <button
-          class="col s2 offset-s6 btn waves-effect waves-light red-darken-4 white-text"
+          class="col s2 offset-s6 btn waves-effect waves-light red darken-4 white-text"
           :class="{disabled:numberOfTickets === 0}"
           @click="continueToSelectSeats"
         >Gå vidare</button>
