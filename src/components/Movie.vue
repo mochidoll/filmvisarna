@@ -37,7 +37,8 @@
       ></dropdown>
 
       <div v-for="time in times" :key="time.id">
-        <div class="col timeButton btn red darken-2">{{time.screeningTime.time}}</div>
+
+        <div class="col timeButton btn red darken-2" on-click="bookMovie(time)">{{time.screeningTime.time}}</div>
         <div class="col">{{time.screeningTime.auditorium}}</div>
       </div>
     </div>
@@ -68,6 +69,9 @@ export default {
     },
     updateChosenTime(time) {
       this.chosenTime = time;
+    },
+    bookMovie(time) {
+      this.$store.state.movieChosen = time;
     }
   },
   computed: {
@@ -81,7 +85,7 @@ export default {
     movies() {
       return this.$store.state.movies;
     },
-    screeningMovie() {
+    screeningMovies() {
       let screenings = [];
       this.$store.state.screenings.forEach(screening => {
         if (this.movie.id === screening.movieId) {
@@ -117,7 +121,7 @@ export default {
     dates() {
       let datesSorted = [];
       let dateObject = [];
-      this.screeningMovie.forEach(screening =>
+      this.screeningMovies.forEach(screening =>
         datesSorted.push(screening.date.name)
       );
       datesSorted = [...new Set(datesSorted)];
@@ -126,12 +130,13 @@ export default {
     },
     times() {
       let timeSorted = [];
-      this.screeningMovie.forEach(screening => {
-        if (screening.date.name == this.chosenDate.name) {
+      this.screeningMovies.forEach(screeningMovie => {
+        if (screeningMovie.date.name == this.chosenDate.name) {
           timeSorted.push({
             screeningTime: {
-              time: screening.time,
-              auditorium: screening.auditorium
+              time: screeningMovie.time,
+              auditorium: screeningMovie.auditorium,
+              screening: screeningMovie.screening
             }
           });
         }

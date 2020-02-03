@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     movies: [],
     screenings: [],
-    auditoriums: []
+    auditoriums: [],
+    movieChosen: {}
   },
   mutations: {
 
@@ -23,6 +24,10 @@ export default new Vuex.Store({
     setAuditoriums(state, data) {
       state.auditoriums = data
     },
+
+    setMovieChosen(state,data) {
+      state.movieChosen = data
+    }
 
   },
   actions: {
