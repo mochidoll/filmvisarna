@@ -12,8 +12,8 @@ export default new Vuex.Store({
     movieChosen: {},
     bookingObject: {
       adultTickets: 0,
-      seniorTickets: 1,
-      childTickets: 3
+      seniorTickets: 0,
+      childTickets: 0
     }
   },
   mutations: {

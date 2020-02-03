@@ -3,6 +3,11 @@
     <div class="booking-confirmation">
       <h4>Booking Complete!</h4>
       <!--Loops through all data inside user, if we want to add more or less information in an user -->
+      <div class="row">
+        <div class="col s3">
+          <img :src="this.movieChosen.image">
+        </div>
+      </div>
       <BookingInformation :data="bookingObject"></BookingInformation>
       <h2>Thanks for booking!</h2>
     </div>
@@ -19,6 +24,9 @@ export default {
   computed: {
     bookingObject() {
       return this.$store.state.bookingObject;
+    },
+    movieChosen() {
+      return this.$store.state.movieChosen;
     }
   }
 };
@@ -36,5 +44,8 @@ h2 {
 }
 .booking-confirmation {
   margin-left: 5%;
+}
+img {
+  width:100%
 }
 </style>

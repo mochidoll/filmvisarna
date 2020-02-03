@@ -37,9 +37,12 @@
       ></dropdown>
 
       <div v-for="time in times" :key="time.id">
-
-        <router-link to="/booking/selectTickets" class="col timeButton btn red darken-2" on-click="bookMovie(time)">{{time.screeningTime.time}}</router-link>
-        <div class="col">{{time.screeningTime.auditorium}}</div>
+        <div
+          to="/booking/selectTickets"
+          class="col timeButton btn red darken-2"
+          @click="bookMovie(time)"
+        >{{time.time}}</div>
+        <div class="col">{{time.auditorium}}</div>
       </div>
     </div>
   </div>
@@ -72,6 +75,9 @@ export default {
     },
     bookMovie(time) {
       this.$store.state.movieChosen = time;
+      this.$router.push({
+        name: "selectTickets"
+      });
     }
   },
   computed: {
@@ -92,6 +98,8 @@ export default {
           this.$store.state.auditoriums.forEach(item => {
             if (screening.auditoriumId === item.id) {
               screenings.push({
+                name: this.movie.title,
+                image: this.movie.image,
                 auditorium: item.name,
                 screening: screening.id,
                 date: {
@@ -103,14 +111,10 @@ export default {
                       day: "numeric"
                     })
                 },
-                time: 
-                  screening.startTime
-                    .toDate()
-                    .toLocaleTimeString("sv-SV", {
-                      hour: "numeric",
-                      minute: "numeric"
-                    })
-                
+                time: screening.startTime.toDate().toLocaleTimeString("sv-SV", {
+                  hour: "numeric",
+                  minute: "numeric"
+                })
               });
             }
           });
@@ -132,13 +136,7 @@ export default {
       let timeSorted = [];
       this.screeningMovies.forEach(screeningMovie => {
         if (screeningMovie.date.name == this.chosenDate.name) {
-          timeSorted.push({
-            screeningTime: {
-              time: screeningMovie.time,
-              auditorium: screeningMovie.auditorium,
-              screening: screeningMovie.screening
-            }
-          });
+          timeSorted.push(screeningMovie);
         }
       });
       timeSorted.sort((a, b) =>
