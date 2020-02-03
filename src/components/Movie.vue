@@ -28,16 +28,17 @@
         <span>Genre: {{movie.genre.join(", ")}}</span>
       </div>
 
-        <dropdown
-          :options="dates"
-          class="options"
-          :selected="chosenDate"
-          v-on:updateOption="updateChosenDate"
-          :placeholder="'Select an Date'"
-        ></dropdown>
-    
+      <dropdown
+        :options="dates"
+        class="options"
+        :selected="chosenDate"
+        v-on:updateOption="updateChosenDate"
+        :placeholder="'Select an Date'"
+      ></dropdown>
+
       <div v-for="time in times" :key="time.id">
-        <div class="col timeButton btn red darken-2">{{time.name}}</div>
+        <div class="col timeButton btn red darken-2">{{time.screeningTime.time}}</div>
+        <div class="col">{{time.screeningTime.auditorium}}</div>
       </div>
     </div>
   </div>
@@ -84,19 +85,29 @@ export default {
       let screenings = [];
       this.$store.state.screenings.forEach(screening => {
         if (this.movie.id === screening.movieId) {
-          screenings.push({
-            date: {
-              name: screening.startTime.toDate().toLocaleDateString("sv-SV", {
-                year: "numeric",
-                month: "numeric",
-                day: "numeric"
-              })
-            },
-            time: {
-              name: screening.startTime.toDate().toLocaleTimeString("sv-SV", {
-                hour: "numeric",
-                minute: "numeric"
-              })
+          this.$store.state.auditoriums.forEach(item => {
+            if (screening.auditoriumId === item.id) {
+              screenings.push({
+                auditorium: item.name,
+                screening: screening.id,
+                date: {
+                  name: screening.startTime
+                    .toDate()
+                    .toLocaleDateString("sv-SV", {
+                      year: "numeric",
+                      month: "numeric",
+                      day: "numeric"
+                    })
+                },
+                time: 
+                  screening.startTime
+                    .toDate()
+                    .toLocaleTimeString("sv-SV", {
+                      hour: "numeric",
+                      minute: "numeric"
+                    })
+                
+              });
             }
           });
         }
@@ -117,23 +128,19 @@ export default {
       let timeSorted = [];
       this.screeningMovie.forEach(screening => {
         if (screening.date.name == this.chosenDate.name) {
-          timeSorted.push(screening.time);
+          timeSorted.push({
+            screeningTime: {
+              time: screening.time,
+              auditorium: screening.auditorium
+            }
+          });
         }
       });
       timeSorted.sort((a, b) =>
-        a.name > b.name ? 1 : b.name > a.name ? -1 : 0
+        a.time > b.time ? 1 : b.time > a.time ? -1 : 0
       );
       return timeSorted;
     }
-  },
-  mounted() {
-    this.initDate = setInterval(() => {
-      //window.console.log(this.dates[0])
-      if (this.dates.length) {
-        this.selectedDate = this.dates[0];
-        clearInterval(this.initDate);
-      }
-    }, 50);
   }
 };
 </script>
@@ -164,8 +171,8 @@ h4 {
   height: 200px !important;
   overflow: auto !important;
 }
-.timeButton {
+/* .timeButton {
   margin-top: 1.5rem;
   margin-right: 1rem;
-}
+} */
 </style>
