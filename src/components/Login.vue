@@ -75,16 +75,19 @@ export default {
         .signInWithEmailAndPassword(this.username, this.password)
         .then(user => {
           if (user) {
-            window.console.log(firebase.auth().currentUser);
-            window.console.log("Success");
+          /*   window.console.log(firebase.auth().currentUser);
+            window.console.log("Success"); */
             this.$router.push("Secure");
           } else {
-            window.console.log("Failure");
+          /*   window.console.log("Failure"); */
           }
         });
     },
     signUp() {
       window.console.log(this.signUpFirstName + " " + this.signUpLastName);
+      if (this.signUpFirstName === "" || this.signUpLastName === "") {
+        alert("Please enter your name")
+      } else{
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.signUpEmail, this.signUpPassword)
@@ -98,10 +101,12 @@ export default {
         })
         .catch(function(error) {
           // Handle Errors here.
-          // var errorCode = error.code;
+          var errorCode = error.code;
           var errorMessage = error.message;
-          window.console.log(errorMessage);
+          window.console.log(errorCode + " " + errorMessage);
+          alert(errorMessage);
         });
+        }
     }
   },
   computed: {

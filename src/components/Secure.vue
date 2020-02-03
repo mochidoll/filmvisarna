@@ -1,10 +1,13 @@
 <template>
   <div id="secure">
-    <div class="container center-align">
-        <h3>{{user.displayName}}</h3>
+    <div v-if="user" class="container center-align">
+      <h3>{{this.user.displayName}}</h3>
       <h3 class="center">Your bookings</h3>
       <p>This is a secure area, you successfully logged in!</p>
       <a class="btn red darken-4" @click="logout">Log out</a>
+    </div>
+    <div v-else>
+      <p>Loading...</p>
     </div>
   </div>
 </template>
@@ -30,8 +33,20 @@ export default {
         );
     }
   },
+  /* computed: {
+      user() {
+          let user = null;
+          firebase.auth().currentUser.then( (currentuser) => {
+            if (currentuser){
+                user = currentuser
+            }
+          });
+          return user
+      }
+  }, */
   created() {
     firebase.auth().onAuthStateChanged(user => {
+        window.console.log(user)
       if (user) {
         this.user = user;
       } else {
