@@ -59,18 +59,7 @@ export default new Vuex.Store({
       })
       commit('setScreenings', screenings)
     },
-
-    async getAuditoriums({ commit }) {
-      let snapshot = await db.collection('auditoriums').get()
-      let auditoriums = []
-      snapshot.forEach(auditorium => {
-        let data = auditorium.data(); // alla egenskaper utom id:t
-        data.id = auditorium.id; // lägg till id
-        auditoriums.push(data)
-      })
-      commit('setAuditoriums', auditoriums)
-    },
-    
+  
   },
   modules: {
   }

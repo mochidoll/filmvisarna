@@ -68,15 +68,18 @@
             </a>
           </div>
           <div class="col s12 center">Totalt: {{totalTicketPrice}}</div>
-          <div class="col m12 center">
-            <button
-              class="m1 btn waves-effect waves-light black white-text"
-              :class="{disabled:numberOfTickets === 0}"
-              @click="continueToSelectSeats"
-            >Gå vidare</button>
-          </div>
         </div>
       </div>
+
+      <div class="row col s12 nav-buttons">
+        <button @click="goBackToHome" class="col s2 offset-s1 btn waves-effect waves-light red darken-4 white-text">Avbryt</button>
+        <button
+          class="col s2 offset-s6 btn waves-effect waves-light red-darken-4 white-text"
+          :class="{disabled:numberOfTickets === 0}"
+          @click="continueToSelectSeats"
+        >Gå vidare</button>
+      </div>
+
     </div>
     <div class="center" v-else>
       <div class="preloader-wrapper active big">
@@ -131,22 +134,28 @@ export default {
       this.seniorTickets--;
     },
     continueToSelectSeats() {
-      this.bookingObject.movie = this.movieChosen
-      this.bookingObject.screening = this.screeningChosen
-      this.bookingObject.auditorium = this.auditorium
-      this.bookingObject.adultTickets = this.adultTickets
-      this.bookingObject.seniorTickets = this.seniorTickets
-      this.bookingObject.childTickets = this.childTickets
-      this.bookingObject.numberOfTickets =this.numberOfTickets
+      this.bookingObject.movie = this.movieChosen;
+      this.bookingObject.screening = this.screeningChosen;
+      this.bookingObject.auditorium = this.auditorium;
+      this.bookingObject.adultTickets = this.adultTickets;
+      this.bookingObject.seniorTickets = this.seniorTickets;
+      this.bookingObject.childTickets = this.childTickets;
+      this.bookingObject.numberOfTickets = this.numberOfTickets;
 
-      this.$router.push({name: 'SelectSeats', params: {bookingObject: this.bookingObject}})
+      this.$router.push({
+        name: "SelectSeats",
+        params: { bookingObject: this.bookingObject }
+      });
       // if (this.numberOfTickets) {
       //   this.$store.commit("setBookingObject", bookingObject);
       //   this.$router.push({
       //     name: "selectSeats"
-      
-      // this.$router.push({ name: "selectSeats" });
 
+      // this.$router.push({ name: "selectSeats" });
+    },
+
+    goBackToHome(){
+      this.$router.push({name: 'Home'})
     }
   },
   computed: {
@@ -181,6 +190,10 @@ export default {
 </script>
 
 <style scoped>
+
+.big-container .nav-buttons {
+  margin: 2rem 0 1rem !important;
+}
 .big-container {
   margin: 2rem 0;
 }

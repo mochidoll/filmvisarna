@@ -54,9 +54,9 @@
                 <p class="movie-title">{{ movie.title }}</p>
                 <p>{{ movie.genre.toString() }} | {{ movie.length }} min</p>
               </div>
-              <!-- <div class="movie-buttons" v-on="checkForTime(movie.id)">
-                <button class="btn black waves-effect waves-light">{{movieTime}}</button>
-              </div> -->
+              <div class="movie-buttons">
+                <button @click="goToSelectTickets" class="btn black waves-effect waves-light">Go</button>
+              </div>
             </div>
           </div>
         </div>

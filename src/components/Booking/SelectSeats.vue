@@ -25,14 +25,16 @@
           @removeFromPositions="removeFromPositions"
         ></Seat>
       </div>
+
       <div class="nav-buttons row col s12 center">
-        <button class="col s3 offset-s1 btn waves-effect waves-light red darken-4 white-text">TIllbaka</button>
+        <button @click="goBackToSelectSeats" class="col s3 offset-s1 btn waves-effect waves-light red darken-4 white-text">TIllbaka</button>
         <button
           @click="goToConfirmDetails"
           class="col s3 offset-s4 btn waves-effect waves-light red darken-4 white-text"
           :class="{disabled:!hasAllSeatsSelected}"
         >Gå vidare</button>
       </div>
+      
     </div>
     
     <div class="center" v-else>
@@ -103,6 +105,10 @@ export default {
         name: "ConfirmDetails",
         params: {bookingObject: this.bookingObject}
       });
+    },
+
+    goBackToSelectSeats() {
+      this.$router.push({name: 'SelectTickets'})
     }
   },
   computed: {
@@ -140,6 +146,8 @@ export default {
 </script>
 
 <style>
+
+
 
 .seats {
   margin: 1%;
