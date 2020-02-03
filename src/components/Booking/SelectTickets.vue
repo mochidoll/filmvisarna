@@ -54,8 +54,14 @@
         </a>
       </div>
       <div class="col s12 center">Total Price: {{totalTicketPrice}}</div>
+      <div class="col m12 center">
+        <button
+          class="m1 btn waves-effect waves-light black white-text"
+          :class="{disabled:numberOfTickets === 0}"
+          @click="enterToSelectSeats"
+        >Next</button>
+      </div>
     </div>
-    <button class="btn waves-effect waves-light black white-text right">Next</button>
   </div>
 </template>
 
@@ -89,9 +95,30 @@ export default {
     },
     removeSeniorTicket() {
       this.seniorTickets--;
+    },
+    enterToSelectSeats() {
+      let bookingObject = {
+        adultTickets: this.adultTickets,
+        childTickets: this.childTickets,
+        seniorTickets: this.seniorTickets,
+        numberOfTickets: this.numberOfTickets,
+        price: this.totalTicketPrice
+      };
+      if (this.numberOfTickets) {
+        this.$store.commit("setBookingObject", bookingObject);
+        this.$router.push({
+          name: "selectSeats"
+        });
+      }
     }
   },
   computed: {
+    numberOfTickets() {
+      return this.adultTickets + this.childTickets + this.seniorTickets;
+    },
+    bookingObject() {
+      return this.$store.state.bookingObject
+    },
     totalTicketPrice() {
       return (
         this.adultTickets * this.adultTicketPrice +
@@ -99,6 +126,11 @@ export default {
         this.seniorTickets * this.seniorTicketPrice
       );
     }
+  },
+  created() {
+    this.adultTickets = this.bookingObject.adultTickets
+    this.seniorTickets = this.bookingObject.seniorTickets
+    this.childTickets = this.bookingObject.childTickets
   }
 };
 </script>
