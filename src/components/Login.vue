@@ -88,6 +88,11 @@ export default {
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.signUpEmail, this.signUpPassword)
+        .then(cred => {
+          cred.user.updateProfile({
+            displayName: this.signUpFirstName + " " + this.signUpLastName
+          });
+        })
         .then(() => {
           this.$router.push("Secure");
         })

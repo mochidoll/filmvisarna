@@ -1,7 +1,8 @@
 <template>
   <div id="secure">
     <div class="container center-align">
-      <h1 class="center">Your bookings</h1>
+        <h3>{{user.displayName}}</h3>
+      <h3 class="center">Your bookings</h3>
       <p>This is a secure area, you successfully logged in!</p>
       <a class="btn red darken-4" @click="logout">Log out</a>
     </div>
@@ -9,26 +10,40 @@
 </template>
 
 <script>
-import firebase from "firebase"
+import firebase from "firebase";
 export default {
   name: "Secure",
   data() {
-    return {};
+    return {
+      user: {}
+    };
   },
   methods: {
-      logout() {
-          firebase.auth().signOut().then(
-              window.console.log("log out"),
-                window.console.log(firebase.auth().currentUser),
-              this.$router.push('Login')
-          )
+    logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(
+          window.console.log("log out"),
+          window.console.log(firebase.auth().currentUser),
+          this.$router.push("Login")
+        );
+    }
+  },
+  created() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.user = user;
+      } else {
+        this.user = null;
       }
+    });
   }
 };
 </script>
 
 <style scoped>
- .btn {
-     margin-bottom: 1%;
- }
+.btn {
+  margin-bottom: 1%;
+}
 </style>
