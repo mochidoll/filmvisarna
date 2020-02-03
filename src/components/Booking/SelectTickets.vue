@@ -116,6 +116,9 @@ export default {
     numberOfTickets() {
       return this.adultTickets + this.childTickets + this.seniorTickets;
     },
+    bookingObject() {
+      return this.$store.state.bookingObject
+    },
     totalTicketPrice() {
       return (
         this.adultTickets * this.adultTicketPrice +
@@ -123,6 +126,11 @@ export default {
         this.seniorTickets * this.seniorTicketPrice
       );
     }
+  },
+  created() {
+    this.adultTickets = this.bookingObject.adultTickets
+    this.seniorTickets = this.bookingObject.seniorTickets
+    this.childTickets = this.bookingObject.childTickets
   }
 };
 </script>

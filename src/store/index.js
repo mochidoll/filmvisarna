@@ -9,7 +9,11 @@ export default new Vuex.Store({
     auditoriums: [],
     movies: [],
     screenings: [],
-    bookingObject: {}
+    bookingObject: {
+      adultTickets: 0,
+      seniorTickets: 0,
+      childTickets: 0
+    }
   },
   mutations: {
     setAuditoriums(state, data) {
