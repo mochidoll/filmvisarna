@@ -8,7 +8,8 @@
             <input type="text" id="login" class="active" v-model="username" />
             <label for="login">Login</label>
           </div>
-
+          </div>
+          <div class="col s12">
           <div class="input-field">
             <label for="password">Password</label>
             <input type="password" id="password" class="active" v-model="password" />
@@ -131,5 +132,8 @@ label {
 .container {
   margin-top: 2rem;
   margin-bottom: 2rem;
+}
+.col{
+  padding: 1 !important; 
 }
 </style>
