@@ -1,34 +1,37 @@
 <template>
   <div class="movie-list">
-    <div>
-      <p>Today's date: ({{ day }}, {{ date }})</p>
+    <div class="date">
+      <p>Today's date: ({{ dayToday }}, {{ dateToday }})</p>
     </div>
 
     <div class="filters">
-      <div class="date-selector">
-        <select name="date" id="choose-date">
-          <option value selected disabled hidden>Date</option>
-          <option value v-for="(date, id) in dates" :key="id">{{ date }}</option>
-        </select>
-      </div>
-      <div class="genre-selector">
-        <select name="genre" id="choose-genre">
-          <option value selected disabled hidden>Genre</option>
-          <option value v-for="(genre, id) in genres" :key="id">{{ genre }}</option>
-        </select>
+      <div class="row">
+        <div class="col s12 m6">
+          <div class="date-selector">
+            <select v-model="selectedDate" name="date" id="choose-date">
+              <option :value="date" v-for="(date, id) in dates" :key="id">{{ date }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col s12 m6">
+          <div class="genre-selector">
+            <select name="genre" id="choose-genre">
+              <option value selected disabled hidden>Genre</option>
+              <option v-for="(genre, id) in genres" :key="id">{{ genre }}</option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="movie col s12 m7" v-for="(movie, id) in movies" :key="id">
-      <div class="card horizontal red darken-4">
-        <div class="card-image">
-          <img class :src="movie.image" />
-        </div>
-        <div class="card-stacked">
-          <div class="card-content valign-wrapper">
-            <div>
-              <p class="movie-title">{{ movie.title }}</p>
-              <p>{{ movie.genre.toString() }} | {{ movie.length }} min</p>
+    <div class="hide-on-med-and-up">
+      <div class="movie" v-for="movie in filteredMovies" :key="movie.id">
+        <div class="row center">
+          <div class="card red darken-4">
+            <div class="col s12 m2">
+              <div class="card-img">
+                <img class="responive-img mobile-img" :src="movie.image" />
+              </div>
             </div>
             <div class="movie-buttons">
               <button class="btn black waves-effect waves-light" @click="goToSelectTickets">Go</button>
@@ -36,9 +39,26 @@
               <button class="btn black waves-effect waves-light">Time</button>
             </div>
           </div>
-          <!-- <div class="card-action">
-            <a class="white-text" href="#">This is a link</a>
-          </div>-->
+        </div>
+      </div>
+    </div>
+    <div class="hide-on-small-only">
+      <div class="movie col s12 m7" v-for="movie in filteredMovies" :key="movie.id">
+        <div class="card horizontal red darken-4">
+          <div class="card-image">
+            <img class="responsive-img" :src="movie.image" />
+          </div>
+          <div class="card-stacked">
+            <div class="card-content valign-wrapper">
+              <div>
+                <p class="movie-title">{{ movie.title }}</p>
+                <p>{{ movie.genre.toString() }} | {{ movie.length }} min</p>
+              </div>
+              <!-- <div class="movie-buttons" v-on="checkForTime(movie.id)">
+                <button class="btn black waves-effect waves-light">{{movieTime}}</button>
+              </div> -->
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -49,11 +69,18 @@
 import moment from "moment";
 
 export default {
+  data() {
+    return {
+      selectedDate: "",
+      movieTime: "",
+    };
+  },
+
   computed: {
-    day() {
+    dayToday() {
       return moment().format("dddd");
     },
-    date() {
+    dateToday() {
       return moment().format("MMM Do YY");
     },
     movies() {
@@ -75,19 +102,49 @@ export default {
       let screenings = [];
       for (let screening of this.$store.state.screenings) {
         screenings.push(
-          screening.startTime
-            .toDate()
-            .toLocaleDateString("sv-SV", {
-              year: "numeric",
-              month: "numeric",
-              day: "numeric",
-              weekday: "long"
-            })
+          screening.startTime.toDate().toLocaleDateString("sv-SV", {
+            year: "numeric",
+            month: "numeric",
+            day: "numeric"
+            // weekday: "long"
+          })
         );
       }
       screenings = [...new Set(screenings)];
       screenings.sort();
       return screenings;
+    },
+    filteredMovies() {
+      // filter movies where the movieID is
+      // in the filtered array of movieIDs
+      return this.movies.filter(movie => {
+        if (this.filteredScreens.includes(movie.id)) {
+          return movie;
+        }
+      });
+    },
+    filteredScreens() {
+      let date = new Date(this.selectedDate);
+      let year = date.getFullYear();
+      let month = date.getMonth(); //starts on 0 to 11
+      let day = date.getDate();
+
+      let screens = this.$store.state.screenings;
+
+      // filters array on date
+      let filteredArray = screens.filter(screen => {
+        let sDate = new Date(screen.startTime.toDate());
+
+        if (
+          sDate.getFullYear() == year &&
+          sDate.getMonth() == month &&
+          sDate.getDate() == day
+        ) {
+          return screen;
+        }
+      });
+      // convert array of screens to an array of string containing movieIds
+      return filteredArray.map(screen => screen.movieId);
     }
   },
 
@@ -99,10 +156,40 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+* {
+  box-sizing: border-box;
+}
 .movie .card {
   border-radius: 20px !important;
 }
+
+.card-stacked {
+  display: inline-block;
+}
+.movie .card-image img {
+  width: 100%;
+}
+.movie-buttons button {
+  border-radius: 10px;
+  margin: 1rem;
+}
+
+.movie .movie-title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.filters select {
+  text-align: center;
+  display: block !important;
+  height: 2rem;
+  padding: 0;
+}
+.filters .date-selector {
+  margin-right: 1rem;
+}
+
 .movie .card-content {
   display: flex;
   justify-content: space-between;
@@ -125,17 +212,17 @@ export default {
   font-size: 2rem;
   font-weight: bold;
 }
-.movie-list .filters {
-  display: flex;
-  justify-content: start;
+
+.mobile {
+  margin: 1% !important;
 }
-.filters select {
-  text-align: center;
-  display: block !important;
-  height: 2rem;
-  padding: 0;
+.responsive-img {
+  border-radius: 20px !important;
 }
-.filters .date-selector {
-  margin-right: 1rem;
+.mobile-img {
+  border-radius: 20px;
+  position: relative;
+  bottom: -10px;
+  width: 75%;
 }
 </style>

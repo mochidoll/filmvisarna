@@ -11,10 +11,10 @@ export default {
   name: "Home",
   components: {
     MovieList
-  },
-
+  }
 };
 </script>
 
 <style>
+
 </style>
