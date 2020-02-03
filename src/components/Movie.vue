@@ -38,7 +38,7 @@
 
       <div v-for="time in times" :key="time.id">
 
-        <div class="col timeButton btn red darken-2" on-click="bookMovie(time)">{{time.screeningTime.time}}</div>
+        <router-link to="/booking/selectTickets" class="col timeButton btn red darken-2" on-click="bookMovie(time)">{{time.screeningTime.time}}</router-link>
         <div class="col">{{time.screeningTime.auditorium}}</div>
       </div>
     </div>
