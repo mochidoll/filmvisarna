@@ -13,10 +13,6 @@ export default {
     MovieList
   },
 
-  created() {
-    this.$store.dispatch("getMovies");
-    this.$store.dispatch("getScreenings");
-  }
 };
 </script>
 

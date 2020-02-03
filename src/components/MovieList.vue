@@ -31,7 +31,7 @@
               <p>{{ movie.genre.toString() }} | {{ movie.length }} min</p>
             </div>
             <div class="movie-buttons">
-              <button class="btn black waves-effect waves-light">Time</button>
+              <button class="btn black waves-effect waves-light" @click="goToSelectTickets">Go</button>
               <button class="btn black waves-effect waves-light">Time</button>
               <button class="btn black waves-effect waves-light">Time</button>
             </div>
@@ -88,6 +88,12 @@ export default {
       screenings = [...new Set(screenings)];
       screenings.sort();
       return screenings;
+    }
+  },
+
+  methods: {
+    goToSelectTickets() {
+      this.$router.push({name: 'SelectTickets'})
     }
   }
 };

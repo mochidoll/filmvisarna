@@ -32,9 +32,9 @@ export default {
 
 <style scoped>
 .row {
-  padding-top: 7%;
+  padding-top: 2rem;
   width:70vw;
-  margin: 2rem;
+  margin: 2rem 0;
 }
 .breadcrumb:before {
   color: black;
