@@ -18,6 +18,10 @@ let myFirebase = firebase.initializeApp(config);
 // Firebase db
 const db = myFirebase.firestore();
 
+// Firebase authorization
+const auth = myFirebase.auth();
+
 export {
-  db
+  db,
+  auth
 }

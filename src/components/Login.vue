@@ -20,11 +20,7 @@
             v-if="loggedInUser"
             @click="login()"
           >Log In</a>
-          <a
-            class="btn waves-effect waves-light red darken-4"
-            v-else
-            @click="logOut()"
-          >Log Out</a>
+          <a class="btn waves-effect waves-light red darken-4" v-else @click="logOut()">Log Out</a>
         </div>
       </div>
       <div class="row col s12 m6">
@@ -58,6 +54,9 @@
 </template>
 
 <script>
+// import { auth } from "@/firebase/firebase";
+import firebase from "firebase";
+
 export default {
   data() {
     return {
@@ -66,42 +65,38 @@ export default {
       signUpFirstName: "",
       signUpLastName: "",
       signUpEmail: "",
-      signUpPassword: "",
+      signUpPassword: ""
     };
   },
   methods: {
     login() {
-      let attemptUser = this.users.filter(user => {
-        return user.userName === this.username;
-      })[0];
-      //window.console.log(attemptUser);
-      window.console.log(this.username);
-
-      if (
-        this.username.toLowerCase() === attemptUser.userName.toLowerCase() &&
-        this.password === attemptUser.password
-      ) {
-        window.console.log("Correct");
-        window.console.log(this.username);
-        this.$store.commit("setLoggedInUser", attemptUser);
-        this.username = "";
-        this.password = "";
-        this.$router.push("secure");
-        // window.console.log(this.loggedInUser);
-      } else {
-        window.console.log("Fail");
-        this.password = "";
-      }
-      window.console.log(this.loggedInUser);
-      if (this.loggedInUser) {
-        window.console.log("hej");
-      }
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.username, this.password)
+        .then(user => {
+          if (user) {
+            window.console.log(firebase.auth().currentUser)
+            window.console.log('Success')
+            this.$router.push('Secure')
+          } else {
+            window.console.log('Failure')
+          }
+        });
     },
     logOut() {
       this.$store.commit("setLoggedInUser", null);
     },
     signUp() {
-      window.console.log(this.signUpFirstName + " " + this.signUpLastName)
+      window.console.log(this.signUpFirstName + " " + this.signUpLastName);
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.signUpEmail, this.signUpPassword)
+        .catch(function(error) {
+          // Handle Errors here.
+          // var errorCode = error.code;
+          var errorMessage = error.message;
+          window.console.log(errorMessage);
+        });
     }
   },
   computed: {

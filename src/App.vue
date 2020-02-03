@@ -22,8 +22,11 @@
           <li>
             <router-link to="/contact">Contact</router-link>
           </li>
-          <li>
+          <li v-if="user === null">
             <router-link to="/login">Login</router-link>
+          </li>
+          <li v-else>
+            <router-link to="/secure">Secure</router-link>
           </li>
         </ul>
 
@@ -37,18 +40,19 @@
           <li>
             <router-link to="/contact">Contact</router-link>
           </li>
-          <li v-if="this.loggedInUser.userName === 'Magnus'">
-            <router-link to="/secure">{{this.loggedInUser.userName}}</router-link>
-          </li>
-          <li v-else>
+          <li v-if="user === null">
             <router-link to="/login">Login</router-link>
           </li>
-          
+          <li v-else>
+            <router-link to="/secure">Secure</router-link>
+          </li>
         </ul>
       </div>
     </nav>
 
-  <div id="main"><router-view></router-view></div>
+    <div id="main">
+      <router-view></router-view>
+    </div>
 
     <footer class="page-footer black">
       <div class="container center">
@@ -73,51 +77,65 @@
 </template>
 
 <script>
-  export default {
-    computed: {
-      loggedInUser() {
-        return this.$store.state.loggedInUser
-      }
-    },
-    created() {
+import firebase from "firebase";
+export default {
+  data() {
+    return {
+      user: {}
+    }
+  },
+  computed: {
+    logUser() {
+      return firebase.auth().currentUser;
+    }
+  },
+  created() {
     this.$store.dispatch("getMovies");
     this.$store.dispatch("getScreenings");
     this.$store.dispatch("getAuditoriums");
     this.$store.dispatch("getUsers");
+
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.user = user;
+      } else {
+        this.user = null;
+      }
+    });
   }
-  };
+};
 </script>
 
 <style>
-  * {
-    box-sizing: border-box;
-  }
-  
-  #app {
-    min-height: 100vh;
-    background: #ececec;
-  }
-  #main {
-    flex: 1 0 auto;
-  }
-  .logo {
-    width: 5rem;
-  }
-  .logo-text{
-    font-size: 1rem;
-  }
-  footer span {
-    font-size: 0.8rem;
-    margin: 0;
-    padding: 0;
-  }
-  footer i {
-    margin-right: 0.5rem;
-    display: inline-block;
-    position: relative;
-    bottom:-2px;
-  }
-  .page-footer {
-    padding-bottom: 20px;
-  }
+* {
+  box-sizing: border-box;
+}
+
+#app {
+  min-height: 100vh;
+  background: #ececec;
+}
+#main {
+  flex: 1 0 auto;
+}
+.logo {
+  width: 5rem;
+}
+.logo-text {
+  font-size: 1rem;
+}
+footer span {
+  font-size: 0.8rem;
+  margin: 0;
+  padding: 0;
+}
+footer i {
+  margin-right: 0.5rem;
+  display: inline-block;
+  position: relative;
+  bottom: -2px;
+}
+.page-footer {
+  padding-bottom: 20px;
+}
 </style>
