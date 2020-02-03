@@ -75,22 +75,22 @@ export default {
         .signInWithEmailAndPassword(this.username, this.password)
         .then(user => {
           if (user) {
-            window.console.log(firebase.auth().currentUser)
-            window.console.log('Success')
-            this.$router.push('Secure')
+            window.console.log(firebase.auth().currentUser);
+            window.console.log("Success");
+            this.$router.push("Secure");
           } else {
-            window.console.log('Failure')
+            window.console.log("Failure");
           }
         });
-    },
-    logOut() {
-      this.$store.commit("setLoggedInUser", null);
     },
     signUp() {
       window.console.log(this.signUpFirstName + " " + this.signUpLastName);
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.signUpEmail, this.signUpPassword)
+        .then(() => {
+          this.$router.push("Secure");
+        })
         .catch(function(error) {
           // Handle Errors here.
           // var errorCode = error.code;

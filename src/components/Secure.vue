@@ -1,9 +1,9 @@
 <template>
   <div id="secure">
-    <div class="container">
+    <div class="container center-align">
       <h1 class="center">Your bookings</h1>
       <p>This is a secure area, you successfully logged in!</p>
-      <a class="btn" @click="logout">Log out</a>
+      <a class="btn red darken-4" @click="logout">Log out</a>
     </div>
   </div>
 </template>
@@ -26,3 +26,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+ .btn {
+     margin-bottom: 1%;
+ }
+</style>
