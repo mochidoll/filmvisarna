@@ -3,8 +3,9 @@
     <div v-if="user" class="container center-align">
       <h3>{{this.user.displayName}}</h3>
       <h3 class="center">Your bookings</h3>
-      <p>This is a secure area, you successfully logged in!</p>
-      <a class="btn red darken-4" @click="logout">Log out</a>
+      <a class="btn" @click="test()">Test</a>
+
+      <a class="btn red darken-4" @click="logout()">Log out</a>
     </div>
     <div v-else>
       <p>Loading...</p>
@@ -31,28 +32,47 @@ export default {
           window.console.log(firebase.auth().currentUser),
           this.$router.push("Login")
         );
-    }
+    },
+    /* test() {
+      window.console.log(this.bookingUser);
+      window.console.log(this.userBookings);
+    } */
   },
   /* computed: {
-      user() {
-          let user = null;
-          firebase.auth().currentUser.then( (currentuser) => {
-            if (currentuser){
-                user = currentuser
-            }
-          });
-          return user
-      }
+    dummyBookings() {
+      return this.$store.state.dummyBookings
+    },
+    users() {
+      return this.$store.state.users;
+    },
+    bookingUser() {
+      return this.users.filter(user => {
+        if (firebase.auth().currentUser.uid === user.id) {
+          return user;
+        }
+      })[0];
+    },
+    userBookings() {
+      return this.dummyBookings.filter(dummyBooking => {
+        this.bookingUser.bookings.foreach(booking => {
+          if (dummyBooking.id === booking.id) {
+            return dummyBooking;
+          }
+        });
+      });
+    }
   }, */
   created() {
     firebase.auth().onAuthStateChanged(user => {
-        window.console.log(user)
+      window.console.log(user);
       if (user) {
         this.user = user;
       } else {
         this.user = null;
       }
     });
+    /* this.$store.dispatch("getDummyBookings"); */
+    this.$store.dispatch("getUsers");
   }
 };
 </script>

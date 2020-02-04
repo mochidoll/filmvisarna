@@ -10,7 +10,7 @@ export default new Vuex.Store({
     screenings: [],
     auditoriums: [],
     users: [],
-    loggedInUser: {},
+    dummyBookings: [], 
   },
   mutations: {
 
@@ -30,9 +30,10 @@ export default new Vuex.Store({
       state.users = data
     },
 
-    setLoggedInUser(state, data) {
-      state.loggedInUser = data
-    }
+   /*  setDummyBookings(state, data) {
+      state.dummyBookings = data
+    },
+ */
 
   },
   actions: {
@@ -80,6 +81,17 @@ export default new Vuex.Store({
       })
       commit('setUsers', users)
     },
+
+   /*  async getDummyBookings({ commit }) {
+      let snapshot = await db.collection('dummyBookings').get()
+      let dummyBookings = []
+      snapshot.forEach(dummyBooking=> {
+        let data = dummyBooking.data(); // alla egenskaper utom id:t
+        data.id = dummyBooking.id; // lägg till id
+        dummyBookings.push(data)
+      })
+      commit('setDummyBookings', dummyBookings)
+    }, */
     
   },
   modules: {
