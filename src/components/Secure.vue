@@ -1,10 +1,19 @@
 <template>
   <div id="secure">
     <div v-if="user" class="container center-align">
-      <h3>{{this.user.displayName}}</h3>
-      <h3 class="center">Your bookings</h3>
-      <a class="btn" @click="test()">Test</a>
+      <h4>{{this.user.displayName}}</h4>
+      <h4 class="center">Your bookings</h4>
 
+      <ul>
+        <li v-for="booking in userBookings" :key="booking.id">
+          <h5>{{ booking.id }}</h5>
+          <p>Adult Tickets: {{ booking.adultTickets }}</p>
+          <p>Child Tickets: {{ booking.childTickets }}</p>
+          <p>Senior Tickets: {{ booking.seniorTickets }}</p>
+        </li>
+      </ul>
+
+      <a class="btn" @click="test()">Test</a>
       <a class="btn red darken-4" @click="logout()">Log out</a>
     </div>
     <div v-else>
