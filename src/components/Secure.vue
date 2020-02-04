@@ -43,17 +43,16 @@ export default {
         );
     },
     test() {
-     /*  window.console.log(this.bookingUser);
+      /*  window.console.log(this.bookingUser);
       window.console.log(this.userBookings); */
-     /*  window.console.log(this.users) */
-     /*  window.console.log(this.dummyBookings)
-      window.console.log(this.bookingUser) */
-      window.console.log(this.userBookings)
+      /*  window.console.log(this.users) */
+      /*  window.console.log(this.dummyBookings) */
+      /* window.console.log(this.filteredScreenings); */
     }
   },
   computed: {
     dummyBookings() {
-      return this.$store.state.dummyBookings
+      return this.$store.state.dummyBookings;
     },
     users() {
       return this.$store.state.users;
@@ -66,17 +65,26 @@ export default {
       })[0];
     },
     userBookings() {
-      let bookingFilter =  this.bookingUser.bookings.toString();
-      return this.dummyBookings.filter( (dummyBooking) => {
-        if (bookingFilter.includes(dummyBooking.id)) {
+      return this.dummyBookings.filter(dummyBooking => {
+        if (this.bookingUser.bookings.includes(dummyBooking.id)) {
           return dummyBooking;
         }
       });
-    }
+    },
+    filteredScreenings() {
+      let screeningFilter = this.userBookings.map(
+        dummyBooking => dummyBooking.screeningId
+      );
+      return this.$store.state.screenings.filter(screening => {
+        if (screeningFilter.includes(screening.id)) {
+          return screening;
+        }
+      });
+    },
   },
   created() {
     firebase.auth().onAuthStateChanged(user => {
-     /*  window.console.log(user); */
+      /*  window.console.log(user); */
       if (user) {
         this.user = user;
       } else {
