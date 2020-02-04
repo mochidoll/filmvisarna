@@ -30,10 +30,10 @@ export default new Vuex.Store({
       state.users = data
     },
 
-   /*  setDummyBookings(state, data) {
+    setDummyBookings(state, data) {
       state.dummyBookings = data
     },
- */
+
 
   },
   actions: {
@@ -82,7 +82,7 @@ export default new Vuex.Store({
       commit('setUsers', users)
     },
 
-   /*  async getDummyBookings({ commit }) {
+    async getDummyBookings({ commit }) {
       let snapshot = await db.collection('dummyBookings').get()
       let dummyBookings = []
       snapshot.forEach(dummyBooking=> {
@@ -91,7 +91,7 @@ export default new Vuex.Store({
         dummyBookings.push(data)
       })
       commit('setDummyBookings', dummyBookings)
-    }, */
+    },
     
   },
   modules: {

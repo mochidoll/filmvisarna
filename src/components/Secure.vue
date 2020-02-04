@@ -33,12 +33,16 @@ export default {
           this.$router.push("Login")
         );
     },
-    /* test() {
-      window.console.log(this.bookingUser);
-      window.console.log(this.userBookings);
-    } */
+    test() {
+     /*  window.console.log(this.bookingUser);
+      window.console.log(this.userBookings); */
+     /*  window.console.log(this.users) */
+     /*  window.console.log(this.dummyBookings)
+      window.console.log(this.bookingUser) */
+      window.console.log(this.userBookings)
+    }
   },
-  /* computed: {
+  computed: {
     dummyBookings() {
       return this.$store.state.dummyBookings
     },
@@ -53,25 +57,24 @@ export default {
       })[0];
     },
     userBookings() {
-      return this.dummyBookings.filter(dummyBooking => {
-        this.bookingUser.bookings.foreach(booking => {
-          if (dummyBooking.id === booking.id) {
-            return dummyBooking;
-          }
-        });
+      let bookingFilter =  this.bookingUser.bookings.toString();
+      return this.dummyBookings.filter( (dummyBooking) => {
+        if (bookingFilter.includes(dummyBooking.id)) {
+          return dummyBooking;
+        }
       });
     }
-  }, */
+  },
   created() {
     firebase.auth().onAuthStateChanged(user => {
-      window.console.log(user);
+     /*  window.console.log(user); */
       if (user) {
         this.user = user;
       } else {
         this.user = null;
       }
     });
-    /* this.$store.dispatch("getDummyBookings"); */
+    this.$store.dispatch("getDummyBookings");
     this.$store.dispatch("getUsers");
   }
 };

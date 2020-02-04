@@ -18,10 +18,8 @@
         <div class="col s12 left-align">
           <a
             class="btn waves-effect waves-light red darken-4"
-            v-if="loggedInUser"
             @click="login()"
           >Log In</a>
-          <a class="btn waves-effect waves-light red darken-4" v-else @click="logOut()">Log Out</a>
         </div>
       </div>
       <div class="row col s12 m6">
