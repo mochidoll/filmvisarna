@@ -8,8 +8,8 @@
             <input type="text" id="login" class="active" v-model="username" />
             <label for="login">Login</label>
           </div>
-          </div>
-          <div class="col s12">
+        </div>
+        <div class="col s12">
           <div class="input-field">
             <label for="password">Password</label>
             <input type="password" id="password" class="active" v-model="password" />
@@ -57,6 +57,7 @@
 <script>
 // import { auth } from "@/firebase/firebase";
 import firebase from "firebase";
+import { db } from "@/firebase/firebase";
 
 export default {
   data() {
@@ -76,38 +77,44 @@ export default {
         .signInWithEmailAndPassword(this.username, this.password)
         .then(user => {
           if (user) {
-          /*   window.console.log(firebase.auth().currentUser);
+            /*   window.console.log(firebase.auth().currentUser);
             window.console.log("Success"); */
             this.$router.push("Secure");
           } else {
-          /*   window.console.log("Failure"); */
+            /*   window.console.log("Failure"); */
           }
         });
     },
     signUp() {
       window.console.log(this.signUpFirstName + " " + this.signUpLastName);
       if (this.signUpFirstName === "" || this.signUpLastName === "") {
-        alert("Please enter your name")
-      } else{
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.signUpEmail, this.signUpPassword)
-        .then(cred => {
-          cred.user.updateProfile({
-            displayName: this.signUpFirstName + " " + this.signUpLastName
+        alert("Please enter your name");
+      } else {
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(this.signUpEmail, this.signUpPassword)
+          .then(cred => {
+            cred.user.updateProfile({
+              displayName: this.signUpFirstName + " " + this.signUpLastName
+            });
+            db
+              .collection("users")
+              .doc(cred.user.uid)
+              .set({
+                bookings: []
+              });
+          })
+          .then(() => {
+            this.$router.push("Secure");
+          })
+          .catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            window.console.log(errorCode + " " + errorMessage);
+            alert(errorMessage);
           });
-        })
-        .then(() => {
-          this.$router.push("Secure");
-        })
-        .catch(function(error) {
-          // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          window.console.log(errorCode + " " + errorMessage);
-          alert(errorMessage);
-        });
-        }
+      }
     }
   },
   computed: {
@@ -138,7 +145,7 @@ label {
   margin-top: 2rem;
   margin-bottom: 2rem;
 }
-.col{
-  padding: 1 !important; 
+.col {
+  padding: 1 !important;
 }
 </style>
