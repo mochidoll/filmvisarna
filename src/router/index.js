@@ -52,7 +52,7 @@ const routes = [
     name: 'secure',
     component: Secure
   },
-]
+
   {
     path: '/booking',
     name: 'booking',
