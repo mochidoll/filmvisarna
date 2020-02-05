@@ -66,8 +66,8 @@ export default {
       return re.test(this.emailInput);
     },
     enableContinueButton() {
-      return (this.validEmail || this.user)
-    },
+      return this.validEmail || this.user;
+    }
   },
 
   props: {
@@ -96,17 +96,37 @@ export default {
           numberOfTickets: this.bookingObject.numberOfTickets,
           screeningId: this.bookingObject.screeningId,
           email: this.bookingObject.email,
-          seats: this.bookingObject.seatPositions,
-          timeStamp: new Date()
+          seats: this.bookingObject.seatPositions
+          /* timeStamp: new Date() */
         })
         .then(ref => {
           this.bookingObject.id = ref.id;
-          /*  window.console.log('In Confirm', this.bookingObject.id) */
+          window.console.log(this.user.uid)
+          if (this.user) {
+            db.collection("users")
+              .doc(this.user.uid)
+              .update({
+                bookings: firebase.firestore.FieldValue.arrayUnion(
+                  this.bookingObject.id
+                )
+              });
+          }
           this.$router.push({
-            name: "BookingComplete",
-            params: { bookingObject: this.bookingObject }
-          });
+        name: "BookingComplete",
+        params: {bookingObject: this.bookingObject}
+      });
+          /*  window.console.log('In Confirm', this.bookingObject.id) */
         });
+
+      /* let bookingRef = db.collection("users").doc(this.user.id); */
+      // Atomically add a new region to the "regions" array field.
+      /* let arrUnion = */
+
+      /* bookingRef.update({
+          bookings: firebase.firestore.FieldValue.arrayUnion(
+            this.bookingObject.id
+          )
+        }); */
     }
   },
 
