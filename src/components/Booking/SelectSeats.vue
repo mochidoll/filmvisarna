@@ -2,7 +2,7 @@
   <div class="container">
     <h4>Välj platser i {{ bookingObject.auditorium.name }}</h4>
     <p>Bokade biljetter: {{ bookingObject.numberOfTickets }} st</p>
-    <!-- <p>{{positions}}</p> -->
+    <p v-if="positions.length">Bokade platser: {{positions}}</p>
     <p v-if="feedback">{{feedback}}</p>
     <div class="center">
       <img src="@/assets/images/cinema.png" alt="cinema-screen" />
@@ -27,7 +27,7 @@
       </div>
 
       <div class="nav-buttons row col s12 center">
-        <button @click="goBackToSelectSeats" class="col s3 offset-s1 btn waves-effect waves-light red darken-4 white-text">TIllbaka</button>
+        <button @click="goBackToSelectTickets" class="col s3 offset-s1 btn waves-effect waves-light red darken-4 white-text">TIllbaka</button>
         <button
           @click="goToConfirmDetails"
           class="col s3 offset-s4 btn waves-effect waves-light red darken-4 white-text"
@@ -78,6 +78,7 @@ export default {
       hasAllSeatsSelected: false
     };
   },
+
   methods: {
     showPosition(position) {
       this.position = position;
@@ -100,17 +101,17 @@ export default {
     },
     goToConfirmDetails() {
       this.bookingObject.seatPositions = this.positions;
-      // this.$store.commit("setBookingObject", this.bookingObject);
       this.$router.push({
         name: "ConfirmDetails",
         params: {bookingObject: this.bookingObject}
       });
     },
-
-    goBackToSelectSeats() {
+    goBackToSelectTickets() {
+      this.bookingObject.seatPositions = null
       this.$router.push({name: 'SelectTickets'})
     }
   },
+
   computed: {
     auditorium() {
       return this.auditoriums.length
@@ -123,13 +124,14 @@ export default {
     auditoriums() {
       return this.$store.state.auditoriums;
     }
-    // bookingObject() {
-    //   return this.$store.state.bookingObject;
-    // }
   },
+
   created() {
-    // this.$store.dispatch("getAuditoriums");
+    if(this.bookingObject.seatPositions){
+      return null
+    }
   },
+
   watch: {
     currentTickets(val) {
       if (val === this.bookingObject.numberOfTickets) {
@@ -147,10 +149,12 @@ export default {
 
 <style>
 
-
-
-.seats {
-  margin: 1%;
-  border-radius: 10px;
-}
+  .seats {
+    margin: 1%;
+    border-radius: 10px;
+  }
+  
+  .container .nav-buttons {
+    margin: 1rem 0;
+  }
 </style>

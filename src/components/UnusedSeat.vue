@@ -18,7 +18,7 @@ export default {
     logPosition() {
       this.x = this.position.x;
       this.y = this.position.y;
-    window.console.log(this.x + " " + this.y);
+      window.console.log(this.x + " " + this.y);
       this.$emit("selectedSeat", this.x, this.y);
     }
   }

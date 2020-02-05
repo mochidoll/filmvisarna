@@ -185,6 +185,8 @@ export default {
     this.movieChosen = this.$store.state.movies.filter(movie => {
       return movie.id === this.screeningChosen.movieId;
     })[0];
+
+    // this.adultTickets = this.$store.state.bookingObject.adultTickets; 
   }
 };
 </script>
