@@ -62,7 +62,7 @@
           <div class="card-image">
             <img class="responsive-img" :src="movie.image" />
           </div>
-          <div class="card-stacked white">
+          <div class="card-stacked">
             <div class="card-content valign-wrapper">
               <div>
                 <p class="movie-title">{{ movie.title }}</p>
@@ -72,13 +72,14 @@
             </div>
           </div>
 
-          <div class="col s3">
+          <div class="col m3">
             <div v-for="screen in screeningMovies" :key="screen.id">
               <div v-if="screen.movieId == movie">
                 <div class="btn col red" v-if="screen.date.name === chosenDate.name">{{screen.time}}</div>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>
@@ -261,6 +262,13 @@ export default {
   border-radius: 5px !important;
 }
 
+
+.movie .card-image img {
+  width: 100%;
+}
+
+
+
 .card-stacked {
   display: inline-block;
 }
@@ -322,4 +330,61 @@ export default {
   margin-top: 15px;
   margin-bottom: 10px;
 }
+
+
+
+
+
+
+
+.movie .movie-title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.filters select {
+  text-align: center;
+  display: block !important;
+  height: 2rem;
+  padding: 0;
+}
+.filters .date-selector {
+  margin-right: 1rem;
+}
+
+.movie .card-content {
+  display: flex;
+  justify-content: space-between;
+}
+.movie .card-image {
+  max-width: 10rem !important;
+}
+.movie-buttons button {
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+}
+.movie .movie-container {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+.movie .movie-title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.mobile {
+  margin: 1% !important;
+}
+
+.mobile-img {
+  position: relative;
+  bottom: -10px;
+  width: 75%;
+  border-radius: 5px;
+}
+
+
 </style>
