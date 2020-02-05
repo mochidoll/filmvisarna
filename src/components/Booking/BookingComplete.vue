@@ -1,40 +1,53 @@
 <template>
-  <div class="container">
-    <div class="booking-confirmation">
-      <h4>Booking Complete!</h4>
-      <!--Loops through all data inside user, if we want to add more or less information in an user -->
-      <div class="row">
-        <div class="col s3">
-          <img :src="this.movieChosen.image">
-        </div>
+  <div class="container confirm-booking center">
+
+    <div class="row inner-container">
+      <h4 class="center col s12">Tack för din bokning!</h4>
+      <h5 class="center col s12">Bokningsnummer: {{ bookingObject.id.slice(-6) }}</h5>
+
+      <div class="col l6 m6 s12 image-container   ">
+        <img :src="bookingObject.movie.image" alt class="responsive-img" />
       </div>
-      <BookingInformation :data="bookingObject"></BookingInformation>
-      <h2>Thanks for booking!</h2>
+
+      <div class="left-align text-container col l6 m6 s12 center">
+        <p>Titel: {{ bookingObject.movie.title }}</p>
+        <p>Längd: {{ bookingObject.movie.length }} min</p>
+        <p>Datum: {{ bookingObject.screening.startTime.toDate().toLocaleDateString() }}</p>
+        <p>Tid: {{ bookingObject.screening.startTime.toDate().getHours() }}:00</p>
+        <p>Salong: {{ bookingObject.auditorium.name }}</p>
+        <p v-if="bookingObject.adultTickets">Vuxenbiljetter: {{ bookingObject.adultTickets}}</p>
+        <p v-if="bookingObject.childTickets">Barnbiljetter: {{ bookingObject.childTickets }}</p>
+        <p v-if="bookingObject.seniorTickets">Pensionärsbiljetter: {{bookingObject.seniorTickets }}</p>
+        <p v-for="(seat, id) in bookingObject.seatPositions" :key="id">Parkett: rad {{ seat.y + 1 }}, plats {{ seat.x}}</p>
+      </div>
+
     </div>
+
   </div>
 </template>
 
 <script>
-import BookingInformation from "@/components/Booking/BookingInformation";
 
 export default {
-  components: {
-    BookingInformation
-  },
-  computed: {
-    bookingObject() {
-      return this.$store.state.bookingObject;
-    },
-    movieChosen() {
-      return this.$store.state.movieChosen;
+
+  props: {
+    bookingObject: {
+      type: Object,
+      required: true
     }
+  },
+
+  mounted() {
+      window.console.log(this.bookingObject)
+      window.console.log('In Complete', this.bookingObject.id)
   }
-};
+}
 </script>
 
-<style scoped>
-.container {
-  padding: 20px;
+<style>
+  .confirm-booking h5 {
+  margin: 0 0 1.5rem !important;
+  /* margin-top: 2rem !important; */
 }
 h2 {
   margin: 2%;
@@ -44,8 +57,5 @@ h2 {
 }
 .booking-confirmation {
   margin-left: 5%;
-}
-img {
-  width:100%
 }
 </style>
