@@ -1,6 +1,6 @@
 <template>
   <div id="secure">
-    <div v-if="user" class="container center-align">
+    <div class="container center-align">
       <h4>{{this.user.displayName}}</h4>
       <h4 class="center">Your bookings</h4>
 
@@ -15,9 +15,6 @@
 
       <a class="btn" @click="test()">Test</a>
       <a class="btn red darken-4" @click="logout()">Log out</a>
-    </div>
-    <div v-else>
-      <p>Loading...</p>
     </div>
   </div>
 </template>
@@ -51,8 +48,8 @@ export default {
     }
   },
   computed: {
-    dummyBookings() {
-      return this.$store.state.dummyBookings;
+    bookings() {
+      return this.$store.state.bookings;
     },
     users() {
       return this.$store.state.users;
@@ -65,15 +62,15 @@ export default {
       })[0];
     },
     userBookings() {
-      return this.dummyBookings.filter(dummyBooking => {
-        if (this.bookingUser.bookings.includes(dummyBooking.id)) {
-          return dummyBooking;
+      return this.bookings.filter(booking => {
+        if (this.bookingUser.bookings.includes(booking.id)) {
+          return booking;
         }
       });
     },
     filteredScreenings() {
       let screeningFilter = this.userBookings.map(
-        dummyBooking => dummyBooking.screeningId
+        booking => booking.screeningId
       );
       return this.$store.state.screenings.filter(screening => {
         if (screeningFilter.includes(screening.id)) {
@@ -84,14 +81,13 @@ export default {
   },
   created() {
     firebase.auth().onAuthStateChanged(user => {
-      /*  window.console.log(user); */
       if (user) {
         this.user = user;
       } else {
         this.user = null;
       }
     });
-    this.$store.dispatch("getDummyBookings");
+    this.$store.dispatch("getBookings");
     this.$store.dispatch("getUsers");
   }
 };

@@ -1,10 +1,9 @@
 <template>
   <div class="container confirm-booking center">
-
     <div class="row inner-container">
       <h4 class="center col s12">Kontrollera din bokning..</h4>
 
-      <div class="col l6 m6 s12 image-container   ">
+      <div class="col l6 m6 s12 image-container">
         <img :src="bookingObject.movie.image" alt class="responsive-img" />
       </div>
 
@@ -17,48 +16,58 @@
         <p v-if="bookingObject.adultTickets">Vuxenbiljetter: {{ bookingObject.adultTickets}}</p>
         <p v-if="bookingObject.childTickets">Barnbiljetter: {{ bookingObject.childTickets }}</p>
         <p v-if="bookingObject.seniorTickets">Pensionärsbiljetter: {{bookingObject.seniorTickets }}</p>
-        <p v-for="(seat, id) in bookingObject.seatPositions" :key="id">Parkett: rad {{ seat.y + 1 }}, plats {{ seat.x}}</p>
+        <p
+          v-for="(seat, id) in bookingObject.seatPositions"
+          :key="id"
+        >Parkett: rad {{ seat.y + 1 }}, plats {{ seat.x}}</p>
       </div>
 
-        <div class=" extra-info col s12">
-        
-          <p class="span">Ange din email för att slutföra bokningen.</p>
+      <div v-if="!user" class="extra-info col s12">
+        <p class="span">Ange din email för att slutföra bokningen.</p>
 
-          <div class="input-field col m7 offset-m2">
-            <i class="material-icons prefix">email</i>
-            <input v-model="emailInput" id="icon_prefix" class="" type="email">
-            <label for="icon_prefix">Email</label>
-            <span class="helper-text" data-error="Felaktig email, var god skriv in igen."></span>
-          </div>
-
+        <div class="input-field col m7 offset-m2">
+          <i class="material-icons prefix">email</i>
+          <input v-model="emailInput" id="icon_prefix" class type="email" />
+          <label for="icon_prefix">Email</label>
+          <span class="helper-text" data-error="Felaktig email, var god skriv in igen."></span>
         </div>
-
+      </div>
     </div>
 
     <div class="nav-buttons col s12">
-      <button @click="backToSelectSeats" class="btn waves-effect waves-light red darken-4 col s3 offset-s1">Tillbaka</button>
-      <button :class="{disabled: !validEmail }" @click="confirmBooking" class="btn waves-effect waves-light red darken-4 col s3 offset-s4">Bekräfta</button>
+      <button
+        @click="backToSelectSeats"
+        class="btn waves-effect waves-light red darken-4 col s3 offset-s1"
+      >Tillbaka</button>
+      <button
+        :class="{disabled: !enableContinueButton}"
+        @click="confirmBooking"
+        class="btn waves-effect waves-light red darken-4 col s3 offset-s4"
+      >Bekräfta</button>
     </div>
-
   </div>
 </template>
 
 <script>
-import { db } from "@/firebase/firebase"
+import { db } from "@/firebase/firebase";
+import firebase from "firebase";
 
 export default {
-
   data() {
     return {
-      emailInput: null
-    }
+      emailInput: null,
+      user: null
+    };
   },
 
   computed: {
     validEmail() {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(this.emailInput);
-    }
+    },
+    enableContinueButton() {
+      return (this.validEmail || this.user)
+    },
   },
 
   props: {
@@ -77,26 +86,39 @@ export default {
     },
 
     confirmBooking() {
+      this.bookingObject.email = this.emailInput;
 
-      this.bookingObject.email = this.emailInput
-
-      db.collection("bookings").add({
-        adultTickets: this.bookingObject.adultTickets,
-        childTickets: this.bookingObject.childTickets,
-        seniorTickets: this.bookingObject.seniorTickets,
-        numberOfTickets: this.bookingObject.numberOfTickets,
-        screeningId: this.bookingObject.screeningId,
-        email: this.bookingObject.email,
-        seats: this.bookingObject.seatPositions,
-        timeStamp: new Date()
-      }).then( ref => {
-        this.bookingObject.id = ref.id
-        window.console.log('In Confirm', this.bookingObject.id)
-        this.$router.push({name: 'BookingComplete', params: {bookingObject: this.bookingObject}})
-      })
+      db.collection("bookings")
+        .add({
+          adultTickets: this.bookingObject.adultTickets,
+          childTickets: this.bookingObject.childTickets,
+          seniorTickets: this.bookingObject.seniorTickets,
+          numberOfTickets: this.bookingObject.numberOfTickets,
+          screeningId: this.bookingObject.screeningId,
+          email: this.bookingObject.email,
+          seats: this.bookingObject.seatPositions,
+          timeStamp: new Date()
+        })
+        .then(ref => {
+          this.bookingObject.id = ref.id;
+          /*  window.console.log('In Confirm', this.bookingObject.id) */
+          this.$router.push({
+            name: "BookingComplete",
+            params: { bookingObject: this.bookingObject }
+          });
+        });
     }
   },
 
+  created() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.user = user;
+      } else {
+        this.user = null;
+      }
+    });
+  }
 };
 </script>
 <style>

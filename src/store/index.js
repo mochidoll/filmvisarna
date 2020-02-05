@@ -10,7 +10,7 @@ export default new Vuex.Store({
     movies: [],
     screenings: [],
     users: [],
-    dummyBookings: [], 
+    bookings: [], 
     bookingObject: {
       adultTickets: 0,
       seniorTickets: 0,
@@ -33,8 +33,8 @@ export default new Vuex.Store({
       state.users = data
     },
 
-    setDummyBookings(state, data) {
-      state.dummyBookings = data
+    setBookings(state, data) {
+      state.bookings = data
     },
 
 
@@ -83,15 +83,15 @@ export default new Vuex.Store({
       commit('setUsers', users)
     },
 
-    async getDummyBookings({ commit }) {
-      let snapshot = await db.collection('dummyBookings').get()
-      let dummyBookings = []
-      snapshot.forEach(dummyBooking=> {
-        let data = dummyBooking.data(); // alla egenskaper utom id:t
-        data.id = dummyBooking.id; // lägg till id
-        dummyBookings.push(data)
+    async getBookings({ commit }) {
+      let snapshot = await db.collection('bookings').get()
+      let bookings = []
+      snapshot.forEach(booking=> {
+        let data = booking.data(); // alla egenskaper utom id:t
+        data.id = booking.id; // lägg till id
+        bookings.push(data)
       })
-      commit('setDummyBookings', dummyBookings)
+      commit('setBookings', bookings)
     },
     
   },
