@@ -7,7 +7,7 @@
       <img src="@/assets/images/cinema.png" alt="cinema-screen" />
     </div>
 
-    <div class="row" v-if="auditoriums">
+    <div class="row seat-wrapper" v-if="auditoriums">
       <div
         class="center col s12"
         v-for="(row, y, id) in bookingObject.auditorium.seatsPerRow"
@@ -147,6 +147,10 @@ export default {
 </script>
 
 <style>
+
+  .seat-wrapper {
+    user-select: none;
+  }
 
   .seats {
     margin: 1%;
