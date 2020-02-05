@@ -44,7 +44,7 @@
                   <div v-for="screen in screeningMovies" :key="screen.id">
                     <div v-if="screen.movieId == movie">
                       <div
-                        class="btn col red s12"
+                        class="btn col red darken-4 s12 z-depth-0.5"
                         v-if="screen.date.name === chosenDate.name"
                       >Book time - {{screen.time}}</div>
                     </div>
@@ -58,7 +58,7 @@
     </div>
     <div class="hide-on-small-only">
       <div class="movie col m7" v-for="movie in filteredMovies" :key="movie.id">
-        <div class="card horizontal white">
+        <div @click="goToMovie(movie)" class="card horizontal white">
           <div class="card-image">
             <img class="responsive-img" :src="movie.image" />
           </div>
@@ -71,15 +71,15 @@
               </div>
             </div>
           </div>
-
-          <div class="col m3">
+          <!-- <div class="col m3">
             <div v-for="screen in screeningMovies" :key="screen.id">
               <div v-if="screen.movieId == movie">
-                <div class="btn col red" v-if="screen.date.name === chosenDate.name">{{screen.time}}</div>
+                <div class="btn col red" v-if="screen.date.name === chosenDate.name">{{screen.time}}
+                  
+                </div>
               </div>
             </div>
-          </div>
-
+          </div>-->
         </div>
       </div>
     </div>
@@ -227,6 +227,9 @@ export default {
   methods: {
     updateChosenDate(date) {
       this.chosenDate.name = date.name;
+    },
+    goToMovie(movie) {
+      this.$router.push("/allMovies/" + movie.title);
     }
   },
   mounted() {
@@ -261,37 +264,16 @@ export default {
 .movie .card {
   border-radius: 5px !important;
 }
-
-
 .movie .card-image img {
   width: 100%;
 }
-
-
-
 .card-stacked {
   display: inline-block;
 }
-.movie-buttons button {
-  border-radius: 10px;
-  margin: 1rem;
-}
-
 .movie .movie-title {
   font-size: 2rem;
   font-weight: bold;
 }
-
-.filters select {
-  text-align: center;
-  display: block !important;
-  height: 2rem;
-  padding: 0;
-}
-.filters .date-selector {
-  margin-right: 1rem;
-}
-
 .movie .card-content {
   display: flex;
   justify-content: space-between;
@@ -303,7 +285,7 @@ export default {
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  margin: 1rem;
+  margin: 0.5rem;
 }
 .movie .movie-container {
   align-items: center;
@@ -314,11 +296,9 @@ export default {
   font-size: 2rem;
   font-weight: bold;
 }
-
 .mobile {
   margin: 1% !important;
 }
-
 .mobile-img {
   position: relative;
   bottom: -10px;
@@ -326,65 +306,6 @@ export default {
   border-radius: 5px;
 }
 .btn {
-  margin-right: 30px;
-  margin-top: 15px;
-  margin-bottom: 10px;
+  margin-top: 7%;
 }
-
-
-
-
-
-
-
-.movie .movie-title {
-  font-size: 2rem;
-  font-weight: bold;
-}
-
-.filters select {
-  text-align: center;
-  display: block !important;
-  height: 2rem;
-  padding: 0;
-}
-.filters .date-selector {
-  margin-right: 1rem;
-}
-
-.movie .card-content {
-  display: flex;
-  justify-content: space-between;
-}
-.movie .card-image {
-  max-width: 10rem !important;
-}
-.movie-buttons button {
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  margin: 1rem;
-}
-.movie .movie-container {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-}
-.movie .movie-title {
-  font-size: 2rem;
-  font-weight: bold;
-}
-
-.mobile {
-  margin: 1% !important;
-}
-
-.mobile-img {
-  position: relative;
-  bottom: -10px;
-  width: 75%;
-  border-radius: 5px;
-}
-
-
 </style>
