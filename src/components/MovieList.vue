@@ -18,7 +18,7 @@
     </div>
 
     <div class="hide-on-med-and-up">
-      <div class="movie" v-for="movie in movies" :key="movie.id">
+      <div class="movie" v-for="movie in filteredMovies" :key="movie.id">
         <div class="row center">
           <div class="card white small-movie-margin">
             <div class="col s12">
@@ -40,6 +40,16 @@
                   <p>{{ movie.description }}</p>
                 </div>
                 <div class="col s12"></div>
+                <div class="col s6 offset-s3">
+                  <div v-for="screen in screeningMovies" :key="screen.id">
+                    <div v-if="screen.movieId == movie">
+                      <div
+                        class="btn col red s12"
+                        v-if="screen.date.name === chosenDate.name"
+                      >Book time - {{screen.time}}</div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -307,7 +317,7 @@ export default {
   width: 75%;
   border-radius: 5px;
 }
-.btn{
+.btn {
   margin-right: 30px;
   margin-top: 15px;
   margin-bottom: 10px;
