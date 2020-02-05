@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container center">
     <div class="row z-depth-1 white">
       <div class="container center navbar">
         <div class="nav-wrapper">
@@ -33,7 +33,6 @@ export default {
 <style scoped>
 .row {
   padding-top: 2rem;
-  width:70vw;
   margin: 2rem 0;
 }
 .breadcrumb:before {

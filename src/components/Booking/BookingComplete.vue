@@ -3,7 +3,7 @@
 
     <div class="row inner-container">
       <h4 class="center col s12">Tack för din bokning!</h4>
-      <h5 class="center col s12">Bokningsnummer: {{ bookingObject.id }}</h5>
+      <h5 class="center col s12">Bokningsnummer: {{ bookingObject.id.slice(-6) }}</h5>
 
       <div class="col l6 m6 s12 image-container   ">
         <img :src="bookingObject.movie.image" alt class="responsive-img" />
@@ -44,6 +44,10 @@ export default {
 }
 </script>
 
-<style >
+<style>
+  .confirm-booking h5 {
+  margin: 0 0 1.5rem !important;
+  /* margin-top: 2rem !important; */
+}
 
 </style>
