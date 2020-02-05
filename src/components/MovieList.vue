@@ -23,7 +23,7 @@
           <div class="card white small-movie-margin">
             <div class="col s12">
               <div class="card-img">
-                <img class="responive-img mobile-img" :src="movie.image" />
+                <img @click="goToMovie(movie)" class="responive-img mobile-img" :src="movie.image" />
               </div>
             </div>
             <div class="card-stacked">
