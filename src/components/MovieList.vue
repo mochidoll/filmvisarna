@@ -45,6 +45,7 @@
                     <div v-if="screen.movieId == movie">
                       <div
                         class="btn col red darken-4 s12 z-depth-0.5"
+                        @click="bookMovie(screen.screeningId)"
                         v-if="screen.date.name === chosenDate.name"
                       >Book time - {{screen.time}}</div>
                     </div>
@@ -179,10 +180,10 @@ export default {
           if (movie.id == screening.movieId) {
             this.$store.state.auditoriums.forEach(item => {
               if (screening.auditoriumId == item.id) {
-                window.console.log(item.id);
                 screenings.push({
                   movieId: movie,
                   name: movie.title,
+                  screeningId: screening.id,
                   date: {
                     name: screening.startTime
                       .toDate()
@@ -230,6 +231,11 @@ export default {
     },
     goToMovie(movie) {
       this.$router.push("/allMovies/" + movie.title);
+    },
+    bookMovie(screenId){
+      this.$store.state.bookingObject.screeningId = screenId
+      window.console.log(screenId)
+      this.$router.push({name: 'selectTickets'})
     }
   },
   mounted() {

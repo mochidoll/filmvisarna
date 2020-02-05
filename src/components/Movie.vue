@@ -40,7 +40,7 @@
         <div
           to="/booking/selectTickets"
           class="col timeButton btn red darken-2"
-          @click="bookMovie(time)"
+          @click="bookMovie(time.screening)"
         >{{time.time}}</div>
         <div class="col">{{time.auditorium}}</div>
       </div>
@@ -73,8 +73,8 @@ export default {
     updateChosenTime(time) {
       this.chosenTime = time;
     },
-    bookMovie(time) {
-      this.$store.state.movieChosen = time;
+    bookMovie(screenId) {
+      this.$store.state.bookingObject.screeningId = screenId;
       this.$router.push({
         name: "selectTickets"
       });
