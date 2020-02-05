@@ -51,7 +51,7 @@
             </a>
           </div>
 
-          <div class="col s12 m6 right-align">Pensionärsbiljetter{{seniorTicketPrice}}:-</div>
+          <div class="col s12 m6 right-align">Pensionärsbiljetter: {{seniorTicketPrice}}:-</div>
           <div class="col s12 m6 left-align">
             <a class="btn-floating disabled btn-small" v-if="seniorTickets === 0">
               <i class="material-icons">remove</i>
@@ -67,7 +67,7 @@
               <i class="material-icons">add</i>
             </a>
           </div>
-          <div class="col s12 center">Totalt: {{totalTicketPrice}}</div>
+          <div class="col s12 center">Totalt: {{totalTicketPrice}}:-</div>
         </div>
       </div>
 

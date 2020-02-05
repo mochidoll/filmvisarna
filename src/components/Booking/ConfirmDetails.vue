@@ -40,10 +40,6 @@
       <button :class="{disabled: !validEmail }" @click="confirmBooking" class="btn waves-effect waves-light red darken-4 col s3 offset-s4">Bekräfta</button>
     </div>
 
-    
-
-
-
   </div>
 </template>
 
@@ -80,20 +76,24 @@ export default {
       });
     },
 
-    async confirmBooking() {
+    confirmBooking() {
 
       this.bookingObject.email = this.emailInput
 
-      await db.collection("bookings").add({
+      db.collection("bookings").add({
         adultTickets: this.bookingObject.adultTickets,
         childTickets: this.bookingObject.childTickets,
         seniorTickets: this.bookingObject.seniorTickets,
         numberOfTickets: this.bookingObject.numberOfTickets,
         screeningId: this.bookingObject.screeningId,
         email: this.bookingObject.email,
-        seats: this.bookingObject.seatPositions
+        seats: this.bookingObject.seatPositions,
+        timeStamp: new Date()
+      }).then( ref => {
+        this.bookingObject.id = ref.id
+        window.console.log('In Confirm', this.bookingObject.id)
+        this.$router.push({name: 'BookingComplete', params: {bookingObject: this.bookingObject}})
       })
-      this.$router.push({name: 'BookingComplete', params: {bookingObject: this.bookingObject}})
     }
   },
 
@@ -116,7 +116,8 @@ export default {
   margin: 0 0 0.5rem 0;
 }
 .confirm-booking img {
-  max-height: 200px;
+  border-radius: 5px;
+  max-height: 40vh;
 }
 
 .confirm-booking .nav-buttons {

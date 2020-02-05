@@ -71,6 +71,7 @@ const routes = [
       {
         path: 'bookingComplete',
         name: 'BookingComplete',
+        props: true,
         component: BookingComplete
       },
     ]

@@ -2,7 +2,6 @@
   <div class="container">
     <h4>Välj platser i {{ bookingObject.auditorium.name }}</h4>
     <p>Bokade biljetter: {{ bookingObject.numberOfTickets }} st</p>
-    <p v-if="positions.length">Bokade platser: {{positions}}</p>
     <p v-if="feedback">{{feedback}}</p>
     <div class="center">
       <img src="@/assets/images/cinema.png" alt="cinema-screen" />
