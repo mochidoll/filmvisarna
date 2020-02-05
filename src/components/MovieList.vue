@@ -18,7 +18,7 @@
     </div>
 
     <div class="hide-on-med-and-up">
-      <div class="movie" v-for="movie in movies" :key="movie.id">
+      <div class="movie" v-for="movie in filteredMovies" :key="movie.id">
         <div class="row center">
           <div class="card white small-movie-margin">
             <div class="col s12">
@@ -40,6 +40,12 @@
                   <p>{{ movie.description }}</p>
                 </div>
                 <div class="col s12"></div>
+                <div class v-for="time in times" :key="time.id">
+                  <div
+                    v-if="movie.id === time.screeningTime.movieId"
+                    class="btn red darken-2"
+                  >{{time.screeningTime.time}}</div>
+                </div>
               </div>
             </div>
           </div>
@@ -58,6 +64,13 @@
                 <p class="movie-title">{{ movie.title }}</p>
                 <p>{{ movie.genre.toString() }} | {{ movie.length }} min</p>
                 <p>{{ movie.description }}</p>
+              </div>
+
+              <div class v-for="time in times" :key="time.id">
+                <div
+                  v-if="movie.id === time.screeningTime.movieId"
+                  class="btn red darken-2"
+                >{{time.screeningTime.time}}</div>
               </div>
             </div>
           </div>
@@ -123,11 +136,13 @@ export default {
       return screenings;
     }, */
     filteredMovies() {
+      //changes filteredScreens to an array of strings with movieIds
+      let movieIds = this.filteredScreens.map(screen => screen.movieId);
+
       // filter movies where the movieID is
       // in the filtered array of movieIDs
       return this.movies.filter(movie => {
-        if (this.filteredScreens.includes(movie.id)) {
-          window.console.log("inne i filteredmovies: " + movie.id);
+        if (movieIds.includes(movie.id)) {
           return movie;
         }
       });
@@ -156,7 +171,8 @@ export default {
         }
       });
       // convert array of screens to an array of string containing movieIds
-      return filteredArray.map(screen => screen.movieId);
+      //return filteredArray.map(screen => screen.movieId);
+      return filteredArray;
     },
     dates() {
       let datesSorted = [];
@@ -177,25 +193,25 @@ export default {
     },
     times() {
       let timeSorted = [];
-      this.screeningMovies.forEach(screeningMovie => {
-        if (screeningMovie.date.name == this.chosenDate.name) {
-          timeSorted.push({
-            screeningTime: {
-              time: screeningMovie.time,
-              auditorium: screeningMovie.auditorium,
-              screening: screeningMovie.screening
-            }
-          });
-        }
-      });
+
+      this.filteredScreens.forEach(screening =>
+        timeSorted.push({
+          screeningTime: {
+            time: screening.startTime.toDate().toLocaleTimeString(),
+            movieId: screening.movieId
+          }
+        })
+      );
       timeSorted.sort((a, b) =>
         a.time > b.time ? 1 : b.time > a.time ? -1 : 0
       );
+      window.console.log(timeSorted);
       return timeSorted;
     }
   },
   methods: {
     updateChosenDate(date) {
+      window.console.log(date);
       this.chosenDate.name = date.name;
     }
   },
