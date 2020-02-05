@@ -4,7 +4,7 @@
     <div class="row inner-container">
       <h4 class="center col s12">Kontrollera din bokning..</h4>
 
-      <div class="col l6 m6 s12 image-container">
+      <div class="col l6 m6 s12 image-container   ">
         <img :src="bookingObject.movie.image" alt class="responsive-img" />
       </div>
 
@@ -17,11 +17,12 @@
         <p v-if="bookingObject.adultTickets">Vuxenbiljetter: {{ bookingObject.adultTickets}}</p>
         <p v-if="bookingObject.childTickets">Barnbiljetter: {{ bookingObject.childTickets }}</p>
         <p v-if="bookingObject.seniorTickets">Pensionärsbiljetter: {{bookingObject.seniorTickets }}</p>
-        <p v-for="(seat, id) in bookingObject.seatPositions" :key="id + seat.x + seat.y">Parkett: rad {{ seat.y + 1 }}, plats {{ seat.x}}</p>
+        <p v-for="(seat, id) in bookingObject.seatPositions" :key="id">Parkett: rad {{ seat.y + 1 }}, plats {{ seat.x}}</p>
       </div>
 
         <div class=" extra-info col s12">
         
+          <p class="span">Ange din email för att slutföra bokningen.</p>
 
           <div class="input-field col m7 offset-m2">
             <i class="material-icons prefix">email</i>
@@ -47,12 +48,9 @@
 </template>
 
 <script>
-// import BookingInformation from "@/components/Booking/BookingInformation";
+import { db } from "@/firebase/firebase"
 
 export default {
-  components: {
-    // BookingInformation
-  },
 
   data() {
     return {
@@ -82,15 +80,22 @@ export default {
       });
     },
 
-    confirmBooking() {
+    async confirmBooking() {
+
       this.bookingObject.email = this.emailInput
+
+      await db.collection("bookings").add({
+        adultTickets: this.bookingObject.adultTickets,
+        childTickets: this.bookingObject.childTickets,
+        seniorTickets: this.bookingObject.seniorTickets,
+        numberOfTickets: this.bookingObject.numberOfTickets,
+        screeningId: this.bookingObject.screeningId,
+        email: this.bookingObject.email,
+        seats: this.bookingObject.seatPositions
+      })
       this.$router.push({name: 'BookingComplete', params: {bookingObject: this.bookingObject}})
     }
   },
-
-  mounted() {
-    window.console.log(this.bookingObject.seatPositions)
-  }
 
 };
 </script>
@@ -106,8 +111,9 @@ export default {
   /* margin-top: 2rem !important; */
 }
 .confirm-booking .text-container p {
-  margin: 0 0 0.5rem 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  font-size: 1rem !important;
+  margin: 0 0 0.5rem 0;
 }
 .confirm-booking img {
   max-height: 200px;
@@ -115,5 +121,8 @@ export default {
 
 .confirm-booking .nav-buttons {
   margin-bottom: 1rem;
+}
+.span {
+  margin: 1rem 0 0 !important;
 }
 </style>
