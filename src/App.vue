@@ -17,7 +17,7 @@
             <router-link to="/">Now Showing</router-link>
           </li>
           <li>
-            <router-link to="/allMovies">All Movies </router-link>
+            <router-link to="/allMovies">All Movies</router-link>
           </li>
           <li>
             <router-link to="/contact">Contact</router-link>
