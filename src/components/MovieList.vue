@@ -61,6 +61,14 @@
               </div>
             </div>
           </div>
+
+          <div class="col s3">
+            <div v-for="screen in screeningMovies" :key="screen.id">
+              <div v-if="screen.movieId == movie">
+                <div class="btn col red" v-if="screen.date.name === chosenDate.name">{{screen.time}}</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -127,7 +135,7 @@ export default {
       // in the filtered array of movieIDs
       return this.movies.filter(movie => {
         if (this.filteredScreens.includes(movie.id)) {
-          window.console.log("inne i filteredmovies: " + movie.id);
+          window.console.log(movie);
           return movie;
         }
       });
@@ -142,11 +150,6 @@ export default {
       // filters array on date
       let filteredArray = screens.filter(screen => {
         let sDate = new Date(screen.startTime.toDate());
-        window.console.log(
-          "inne i filteredscreens: ",
-          sDate.getFullYear(),
-          year
-        );
         if (
           sDate.getFullYear() == year &&
           sDate.getMonth() == month &&
@@ -157,6 +160,40 @@ export default {
       });
       // convert array of screens to an array of string containing movieIds
       return filteredArray.map(screen => screen.movieId);
+    },
+    screeningMovies() {
+      let screenings = [];
+      this.movies.forEach(movie => {
+        this.$store.state.screenings.forEach(screening => {
+          if (movie.id == screening.movieId) {
+            this.$store.state.auditoriums.forEach(item => {
+              if (screening.auditoriumId == item.id) {
+                window.console.log(item.id);
+                screenings.push({
+                  movieId: movie,
+                  name: movie.title,
+                  date: {
+                    name: screening.startTime
+                      .toDate()
+                      .toLocaleDateString("sv-SV", {
+                        year: "numeric",
+                        month: "numeric",
+                        day: "numeric"
+                      })
+                  },
+                  time: screening.startTime
+                    .toDate()
+                    .toLocaleTimeString("sv-SV", {
+                      hour: "numeric",
+                      minute: "numeric"
+                    })
+                });
+              }
+            });
+          }
+        });
+      });
+      return screenings;
     },
     dates() {
       let datesSorted = [];
@@ -174,24 +211,6 @@ export default {
       datesSorted = [...new Set(datesSorted)];
       datesSorted.sort().forEach(date => dateObject.push({ name: date }));
       return dateObject;
-    },
-    times() {
-      let timeSorted = [];
-      this.screeningMovies.forEach(screeningMovie => {
-        if (screeningMovie.date.name == this.chosenDate.name) {
-          timeSorted.push({
-            screeningTime: {
-              time: screeningMovie.time,
-              auditorium: screeningMovie.auditorium,
-              screening: screeningMovie.screening
-            }
-          });
-        }
-      });
-      timeSorted.sort((a, b) =>
-        a.time > b.time ? 1 : b.time > a.time ? -1 : 0
-      );
-      return timeSorted;
     }
   },
   methods: {
@@ -287,5 +306,10 @@ export default {
   bottom: -10px;
   width: 75%;
   border-radius: 5px;
+}
+.btn{
+  margin-right: 30px;
+  margin-top: 15px;
+  margin-bottom: 10px;
 }
 </style>
