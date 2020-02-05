@@ -107,35 +107,41 @@ export default {
 </script>
 
 <style>
-* {
-  box-sizing: border-box;
-}
+  * {
+    box-sizing: border-box;
+  }
+  
+  #app {
+    min-height: 100vh;
+    background: #ececec;
+    display: flex;
+    flex-direction: column;
+  
+  }
+  #main {
+    flex: 1 0 auto;
+  }
+    
+    
 
-#app {
-  min-height: 100vh;
-  background: #ececec;
-}
-#main {
-  flex: 1 0 auto;
-}
-.logo {
-  width: 5rem;
-}
-.logo-text {
-  font-size: 1rem;
-}
-footer span {
-  font-size: 0.8rem;
-  margin: 0;
-  padding: 0;
-}
-footer i {
-  margin-right: 0.5rem;
-  display: inline-block;
-  position: relative;
-  bottom: -2px;
-}
-.page-footer {
-  padding-bottom: 20px;
-}
+  .logo {
+    width: 5rem;
+  }
+  .logo-text{
+    font-size: 1rem;
+  }
+  footer span {
+    font-size: 0.8rem;
+    margin: 0;
+    padding: 0;
+  }
+  footer i {
+    margin-right: 0.5rem;
+    display: inline-block;
+    position: relative;
+    bottom:-2px;
+  }
+  .page-footer {
+    padding-bottom: 20px;
+  }
 </style>

@@ -6,24 +6,27 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    auditoriums: [],
     movies: [],
     screenings: [],
-    auditoriums: [],
     users: [],
     dummyBookings: [], 
+    bookingObject: {
+      adultTickets: 0,
+      seniorTickets: 0,
+      childTickets: 0,
+      screeningId:'886NXaI15Uq0v7NmuiB8'
+    }
   },
   mutations: {
-
+    setAuditoriums(state, data) {
+      state.auditoriums = data
+    },
     setMovies(state, data) {
       state.movies = data
     }, 
-
     setScreenings(state, data) {
       state.screenings = data
-    },
-
-    setAuditoriums(state, data) {
-      state.auditoriums = data
     },
 
     setUsers(state, data) {
@@ -37,7 +40,16 @@ export default new Vuex.Store({
 
   },
   actions: {
-
+    async getAuditoriums({ commit }) {
+      let snapshot = await db.collection('auditoriums').get()
+      let auditoriums = []
+      snapshot.forEach(auditorium => {
+        let data = auditorium.data(); // alla egenskaper utom id:t
+        data.id = auditorium.id; // lägg till id
+        auditoriums.push(data)
+      })
+      commit('setAuditoriums', auditoriums)
+    },
     async getMovies({ commit }) {
       let snapshot = await db.collection('movies').get()
       let movies = []
@@ -58,17 +70,6 @@ export default new Vuex.Store({
         screenings.push(data)
       })
       commit('setScreenings', screenings)
-    },
-
-    async getAuditoriums({ commit }) {
-      let snapshot = await db.collection('auditoriums').get()
-      let auditoriums = []
-      snapshot.forEach(auditorium => {
-        let data = auditorium.data(); // alla egenskaper utom id:t
-        data.id = auditorium.id; // lägg till id
-        auditoriums.push(data)
-      })
-      commit('setAuditoriums', auditoriums)
     },
 
     async getUsers({ commit }) {

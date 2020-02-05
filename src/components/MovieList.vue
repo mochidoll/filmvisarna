@@ -33,22 +33,10 @@
                 <img class="responive-img mobile-img" :src="movie.image" />
               </div>
             </div>
-            <div class="card-stacked">
-              <div class="card-con">
-                <div class="col s12 m4">
-                  <span class="movie-title center">{{ movie.title }}</span>
-                </div>
-                <div class="col s12">
-                  <div>
-                    <span>{{ movie.genre.toString() }} | {{ movie.length }} min</span>
-                  </div>
-                </div>
-                <div class="col s12 m12">
-                  <div class="movie-buttons-mobile">
-                    <button class="btn black waves-effect waves-light mobile">{{movie.id}}</button>
-                  </div>
-                </div>
-              </div>
+            <div class="movie-buttons">
+              <button class="btn black waves-effect waves-light" @click="goToSelectTickets">Go</button>
+              <button class="btn black waves-effect waves-light">Time</button>
+              <button class="btn black waves-effect waves-light">Time</button>
             </div>
           </div>
         </div>
@@ -66,9 +54,9 @@
                 <p class="movie-title">{{ movie.title }}</p>
                 <p>{{ movie.genre.toString() }} | {{ movie.length }} min</p>
               </div>
-              <!-- <div class="movie-buttons" v-on="checkForTime(movie.id)">
-                <button class="btn black waves-effect waves-light">{{movieTime}}</button>
-              </div> -->
+              <div class="movie-buttons">
+                <button @click="goToSelectTickets" class="btn black waves-effect waves-light">Go</button>
+              </div>
             </div>
           </div>
         </div>
@@ -160,14 +148,10 @@ export default {
     }
   },
 
-  mounted() {
-    this.initDate = setInterval(() => {
-      //window.console.log(this.dates[0])
-      if (this.dates.length) {
-        this.selectedDate = this.dates[0];
-        clearInterval(this.initDate);
-      }
-    }, 50);
+  methods: {
+    goToSelectTickets() {
+      this.$router.push({name: 'SelectTickets'})
+    }
   }
 };
 </script>
