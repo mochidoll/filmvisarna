@@ -76,7 +76,7 @@ export default {
     bookMovie(screenId) {
       this.$store.state.bookingObject.screeningId = screenId;
       this.$router.push({
-        name: "selectTickets"
+        path: "/booking/selectTickets"
       });
     }
   },

@@ -172,9 +172,6 @@ export default {
         this.seniorTickets * this.seniorTicketPrice
       );
     },
-    movieChosen() {
-      return this.$store.state.movieChosen;
-    }
   },
   created() {
     this.screeningChosen = this.$store.state.screenings.filter(screening => {

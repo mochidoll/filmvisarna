@@ -147,7 +147,6 @@ export default {
       // in the filtered array of movieIDs
       return this.movies.filter(movie => {
         if (this.filteredScreens.includes(movie.id)) {
-          window.console.log(movie);
           return movie;
         }
       });
@@ -234,8 +233,7 @@ export default {
     },
     bookMovie(screenId){
       this.$store.state.bookingObject.screeningId = screenId
-      window.console.log(screenId)
-      this.$router.push({name: 'selectTickets'})
+      this.$router.push({path: '/booking/selectTickets'})
     }
   },
   mounted() {
