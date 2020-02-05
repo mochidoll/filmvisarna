@@ -33,11 +33,6 @@
                 <img class="responive-img mobile-img" :src="movie.image" />
               </div>
             </div>
-            <div class="movie-buttons">
-              <button class="btn black waves-effect waves-light" @click="goToSelectTickets">Go</button>
-              <button class="btn black waves-effect waves-light">Time</button>
-              <button class="btn black waves-effect waves-light">Time</button>
-            </div>
           </div>
         </div>
       </div>
@@ -54,9 +49,6 @@
                 <p class="movie-title">{{ movie.title }}</p>
                 <p>{{ movie.genre.toString() }} | {{ movie.length }} min</p>
               </div>
-              <div class="movie-buttons">
-                <button @click="goToSelectTickets" class="btn black waves-effect waves-light">Go</button>
-              </div>
             </div>
           </div>
         </div>
@@ -72,7 +64,7 @@ export default {
   data() {
     return {
       selectedDate: "",
-      movieTime: "",
+      movieTime: ""
     };
   },
 
@@ -148,11 +140,7 @@ export default {
     }
   },
 
-  methods: {
-    goToSelectTickets() {
-      this.$router.push({name: 'SelectTickets'})
-    }
-  }
+  methods: {}
 };
 </script>
 
