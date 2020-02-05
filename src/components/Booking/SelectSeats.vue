@@ -151,11 +151,6 @@ export default {
   .seat-wrapper {
     user-select: none;
   }
-
-  .seats {
-    margin: 1%;
-    border-radius: 10px;
-  }
   
   .container .nav-buttons {
     margin: 1rem 0;
