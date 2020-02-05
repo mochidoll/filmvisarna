@@ -70,7 +70,11 @@
 
 <script>
   export default {
-    
+    created() {
+      this.$store.dispatch("getMovies");
+      this.$store.dispatch("getScreenings");
+      this.$store.dispatch("getAuditoriums");
+    }
   };
 </script>
 

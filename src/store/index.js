@@ -12,7 +12,8 @@ export default new Vuex.Store({
     bookingObject: {
       adultTickets: 0,
       seniorTickets: 0,
-      childTickets: 0
+      childTickets: 0,
+      screeningId:'886NXaI15Uq0v7NmuiB8'
     }
   },
   mutations: {
@@ -25,18 +26,17 @@ export default new Vuex.Store({
     setScreenings(state, data) {
       state.screenings = data
     },
-    setBookingObject(state, data) {
-      state.bookingObject = data
-    }
   },
   actions: {
     async getAuditoriums({ commit }) {
       let snapshot = await db.collection('auditoriums').get()
-      let data = []
-      snapshot.forEach(document => {
-        data.push(document.data())
+      let auditoriums = []
+      snapshot.forEach(auditorium => {
+        let data = auditorium.data(); // alla egenskaper utom id:t
+        data.id = auditorium.id; // lägg till id
+        auditoriums.push(data)
       })
-      commit('setAuditoriums', data)
+      commit('setAuditoriums', auditoriums)
     },
     async getMovies({ commit }) {
       let snapshot = await db.collection('movies').get()
@@ -59,7 +59,7 @@ export default new Vuex.Store({
       })
       commit('setScreenings', screenings)
     },
-    
+  
   },
   modules: {
   }

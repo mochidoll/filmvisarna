@@ -1,16 +1,16 @@
 <template>
   <div class="container">
-    <h4>Select seats from {{auditorium.name}}</h4>
-    <p>max numbers of tickets: {{bookingObject.numberOfTickets}}</p>
-    <p>{{positions}}</p>
+    <h4>Välj platser i {{ bookingObject.auditorium.name }}</h4>
+    <p>Bokade biljetter: {{ bookingObject.numberOfTickets }} st</p>
     <p v-if="feedback">{{feedback}}</p>
     <div class="center">
       <img src="@/assets/images/cinema.png" alt="cinema-screen" />
     </div>
-    <div class="row" v-if="auditoriums.length">
+
+    <div class="row" v-if="auditoriums">
       <div
         class="center col s12"
-        v-for="(row, y, id) in auditorium.seatsPerRow"
+        v-for="(row, y, id) in bookingObject.auditorium.seatsPerRow"
         :key="'row' + y + id"
       >
         <Seat
@@ -24,14 +24,18 @@
           @removeFromPositions="removeFromPositions"
         ></Seat>
       </div>
-      <div class="col m12 center">
+
+      <div class="nav-buttons row col s12 center">
+        <button @click="goBackToSelectTickets" class="col s3 offset-s1 btn waves-effect waves-light red darken-4 white-text">TIllbaka</button>
         <button
           @click="goToConfirmDetails"
-          class="m1 btn waves-effect waves-light black white-text"
+          class="col s3 offset-s4 btn waves-effect waves-light red darken-4 white-text"
           :class="{disabled:!hasAllSeatsSelected}"
-        >Next</button>
+        >Gå vidare</button>
       </div>
+      
     </div>
+    
     <div class="center" v-else>
       <div class="preloader-wrapper active big">
         <div class="spinner-layer spinner-red-only center">
@@ -56,6 +60,14 @@ export default {
   components: {
     Seat
   },
+
+  props: {
+    bookingObject: {
+      type: Object,
+      required: true
+    }
+  },
+
   data() {
     return {
       room: 0,
@@ -65,6 +77,7 @@ export default {
       hasAllSeatsSelected: false
     };
   },
+
   methods: {
     showPosition(position) {
       this.position = position;
@@ -87,12 +100,17 @@ export default {
     },
     goToConfirmDetails() {
       this.bookingObject.seatPositions = this.positions;
-      this.$store.commit("setBookingObject", this.bookingObject);
       this.$router.push({
-        name: "confirmDetails"
+        name: "ConfirmDetails",
+        params: {bookingObject: this.bookingObject}
       });
+    },
+    goBackToSelectTickets() {
+      this.bookingObject.seatPositions = null
+      this.$router.push({name: 'SelectTickets'})
     }
   },
+
   computed: {
     auditorium() {
       return this.auditoriums.length
@@ -104,18 +122,20 @@ export default {
     },
     auditoriums() {
       return this.$store.state.auditoriums;
-    },
-    bookingObject() {
-      return this.$store.state.bookingObject;
     }
   },
+
   created() {
-    this.$store.dispatch("getAuditoriums");
+    if(this.bookingObject.seatPositions){
+      return null
+    }
   },
+
   watch: {
     currentTickets(val) {
       if (val === this.bookingObject.numberOfTickets) {
-        this.feedback = "Error: Du kan inte välja fler!";
+        this.feedback =
+          "Max antal platser valda. Avmarkera en plats för att välja om.";
         this.hasAllSeatsSelected = true;
       } else if (val < this.bookingObject.numberOfTickets) {
         this.feedback = null;
@@ -126,9 +146,14 @@ export default {
 };
 </script>
 
-<style scoped>
-.seats {
-  margin: 1%;
-  border-radius: 10px;
-}
+<style>
+
+  .seats {
+    margin: 1%;
+    border-radius: 10px;
+  }
+  
+  .container .nav-buttons {
+    margin: 1rem 0;
+  }
 </style>
