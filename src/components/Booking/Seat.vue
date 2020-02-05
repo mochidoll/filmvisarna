@@ -6,8 +6,9 @@
       :class="{'red darken-4': isSelected, black: !isSelected,
        disabled: disableSeat && !isSelected,
        'red lighten-2': hover}"
-      class="btn-small white-text seats"
-    ></span>
+      class="white-text seats"
+    >
+    </span>
 </template>
 
 <script>
@@ -50,8 +51,8 @@ export default {
 .seats {
   margin: 1px;
   border-radius: 5px;
-  width: 3vmin;
-  height: 7vh;
+  width: 3px;
+  height: 5vmin;
 
 }
 </style>
