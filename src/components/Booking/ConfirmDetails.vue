@@ -86,7 +86,11 @@ export default {
     },
 
     confirmBooking() {
+      if (this.user) {
+        this.bookingObject.email = this.user.email 
+      } else {
       this.bookingObject.email = this.emailInput;
+      }
 
       db.collection("bookings")
         .add({
@@ -97,11 +101,10 @@ export default {
           screeningId: this.bookingObject.screeningId,
           email: this.bookingObject.email,
           seats: this.bookingObject.seatPositions
-          /* timeStamp: new Date() */
         })
         .then(ref => {
           this.bookingObject.id = ref.id;
-          window.console.log(this.user.uid)
+          /* window.console.log(this.user.uid) */
           if (this.user) {
             db.collection("users")
               .doc(this.user.uid)
@@ -118,15 +121,6 @@ export default {
           /*  window.console.log('In Confirm', this.bookingObject.id) */
         });
 
-      /* let bookingRef = db.collection("users").doc(this.user.id); */
-      // Atomically add a new region to the "regions" array field.
-      /* let arrUnion = */
-
-      /* bookingRef.update({
-          bookings: firebase.firestore.FieldValue.arrayUnion(
-            this.bookingObject.id
-          )
-        }); */
     }
   },
 

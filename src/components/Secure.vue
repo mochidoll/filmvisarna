@@ -48,7 +48,7 @@ export default {
       /*  window.console.log(this.users) */
       /*  window.console.log(this.dummyBookings) */
       /* window.console.log(this.filteredScreenings); */
-      window.console.log(this.userBookings[0])
+      window.console.log(this.user)
     }
   },
   computed: {
@@ -92,6 +92,7 @@ export default {
       }
     });
     this.$store.dispatch("getBookings");
+    this.$store.dispatch("getUsers");
   }
 };
 </script>
