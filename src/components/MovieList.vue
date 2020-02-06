@@ -25,7 +25,7 @@
         <div class="col s12 m6">
           <div class="genre-selector">
             <select name="genre" id="choose-genre" v-model="selectedGenre">
-              <option value selected disabled hidden>Genreee</option>
+              <option value selected disabled hidden>Genre</option>
               <option v-for="(genre, id) in genres" :key="id">{{ genre }}</option>
             </select>
           </div>
