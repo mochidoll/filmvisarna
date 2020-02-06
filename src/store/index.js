@@ -26,6 +26,9 @@ export default new Vuex.Store({
     setScreenings(state, data) {
       state.screenings = data
     },
+    setBookingObject(state, data) {
+      state.bookingObject = data
+    },
   },
   actions: {
     async getAuditoriums({ commit }) {
