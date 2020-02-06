@@ -14,10 +14,18 @@
             :placeholder="chosenDate.name"
           ></dropdown>
         </div>
+        <div class="col">
+          <dropdown
+            :options="genres"
+            :selected="chosenGenre.name"
+            v-on:updateOption="updateChosenGenre"
+            :placeholder="chosenGenre.name"
+          ></dropdown>
+        </div>
         <div class="col s12 m6">
           <div class="genre-selector">
             <select name="genre" id="choose-genre" v-model="selectedGenre">
-              <option value selected disabled hidden>Genre</option>
+              <option value selected disabled hidden>Genreee</option>
               <option v-for="(genre, id) in genres" :key="id">{{ genre }}</option>
             </select>
           </div>
@@ -106,9 +114,11 @@ export default {
       movieTime: "",
       chosenDate: {
         name: "Sort by Day"
-      }
-      selectedGenre: "All genres",
-      movieTime: ""
+      },
+      chosenGenre:{
+        name: "Sort by Genre"
+      },
+      selectedGenre: "All genres"
     };
   },
   components: {
@@ -126,6 +136,7 @@ export default {
     },
     genres() {
       let genres = [];
+      let genresName = [];
       // Add genres from each movie to the genres array
       for (let movie of this.movies) {
         genres = [...genres, ...movie.genre];
@@ -133,10 +144,10 @@ export default {
       // Remove duplicates from genres array
       genres = [...new Set(genres)];
       // Sort alphanumeric
-      genres.sort();
-      // Add All genres at the top
+      genres.sort().forEach(genre => genresName.push({name:genre}))
+      window.console.log(genresName)
       genres.unshift("All genres");
-      return genres;
+      return genresName;
     },
     /* dates() {
       let screenings = [];
@@ -251,6 +262,9 @@ export default {
   methods: {
     updateChosenDate(date) {
       this.chosenDate.name = date.name;
+    },
+    updateChosenGenre(genre) {
+      this.chosenGenre.name = genre.name;
     },
     goToMovie(movie) {
       this.$router.push("/allMovies/" + movie.title);
