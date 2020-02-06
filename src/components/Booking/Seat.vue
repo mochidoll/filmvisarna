@@ -1,5 +1,5 @@
 <template>
-    <span
+    <button
       @click="onClick()"
       @mouseover="hover = true"
       @mouseleave="hover = false"
@@ -7,8 +7,7 @@
        disabled: disableSeat && !isSelected,
        'red lighten-2': hover}"
       class="white-text seats"
-    >
-    </span>
+    ></button>
 </template>
 
 <script>
@@ -51,8 +50,8 @@ export default {
 .seats {
   margin: 1px;
   border-radius: 5px;
-  width: 3px;
-  height: 5vmin;
+  width: 3vmin;
+  height: 3vmin;
 
 }
 </style>
