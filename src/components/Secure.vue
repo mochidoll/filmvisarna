@@ -2,14 +2,13 @@
   <div id="secure">
     <div class="container center-align">
       <h4>{{this.user.displayName}}</h4>
-      <h4 class="center">Your bookings</h4>
+      <div class="divider"></div>
+      <h5 class="center">Dina bokningar</h5>
+      
 
       <ul>
         <li v-for="booking in userBookings" :key="booking.id">
-          <h5>{{ booking.id }}</h5>
-          <p>Adult Tickets: {{ booking.adultTickets }}</p>
-          <p>Child Tickets: {{ booking.childTickets }}</p>
-          <p>Senior Tickets: {{ booking.seniorTickets }}</p>
+          <user-booking :booking-object="booking" />
         </li>
       </ul>
 
@@ -21,8 +20,12 @@
 
 <script>
 import firebase from "firebase";
+import UserBooking from './UserBooking.vue'
 export default {
   name: "Secure",
+  components: {
+    UserBooking
+  },
   data() {
     return {
       user: {}
@@ -45,6 +48,7 @@ export default {
       /*  window.console.log(this.users) */
       /*  window.console.log(this.dummyBookings) */
       /* window.console.log(this.filteredScreenings); */
+      window.console.log(this.userBookings[0])
     }
   },
   computed: {
@@ -88,7 +92,6 @@ export default {
       }
     });
     this.$store.dispatch("getBookings");
-    this.$store.dispatch("getUsers");
   }
 };
 </script>
@@ -97,4 +100,5 @@ export default {
 .btn {
   margin-bottom: 1%;
 }
+
 </style>

@@ -119,9 +119,6 @@ export default {
     users() {
       return this.$store.state.users;
     },
-    loggedInUser() {
-      return this.$store.state.loggedInUser;
-    }
   }
 };
 </script>
