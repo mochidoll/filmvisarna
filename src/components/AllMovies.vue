@@ -4,7 +4,14 @@
       <div class="card-container col s12 m4 l3" v-for="(movie, id) in movies" :key="id">
         <div class="card">
           <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" :src="movie.image" />
+            <div v-if="movie.title == 'Dolittle'">
+              <img class="activator" :src="movie.image" />
+            </div>
+
+            <div v-else><img class="activator add-margin" :style="{marginBottom:30+'px'}" :src="movie.image" />
+            
+            </div>
+            
           </div>
           <div class="card-content">
             <span class="card-title activator grey-text text-darken-4">{{movie.title}}</span>
@@ -53,12 +60,9 @@ export default {
 </script>
 
 <style>
+
 .movie .card-image img {
   width: 100%;
-}
-
-.movie .card-image {
-  
 }
 
 .row {
@@ -66,8 +70,5 @@ export default {
 }
 .card .card-title {
   font-size: 1.2rem !important;
-}
-.card .card-content {
-  padding: 10px !important;
 }
 </style>
