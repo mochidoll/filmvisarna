@@ -13,7 +13,7 @@ export default new Vuex.Store({
       adultTickets: 0,
       seniorTickets: 0,
       childTickets: 0,
-      screeningId:'886NXaI15Uq0v7NmuiB8'
+      screeningId: null
     }
   },
   mutations: {
