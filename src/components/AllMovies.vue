@@ -53,6 +53,14 @@ export default {
 </script>
 
 <style>
+.movie .card-image img {
+  width: 100%;
+}
+
+.movie .card-image {
+  
+}
+
 .row {
   display: inline-block;
 }
