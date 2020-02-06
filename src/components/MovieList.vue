@@ -105,9 +105,8 @@ export default {
       movieTime: "",
       chosenDate: {
         name: "Sort by Day"
-      }
-      selectedGenre: "All genres",
-      movieTime: ""
+      },
+      selectedGenre: "All genres"
     };
   },
   components: {
