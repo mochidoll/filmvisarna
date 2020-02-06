@@ -2,7 +2,7 @@
   <div class>
     <div class="row">
       <div class="card-container col s12 m4 l3" v-for="(movie, id) in movies" :key="id">
-        <div class="card">
+        <div class="card hoverable">
           <div class="card-image waves-effect waves-block waves-light">
             <div v-if="movie.title == 'Dolittle'">
               <img class="activator" :src="movie.image" />
