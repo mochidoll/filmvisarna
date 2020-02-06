@@ -68,7 +68,7 @@
     </div>
     <div class="hide-on-small-only">
       <div class="movie col m7" v-for="movie in filteredMovies" :key="movie.id">
-        <div @click="goToMovie(movie)" class="card horizontal white">
+        <div @click="goToMovie(movie)" class="hoverable card horizontal white">
           <div class="card-image">
             <img class="responsive-img" :src="movie.image" />
           </div>
