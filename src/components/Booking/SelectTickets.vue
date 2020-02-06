@@ -178,6 +178,9 @@ export default {
   position: relative;
   user-select: none;
 }
+.movie-image img {
+  border-radius: 5px;
+}
 .select-tickets-wrapper h5 {
   margin: 2rem 0;
 }
