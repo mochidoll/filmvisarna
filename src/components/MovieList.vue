@@ -22,14 +22,7 @@
             :placeholder="chosenGenre.name"
           ></dropdown>
         </div>
-        <div class="col s12 m6">
-          <div class="genre-selector">
-            <select name="genre" id="choose-genre" v-model="selectedGenre">
-              <option value selected disabled hidden>Genre</option>
-              <option v-for="(genre, id) in genres" :key="id">{{ genre }}</option>
-            </select>
-          </div>
-        </div>
+        
       </div>
     </div>
 
@@ -116,9 +109,8 @@ export default {
         name: "Sort by Day"
       },
       chosenGenre:{
-        name: "Sort by Genre"
-      },
-      selectedGenre: "All genres"
+        name: "All genres"
+      }
     };
   },
   components: {
@@ -146,7 +138,7 @@ export default {
       // Sort alphanumeric
       genres.sort().forEach(genre => genresName.push({name:genre}))
       window.console.log(genresName)
-      genres.unshift("All genres");
+      genresName.unshift({name:"All genres"});
       return genresName;
     },
     /* dates() {
@@ -198,8 +190,8 @@ export default {
             sDate.getMonth() === month &&
             sDate.getDate() === day) ||
             !year) &&
-          (this.selectedGenre === "All genres" ||
-            screen.movie.genre.includes(this.selectedGenre))
+          (this.chosenGenre.name === "All genres" ||
+            screen.movie.genre.includes(this.chosenGenre.name))
         ) {
           return screen;
         }
