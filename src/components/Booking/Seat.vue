@@ -5,7 +5,7 @@
       @mouseleave="hover = false"
       :disabled='disableSeat && !isSelected'
       :class="{'red darken-4': isSelected, black: !isSelected && !disableSeat,
-       'red lighten-2': hover, 'grey': !isSelected && disableSeat}"
+       'red lighten-2': hover && !disableSeat, 'grey lighten-2': !isSelected && disableSeat}"
       class="white-text seats"
     ></button>
 </template>
