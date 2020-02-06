@@ -151,7 +151,7 @@ export default {
         this.childTickets * this.childTicketPrice +
         this.seniorTickets * this.seniorTicketPrice
       );
-    }
+    },
   },
   created() {
     this.screeningChosen = this.$store.state.screenings.filter(screening => {

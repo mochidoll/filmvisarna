@@ -49,5 +49,13 @@ export default {
   margin: 0 0 1.5rem !important;
   /* margin-top: 2rem !important; */
 }
-
+h2 {
+  margin: 2%;
+}
+.col {
+  margin-bottom: 1%;
+}
+.booking-confirmation {
+  margin-left: 5%;
+}
 </style>
