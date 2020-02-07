@@ -16,10 +16,11 @@ export default new Vuex.Store({
       screeningId: null
     },
     navTexts: [
+      'Tillbaks hem',
       'Välj biljetter',
       'Välj platser',
-      'Bekräfta din bokning',
-      'Bokningen genomförd!'
+      'Bekräfta',
+      'Genomför bokning'
     ]
   },
   mutations: {

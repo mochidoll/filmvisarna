@@ -91,14 +91,13 @@ export default {
         timeStamp: new Date()
       }).then( ref => {
         this.bookingObject.id = ref.id
-        window.console.log('In Confirm', this.bookingObject.id)
         this.$router.push({name: 'BookingComplete', params: {bookingObject: this.bookingObject}})
       })
     }
   },
 
   created() {
-    this.$emit('changeNavText', this.$store.state.navTexts[2])
+    this.$emit('changeNavText', this.$store.state.navTexts[3])
   }
 
 };

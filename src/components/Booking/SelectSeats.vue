@@ -26,10 +26,10 @@
        <p v-if="feedback">{{feedback}}</p>
 
       <div class="nav-buttons row col s12">
-        <button @click="goBackToSelectTickets" class="col s5 m3 l2 offset-m1 offset-l1 btn waves-effect waves-light red darken-4 white-text">Tillbaka</button>
+        <button @click="goBackToSelectTickets" class="col s5 m3 l3 offset-m1 offset-l1 btn waves-effect waves-light red darken-4 white-text">Tillbaka</button>
         <button
           @click="goToConfirmDetails"
-          class="col s5 m3 l2 offset-s2 offset-l6 offset-m4 btn waves-effect waves-light red darken-4 white-text"
+          class="col s5 m3 l3 offset-s2 offset-l4 offset-m4 btn waves-effect waves-light red darken-4 white-text"
           :class="{disabled:!hasAllSeatsSelected}"
         >Gå vidare</button>
       </div>
@@ -125,12 +125,8 @@ export default {
     }
   },
 
-  created() {
-    if(this.bookingObject.seatPositions){
-      return null
-    }
-
-    this.$emit('changeNavText', this.$store.state.navTexts[1])
+  created() { 
+    this.$emit('changeNavText', this.$store.state.navTexts[2])
   },
 
   watch: {

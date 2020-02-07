@@ -97,7 +97,8 @@ export default {
       childTicketPrice: 65,
       movieChosen: null,
       screeningChosen: null,
-      auditorium: null
+      auditorium: null,
+      payload: null
     };
   },
   methods: {
@@ -172,8 +173,8 @@ export default {
     this.adultTickets = this.bookingObject.adultTickets
     this.childTickets = this.bookingObject.childTickets
     this.seniorTickets = this.bookingObject.seniorTickets
-
-    this.$emit('changeNavText', this.$store.state.navTexts[0])
+    
+    this.$emit('changeNavText', this.$store.state.navTexts[1])
   }
 };
 </script>
@@ -210,7 +211,7 @@ export default {
   margin: 2rem 0 1rem !important;
 }
 
-@media screen and (max-width: 599px) {
+/* @media screen and (max-width: 599px) {
   .select-tickets-wrapper p {
     font-size: 0.9rem;
   }
@@ -302,5 +303,5 @@ export default {
   top: 145px;
   left: 480px !important;
   } 
-}
+} */
 </style>

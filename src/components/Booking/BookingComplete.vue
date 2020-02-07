@@ -38,7 +38,7 @@ export default {
   },
 
   created() {
-    this.$emit('changeNavText', this.$store.state.navTexts[3])  
+    this.$emit('changeNavText', this.$store.state.navTexts[4])  
   }
 }
 </script>
