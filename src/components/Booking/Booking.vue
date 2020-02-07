@@ -7,7 +7,7 @@
 
             <div class="nav-choices">
 
-             <div @click="back" v-if="showOrNot" class="backwards">
+             <div @click="back" v-if="showOrNot" class="nav-buttons backwards">
                 <span class="">
                 <i class="material-icons">arrow_back_ios</i>
                 </span>
@@ -16,7 +16,7 @@
 
               <h4 v-if="showOrNot" class="nav-text">{{navText}}</h4>
 
-              <div @click="forward" v-if="showOrNot" class="forward">
+              <div @click="forward" v-if="showOrNot" class="nav-buttons forward">
                 <h6><i>{{ after }}</i></h6>
                 <span class="">
                 <i class="material-icons">arrow_forward_ios</i>
@@ -26,7 +26,7 @@
 
           </div>
         </div>
-        <div class="divider"></div>
+        <div v-if="showOrNot" class="divider"></div>
       </div>
       <router-view @changeNavText="changeNavText"></router-view>
     </div>
@@ -92,11 +92,11 @@ export default {
 </script>
 
 <style>
-
-
-
+.nav-wrapper .nav-buttons {
+  cursor: pointer;
+}
 .nav-choices {
-  align-items: flex-end;
+  align-items: center;
   display: flex;
   justify-content: space-between;
 }
