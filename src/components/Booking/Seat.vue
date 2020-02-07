@@ -56,5 +56,11 @@ export default {
 button{
   border-style: none;
 }
+@media screen and (min-width: 900px) and (max-width: 1100px) {
+  .seats{
+   width: 4vmin;
+  height: 4vmin;
+  }
+}
 
 </style>
