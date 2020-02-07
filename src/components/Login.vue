@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import firebase from "firebase";
+import { auth } from "@/firebase/firebase";
 import { db } from "@/firebase/firebase";
 
 export default {
@@ -66,8 +66,7 @@ export default {
   },
   methods: {
     login() {
-      firebase
-        .auth()
+      auth
         .signInWithEmailAndPassword(this.username, this.password)
         .then(user => {
           if (user) {
@@ -82,8 +81,7 @@ export default {
       if (this.signUpFirstName === "" || this.signUpLastName === "") {
         alert("Please enter your name");
       } else {
-        firebase
-          .auth()
+        auth
           .createUserWithEmailAndPassword(this.signUpEmail, this.signUpPassword)
           .then(cred => {
             cred.user.updateProfile({

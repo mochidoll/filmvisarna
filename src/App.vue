@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import firebase from "firebase";
+import { auth } from "@/firebase/firebase";
 export default {
   data() {
     return {
@@ -86,7 +86,7 @@ export default {
   },
   computed: {
     logUser() {
-      return firebase.auth().currentUser;
+      return auth.currentUser;
     }
   },
   created() {
@@ -95,7 +95,7 @@ export default {
     this.$store.dispatch("getAuditoriums");
     this.$store.dispatch("getUsers");
 
-    firebase.auth().onAuthStateChanged(user => {
+    auth.onAuthStateChanged(user => {
       if (user) {
         this.user = user;
       } else {

@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import firebase from "firebase";
+import { auth } from "@/firebase/firebase";
 import UserBooking from "./UserBooking.vue";
 export default {
   name: "Secure",
@@ -32,12 +32,9 @@ export default {
   },
   methods: {
     logout() {
-      firebase
-        .auth()
+      auth
         .signOut()
         .then(
-          window.console.log("log out"),
-          window.console.log(firebase.auth().currentUser),
           this.$router.push("Login")
         );
     }
@@ -51,7 +48,7 @@ export default {
     },
     bookingUser() {
       return this.users.filter(user => {
-        if (firebase.auth().currentUser.uid === user.id) {
+        if (auth.currentUser.uid === user.id) {
           return user;
         }
       })[0];
@@ -65,7 +62,7 @@ export default {
     }
   },
   created() {
-    firebase.auth().onAuthStateChanged(user => {
+    auth.onAuthStateChanged(user => {
       if (user) {
         this.user = user;
       } else {

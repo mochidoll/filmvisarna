@@ -50,7 +50,7 @@
 
 <script>
 import { db } from "@/firebase/firebase";
-import firebase from "firebase";
+import { auth } from "@/firebase/firebase";
 
 export default {
   data() {
@@ -109,7 +109,7 @@ export default {
             db.collection("users")
               .doc(this.user.uid)
               .update({
-                bookings: firebase.firestore.FieldValue.arrayUnion(
+                bookings: db.FieldValue.arrayUnion(
                   this.bookingObject.id
                 )
               });
@@ -123,7 +123,7 @@ export default {
   },
 
   created() {
-    firebase.auth().onAuthStateChanged(user => {
+    auth.onAuthStateChanged(user => {
       if (user) {
         this.user = user;
       } else {
