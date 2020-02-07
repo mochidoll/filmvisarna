@@ -19,5 +19,5 @@ let myFirebase = firebase.initializeApp(config);
 const db = myFirebase.firestore();
 
 export {
-  db
+  db,
 }
