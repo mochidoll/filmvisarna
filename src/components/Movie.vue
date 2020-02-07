@@ -167,7 +167,7 @@ h4 {
 }
 
 .image img {
-  width: 100%;
+width: 100%;
   padding-right: 10% !important;
 }
 .dropdown-menu {

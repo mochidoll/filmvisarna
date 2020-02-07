@@ -1,23 +1,23 @@
 <template>
   <div class>
     <div class="row">
-      <div class="card-container col s12 m4 l3" v-for="(movie, id) in movies" :key="id">
+      <div class="card-container col s12 m3 " v-for="(movie, id) in movies" :key="id">
         <div class="card">
           <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" :src="movie.image" />
+            <img class="card-bg-img activator" :src="movie.image" />
           </div>
-          <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4">{{movie.title}}</span>
+          <!-- <div class="card-content"> -->
+            <!-- <span class="card-title activator grey-text text-darken-4 center">{{movie.title}}</span> -->
             <!-- <a class="btn waves-effect waves-light center red darken-4" @click="goToBooking(movie)">08:00</a>
             <a class="btn waves-effect waves-light center red darken-4" @click="goToBooking(movie)">15:00</a>
-            <a class="btn waves-effect waves-light center red darken-4" @click="goToBooking(movie)">20:00</a>-->
-          </div>
+            <a class="btn waves-effect waves-light center red darken-4" @click="goToBooking(movie)">20:00</a> -->
+          <!-- </div> -->
           <div class="card-reveal">
             <span class="card-title grey-text text-darken-4">
               {{movie.title}}
               <i class="material-icons right">close</i>
             </span>
-            <p>{{movie.description}}</p>
+            <p>{{movie.shortDescription}}</p>
             <a
               class="btn waves-effect waves-light center red darken-4"
               @click="goToMovie(movie)"
@@ -53,6 +53,11 @@ export default {
 </script>
 
 <style>
+.card-bg-img {
+  width: 100%;
+  max-height: 90% !important;
+}
+
 .row {
   display: inline-block;
 }
@@ -61,5 +66,8 @@ export default {
 }
 .card .card-content {
   padding: 10px !important;
+}
+.card .card-image img {
+  width: 100%;
 }
 </style>

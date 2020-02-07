@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <nav class="nav-wrapper red darken-4">
+    <nav class="nav-wrapper">
       <div class="container">
         <router-link class="brand-logo" to="/">
           <div>
@@ -85,7 +85,7 @@
   
   #app {
     min-height: 100vh;
-    background: #ececec;
+    background: #e0dfde;
     display: flex;
     flex-direction: column;
   
@@ -93,7 +93,9 @@
   #main {
     flex: 1 0 auto;
   }
-    
+  nav{
+    background-color: #49111c !important;
+  }
     
 
   .logo {
