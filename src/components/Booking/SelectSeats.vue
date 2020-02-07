@@ -2,7 +2,6 @@
   <div class="container">
     <h4>Välj platser i {{ bookingObject.auditorium.name }}</h4>
     <p>Bokade biljetter: {{ bookingObject.numberOfTickets }} st</p>
-    <p v-if="feedback">{{feedback}}</p>
     <div class="center">
       <img src="@/assets/images/cinema.png" alt="cinema-screen" />
     </div>
@@ -24,6 +23,7 @@
           @removeFromPositions="removeFromPositions"
         ></Seat>
       </div>
+       <p v-if="feedback">{{feedback}}</p>
 
       <div class="nav-buttons row col s12 center">
         <button @click="goBackToSelectTickets" class="col s3 offset-s1 btn waves-effect waves-light red darken-4 white-text">TIllbaka</button>
@@ -31,7 +31,7 @@
           @click="goToConfirmDetails"
           class="col s3 offset-s4 btn waves-effect waves-light red darken-4 white-text"
           :class="{disabled:!hasAllSeatsSelected}"
-        >Gå vidare</button>
+        >Nästa</button>
       </div>
       
     </div>
@@ -151,13 +151,11 @@ export default {
   .seat-wrapper {
     user-select: none;
   }
-
-  .seats {
-    margin: 1%;
-    border-radius: 10px;
-  }
   
-  .container .nav-buttons {
-    margin: 1rem 0;
+  .nav-buttons {
+    margin: 2rem 0 !important;
+  }
+  @media screen and (max-width: ) {
+    
   }
 </style>
