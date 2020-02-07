@@ -2,9 +2,9 @@
   <section>
     <section class="select-tickets-wrapper row">
 
-      <h5 class="col s12 m12 l12">Välj Biljetter..</h5>
+      <h5 class="col s12 m12 l12">Välj Biljetter</h5>
 
-      <div class="col s12 m6 l6 movie-info-wrapper valign-wrapper">
+      <div class="col s12 m6 l8 movie-info-wrapper valign-wrapper left-align">
 
         <div class="col l6 m6 s6 movie-image">
           <img :src="movieChosen.image" alt class="responsive-img" />
@@ -15,12 +15,12 @@
           <p>Datum: {{ screeningChosen.startTime.toDate().toLocaleDateString() }}</p>
           <p>Tid: {{ screeningChosen.startTime.toDate().getHours() }}:00</p>
           <p>Salong: {{ auditorium.name }}</p>
-           <p>Totalt pris: {{ totalTicketPrice }}:-</p>
+           <p><b>Totalt pris: {{ totalTicketPrice }}:-</b></p>
         </div>
 
       </div>
 
-      <div class="col s12 m6 l6 select-tickets-container">
+      <div class="col s12 m6 l4 select-tickets-container">
 
         <div class="col s12 select-tickets valign-wrapper">
           <span class="col s12 m5 type-of-tickets">Vuxen: {{adultTicketPrice}}:-</span>
