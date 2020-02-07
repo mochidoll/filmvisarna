@@ -18,7 +18,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'home',
+    name: 'Home',
     component: Home
   },
   {
@@ -53,22 +53,25 @@ const routes = [
     children: [
       {
         path: 'selectTickets',
-        name: 'selectTickets',
+        name: 'SelectTickets',
         component: SelectTickets
       },
       {
         path: 'selectSeats',
-        name: 'selectSeats',
+        name: 'SelectSeats',
+        props: true,
         component: SelectSeats
       },
       {
         path: 'confirmDetails', 
-        name: 'confirmDetails',
+        name: 'ConfirmDetails',
+        props: true,
         component: ConfirmDetails
       },
       {
         path: 'bookingComplete',
-        name: 'bookingComplete',
+        name: 'BookingComplete',
+        props: true,
         component: BookingComplete
       },
     ]
