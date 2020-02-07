@@ -16,10 +16,7 @@
           </div>
         </div>
         <div class="col s12 left-align">
-          <a
-            class="btn waves-effect waves-light red darken-4"
-            @click="login()"
-          >Logga In</a>
+          <a class="btn waves-effect waves-light red darken-4" @click="login()">Logga In</a>
         </div>
       </div>
       <div class="row col s12 m6">
@@ -75,16 +72,14 @@ export default {
         .signInWithEmailAndPassword(this.username, this.password)
         .then(user => {
           if (user) {
-            /*   window.console.log(firebase.auth().currentUser);
-            window.console.log("Success"); */
             this.$router.push("Secure");
-          } else {
-            /*   window.console.log("Failure"); */
           }
+        })
+        .catch(error => {
+          alert(error.message);
         });
     },
     signUp() {
-      window.console.log(this.signUpFirstName + " " + this.signUpLastName);
       if (this.signUpFirstName === "" || this.signUpLastName === "") {
         alert("Please enter your name");
       } else {
@@ -95,8 +90,7 @@ export default {
             cred.user.updateProfile({
               displayName: this.signUpFirstName + " " + this.signUpLastName
             });
-            db
-              .collection("users")
+            db.collection("users")
               .doc(cred.user.uid)
               .set({
                 bookings: []
@@ -105,12 +99,9 @@ export default {
           .then(() => {
             this.$router.push("Secure");
           })
-          .catch(function(error) {
+          .catch(error => {
             // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            window.console.log(errorCode + " " + errorMessage);
-            alert(errorMessage);
+            alert(error.message);
           });
       }
     }
@@ -118,7 +109,7 @@ export default {
   computed: {
     users() {
       return this.$store.state.users;
-    },
+    }
   }
 };
 </script>

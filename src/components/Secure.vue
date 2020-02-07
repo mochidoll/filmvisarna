@@ -72,7 +72,7 @@ export default {
         }
       });
     },
-    filteredScreenings() {
+    /* filteredScreenings() {
       let screeningFilter = this.userBookings.map(
         booking => booking.screeningId
       );
@@ -81,7 +81,7 @@ export default {
           return screening;
         }
       });
-    },
+    }, */
   },
   created() {
     firebase.auth().onAuthStateChanged(user => {
