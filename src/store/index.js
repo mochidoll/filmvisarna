@@ -24,18 +24,20 @@ export default new Vuex.Store({
     ]
   },
   mutations: {
-    setAuditoriums(state, data) {
-      state.auditoriums = data
-    },
     setMovies(state, data) {
       state.movies = data
     }, 
     setScreenings(state, data) {
       state.screenings = data
     },
+
+    setAuditoriums(state, data) {
+      state.auditoriums = data
+    },
+
     setBookingObject(state, data) {
       state.bookingObject = data
-    },
+    }
   },
   actions: {
     async getAuditoriums({ commit }) {
@@ -58,7 +60,6 @@ export default new Vuex.Store({
       })
       commit('setMovies', movies)
     },
-
     async getScreenings({ commit }) {
       let snapshot = await db.collection('screenings').get()
       let screenings = []
@@ -69,7 +70,7 @@ export default new Vuex.Store({
       })
       commit('setScreenings', screenings)
     },
-  
+    
   },
   modules: {
   }

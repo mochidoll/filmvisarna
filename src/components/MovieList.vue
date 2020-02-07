@@ -77,7 +77,7 @@
               <div>
                 <p class="movie-title">{{ movie.title }}</p>
                 <p>{{ movie.genre.toString() }} | {{ movie.length }} min</p>
-                <p>{{ movie.description }}</p>
+                <p>{{ movie.shortDescription }}</p>
               </div>
             </div>
           </div>
@@ -284,7 +284,7 @@ export default {
       }
     }, 50);
   }
-};
+}
 </script>
 
 <style scoped>
