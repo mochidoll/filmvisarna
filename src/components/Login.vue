@@ -65,41 +65,40 @@ export default {
     };
   },
   methods: {
-    login() {
-      auth
+    async login() {
+      let user = await auth
         .signInWithEmailAndPassword(this.username, this.password)
-        .then(user => {
-          if (user) {
-            this.$router.push("Secure");
-          }
-        })
         .catch(error => {
           alert(error.message);
         });
+
+      if (user) {
+        this.$router.push("secure");
+      }
     },
-    signUp() {
+    async signUp() {
       if (this.signUpFirstName === "" || this.signUpLastName === "") {
         alert("Please enter your name");
       } else {
-        auth
+        let cred = await auth
           .createUserWithEmailAndPassword(this.signUpEmail, this.signUpPassword)
-          .then(cred => {
-            cred.user.updateProfile({
-              displayName: this.signUpFirstName + " " + this.signUpLastName
-            });
-            db.collection("users")
-              .doc(cred.user.uid)
-              .set({
-                bookings: []
-              });
-          })
-          .then(() => {
-            this.$router.push("Secure");
-          })
           .catch(error => {
             // Handle Errors here.
             alert(error.message);
           });
+
+        await cred.user.updateProfile({
+          displayName: this.signUpFirstName + " " + this.signUpLastName
+        });
+        await db
+          .collection("users")
+          .doc(cred.user.uid)
+          .set({
+            bookings: []
+          });
+        await this.$store.dispatch("getUsers");
+
+        this.$router.push("secure");
       }
     }
   },

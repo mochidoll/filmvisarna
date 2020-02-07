@@ -31,6 +31,8 @@ export default new Vuex.Store({
 
     setUsers(state, data) {
       state.users = data
+      console.log(state.users);
+      
     },
 
     setBookings(state, data) {
@@ -45,7 +47,7 @@ export default new Vuex.Store({
       let auditoriums = []
       snapshot.forEach(auditorium => {
         let data = auditorium.data(); // alla egenskaper utom id:t
-        data.id = auditorium.id; // lägg till id
+        data.id = auditorium.id; // lägg till id        
         auditoriums.push(data)
       })
       commit('setAuditoriums', auditoriums)

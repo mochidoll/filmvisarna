@@ -32,11 +32,7 @@ export default {
   },
   methods: {
     logout() {
-      auth
-        .signOut()
-        .then(
-          this.$router.push("Login")
-        );
+      auth.signOut().then(this.$router.push("Login"));
     }
   },
   computed: {
@@ -70,7 +66,6 @@ export default {
       }
     });
     this.$store.dispatch("getBookings");
-    this.$store.dispatch("getUsers");
   }
 };
 </script>
