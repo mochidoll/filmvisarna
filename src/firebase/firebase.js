@@ -1,5 +1,5 @@
 import firebase from 'firebase'
-import 'firebase/firestore''
+import 'firebase/firestore'
 
 // Initialize Firebase
 let config = {
@@ -20,5 +20,4 @@ const db = myFirebase.firestore();
 
 export {
   db,
-  auth
 }
