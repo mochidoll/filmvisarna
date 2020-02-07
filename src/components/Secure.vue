@@ -13,7 +13,7 @@
       </ul>
 
       <a class="btn" @click="test()">Test</a>
-      <a class="btn red darken-4" @click="logout()">Log out</a>
+      <a class="btn red darken-4" @click="logout()">Logga ut</a>
     </div>
   </div>
 </template>

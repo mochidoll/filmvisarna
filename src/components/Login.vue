@@ -2,16 +2,16 @@
   <div class="container center z-depth-1">
     <div class="row">
       <div class="row col s12 m6">
-        <h4 class>Log in</h4>
+        <h4 class>Logga in</h4>
         <div class="col s12">
           <div class="input-field">
             <input type="text" id="login" class="active" v-model="username" />
-            <label for="login">Login</label>
+            <label for="login">Email</label>
           </div>
         </div>
         <div class="col s12">
           <div class="input-field">
-            <label for="password">Password</label>
+            <label for="password">Lösenord</label>
             <input type="password" id="password" class="active" v-model="password" />
           </div>
         </div>
@@ -19,21 +19,21 @@
           <a
             class="btn waves-effect waves-light red darken-4"
             @click="login()"
-          >Log In</a>
+          >Logga In</a>
         </div>
       </div>
       <div class="row col s12 m6">
-        <h4>Sign Up</h4>
+        <h4>Registrera</h4>
         <div class="col s12 l6">
           <div class="input-field">
             <input type="text" id="signUpFirstName" v-model="signUpFirstName" class="active" />
-            <label for="signUpFirstName">First Name</label>
+            <label for="signUpFirstName">Förnamn</label>
           </div>
         </div>
         <div class="col s12 l6">
           <div class="input-field">
             <input type="text" id="signUpLastName" v-model="signUpLastName" class="active" />
-            <label for="signUpLastName">Last Name</label>
+            <label for="signUpLastName">Efternamn</label>
           </div>
         </div>
         <div class="input-field col s12">
@@ -42,10 +42,10 @@
         </div>
         <div class="input-field col s12">
           <input type="password" id="signUpPassword" v-model="signUpPassword" class="active" />
-          <label for="signUpPassword">Password</label>
+          <label for="signUpPassword">Lösenord</label>
         </div>
         <div class="col s12 left-align">
-          <a class="btn waves-effect waves-light red darken-4" @click="signUp()">Sign Up</a>
+          <a class="btn waves-effect waves-light red darken-4" @click="signUp()">Registrera</a>
         </div>
       </div>
     </div>
