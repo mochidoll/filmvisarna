@@ -54,4 +54,11 @@ export default {
   height: 3vmin;
 
 }
+@media screen and (max-width: 650px){
+  .seats{
+   width: 5vmin;
+  height: 5vmin;
+}
+}
+
 </style>

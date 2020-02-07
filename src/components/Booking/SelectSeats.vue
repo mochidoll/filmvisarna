@@ -31,7 +31,7 @@
           @click="goToConfirmDetails"
           class="col s3 offset-s4 btn waves-effect waves-light red darken-4 white-text"
           :class="{disabled:!hasAllSeatsSelected}"
-        >Gå vidare</button>
+        >Nästa</button>
       </div>
       
     </div>
@@ -152,7 +152,10 @@ export default {
     user-select: none;
   }
   
-  .container .nav-buttons {
-    margin: 1rem 0;
+  .nav-buttons {
+    margin: 2rem 0 !important;
+  }
+  @media screen and (max-width: ) {
+    
   }
 </style>
