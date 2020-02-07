@@ -14,6 +14,15 @@
             :placeholder="chosenDate.name"
           ></dropdown>
         </div>
+        <div class="col">
+          <dropdown
+            :options="genres"
+            :selected="chosenGenre.name"
+            v-on:updateOption="updateChosenGenre"
+            :placeholder="chosenGenre.name"
+          ></dropdown>
+        </div>
+        
       </div>
     </div>
 
@@ -59,7 +68,7 @@
     </div>
     <div class="hide-on-small-only">
       <div class="movie col m7" v-for="movie in filteredMovies" :key="movie.id">
-        <div @click="goToMovie(movie)" class="card horizontal white">
+        <div @click="goToMovie(movie)" class="hoverable card horizontal white">
           <div class="card-image">
             <img class="responsive-img" :src="movie.image" />
           </div>
@@ -98,6 +107,9 @@ export default {
       movieTime: "",
       chosenDate: {
         name: "Sort by Day"
+      },
+      chosenGenre:{
+        name: "All genres"
       }
     };
   },
@@ -116,6 +128,7 @@ export default {
     },
     genres() {
       let genres = [];
+      let genresName = [];
       // Add genres from each movie to the genres array
       for (let movie of this.movies) {
         genres = [...genres, ...movie.genre];
@@ -123,8 +136,10 @@ export default {
       // Remove duplicates from genres array
       genres = [...new Set(genres)];
       // Sort alphanumeric
-      genres.sort();
-      return genres;
+      genres.sort().forEach(genre => genresName.push({name:genre}))
+      window.console.log(genresName)
+      genresName.unshift({name:"All genres"});
+      return genresName;
     },
     /* dates() {
       let screenings = [];
@@ -158,13 +173,25 @@ export default {
       let day = date.getDate();
       let screens = this.$store.state.screenings;
 
+      // add the movie to each screening
+      // if we have movies in array called movies we could
+      // do it like this
+      screens.forEach(screening => {
+        screening.movie = this.movies.filter(movie => {
+          return movie.id === screening.movieId;
+        })[0];
+      });
+
       // filters array on date
       let filteredArray = screens.filter(screen => {
         let sDate = new Date(screen.startTime.toDate());
         if (
-          sDate.getFullYear() == year &&
-          sDate.getMonth() == month &&
-          sDate.getDate() == day
+          ((sDate.getFullYear() === year &&
+            sDate.getMonth() === month &&
+            sDate.getDate() === day) ||
+            !year) &&
+          (this.chosenGenre.name === "All genres" ||
+            screen.movie.genre.includes(this.chosenGenre.name))
         ) {
           return screen;
         }
@@ -228,6 +255,9 @@ export default {
     updateChosenDate(date) {
       this.chosenDate.name = date.name;
     },
+    updateChosenGenre(genre) {
+      this.chosenGenre.name = genre.name;
+    },
     goToMovie(movie) {
       this.$router.push("/allMovies/" + movie.title);
     },
@@ -254,7 +284,7 @@ export default {
       }
     }, 50);
   }
-};
+}
 </script>
 
 <style scoped>

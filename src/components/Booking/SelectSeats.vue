@@ -25,13 +25,13 @@
       </div>
        <p v-if="feedback">{{feedback}}</p>
 
-      <div class="nav-buttons row col s12 center">
-        <button @click="goBackToSelectTickets" class="col s3 offset-s1 btn waves-effect waves-light red darken-4 white-text">TIllbaka</button>
+      <div class="nav-buttons row col s12">
+        <button @click="goBackToSelectTickets" class="col s5 m3 l2 offset-m1 offset-l1 btn waves-effect waves-light red darken-4 white-text">Tillbaka</button>
         <button
           @click="goToConfirmDetails"
-          class="col s3 offset-s4 btn waves-effect waves-light red darken-4 white-text"
+          class="col s5 m3 l2 offset-s2 offset-l6 offset-m4 btn waves-effect waves-light red darken-4 white-text"
           :class="{disabled:!hasAllSeatsSelected}"
-        >Nästa</button>
+        >Gå vidare</button>
       </div>
       
     </div>
@@ -153,9 +153,8 @@ export default {
   }
   
   .nav-buttons {
-    margin: 2rem 0 !important;
+    margin: 2rem 0 1rem !important;
   }
-  @media screen and (max-width: ) {
-    
-  }
+
+
 </style>
