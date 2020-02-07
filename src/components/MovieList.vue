@@ -42,11 +42,11 @@
                 </div>
                 <div class="col s12">
                   <div>
-                    <span>{{ movie.genre.toString() }} | {{ movie.length }} min</span>
+                    <span>{{movie.genre.join(", ")}} | {{ movie.length }} min</span>
                   </div>
                 </div>
                 <div class="col s12">
-                  <p>{{ movie.description }}</p>
+                  <p>{{ movie.shortDescription }}</p>
                 </div>
                 <div class="col s12"></div>
                 <div class="col s6 offset-s3">
@@ -68,16 +68,16 @@
     </div>
     <div class="hide-on-small-only">
       <div class="movie col m7" v-for="movie in filteredMovies" :key="movie.id">
-        <div @click="goToMovie(movie)" class="hoverable card horizontal white">
-          <div class="card-image">
+        <div @click="goToMovie(movie)" class="hoverable card test-hover horizontal white">
+          <div class="card-image responsive-img">
             <img class="responsive-img" :src="movie.image" />
           </div>
           <div class="card-stacked">
             <div class="card-content valign-wrapper">
               <div>
                 <p class="movie-title">{{ movie.title }}</p>
-                <p>{{ movie.genre.toString() }} | {{ movie.length }} min</p>
-                <p>{{ movie.description }}</p>
+                <p>{{movie.genre.join(", ")}} | {{ movie.length }} min</p>
+                <p>{{ movie.shortDescription }}</p>
               </div>
             </div>
           </div>
@@ -297,6 +297,8 @@ export default {
 }
 .movie .card {
   border-radius: 5px !important;
+  background-color: #ccbeb3 !important;
+
 }
 .movie .card-image img {
   width: 100%;
@@ -341,5 +343,8 @@ export default {
 }
 .btn {
   margin-top: 7%;
+}
+.test-hover:hover{
+  background-color: #e6dbd4 !important;
 }
 </style>
