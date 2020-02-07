@@ -2,7 +2,7 @@
   <section>
     <section class="select-tickets-wrapper row">
 
-      <h5 class="col s12 m12 l12">Välj Biljetter</h5>
+      <!-- <h5 class="col s12 m12 l12">Välj Biljetter</h5> -->
 
       <div class="col s12 m6 l6 movie-info-wrapper valign-wrapper left-align">
 
@@ -172,12 +172,15 @@ export default {
     this.adultTickets = this.bookingObject.adultTickets
     this.childTickets = this.bookingObject.childTickets
     this.seniorTickets = this.bookingObject.seniorTickets
+
+    this.$emit('changeNavText', this.$store.state.navTexts[0])
   }
 };
 </script>
 
 <style>
 .select-tickets-wrapper {
+  margin-top: 3rem;
   position: relative;
   user-select: none;
 }

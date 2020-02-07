@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h4>Välj platser i {{ bookingObject.auditorium.name }}</h4>
+    <h4>{{ bookingObject.auditorium.name }}</h4>
     <p>Bokade biljetter: {{ bookingObject.numberOfTickets }} st</p>
     <div class="center">
       <img src="@/assets/images/cinema.png" alt="cinema-screen" />
@@ -130,6 +130,8 @@ export default {
     if(this.bookingObject.seatPositions){
       return null
     }
+
+    this.$emit('changeNavText', this.$store.state.navTexts[1])
   },
 
   watch: {

@@ -2,7 +2,7 @@
   <div class="container confirm-booking center">
 
     <div class="row inner-container">
-      <h4 class="center col s12">Kontrollera din bokning..</h4>
+      <!-- <h4 class="center col s12">Kontrollera din bokning..</h4> -->
 
       <div class="col l6 m6 s12 image-container   ">
         <img :src="bookingObject.movie.image" alt class="responsive-img" />
@@ -97,6 +97,10 @@ export default {
     }
   },
 
+  created() {
+    this.$emit('changeNavText', this.$store.state.navTexts[2])
+  }
+
 };
 </script>
 <style>
@@ -104,7 +108,7 @@ export default {
   border: 2px solid rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   margin-top: 1rem;
-  padding: 1rem;
+  padding: 3rem 1rem 1rem;
 }
 .confirm-booking h4 {
   margin: 1rem 0 1.5rem !important;

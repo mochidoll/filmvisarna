@@ -14,7 +14,13 @@ export default new Vuex.Store({
       seniorTickets: 0,
       childTickets: 0,
       screeningId: null
-    }
+    },
+    navTexts: [
+      'Välj biljetter',
+      'Välj platser',
+      'Bekräfta din bokning',
+      'Bokningen genomförd!'
+    ]
   },
   mutations: {
     setAuditoriums(state, data) {

@@ -4,19 +4,19 @@
       <div class="container center navbar">
         <div class="nav-wrapper">
           <div class="nav-choices s12">
-            <router-link to="/booking/selectTickets" class="breadcrumb black-text">Select Tickets</router-link>
+            <!-- <router-link to="/booking/selectTickets" class="breadcrumb black-text">Select Tickets</router-link>
             <router-link to="/booking/selectSeats" class="breadcrumb black-text">Select Seats</router-link>
             <router-link to="/booking/confirmDetails" class="breadcrumb black-text">Confirm details</router-link>
-            <router-link
-              to="/booking/bookingComplete"
+            <router-link to="/booking/bookingComplete"
               class="breadcrumb black-text"
-            >Booking complete</router-link>
+            >Booking complete</router-link> -->
+            <h4> {{navText}} </h4>
+
           </div>
         </div>
         <div class="divider"></div>
       </div>
-
-      <router-view></router-view>
+      <router-view @changeNavText="changeNavText"></router-view>
     </div>
   </div>
 </template>
@@ -26,6 +26,18 @@ export default {
   props: {
     movie: Object,
     auditorium: Object
+  },
+
+  data() {
+    return {
+      navText: null
+    }
+  },
+
+  methods: {
+    changeNavText(value) {
+      this.navText = value
+    }
   }
 };
 </script>

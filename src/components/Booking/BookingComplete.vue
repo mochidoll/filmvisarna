@@ -37,9 +37,8 @@ export default {
     }
   },
 
-  mounted() {
-      window.console.log(this.bookingObject)
-      window.console.log('In Complete', this.bookingObject.id)
+  created() {
+    this.$emit('changeNavText', this.$store.state.navTexts[3])  
   }
 }
 </script>
