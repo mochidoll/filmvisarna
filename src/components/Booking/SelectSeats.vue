@@ -25,6 +25,8 @@
       </div>
        <p v-if="feedback">{{feedback}}</p>
 
+      <p v-if="feedback">{{feedback}}</p>
+
       <div class="nav-buttons row col s12 center">
         <button @click="goBackToSelectTickets" class="col s3 offset-s1 btn waves-effect waves-light red darken-4 white-text">TIllbaka</button>
         <button
