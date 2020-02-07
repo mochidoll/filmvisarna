@@ -23,14 +23,13 @@
           @removeFromPositions="removeFromPositions"
         ></Seat>
       </div>
+       <p v-if="feedback">{{feedback}}</p>
 
-      <p v-if="feedback">{{feedback}}</p>
-
-      <div class="nav-buttons row col s12 center">
-        <button @click="goBackToSelectTickets" class="col s3 offset-s1 btn waves-effect waves-light red darken-4 white-text">TIllbaka</button>
+      <div class="nav-buttons row col s12">
+        <button @click="goBackToSelectTickets" class="col s5 m3 l2 offset-m1 offset-l1 btn waves-effect waves-light red darken-4 white-text">Tillbaka</button>
         <button
           @click="goToConfirmDetails"
-          class="col s3 offset-s4 btn waves-effect waves-light red darken-4 white-text"
+          class="col s5 m3 l2 offset-s2 offset-l6 offset-m4 btn waves-effect waves-light red darken-4 white-text"
           :class="{disabled:!hasAllSeatsSelected}"
         >Gå vidare</button>
       </div>
@@ -154,13 +153,10 @@ export default {
   .seat-wrapper {
     user-select: none;
   }
-
-  .seats {
-    margin: 1%;
-    border-radius: 10px;
-  }
   
-  .container .nav-buttons {
-    margin: 1rem 0;
+  .nav-buttons {
+    margin: 2rem 0 1rem !important;
   }
+
+
 </style>
