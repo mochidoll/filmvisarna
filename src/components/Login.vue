@@ -50,7 +50,6 @@
 </template>
 
 <script>
-// import { auth } from "@/firebase/firebase";
 import firebase from "firebase";
 import { db } from "@/firebase/firebase";
 

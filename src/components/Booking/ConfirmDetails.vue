@@ -87,9 +87,9 @@ export default {
 
     confirmBooking() {
       if (this.user) {
-        this.bookingObject.email = this.user.email 
+        this.bookingObject.email = this.user.email;
       } else {
-      this.bookingObject.email = this.emailInput;
+        this.bookingObject.email = this.emailInput;
       }
 
       db.collection("bookings")
@@ -115,12 +115,10 @@ export default {
               });
           }
           this.$router.push({
-        name: "BookingComplete",
-        params: {bookingObject: this.bookingObject}
-      });
-          /*  window.console.log('In Confirm', this.bookingObject.id) */
+            name: "BookingComplete",
+            params: { bookingObject: this.bookingObject }
+          });
         });
-
     }
   },
 
@@ -144,7 +142,6 @@ export default {
 }
 .confirm-booking h4 {
   margin: 1rem 0 1.5rem !important;
-  /* margin-top: 2rem !important; */
 }
 .confirm-booking .text-container p {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);

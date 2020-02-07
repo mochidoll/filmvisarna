@@ -41,7 +41,7 @@ export default new Vuex.Store({
   },
   actions: {
     async getAuditoriums({ commit }) {
-      let snapshot = await db.collection('auditoriums').get() //.onSnapshot
+      let snapshot = await db.collection('auditoriums').get() //.onSnapshot?
       let auditoriums = []
       snapshot.forEach(auditorium => {
         let data = auditorium.data(); // alla egenskaper utom id:t

@@ -3,8 +3,8 @@
     <div class="container center-align">
       <h4>{{this.user.displayName}}</h4>
       <div class="divider"></div>
-      <h5 class="center">Dina bokningar</h5>
-      
+      <h5 class="center" v-if="this.userBookings.length">Dina bokningar</h5>
+      <h5 class="center" v-else>Inga bokningar att visa</h5>
 
       <ul>
         <li v-for="booking in userBookings" :key="booking.id">
@@ -12,7 +12,6 @@
         </li>
       </ul>
 
-      <a class="btn" @click="test()">Test</a>
       <a class="btn red darken-4" @click="logout()">Logga ut</a>
     </div>
   </div>
@@ -20,7 +19,7 @@
 
 <script>
 import firebase from "firebase";
-import UserBooking from './UserBooking.vue'
+import UserBooking from "./UserBooking.vue";
 export default {
   name: "Secure",
   components: {
@@ -41,14 +40,6 @@ export default {
           window.console.log(firebase.auth().currentUser),
           this.$router.push("Login")
         );
-    },
-    test() {
-      /*  window.console.log(this.bookingUser);
-      window.console.log(this.userBookings); */
-      /*  window.console.log(this.users) */
-      /*  window.console.log(this.dummyBookings) */
-      /* window.console.log(this.filteredScreenings); */
-      window.console.log(this.user)
     }
   },
   computed: {
@@ -71,17 +62,7 @@ export default {
           return booking;
         }
       });
-    },
-    /* filteredScreenings() {
-      let screeningFilter = this.userBookings.map(
-        booking => booking.screeningId
-      );
-      return this.$store.state.screenings.filter(screening => {
-        if (screeningFilter.includes(screening.id)) {
-          return screening;
-        }
-      });
-    }, */
+    }
   },
   created() {
     firebase.auth().onAuthStateChanged(user => {
@@ -101,5 +82,4 @@ export default {
 .btn {
   margin-bottom: 1%;
 }
-
 </style>

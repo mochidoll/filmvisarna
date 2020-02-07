@@ -56,8 +56,6 @@ export default {
         }
       })[0];
     }
-  },
-
-  created() {}
+  }
 };
 </script>
