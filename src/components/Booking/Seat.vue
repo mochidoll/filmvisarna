@@ -50,15 +50,11 @@ export default {
 .seats {
   margin: 1px;
   border-radius: 5px;
-  width: 3vmin;
-  height: 3vmin;
-
-}
-@media screen and (max-width: 650px){
-  .seats{
-   width: 5vmin;
+  width: 5vmin;
   height: 5vmin;
 }
+button{
+  border-style: none;
 }
 
 </style>
