@@ -5,15 +5,15 @@
 
         <div class="row nav-choices valign-wrapper">
 
-          <div @click="back" v-if="showOrNot" class="row col s4 nav-buttons backwards left-align valign-wrapper hide-on-small-only">
+          <div @click="back" v-if="showOrNot" class="row col s4 nav-buttons backwards left-align valign-wrapper">
             <i class="col s2 material-icons left-align">arrow_back_ios</i>
-            <h6 class="col s10">{{ before }}</h6>
+            <h6 class="col s10 hide-on-small-only">{{ before }}</h6>
           </div>
 
           <h4 v-if="showOrNot" class="col s12 m4 nav-text center">{{navText}}</h4>
 
-          <div @click="forward" v-if="showOrNot" class="row col s4 nav-buttons forward right-align hide-on-small-only">
-            <h6 class="col s10">{{ after }}</h6>
+          <div @click="forward" v-if="showOrNot" class="row col s4 nav-buttons forward right-align">
+            <h6 class="col s10 hide-on-small-only">{{ after }}</h6>
             <i class="col s2 material-icons right-align">arrow_forward_ios</i>
           </div>
 
