@@ -121,18 +121,22 @@ export default {
       this.seniorTickets--;
     },
     continueToSelectSeats() {
-      this.bookingObject.movie = this.movieChosen;
-      this.bookingObject.screening = this.screeningChosen;
-      this.bookingObject.auditorium = this.auditorium;
-      this.bookingObject.adultTickets = this.adultTickets;
-      this.bookingObject.seniorTickets = this.seniorTickets;
-      this.bookingObject.childTickets = this.childTickets;
-      this.bookingObject.numberOfTickets = this.numberOfTickets;
+      if(this.numberOfTickets !== 0){   
+        this.bookingObject.movie = this.movieChosen;
+        this.bookingObject.screening = this.screeningChosen;
+        this.bookingObject.auditorium = this.auditorium;
+        this.bookingObject.adultTickets = this.adultTickets;
+        this.bookingObject.seniorTickets = this.seniorTickets;
+        this.bookingObject.childTickets = this.childTickets;
+        this.bookingObject.numberOfTickets = this.numberOfTickets;
 
-      this.$router.push({
-        name: "SelectSeats",
-        params: { bookingObject: this.bookingObject }
-      });
+        this.$router.push({
+          name: "SelectSeats",
+          params: { bookingObject: this.bookingObject }
+        });
+      } else {
+        alert('Du måste välja minst en biljett för att gå vidare.')
+      }
     },
 
     goBackToHome() {
@@ -140,7 +144,7 @@ export default {
       this.$store.state.bookingObject.childTickets = 0
       this.$store.state.bookingObject.seniorTickets = 0
       this.$router.push({ name: "Home" });
-    }
+    },
   },
   computed: {
     numberOfTickets() {

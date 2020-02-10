@@ -77,22 +77,24 @@ export default {
     },
 
     confirmBooking() {
-
-      this.bookingObject.email = this.emailInput
-
-      db.collection("bookings").add({
-        adultTickets: this.bookingObject.adultTickets,
-        childTickets: this.bookingObject.childTickets,
-        seniorTickets: this.bookingObject.seniorTickets,
-        numberOfTickets: this.bookingObject.numberOfTickets,
-        screeningId: this.bookingObject.screeningId,
-        email: this.bookingObject.email,
-        seats: this.bookingObject.seatPositions,
-        timeStamp: new Date()
-      }).then( ref => {
-        this.bookingObject.id = ref.id
-        this.$router.push({name: 'BookingComplete', params: {bookingObject: this.bookingObject}})
-      })
+      if(this.validEmail){ 
+        this.bookingObject.email = this.emailInput
+        db.collection("bookings").add({
+          adultTickets: this.bookingObject.adultTickets,
+          childTickets: this.bookingObject.childTickets,
+          seniorTickets: this.bookingObject.seniorTickets,
+          numberOfTickets: this.bookingObject.numberOfTickets,
+          screeningId: this.bookingObject.screeningId,
+          email: this.bookingObject.email,
+          seats: this.bookingObject.seatPositions,
+          timeStamp: new Date()
+        }).then( ref => {
+          this.bookingObject.id = ref.id
+          this.$router.push({name: 'BookingComplete', params: {bookingObject: this.bookingObject}})
+        })
+      } else {
+        alert('Du måste skriva in en giltig emailadress för att gå vidare.')
+      }
     }
   },
 

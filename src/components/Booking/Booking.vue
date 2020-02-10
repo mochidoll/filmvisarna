@@ -1,34 +1,27 @@
 <template>
   <div class="container center">
     <div class="row z-depth-1 white">
-      <div class="container center navbar">
-        <div class="nav-wrapper">
-          <div class="s12">
+      <div class="nav-wrapper">
 
-            <div class="nav-choices">
+        <div class="row nav-choices valign-wrapper">
 
-             <div @click="back" v-if="showOrNot" class="nav-buttons backwards">
-                <span class="">
-                <i class="material-icons">arrow_back_ios</i>
-                </span>
-                <h6><i>{{ before }}</i></h6>
-              </div>
-
-              <h4 v-if="showOrNot" class="nav-text">{{navText}}</h4>
-
-              <div @click="forward" v-if="showOrNot" class="nav-buttons forward">
-                <h6><i>{{ after }}</i></h6>
-                <span class="">
-                <i class="material-icons">arrow_forward_ios</i>
-                </span>
-              </div>
-            </div>
-
+          <div @click="back" v-if="showOrNot" class="row col s4 nav-buttons backwards left-align valign-wrapper hide-on-small-only">
+            <i class="col s2 material-icons left-align">arrow_back_ios</i>
+            <h6 class="col s10">{{ before }}</h6>
           </div>
+
+          <h4 v-if="showOrNot" class="col s12 m4 nav-text center">{{navText}}</h4>
+
+          <div @click="forward" v-if="showOrNot" class="row col s4 nav-buttons forward right-align hide-on-small-only">
+            <h6 class="col s10">{{ after }}</h6>
+            <i class="col s2 material-icons right-align">arrow_forward_ios</i>
+          </div>
+
         </div>
+        
         <div v-if="showOrNot" class="divider"></div>
       </div>
-      <router-view @changeNavText="changeNavText"></router-view>
+      <router-view ref="contentView" @changeNavText="changeNavText"></router-view>
     </div>
   </div>
 </template>
@@ -54,17 +47,32 @@ export default {
     back() {
       switch (this.navText) {
         case this.$store.state.navTexts[1]:
+          this.$store.state.bookingObject.adultTickets = 0
+          this.$store.state.bookingObject.childTickets = 0
+          this.$store.state.bookingObject.seniorTickets = 0
           this.$router.push({name: 'Home'})
           break
         case this.$store.state.navTexts[2]:
+          this.$refs.contentView.goBackToSelectTickets()
           break
         case this.$store.state.navTexts[3]:
+          this.$refs.contentView.backToSelectSeats()
           break
       }
     },
 
     forward() {
-
+      switch (this.navText) {
+        case this.$store.state.navTexts[1]:
+          this.$refs.contentView.continueToSelectSeats()
+          break
+        case this.$store.state.navTexts[2]:
+          this.$refs.contentView.goToConfirmDetails()
+          break
+        case this.$store.state.navTexts[3]:
+          this.$refs.contentView.confirmBooking()
+          break
+      }
     }
   },
 
@@ -87,30 +95,23 @@ export default {
       let index = this.$store.state.navTexts.indexOf(this.navText)
       return this.$store.state.navTexts[index - 1]
     }
-  }
+  },
 }
 </script>
 
 <style>
-.nav-wrapper .nav-buttons {
-  cursor: pointer;
-}
 .nav-choices {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
+  display: block;
+  margin: 1rem 0 0 !important;
 }
-.nav-choices h6 {
+.nav-buttons h6 {
   margin: 0;
 }
-.nav-choices .forward {
-  display: flex;
-}
-.nav-choices .backwards {
-  display: flex;
+.nav-buttons {
+  color: grey;
+  cursor: pointer;
 }
 .row {
-  padding-top: 2rem;
   margin: 2rem 0;
 }
 .breadcrumb:before {

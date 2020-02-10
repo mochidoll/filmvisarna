@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h4>{{ bookingObject.auditorium.name }}</h4>
+    <h5>{{ bookingObject.auditorium.name }}</h5>
     <p>Bokade biljetter: {{ bookingObject.numberOfTickets }} st</p>
     <div class="center">
       <img src="@/assets/images/cinema.png" alt="cinema-screen" />
@@ -23,19 +23,21 @@
           @removeFromPositions="removeFromPositions"
         ></Seat>
       </div>
-       <p v-if="feedback">{{feedback}}</p>
+      <p v-if="feedback">{{feedback}}</p>
 
       <div class="nav-buttons row col s12">
-        <button @click="goBackToSelectTickets" class="col s5 m3 l3 offset-m1 offset-l1 btn waves-effect waves-light red darken-4 white-text">Tillbaka</button>
+        <button
+          @click="goBackToSelectTickets"
+          class="col s5 m3 l3 offset-m1 offset-l1 btn waves-effect waves-light red darken-4 white-text"
+        >Tillbaka</button>
         <button
           @click="goToConfirmDetails"
           class="col s5 m3 l3 offset-s2 offset-l4 offset-m4 btn waves-effect waves-light red darken-4 white-text"
           :class="{disabled:!hasAllSeatsSelected}"
         >Gå vidare</button>
       </div>
-      
     </div>
-    
+
     <div class="center" v-else>
       <div class="preloader-wrapper active big">
         <div class="spinner-layer spinner-red-only center">
@@ -99,15 +101,22 @@ export default {
       });
     },
     goToConfirmDetails() {
-      this.bookingObject.seatPositions = this.positions;
-      this.$router.push({
-        name: "ConfirmDetails",
-        params: {bookingObject: this.bookingObject}
-      });
+        if(this.positions.length !== 0){   
+          this.bookingObject.seatPositions = this.positions;
+          this.$router.push({
+            name: "ConfirmDetails",
+            params: { bookingObject: this.bookingObject }
+          });
+        } else {
+          alert('Du måste välja minst ' + this.bookingObject.numberOfTickets + ' biljett(er) för att gå vidare.')
+        }
     },
     goBackToSelectTickets() {
-      this.bookingObject.seatPositions = null
-      this.$router.push({name: 'SelectTickets'})
+      this.bookingObject.seatPositions = null;
+      this.$router.push({ name: "SelectTickets" });
+    },
+    writeSomething() {
+      window.console.log("Successin select seats!");
     }
   },
 
@@ -125,8 +134,8 @@ export default {
     }
   },
 
-  created() { 
-    this.$emit('changeNavText', this.$store.state.navTexts[2])
+  created() {
+    this.$emit("changeNavText", this.$store.state.navTexts[2]);
   },
 
   watch: {
@@ -145,14 +154,11 @@ export default {
 </script>
 
 <style>
+.seat-wrapper {
+  user-select: none;
+}
 
-  .seat-wrapper {
-    user-select: none;
-  }
-  
-  .nav-buttons {
-    margin: 2rem 0 1rem !important;
-  }
-
-
+.nav-buttons {
+  margin: 2rem 0 1rem !important;
+}
 </style>
