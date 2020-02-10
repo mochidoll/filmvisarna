@@ -14,7 +14,14 @@ export default new Vuex.Store({
       seniorTickets: 0,
       childTickets: 0,
       screeningId: null
-    }
+    },
+    navTexts: [
+      'Tillbaks hem',
+      'Välj biljetter',
+      'Välj platser',
+      'Bekräfta',
+      'Genomför bokning'
+    ]
   },
   mutations: {
     setMovies(state, data) {

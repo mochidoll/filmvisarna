@@ -137,7 +137,7 @@ export default {
       genres = [...new Set(genres)];
       // Sort alphanumeric
       genres.sort().forEach(genre => genresName.push({name:genre}))
-      window.console.log(genresName)
+      // window.console.log(genresName)
       genresName.unshift({name:"All genres"});
       return genresName;
     },
