@@ -42,7 +42,7 @@
                 </div>
                 <div class="col s12">
                   <div>
-                    <span>{{ movie.genre.toString() }} | {{ movie.length }} min</span>
+                    <span>{{movie.genre.join(", ")}} | {{ movie.length }} min</span>
                   </div>
                 </div>
                 <div class="col s12">
@@ -76,7 +76,7 @@
             <div class="card-content valign-wrapper">
               <div>
                 <p class="movie-title">{{ movie.title }}</p>
-                <p>{{ movie.genre.toString() }} | {{ movie.length }} min</p>
+                <p>{{movie.genre.join(", ")}} | {{ movie.length }} min</p>
                 <p>{{ movie.shortDescription }}</p>
               </div>
             </div>
