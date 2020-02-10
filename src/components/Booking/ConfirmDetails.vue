@@ -1,7 +1,7 @@
 <template>
   <div class="container confirm-booking center">
     <div class="row inner-container">
-      <h4 class="center col s12">Kontrollera din bokning..</h4>
+      <h4 class="center col s12">Kontrollera din bokning.</h4>
 
       <div class="col l6 m6 s12 image-container">
         <img :src="bookingObject.movie.image" alt class="responsive-img" />
@@ -22,7 +22,7 @@
         >Parkett: rad {{ seat.y + 1 }}, plats {{ seat.x}}</p>
       </div>
 
-      <div v-if="!user" class="extra-info col s12">
+      <div v-if="!user.uid" class="extra-info col s12">
         <p class="span">Ange din email för att slutföra bokningen.</p>
 
         <div class="input-field col m7 offset-m2">
@@ -49,14 +49,14 @@
 </template>
 
 <script>
-import { db } from "@/firebase/firebase";
-import { auth } from "@/firebase/firebase";
+import { db, auth } from "@/firebase/firebase";
 
 export default {
   data() {
     return {
       emailInput: null,
-      user: null
+      user: {},
+      onAuthStateChangedUnsubscribe: null
     };
   },
 
@@ -86,7 +86,7 @@ export default {
     },
 
     confirmBooking() {
-      if (this.user) {
+      if (this.user.uid) {
         this.bookingObject.email = this.user.email;
       } else {
         this.bookingObject.email = this.emailInput;
@@ -104,14 +104,14 @@ export default {
         })
         .then(ref => {
           this.bookingObject.id = ref.id;
-          /* window.console.log(this.user.uid) */
-          if (this.user) {
+          if (this.user.uid) { 
+            this.user.bookings.push(this.bookingObject.id)
+            window.console.log(this.user)
+          
             db.collection("users")
               .doc(this.user.uid)
               .update({
-                bookings: db.FieldValue.arrayUnion(
-                  this.bookingObject.id
-                )
+                bookings: this.user.bookings 
               });
           }
           this.$router.push({
@@ -123,13 +123,25 @@ export default {
   },
 
   created() {
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        this.user = user;
+    this.onAuthStateChangedUnsubscribe = auth.onAuthStateChanged(async user => {
+      if (user != null) {
+        let doc = await db.collection("users")
+              .doc(user.uid)
+
+        doc = await doc.get()
+        let tempUser = {}
+        Object.assign(tempUser, doc.data(), user) 
+        this.user = tempUser;
+
+        window.console.log(this.user)
+
       } else {
-        this.user = null;
+        this.user = {};
       }
     });
+  },
+  beforeDestroy() {
+    this.onAuthStateChangedUnsubscribe()
   }
 };
 </script>

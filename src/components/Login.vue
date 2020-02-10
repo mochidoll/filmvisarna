@@ -98,7 +98,7 @@ export default {
           });
         await this.$store.dispatch("getUsers");
 
-        this.$router.push("secure");
+        this.$router.push("allMovies");
       }
     }
   },
