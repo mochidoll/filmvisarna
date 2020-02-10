@@ -114,6 +114,7 @@ export default {
                 bookings: this.user.bookings 
               });
           }
+          this.$store.commit('setBookings', this.user.bookings)
           this.$router.push({
             name: "BookingComplete",
             params: { bookingObject: this.bookingObject }

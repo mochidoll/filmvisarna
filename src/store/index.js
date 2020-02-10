@@ -40,7 +40,7 @@ export default new Vuex.Store({
     },
 
     setBookings(state, data) {
-      state.bookings = data
+      state.bookings = [...data]
     },
 
 
