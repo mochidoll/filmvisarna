@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <!--<button @click="addArrayToScreeningFireBase()" class="btn">CLICK ME love love</button> USED TO ADD ROOMSEATS-->
     <h4>Välj platser i {{ bookingObject.auditorium.name }}</h4>
     <p>Bokade biljetter: {{ bookingObject.numberOfTickets }} st</p>
     <div class="center">
@@ -17,25 +18,28 @@
           :key="'seat' + id"
           :position="{x: seat, y: y}"
           :disableSeat="hasAllSeatsSelected"
+          :screeningId="bookingObject.screeningId"
           @addToCurrentTicket="addToCurrentTicket"
           @removeFromCurrentTicket="removeFromCurrentTicket"
           @pushToPositions="pushToPositions"
           @removeFromPositions="removeFromPositions"
         ></Seat>
       </div>
-       <p v-if="feedback">{{feedback}}</p>
+      <p v-if="feedback">{{feedback}}</p>
 
       <div class="nav-buttons row col s12">
-        <button @click="goBackToSelectTickets" class="col s5 m3 l2 offset-m1 offset-l1 btn waves-effect waves-light red darken-4 white-text">Tillbaka</button>
+        <button
+          @click="goBackToSelectTickets"
+          class="col s5 m3 l2 offset-m1 offset-l1 btn waves-effect waves-light red darken-4 white-text"
+        >Tillbaka</button>
         <button
           @click="goToConfirmDetails"
           class="col s5 m3 l2 offset-s2 offset-l6 offset-m4 btn waves-effect waves-light red darken-4 white-text"
           :class="{disabled:!hasAllSeatsSelected}"
         >Gå vidare</button>
       </div>
-      
     </div>
-    
+
     <div class="center" v-else>
       <div class="preloader-wrapper active big">
         <div class="spinner-layer spinner-red-only center">
@@ -56,6 +60,7 @@
 
 <script>
 import Seat from "@/components/Booking/Seat";
+//import { db } from "@/firebase/firebase";
 export default {
   components: {
     Seat
@@ -102,13 +107,162 @@ export default {
       this.bookingObject.seatPositions = this.positions;
       this.$router.push({
         name: "ConfirmDetails",
-        params: {bookingObject: this.bookingObject}
+        params: { bookingObject: this.bookingObject }
       });
     },
     goBackToSelectTickets() {
-      this.bookingObject.seatPositions = null
-      this.$router.push({name: 'SelectTickets'})
-    }
+      this.bookingObject.seatPositions = null;
+      this.$router.push({ name: "SelectTickets" });
+    },
+    /* addArrayToScreeningFireBase() {
+      this.screenings.forEach(screening => {
+        if (screening.auditoriumId === this.bookingObject.auditorium.id) {
+          let bookedSeats = null;
+          let localId = screening.id;
+          if (this.bookingObject.auditorium.seatsPerRow[0] === 6) {
+            //Lilla salongen
+            bookedSeats = [
+              [false, false, false, false, false, false],
+              [false, false, false, false, false, false, false, false],
+              [false, false, false, false, false, false, false, false, false],
+              [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+              ],
+              [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+              ],
+              [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+              ]
+            ];
+          } else {
+            //Stora salongen
+            bookedSeats = [
+              [false, false, false, false, false, false, false, false],
+              [false, false, false, false, false, false, false, false, false],
+              [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+              ],
+              [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+              ],
+              [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+              ],
+              [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+              ],
+              [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+              ],
+              [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+              ]
+            ];
+          }
+
+          for (let i = 0; i < bookedSeats.length; i++) {
+            bookedSeats[i] = Object.assign({}, [...bookedSeats[i]]);
+          }
+          screening.bookedSeats = bookedSeats;
+          delete screening.id;
+          delete screening.movie;
+          db.collection("screenings")
+            .doc(localId)
+            .set(screening)
+            .then(function() {
+              console.log("Document successfully written!");
+            });
+        }
+      });
+    } */
   },
 
   computed: {
@@ -122,12 +276,15 @@ export default {
     },
     auditoriums() {
       return this.$store.state.auditoriums;
-    }
+    },
+    /*screenings() {
+      return this.$store.state.screenings;
+    }*/
   },
 
   created() {
-    if(this.bookingObject.seatPositions){
-      return null
+    if (this.bookingObject.seatPositions) {
+      return null;
     }
   },
 
@@ -147,14 +304,11 @@ export default {
 </script>
 
 <style>
+.seat-wrapper {
+  user-select: none;
+}
 
-  .seat-wrapper {
-    user-select: none;
-  }
-  
-  .nav-buttons {
-    margin: 2rem 0 1rem !important;
-  }
-
-
+.nav-buttons {
+  margin: 2rem 0 1rem !important;
+}
 </style>
