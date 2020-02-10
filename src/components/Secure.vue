@@ -30,6 +30,9 @@ export default {
       user: {}
     };
   },
+  watch:{
+   
+  },
   methods: {
     logout() {
       auth.signOut().then(this.$router.push("Login"));

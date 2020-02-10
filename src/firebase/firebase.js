@@ -21,6 +21,7 @@ const db = myFirebase.firestore();
 const auth = myFirebase.auth();
 
 export {
+  myFirebase,
   db,
   auth,
 }
