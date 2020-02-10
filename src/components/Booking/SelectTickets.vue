@@ -235,77 +235,77 @@ export default {
     top: 100px;
     left: 275px !important;
   } 
-}
+}*/
 
-@media screen and (min-width: 760px) {
+@media screen and (min-width: 600px) {
   .select-tickets-wrapper .select-tickets-container {
   display: block;
-  position: absolute;
-  top: 100px;
-  left: 365px !important;
+  position: relative;
+  top: 30px;
+  left: 0px!important;
   } 
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 750px) {
   .select-tickets-wrapper .select-tickets-container {
   display: block;
-  position: absolute;
-  top: 120px;
-  left: 385px !important;
-  } 
+  position: relative;
+  top: 30px;
+  left: 40px!important;
+    }
 }
 
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 850px) {
   .select-tickets-wrapper .select-tickets-container {
   display: block;
-  position: absolute;
-  top: 130px;
-  left: 440px !important;
+  position: relative;
+  top: 30px;
+  left: 40px!important;
   } 
-}
+} 
 
 @media screen and (min-width: 950px) {
   .select-tickets-wrapper .select-tickets-container {
   display: block;
-  position: absolute;
-  top: 140px;
-  left: 465px !important;
+  position: relative;
+  top: 40px;
+  left: 50px!important;
   } 
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 1150px) {
   .select-tickets-wrapper .select-tickets-container {
   display: block;
-  position: absolute;
-  top: 115px;
-  left: 390px !important;
+  position: relative;
+  top: 50px;
+  left: 50px!important;
   } 
 }
 
-@media screen and (min-width: 1050px) {
+@media screen and (min-width: 1250px) {
   .select-tickets-wrapper .select-tickets-container {
   display: block;
-  position: absolute;
-  top: 120px;
-  left: 420px!important;
+  position: relative;
+  top: 60px;
+  left: 50px!important;
   } 
 }
 
-@media screen and (min-width: 1100px) {
+@media screen and (min-width: 1350px) {
   .select-tickets-wrapper .select-tickets-container {
   display: block;
-  position: absolute;
-  top: 130px;
-  left: 435px!important;
+  position: relative;
+  top: 70px;
+  left: 50px!important;
   } 
-}
+} 
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1450px) {
   .select-tickets-wrapper .select-tickets-container {
   display: block;
-  position: absolute;
-  top: 145px;
-  left: 480px !important;
+  position: relative;
+  top: 85px;
+  left: 50px !important;
   } 
-} */
+} 
 </style>
