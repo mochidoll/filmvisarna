@@ -4,7 +4,7 @@
       <div class="container">
         <router-link class="brand-logo" to="/">
           <div>
-            <img class="logo responsive-img" src="@/assets/images/filmvisarna3.png" alt />
+            <img class="logo responsive-img" src="@/assets/images/Cinemalogo.png" alt />
           </div>
         </router-link>
 
@@ -95,7 +95,7 @@
     
 
   .logo {
-    width: 4rem;
+    width: 11rem;
   }
   .logo-text{
     font-size: 1rem;
