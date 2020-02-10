@@ -77,7 +77,7 @@
               <div>
                 <p class="movie-title">{{ movie.title }}</p>
                 <p>{{ movie.genre.toString() }} | {{ movie.length }} min</p>
-                <p>{{ movie.description }}</p>
+                <p>{{ movie.shortDescription }}</p>
               </div>
             </div>
           </div>
@@ -137,7 +137,7 @@ export default {
       genres = [...new Set(genres)];
       // Sort alphanumeric
       genres.sort().forEach(genre => genresName.push({name:genre}))
-      window.console.log(genresName)
+      // window.console.log(genresName)
       genresName.unshift({name:"All genres"});
       return genresName;
     },

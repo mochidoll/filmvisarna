@@ -2,7 +2,7 @@
   <section>
     <section class="select-tickets-wrapper row">
 
-      <h5 class="col s12 m12 l12">Välj Biljetter</h5>
+      <!-- <h5 class="col s12 m12 l12">Välj Biljetter</h5> -->
 
       <div class="col s12 m6 l6 movie-info-wrapper valign-wrapper left-align">
 
@@ -97,7 +97,8 @@ export default {
       childTicketPrice: 65,
       movieChosen: null,
       screeningChosen: null,
-      auditorium: null
+      auditorium: null,
+      payload: null
     };
   },
   methods: {
@@ -120,18 +121,22 @@ export default {
       this.seniorTickets--;
     },
     continueToSelectSeats() {
-      this.bookingObject.movie = this.movieChosen;
-      this.bookingObject.screening = this.screeningChosen;
-      this.bookingObject.auditorium = this.auditorium;
-      this.bookingObject.adultTickets = this.adultTickets;
-      this.bookingObject.seniorTickets = this.seniorTickets;
-      this.bookingObject.childTickets = this.childTickets;
-      this.bookingObject.numberOfTickets = this.numberOfTickets;
+      if(this.numberOfTickets !== 0){   
+        this.bookingObject.movie = this.movieChosen;
+        this.bookingObject.screening = this.screeningChosen;
+        this.bookingObject.auditorium = this.auditorium;
+        this.bookingObject.adultTickets = this.adultTickets;
+        this.bookingObject.seniorTickets = this.seniorTickets;
+        this.bookingObject.childTickets = this.childTickets;
+        this.bookingObject.numberOfTickets = this.numberOfTickets;
 
-      this.$router.push({
-        name: "SelectSeats",
-        params: { bookingObject: this.bookingObject }
-      });
+        this.$router.push({
+          name: "SelectSeats",
+          params: { bookingObject: this.bookingObject }
+        });
+      } else {
+        alert('Du måste välja minst en biljett för att gå vidare.')
+      }
     },
 
     goBackToHome() {
@@ -139,7 +144,7 @@ export default {
       this.$store.state.bookingObject.childTickets = 0
       this.$store.state.bookingObject.seniorTickets = 0
       this.$router.push({ name: "Home" });
-    }
+    },
   },
   computed: {
     numberOfTickets() {
@@ -172,12 +177,15 @@ export default {
     this.adultTickets = this.bookingObject.adultTickets
     this.childTickets = this.bookingObject.childTickets
     this.seniorTickets = this.bookingObject.seniorTickets
+    
+    this.$emit('changeNavText', this.$store.state.navTexts[1])
   }
 };
 </script>
 
 <style>
 .select-tickets-wrapper {
+  margin-top: 3rem;
   position: relative;
   user-select: none;
 }
@@ -207,7 +215,7 @@ export default {
   margin: 2rem 0 1rem !important;
 }
 
-@media screen and (max-width: 599px) {
+/* @media screen and (max-width: 599px) {
   .select-tickets-wrapper p {
     font-size: 0.9rem;
   }
@@ -227,77 +235,77 @@ export default {
     top: 100px;
     left: 275px !important;
   } 
-}
+}*/
 
-@media screen and (min-width: 760px) {
+@media screen and (min-width: 600px) {
   .select-tickets-wrapper .select-tickets-container {
   display: block;
-  position: absolute;
-  top: 100px;
-  left: 365px !important;
+  position: relative;
+  top: 30px;
+  left: 0px!important;
   } 
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 750px) {
   .select-tickets-wrapper .select-tickets-container {
   display: block;
-  position: absolute;
-  top: 120px;
-  left: 385px !important;
-  } 
+  position: relative;
+  top: 30px;
+  left: 40px!important;
+    }
 }
 
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 850px) {
   .select-tickets-wrapper .select-tickets-container {
   display: block;
-  position: absolute;
-  top: 130px;
-  left: 440px !important;
+  position: relative;
+  top: 30px;
+  left: 40px!important;
   } 
-}
+} 
 
 @media screen and (min-width: 950px) {
   .select-tickets-wrapper .select-tickets-container {
   display: block;
-  position: absolute;
-  top: 140px;
-  left: 465px !important;
+  position: relative;
+  top: 40px;
+  left: 50px!important;
   } 
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 1150px) {
   .select-tickets-wrapper .select-tickets-container {
   display: block;
-  position: absolute;
-  top: 115px;
-  left: 390px !important;
+  position: relative;
+  top: 50px;
+  left: 50px!important;
   } 
 }
 
-@media screen and (min-width: 1050px) {
+@media screen and (min-width: 1250px) {
   .select-tickets-wrapper .select-tickets-container {
   display: block;
-  position: absolute;
-  top: 120px;
-  left: 420px!important;
+  position: relative;
+  top: 60px;
+  left: 50px!important;
   } 
 }
 
-@media screen and (min-width: 1100px) {
+@media screen and (min-width: 1350px) {
   .select-tickets-wrapper .select-tickets-container {
   display: block;
-  position: absolute;
-  top: 130px;
-  left: 435px!important;
+  position: relative;
+  top: 70px;
+  left: 50px!important;
   } 
-}
+} 
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1450px) {
   .select-tickets-wrapper .select-tickets-container {
   display: block;
-  position: absolute;
-  top: 145px;
-  left: 480px !important;
+  position: relative;
+  top: 85px;
+  left: 50px !important;
   } 
-}
+} 
 </style>
