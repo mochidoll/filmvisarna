@@ -6,12 +6,12 @@
         <h5>Contact</h5>
         <div class="aside-text">
           <i class="material-icons tiny left">map</i>
-          <p>B-filmer AB, Gladafilmersvägen 69, 225 89 Skärmen, Sverige</p>
+          <p>Filmvisarna AB, Gladafilmersvägen 123, 225 89 Småstad, Sverige</p>
         </div>
 
         <div class="aside-text">
           <i class="material-icons tiny left">email</i>
-          <p>bfilmer.info@bfilmer.com</p>
+          <p>info@filmvisarna.com</p>
         </div>
 
         <div class="aside-text">
