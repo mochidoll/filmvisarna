@@ -101,14 +101,14 @@ export default {
       });
     },
     goToConfirmDetails() {
-        if(this.positions.length !== 0){   
+        if(this.positions.length === this.bookingObject.numberOfTickets){   
           this.bookingObject.seatPositions = this.positions;
           this.$router.push({
             name: "ConfirmDetails",
             params: { bookingObject: this.bookingObject }
           });
         } else {
-          alert('Du måste välja minst ' + this.bookingObject.numberOfTickets + ' biljett(er) för att gå vidare.')
+          alert('Du måste välja ' + this.bookingObject.numberOfTickets + ' biljett(er) för att gå vidare.')
         }
     },
     goBackToSelectTickets() {
