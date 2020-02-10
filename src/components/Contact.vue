@@ -3,7 +3,7 @@
     <div class="row z-depth-2 ">
 
       <div class="col s12 m6 l5 left">
-        <h5>Contact</h5>
+        <h5>Kontakt</h5>
         <div class="aside-text">
           <i class="material-icons tiny left">map</i>
           <p>Filmvisarna AB, Gladafilmersvägen 123, 225 89 Småstad, Sverige</p>
@@ -22,13 +22,13 @@
 
       <div class="col s12 m6 l5 right">
           <div class="col s12 m12 l12">
-            <h5>Business hours</h5>
+            <h5>Öppettider</h5>
           </div>
           <div class="col">
             <ul>
-              <li>Mon - Thu:</li>
-              <li>Fri - Sat:</li>
-              <li>Sun:</li>
+              <li>Mån - Tor:</li>
+              <li>Fre - Lör:</li>
+              <li>Sön:</li>
             </ul>
           </div>
           <div class="col">

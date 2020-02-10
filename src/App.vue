@@ -14,29 +14,29 @@
 
         <ul class="right hide-on-med-and-down">
           <li>
-            <router-link to="/">Now Showing</router-link>
+            <router-link to="/">Dagens visningar</router-link>
           </li>
           <li>
-            <router-link to="/allMovies">All Movies</router-link>
+            <router-link to="/allMovies">Alla Filmer</router-link>
           </li>
           <li>
-            <router-link to="/contact">Contact</router-link>
+            <router-link to="/contact">Kontakt</router-link>
           </li>
           
         </ul>
 
         <ul id="slide-out" class="sidenav">
           <li>
-            <router-link to="/">Now Showing</router-link>
+            <router-link to="/">Dagens visningar</router-link>
           </li>
           <li>
-            <router-link to="/allMovies">All Movies</router-link>
+            <router-link to="/allMovies">Alla Filmer</router-link>
           </li>
           <li>
-            <router-link to="/contact">Contact</router-link>
+            <router-link to="/contact">Kontakt</router-link>
           </li>
           <li>
-            <router-link to="/login">Login</router-link>
+            <router-link to="/login">Logga in</router-link>
           </li>
         </ul>
       </div>

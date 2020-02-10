@@ -1,7 +1,7 @@
 <template>
   <div class="movie-list">
     <div class="date">
-      <p>Today's date: ({{ dayToday }}, {{ dateToday }})</p>
+      <p>Dagens datum: ({{ dayToday }}, {{ dateToday }})</p>
     </div>
 
     <div class="filters">
@@ -98,6 +98,8 @@
 
 <script>
 import moment from "moment";
+import 'moment/locale/sv'  // without this line it didn't work
+moment.locale('sv')
 import dropdown from "vue-dropdowns";
 
 export default {
@@ -106,10 +108,10 @@ export default {
       selectedDate: "",
       movieTime: "",
       chosenDate: {
-        name: "Sort by Day"
+        name: "Sortera på datum"
       },
       chosenGenre:{
-        name: "All genres"
+        name: "Alla genres"
       }
     };
   },
@@ -121,7 +123,7 @@ export default {
       return moment().format("dddd");
     },
     dateToday() {
-      return moment().format("MMM Do YY");
+      return moment().format("ll");
     },
     movies() {
       return this.$store.state.movies;
@@ -138,7 +140,7 @@ export default {
       // Sort alphanumeric
       genres.sort().forEach(genre => genresName.push({name:genre}))
       // window.console.log(genresName)
-      genresName.unshift({name:"All genres"});
+      genresName.unshift({name:"Alla genres"});
       return genresName;
     },
     /* dates() {
@@ -190,7 +192,7 @@ export default {
             sDate.getMonth() === month &&
             sDate.getDate() === day) ||
             !year) &&
-          (this.chosenGenre.name === "All genres" ||
+          (this.chosenGenre.name === "Alla genres" ||
             screen.movie.genre.includes(this.chosenGenre.name))
         ) {
           return screen;
@@ -329,6 +331,9 @@ export default {
 .movie .movie-title {
   font-size: 2rem;
   font-weight: bold;
+}
+.movie {
+  cursor: pointer;
 }
 .mobile {
   margin: 1% !important;
