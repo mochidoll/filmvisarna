@@ -96,7 +96,6 @@ export default {
     pushToPositions(position) {
       this.positions.push(position);
     },
-    readRoomFromScreening() {},
     removeFromPositions(position) {
       this.positions.forEach((element, index) => {
         if (element.x === position.x && element.y === position.y) {

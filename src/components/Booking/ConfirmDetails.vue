@@ -1,10 +1,10 @@
 <template>
   <div class="container confirm-booking center">
-
     <div class="row inner-container">
       <h4 class="center col s12">Kontrollera din bokning..</h4>
+      <button class="btn" @click="updateBookedSeats">CHECK FOR BOOKED</button>
 
-      <div class="col l6 m6 s12 image-container   ">
+      <div class="col l6 m6 s12 image-container">
         <img :src="bookingObject.movie.image" alt class="responsive-img" />
       </div>
 
@@ -17,47 +17,62 @@
         <p v-if="bookingObject.adultTickets">Vuxenbiljetter: {{ bookingObject.adultTickets}}</p>
         <p v-if="bookingObject.childTickets">Barnbiljetter: {{ bookingObject.childTickets }}</p>
         <p v-if="bookingObject.seniorTickets">Pensionärsbiljetter: {{bookingObject.seniorTickets }}</p>
-        <p v-for="(seat, id) in bookingObject.seatPositions" :key="id">Parkett: rad {{ seat.y + 1 }}, plats {{ seat.x}}</p>
+        <p
+          v-for="(seat, id) in bookingObject.seatPositions"
+          :key="id"
+        >Parkett: rad {{ seat.y + 1 }}, plats {{ seat.x}}</p>
       </div>
 
-        <div class=" extra-info col s12">
-        
-          <p class="span">Ange din email för att slutföra bokningen.</p>
+      <div class="extra-info col s12">
+        <p class="span">Ange din email för att slutföra bokningen.</p>
 
-          <div class="input-field col m7 offset-m2">
-            <i class="material-icons prefix">email</i>
-            <input v-model="emailInput" id="icon_prefix" class="" type="email">
-            <label for="icon_prefix">Email</label>
-            <span class="helper-text" data-error="Felaktig email, var god skriv in igen."></span>
-          </div>
-
+        <div class="input-field col m7 offset-m2">
+          <i class="material-icons prefix">email</i>
+          <input v-model="emailInput" id="icon_prefix" class type="email" />
+          <label for="icon_prefix">Email</label>
+          <span class="helper-text" data-error="Felaktig email, var god skriv in igen."></span>
         </div>
-
+      </div>
     </div>
 
     <div class="nav-buttons col s12">
-      <button @click="backToSelectSeats" class="btn waves-effect waves-light red darken-4 col s3 offset-s1">Tillbaka</button>
-      <button :class="{disabled: !validEmail }" @click="confirmBooking" class="btn waves-effect waves-light red darken-4 col s3 offset-s4">Bekräfta</button>
+      <button
+        @click="backToSelectSeats"
+        class="btn waves-effect waves-light red darken-4 col s3 offset-s1"
+      >Tillbaka</button>
+      <button
+        :class="{disabled: !validEmail }"
+        @click="confirmBooking"
+        class="btn waves-effect waves-light red darken-4 col s3 offset-s4"
+      >Bekräfta</button>
     </div>
-
   </div>
 </template>
 
 <script>
-import { db } from "@/firebase/firebase"
+import { db } from "@/firebase/firebase";
 
 export default {
-
   data() {
     return {
       emailInput: null
-    }
+    };
   },
 
   computed: {
     validEmail() {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(this.emailInput);
+    },
+    getBookedSeats() {
+      let screenings = this.$store.state.screenings;
+      let tempBookedSeats = [];
+      screenings.forEach(screening => {
+        if (screening.id === this.bookingObject.screeningId) {
+          tempBookedSeats = screening.bookedSeats;
+        }
+      });
+      return tempBookedSeats;
     }
   },
 
@@ -77,29 +92,60 @@ export default {
     },
 
     confirmBooking() {
+      this.bookingObject.email = this.emailInput;
 
-      this.bookingObject.email = this.emailInput
-
-      db.collection("bookings").add({
-        adultTickets: this.bookingObject.adultTickets,
-        childTickets: this.bookingObject.childTickets,
-        seniorTickets: this.bookingObject.seniorTickets,
-        numberOfTickets: this.bookingObject.numberOfTickets,
-        screeningId: this.bookingObject.screeningId,
-        email: this.bookingObject.email,
-        seats: this.bookingObject.seatPositions,
-        timeStamp: new Date()
-      }).then( ref => {
-        this.bookingObject.id = ref.id
-        window.console.log('In Confirm', this.bookingObject.id)
-        this.$router.push({name: 'BookingComplete', params: {bookingObject: this.bookingObject}})
-      })
+      db.collection("bookings")
+        .add({
+          adultTickets: this.bookingObject.adultTickets,
+          childTickets: this.bookingObject.childTickets,
+          seniorTickets: this.bookingObject.seniorTickets,
+          numberOfTickets: this.bookingObject.numberOfTickets,
+          screeningId: this.bookingObject.screeningId,
+          email: this.bookingObject.email,
+          seats: this.bookingObject.seatPositions,
+          timeStamp: new Date()
+        })
+        .then(ref => {
+          this.bookingObject.id = ref.id;
+          window.console.log("In Confirm", this.bookingObject.id);
+          this.$router.push({
+            name: "BookingComplete",
+            params: { bookingObject: this.bookingObject }
+          });
+        });
     },
-    /*updateBookedSeats(){
+    updateBookedSeats() {
+      //UPPDATERAR BOOKEDSEATS
+      //If you can optimize this, pls fix
+      //Got now the seat and the bookedSeat, now got to check what row and generate that row to replace
+      this.bookingObject.seatPositions.forEach(seat => {
+        window.console.log(seat);
+        window.console.log(`X: ${seat.x} Y: ${seat.y}`);
 
-    }*/
-  },
+        this.getBookedSeats.forEach(col => {
+          /*window.console.log("bookedSeat from seat 2");
+          window.console.log(bookedSeat[2]);
+          window.console.log("ALL BOOKEDSEAT")
+          window.console.log(bookedSeat)*/
+          let bookedSeats = Object.values(col);
+          /*bookedSeatsRow.forEach((bookedSeat, i) => {
+            window.console.log(`ROW ${i}`)
+            window.console.log(bookedSeat)
+          });*/
 
+          window.console.log("Seat y");
+          window.console.log(bookedSeats[seat.y]);
+          window.console.log(bookedSeats.length);
+          bookedSeats.forEach(bookedSeat => {
+            window.console.log(bookedSeat) //THIS WORKS -- CODE GOES HERE
+          });
+        });
+      });
+      /*this.bookingObject.seatPositions.forEach((seat => {
+        return null;
+      })*/
+    }
+  }
 };
 </script>
 <style>
