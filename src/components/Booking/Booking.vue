@@ -5,23 +5,23 @@
 
         <div class="row nav-choices valign-wrapper">
 
-          <div @click="back" v-if="showOrNot" class="row col s4 nav-buttons backwards left-align valign-wrapper">
+          <div @click="back" class="row col s4 nav-buttons backwards left-align valign-wrapper">
             <i class="col s2 material-icons left-align">arrow_back_ios</i>
             <h6 class="col s10 hide-on-small-only">{{ before }}</h6>
           </div>
 
-          <h4 v-if="showOrNot" class="col s12 m4 nav-text center">{{navText}}</h4>
+          <h4 class="col s12 m4 nav-text center">{{navText}}</h4>
 
-          <div @click="forward" v-if="showOrNot" class="row col s4 nav-buttons forward right-align">
+          <div @click="forward" class="row col s4 nav-buttons forward right-align">
             <h6 class="col s10 hide-on-small-only">{{ after }}</h6>
             <i class="col s2 material-icons right-align">arrow_forward_ios</i>
           </div>
 
         </div>
         
-        <div v-if="showOrNot" class="divider"></div>
+        <div class="divider"></div>
       </div>
-      <router-view ref="contentView" @changeNavText="changeNavText"></router-view>
+      <router-view @showFeedback="toggleFeedback" ref="contentView" @changeNavText="changeNavText"></router-view>
     </div>
   </div>
 </template>
@@ -36,10 +36,17 @@ export default {
   data() {
     return {
       navText: null,
+      feedback: null,
     }
   },
 
   methods: {
+    toggleFeedback(val) {
+      if(val === 1) {
+        this.feedback = 'Tickets'
+        window.console.log('FeedbackText')
+      }
+    },
     changeNavText(value) {
       this.navText = value
     },

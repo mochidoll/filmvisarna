@@ -136,6 +136,7 @@ export default {
           params: { bookingObject: this.bookingObject }
         });
       } else {
+        this.$emit('showFeedback', 1)
         alert('Du måste välja minst en biljett för att gå vidare.')
       }
     },
