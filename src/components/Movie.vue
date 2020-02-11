@@ -1,10 +1,11 @@
 <template>
   <div class="container">
-    <div class="trailer-container"></div>
 
-    <div class="row">
-      <div class="left col s12 center flex">
-        <h3 class="left">
+      <youtube class="trailer-container" :video-id="movie.videoId"></youtube>
+
+    <div class=" movie-info-container row">
+      <div class="left col s12 center">
+        <h3 class="center">
           {{movie.title}}
           <span class="movie-year">({{movie.productionYear}})</span>
         </h3>
@@ -50,6 +51,9 @@
 
 <script>
 import dropdown from "vue-dropdowns";
+import Vue from 'vue'
+import VueYouTubeEmbed from 'vue-youtube-embed' 
+Vue.use(VueYouTubeEmbed)
 
 export default {
   data() {
@@ -152,6 +156,23 @@ export default {
 * {
   box-sizing: border-box;
 }
+.trailer-container{
+  display: block;
+  margin: 2rem 0 1rem;
+  padding-bottom: 56.25%;
+  padding-top: 30px; height: 0; overflow: hidden;
+  position: relative;
+}
+.trailer-container iframe{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.movie-info-container{
+  margin-top: 0 !important;
+}
 h3 {
   margin: 0rem !important;
   padding-bottom: 2%;
@@ -174,8 +195,4 @@ h4 {
   height: 200px !important;
   overflow: auto !important;
 }
-/* .timeButton {
-  margin-top: 1.5rem;
-  margin-right: 1rem;
-} */
 </style>
