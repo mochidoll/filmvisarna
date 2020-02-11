@@ -46,7 +46,7 @@
                       <div
                         class="btn col red darken-4 s12 z-depth-0.5"
                         v-if="screen.date.name === chosenDate.name"
-                      >Book time - {{screen.time}}</div>
+                      >Boka - {{screen.time}}</div>
                     </div>
                   </div>
                 </div>
@@ -71,15 +71,14 @@
               </div>
             </div>
           </div>
-          <!-- <div class="col m3">
+          <div class="col m3">
             <div v-for="screen in screeningMovies" :key="screen.id">
               <div v-if="screen.movieId == movie">
-                <div class="btn col red" v-if="screen.date.name === chosenDate.name">{{screen.time}}
-                  
+                <div class="btn col red" v-if="screen.date.name === chosenDate.name">Boka - {{screen.time}}
                 </div>
               </div>
             </div>
-          </div>-->
+          </div>
         </div>
       </div>
     </div>
