@@ -20,6 +20,7 @@
 <script>
 import { auth } from "@/firebase/firebase";
 import UserBooking from "./UserBooking.vue";
+import Vue from 'vue'
 export default {
   name: "Secure",
   components: {
@@ -27,11 +28,8 @@ export default {
   },
   data() {
     return {
-      user: {}
+      user: {},
     };
-  },
-  watch:{
-   
   },
   methods: {
     logout() {
@@ -69,6 +67,7 @@ export default {
       }
     });
     this.$store.dispatch("getBookings");
+    Vue.set(this.userBookings, 0, this.userBookings[0])
   }
 };
 </script>
