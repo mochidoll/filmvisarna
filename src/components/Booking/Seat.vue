@@ -3,47 +3,29 @@
     @click="onClick()"
     @mouseover="hover = true"
     @mouseleave="hover = false"
-    :disabled="isBooked || (disableSeat && !isSelected)"
+    :disabled="bookedSeat || (disableSeat && !isSelected)"
     :class="{
-      'red lighten-2': hover && !disableSeat && !isBooked, 
-      'red accent-2':isSelected && hover && !isBooked, 
+      'red lighten-2': hover && !disableSeat && !bookedSeat, 
+      'red accent-2':isSelected && hover && !bookedSeat, 
       'red darken-4': isSelected && !hover,
-      'blue': isBooked,
-      black: !isSelected && !disableSeat && !isBooked,
-      'grey lighten-2': disableSeat && !isSelected && !isBooked}"
+      'blue': bookedSeat,
+      black: !isSelected && !disableSeat && !bookedSeat,
+      'grey lighten-2': disableSeat && !isSelected && !bookedSeat}"
     class="white-text seats"
   >
-    <!--
-    red darken-4: Selected Seat
-    black: unselected Seat
-    grey lighten-1: Booked seat
-    red lighten-2: hover effect
-    grey lighten-2: disabled seat
-
-    Vars: disableSeat, isSelected, isBooked, hover
-    -->
   </button>
 </template>
 
 <script>
 export default {
-  props: ["position", "disableSeat", "screeningId"],
+  props: ["position", "disableSeat", "bookedSeat"],
   data() {
     return {
       isSelected: false,
-      isBooked: false,
       hover: false
     };
   },
   computed: {
-    bookedSeats() {
-      return this.$store.state.bookings.filter(filterBooking => {
-        if (filterBooking.screeningId === this.screeningId) {
-          //window.console.log(filterBooking)
-          return filterBooking;
-        }
-      });
-    }
   },
   methods: {
     onClick() {
@@ -67,15 +49,7 @@ export default {
       } else if (!this.isSelected) {
         this.$emit("removeFromPositions", this.position);
       }
-    },
-    checkIfSeatIsBooked() {
-      if (this.position.y === 1) {
-        this.isBooked = true;
-      }
     }
-  },
-  created() {
-    this.checkIfSeatIsBooked();
   }
 };
 </script>

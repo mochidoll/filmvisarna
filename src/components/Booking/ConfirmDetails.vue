@@ -94,7 +94,10 @@ export default {
         window.console.log('In Confirm', this.bookingObject.id)
         this.$router.push({name: 'BookingComplete', params: {bookingObject: this.bookingObject}})
       })
-    }
+    },
+    /*updateBookedSeats(){
+
+    }*/
   },
 
 };

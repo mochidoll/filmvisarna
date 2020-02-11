@@ -10,15 +10,15 @@
     <div class="row seat-wrapper" v-if="auditoriums">
       <div
         class="center col s12"
-        v-for="(row, y, id) in bookingObject.auditorium.seatsPerRow"
+        v-for="(row, y, id) in bookedSeats"
         :key="'row' + y + id"
       >
         <Seat
-          v-for="(seat, id) in row"
+          v-for="(seat, x, id) in row"
           :key="'seat' + id"
-          :position="{x: seat, y: y}"
+          :position="{x: x, y: y}"
+          :bookedSeat="seat"
           :disableSeat="hasAllSeatsSelected"
-          :screeningId="bookingObject.screeningId"
           @addToCurrentTicket="addToCurrentTicket"
           @removeFromCurrentTicket="removeFromCurrentTicket"
           @pushToPositions="pushToPositions"
@@ -96,6 +96,7 @@ export default {
     pushToPositions(position) {
       this.positions.push(position);
     },
+    readRoomFromScreening() {},
     removeFromPositions(position) {
       this.positions.forEach((element, index) => {
         if (element.x === position.x && element.y === position.y) {
@@ -113,156 +114,7 @@ export default {
     goBackToSelectTickets() {
       this.bookingObject.seatPositions = null;
       this.$router.push({ name: "SelectTickets" });
-    },
-    /* addArrayToScreeningFireBase() {
-      this.screenings.forEach(screening => {
-        if (screening.auditoriumId === this.bookingObject.auditorium.id) {
-          let bookedSeats = null;
-          let localId = screening.id;
-          if (this.bookingObject.auditorium.seatsPerRow[0] === 6) {
-            //Lilla salongen
-            bookedSeats = [
-              [false, false, false, false, false, false],
-              [false, false, false, false, false, false, false, false],
-              [false, false, false, false, false, false, false, false, false],
-              [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-              ],
-              [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-              ],
-              [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-              ]
-            ];
-          } else {
-            //Stora salongen
-            bookedSeats = [
-              [false, false, false, false, false, false, false, false],
-              [false, false, false, false, false, false, false, false, false],
-              [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-              ],
-              [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-              ],
-              [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-              ],
-              [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-              ],
-              [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-              ],
-              [
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false,
-                false
-              ]
-            ];
-          }
-
-          for (let i = 0; i < bookedSeats.length; i++) {
-            bookedSeats[i] = Object.assign({}, [...bookedSeats[i]]);
-          }
-          screening.bookedSeats = bookedSeats;
-          delete screening.id;
-          delete screening.movie;
-          db.collection("screenings")
-            .doc(localId)
-            .set(screening)
-            .then(function() {
-              console.log("Document successfully written!");
-            });
-        }
-      });
-    } */
+    }
   },
 
   computed: {
@@ -277,9 +129,17 @@ export default {
     auditoriums() {
       return this.$store.state.auditoriums;
     },
-    /*screenings() {
-      return this.$store.state.screenings;
-    }*/
+    bookedSeats() {
+      let bookedSeats = this.$store.state.screenings;
+      let bookeauditoriumSeats = [];
+
+      bookedSeats.forEach(bookedSeat => {
+        if (bookedSeat.id === this.bookingObject.screeningId) {
+          bookeauditoriumSeats = bookedSeat.bookedSeats;
+        }
+      });
+      return bookeauditoriumSeats;
+    }
   },
 
   created() {
