@@ -4,11 +4,25 @@
     @mouseover="hover = true"
     @mouseleave="hover = false"
     :disabled="isBooked || (disableSeat && !isSelected)"
-    :class="{'red darken-4': isSelected, black: !isSelected && !disableSeat && !isBooked,
-        'grey lighten-1': isBooked && !disableSeat,
-       'red lighten-2': hover && !disableSeat, 'grey lighten-2': !isSelected && disableSeat}"
+    :class="{
+      'red lighten-2': hover && !disableSeat && !isBooked, 
+      'red accent-2':isSelected && hover && !isBooked, 
+      'red darken-4': isSelected && !hover,
+      'blue': isBooked,
+      black: !isSelected && !disableSeat && !isBooked,
+      'grey lighten-2': disableSeat && !isSelected && !isBooked}"
     class="white-text seats"
-  ></button>
+  >
+    <!--
+    red darken-4: Selected Seat
+    black: unselected Seat
+    grey lighten-1: Booked seat
+    red lighten-2: hover effect
+    grey lighten-2: disabled seat
+
+    Vars: disableSeat, isSelected, isBooked, hover
+    -->
+  </button>
 </template>
 
 <script>
@@ -18,14 +32,14 @@ export default {
     return {
       isSelected: false,
       isBooked: false,
-      hover: false,
+      hover: false
     };
   },
   computed: {
     bookedSeats() {
       return this.$store.state.bookings.filter(filterBooking => {
         if (filterBooking.screeningId === this.screeningId) {
-          window.console.log(filterBooking)
+          //window.console.log(filterBooking)
           return filterBooking;
         }
       });
@@ -36,7 +50,6 @@ export default {
       this.changeSelectedState();
       this.changeCurrentTicket();
       this.updateParentPositions();
-      this.checkIfSeatIsBooked();
     },
     changeSelectedState() {
       this.isSelected = !this.isSelected;
@@ -56,31 +69,13 @@ export default {
       }
     },
     checkIfSeatIsBooked() {
-      //window.console.log("bookings:");
-      //window.console.log(this.bookings);
-      //let bookedSeats = [];
-
-      //let bookedSeats = []
-      this.bookedSeats.filter(seat => {
-        window.console.log("x: " + seat.x + " y: " + seat.y)
-      })
-      
-      let bookedSeatsArray = this.bookedSeats
-      for (let bookedSeat in bookedSeatsArray) {
-        //if (booking.seats === this.position)
-        window.console.log("booked seat");
-        window.console.log(bookedSeat);
-        window.console.log(bookedSeat.x, bookedSeat.y);
-      }
-
-      /* this.bookings.forEach(booking => {
-        return booking.seats
-      });
-      */
-      if (this.position.y === 1 && this.position.x === 2) {
+      if (this.position.y === 1) {
         this.isBooked = true;
       }
     }
+  },
+  created() {
+    this.checkIfSeatIsBooked();
   }
 };
 </script>
