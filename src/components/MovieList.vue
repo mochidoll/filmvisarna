@@ -82,7 +82,7 @@
           <div class="col m3">
             <div v-for="screen in screeningMovies" :key="screen.id">
               <div v-if="screen.movieId == movie">
-                <div class="btn col red" v-if="screen.date.name === chosenDate.name">Boka - {{screen.time}}
+                <div class="btn col red darken-4" v-if="screen.date.name === chosenDate.name">Boka - {{screen.time}}
                 </div>
               </div>
             </div>
