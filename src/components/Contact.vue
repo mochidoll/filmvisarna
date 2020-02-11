@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row z-depth-2">
       <div class="col s12 m6 l5 left">
-        <h5>Contact</h5>
+        <h5>Kontakt</h5>
         <div class="aside-text">
           <i class="material-icons tiny left">map</i>
           <p>Filmvisarna AB, Kalkstensvägen 3, 225 89 Småstad, Sverige</p>
@@ -20,23 +20,23 @@
       </div>
 
       <div class="col s12 m6 l5 right">
-        <div class="col s12 m12 l12">
-          <h5>Business hours</h5>
-        </div>
-        <div class="col">
-          <ul>
-            <li>Mon - Thu:</li>
-            <li>Fri - Sat:</li>
-            <li>Sun:</li>
-          </ul>
-        </div>
-        <div class="col">
-          <ul>
-            <li>08:00 - 20:00</li>
-            <li>08:00 - 24:00</li>
-            <li>08:00 - 24:00</li>
-          </ul>
-        </div>
+          <div class="col s12 m12 l12">
+            <h5>Öppettider</h5>
+          </div>
+          <div class="col">
+            <ul>
+              <li>Mån - Tor:</li>
+              <li>Fre - Lör:</li>
+              <li>Sön:</li>
+            </ul>
+          </div>
+          <div class="col">
+            <ul>
+              <li>08:00 - 20:00</li>
+              <li>08:00 - 24:00</li>
+              <li>08:00 - 24:00</li>
+            </ul>
+          </div>
       </div>
 
       <div class="col s12 center googlemaps">

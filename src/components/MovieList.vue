@@ -1,7 +1,7 @@
 <template>
   <div class="movie-list">
     <div class="date">
-      <p>Today's date: ({{ dayToday }}, {{ dateToday }})</p>
+      <p>Dagens datum: ({{ dayToday }}, {{ dateToday }})</p>
     </div>
 
     <div class="filters">
@@ -14,6 +14,15 @@
             :placeholder="chosenDate.name"
           ></dropdown>
         </div>
+        <div class="col">
+          <dropdown
+            :options="genres"
+            :selected="chosenGenre.name"
+            v-on:updateOption="updateChosenGenre"
+            :placeholder="chosenGenre.name"
+          ></dropdown>
+        </div>
+        
       </div>
     </div>
 
@@ -33,7 +42,7 @@
                 </div>
                 <div class="col s12">
                   <div>
-                    <span>{{ movie.genre.toString() }} | {{ movie.length }} min</span>
+                    <span>{{movie.genre.join(", ")}} | {{ movie.length }} min</span>
                   </div>
                 </div>
                 <div class="col s12">
@@ -59,7 +68,7 @@
     </div>
     <div class="hide-on-small-only">
       <div class="movie col m7" v-for="movie in filteredMovies" :key="movie.id">
-        <div @click="goToMovie(movie)" class="card horizontal white">
+        <div @click="goToMovie(movie)" class="hoverable card horizontal white">
           <div class="card-image">
             <img class="responsive-img" :src="movie.image" />
           </div>
@@ -67,8 +76,8 @@
             <div class="card-content valign-wrapper">
               <div>
                 <p class="movie-title">{{ movie.title }}</p>
-                <p>{{ movie.genre.toString() }} | {{ movie.length }} min</p>
-                <p>{{ movie.description }}</p>
+                <p>{{movie.genre.join(", ")}} | {{ movie.length }} min</p>
+                <p>{{ movie.shortDescription }}</p>
               </div>
             </div>
           </div>
@@ -89,6 +98,8 @@
 
 <script>
 import moment from "moment";
+import 'moment/locale/sv'  // without this line it didn't work
+moment.locale('sv')
 import dropdown from "vue-dropdowns";
 
 export default {
@@ -97,7 +108,10 @@ export default {
       selectedDate: "",
       movieTime: "",
       chosenDate: {
-        name: "Sort by Day"
+        name: "Sortera på datum"
+      },
+      chosenGenre:{
+        name: "Alla genres"
       }
     };
   },
@@ -109,13 +123,14 @@ export default {
       return moment().format("dddd");
     },
     dateToday() {
-      return moment().format("MMM Do YY");
+      return moment().format("ll");
     },
     movies() {
       return this.$store.state.movies;
     },
     genres() {
       let genres = [];
+      let genresName = [];
       // Add genres from each movie to the genres array
       for (let movie of this.movies) {
         genres = [...genres, ...movie.genre];
@@ -123,8 +138,10 @@ export default {
       // Remove duplicates from genres array
       genres = [...new Set(genres)];
       // Sort alphanumeric
-      genres.sort();
-      return genres;
+      genres.sort().forEach(genre => genresName.push({name:genre}))
+      // window.console.log(genresName)
+      genresName.unshift({name:"Alla genres"});
+      return genresName;
     },
     /* dates() {
       let screenings = [];
@@ -158,13 +175,25 @@ export default {
       let day = date.getDate();
       let screens = this.$store.state.screenings;
 
+      // add the movie to each screening
+      // if we have movies in array called movies we could
+      // do it like this
+      screens.forEach(screening => {
+        screening.movie = this.movies.filter(movie => {
+          return movie.id === screening.movieId;
+        })[0];
+      });
+
       // filters array on date
       let filteredArray = screens.filter(screen => {
         let sDate = new Date(screen.startTime.toDate());
         if (
-          sDate.getFullYear() == year &&
-          sDate.getMonth() == month &&
-          sDate.getDate() == day
+          ((sDate.getFullYear() === year &&
+            sDate.getMonth() === month &&
+            sDate.getDate() === day) ||
+            !year) &&
+          (this.chosenGenre.name === "Alla genres" ||
+            screen.movie.genre.includes(this.chosenGenre.name))
         ) {
           return screen;
         }
@@ -228,6 +257,9 @@ export default {
     updateChosenDate(date) {
       this.chosenDate.name = date.name;
     },
+    updateChosenGenre(genre) {
+      this.chosenGenre.name = genre.name;
+    },
     goToMovie(movie) {
       this.$router.push("/allMovies/" + movie.title);
     },
@@ -254,7 +286,7 @@ export default {
       }
     }, 50);
   }
-};
+}
 </script>
 
 <style scoped>
@@ -299,6 +331,9 @@ export default {
 .movie .movie-title {
   font-size: 2rem;
   font-weight: bold;
+}
+.movie {
+  cursor: pointer;
 }
 .mobile {
   margin: 1% !important;
