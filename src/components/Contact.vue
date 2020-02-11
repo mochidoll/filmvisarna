@@ -5,17 +5,17 @@
         <h5>Contact</h5>
         <div class="aside-text">
           <i class="material-icons tiny left">map</i>
-          <p>B-filmer AB, Gladafilmersvägen 69, 225 89 Skärmen, Sverige</p>
+          <p>Filmvisarna AB, Kalkstensvägen 3, 225 89 Småstad, Sverige</p>
         </div>
 
         <div class="aside-text">
           <i class="material-icons tiny left">email</i>
-          <p>bfilmer.info@bfilmer.com</p>
+          <p>info@bfilmvisarna.com</p>
         </div>
 
         <div class="aside-text">
           <i class="material-icons tiny left">phone</i>
-          <p>+467012346789</p>
+          <p>+46 70 12 346 789</p>
         </div>
       </div>
 
@@ -50,8 +50,6 @@
         ></iframe>
       </div>
     </div>
-
-    <!--Google Map karta-->
   </div>
 </template>
 
@@ -70,23 +68,32 @@ i {
   bottom: -4px;
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 363px) {
   .container {
-  font-size: 0.8em;
+    font-size: 0.7em;
+  }
+}
+
+@media screen and (min-width: 601px) and (max-width: 670px) {
+  .container {
+    font-size: 0.8em;
+  }
+  h5 {
+    font-size: 1.5em;
   }
 }
 
 .googlemaps {
-    overflow:hidden;
-    padding-bottom:56.25%;
-    position:relative;
-    height:300px;
+  overflow: hidden;
+  padding-bottom: 56.25%;
+  position: relative;
+  height: 300px;
 }
-.googlemaps iframe{
-    left:0;
-    top:0;
-    height:100%;
-    width:100%;
-    position:absolute;
+.googlemaps iframe {
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
 }
 </style>
