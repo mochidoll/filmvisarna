@@ -16,7 +16,7 @@ export default new Vuex.Store({
       screeningId: null
     },
     navTexts: [
-      'Tillbaks hem',
+      'Hem',
       'Välj biljetter',
       'Välj platser',
       'Bekräfta',
