@@ -129,6 +129,7 @@ export default {
         this.bookingObject.seniorTickets = this.seniorTickets;
         this.bookingObject.childTickets = this.childTickets;
         this.bookingObject.numberOfTickets = this.numberOfTickets;
+        this.bookingObject.totalTicketPrice = this.totalTicketPrice;
 
         this.$router.push({
           name: "SelectSeats",

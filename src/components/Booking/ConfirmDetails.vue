@@ -18,6 +18,7 @@
         <p v-if="bookingObject.childTickets">Barnbiljetter: {{ bookingObject.childTickets }}</p>
         <p v-if="bookingObject.seniorTickets">Pensionärsbiljetter: {{bookingObject.seniorTickets }}</p>
         <p v-for="(seat, id) in bookingObject.seatPositions" :key="id">Parkett: rad {{ seat.y + 1 }}, plats {{ seat.x}}</p>
+        <p><b>Totalt pris: {{ bookingObject.totalTicketPrice}} kr</b></p>
       </div>
 
         <div class=" extra-info col s12">
