@@ -142,9 +142,6 @@ export default {
     },
 
     goBackToHome() {
-      this.$store.state.bookingObject.adultTickets = 0
-      this.$store.state.bookingObject.childTickets = 0
-      this.$store.state.bookingObject.seniorTickets = 0
       this.$router.push({ name: "Home" });
     },
   },
