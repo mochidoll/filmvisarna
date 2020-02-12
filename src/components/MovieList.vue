@@ -1,7 +1,7 @@
 <template>
   <div class="movie-list">
     <div class="date">
-      <p>Today's date: ({{ dayToday }}, {{ dateToday }})</p>
+      <p>Dagens datum: ({{ dayToday }}, {{ dateToday }})</p>
     </div>
 
     <div class="filters">
@@ -42,7 +42,7 @@
                 </div>
                 <div class="col s12">
                   <div>
-                    <span>{{ movie.genre.toString() }} | {{ movie.length }} min</span>
+                    <span>{{movie.genre.join(", ")}} | {{ movie.length }} min</span>
                   </div>
                 </div>
                 <div class="col s12">
@@ -56,7 +56,7 @@
                         class="btn col red darken-4 s12 z-depth-0.5"
                         @click="bookMovie(screen.screeningId)"
                         v-if="screen.date.name === chosenDate.name"
-                      >Book time - {{screen.time}}</div>
+                      >Boka Tid - {{screen.time}}</div>
                     </div>
                   </div>
                 </div>
@@ -76,20 +76,11 @@
             <div class="card-content valign-wrapper">
               <div>
                 <p class="movie-title">{{ movie.title }}</p>
-                <p>{{ movie.genre.toString() }} | {{ movie.length }} min</p>
+                <p>{{movie.genre.join(", ")}} | {{ movie.length }} min</p>
                 <p>{{ movie.shortDescription }}</p>
               </div>
             </div>
           </div>
-          <!-- <div class="col m3">
-            <div v-for="screen in screeningMovies" :key="screen.id">
-              <div v-if="screen.movieId == movie">
-                <div class="btn col red" v-if="screen.date.name === chosenDate.name">{{screen.time}}
-                  
-                </div>
-              </div>
-            </div>
-          </div>-->
         </div>
       </div>
     </div>
@@ -98,6 +89,8 @@
 
 <script>
 import moment from "moment";
+import 'moment/locale/sv'  // without this line it didn't work
+moment.locale('sv')
 import dropdown from "vue-dropdowns";
 
 export default {
@@ -106,10 +99,10 @@ export default {
       selectedDate: "",
       movieTime: "",
       chosenDate: {
-        name: "Sort by Day"
+        name: "Sortera på datum"
       },
       chosenGenre:{
-        name: "All genres"
+        name: "Alla genres"
       }
     };
   },
@@ -121,7 +114,7 @@ export default {
       return moment().format("dddd");
     },
     dateToday() {
-      return moment().format("MMM Do YY");
+      return moment().format("ll");
     },
     movies() {
       return this.$store.state.movies;
@@ -137,26 +130,10 @@ export default {
       genres = [...new Set(genres)];
       // Sort alphanumeric
       genres.sort().forEach(genre => genresName.push({name:genre}))
-      window.console.log(genresName)
-      genresName.unshift({name:"All genres"});
+      // window.console.log(genresName)
+      genresName.unshift({name:"Alla genres"});
       return genresName;
     },
-    /* dates() {
-      let screenings = [];
-      for (let screening of this.$store.state.screenings) {
-        screenings.push(
-          screening.startTime.toDate().toLocaleDateString("sv-SV", {
-            year: "numeric",
-            month: "numeric",
-            day: "numeric"
-            // weekday: "long"
-          })
-        );
-      }
-      screenings = [...new Set(screenings)];
-      screenings.sort();
-      return screenings;
-    }, */
     filteredMovies() {
       // filter movies where the movieID is
       // in the filtered array of movieIDs
@@ -190,7 +167,7 @@ export default {
             sDate.getMonth() === month &&
             sDate.getDate() === day) ||
             !year) &&
-          (this.chosenGenre.name === "All genres" ||
+          (this.chosenGenre.name === "Alla genres" ||
             screen.movie.genre.includes(this.chosenGenre.name))
         ) {
           return screen;
@@ -329,6 +306,9 @@ export default {
 .movie .movie-title {
   font-size: 2rem;
   font-weight: bold;
+}
+.movie {
+  cursor: pointer;
 }
 .mobile {
   margin: 1% !important;

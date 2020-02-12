@@ -4,7 +4,7 @@
       <div class="container">
         <router-link class="brand-logo" to="/">
           <div>
-            <img class="logo responsive-img" src="@/assets/images/Clapperboard.png" alt />
+            <img class="logo responsive-img" src="@/assets/images/Cinemalogo.png" alt />
           </div>
         </router-link>
 
@@ -14,7 +14,7 @@
 
         <ul class="right hide-on-med-and-down">
           <li>
-            <router-link to="/">Visas Nu</router-link>
+            <router-link to="/">Dagens visningar</router-link>
           </li>
           <li>
             <router-link to="/allMovies">Alla Filmer</router-link>
@@ -32,7 +32,7 @@
 
         <ul id="slide-out" class="sidenav">
           <li>
-            <router-link to="/">Visas Nu</router-link>
+            <router-link to="/">Dagens visningar</router-link>
           </li>
           <li>
             <router-link to="/allMovies">Alla Filmer</router-link>
@@ -57,11 +57,11 @@
     <footer class="page-footer black">
       <div class="container center">
         <div>
-          <span class="logo-text">B-Filmer AB</span>
+          <span class="logo-text">Filmvisarna AB</span>
         </div>
         <div class="footer-text">
           <i class="material-icons tiny">map</i>
-          <span>Gladafilmersvägen 69, 225 89 Skärmen, Sverige</span>
+          <span>Gladafilmersvägen 123, 225 89 Småstad, Sverige</span>
         </div>
         <div class="footer-text">
           <i class="material-icons tiny">email</i>
@@ -125,7 +125,7 @@ export default {
     
 
   .logo {
-    width: 5rem;
+    width: 11rem;
   }
   .logo-text{
     font-size: 1rem;

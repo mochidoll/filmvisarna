@@ -1,22 +1,31 @@
 <template>
   <div class="container center">
     <div class="row z-depth-1 white">
-      <div class="container center navbar">
-        <div class="nav-wrapper">
-          <div class="nav-choices s12">
-            <router-link to="/booking/selectTickets" class="breadcrumb black-text">Select Tickets</router-link>
-            <router-link to="/booking/selectSeats" class="breadcrumb black-text">Select Seats</router-link>
-            <router-link to="/booking/confirmDetails" class="breadcrumb black-text">Confirm details</router-link>
-            <router-link
-              to="/booking/bookingComplete"
-              class="breadcrumb black-text"
-            >Booking complete</router-link>
+      <div class="booking nav-wrapper">
+
+        <div v-if="!showErrorText" class="row nav-choices valign-wrapper">
+
+          <div @click="back" class="row col s2 m4 nav-buttons backwards left-align valign-wrapper">
+            <i class="col s2 material-icons left-align">arrow_back_ios</i>
+            <h6 class="col s10 hide-on-small-only">{{ before }}</h6>
           </div>
+
+          <h4 class="col s8 m4 nav-text center">{{navText}}</h4>
+
+          <div @click="forward" class="row col s2 m4 nav-buttons forward right-align">
+            <h6 class="col s10 hide-on-small-only">{{ after }}</h6>
+            <i class="col s2 material-icons">arrow_forward_ios</i>
+          </div>
+
         </div>
+
+        <div v-if="showErrorText" class="row nav-choices valign-wrapper">
+          <h5 class="col s12 nav-text red-text">{{ errorText }}</h5>
+        </div>
+        
         <div class="divider"></div>
       </div>
-
-      <router-view></router-view>
+      <router-view @toggleErrorText="toggleErrorText" ref="contentView" @changeNavText="changeNavText"></router-view>
     </div>
   </div>
 </template>
@@ -26,13 +35,131 @@ export default {
   props: {
     movie: Object,
     auditorium: Object
-  }
-};
+  },
+
+  data() {
+    return {
+      navText: null,
+      feedback: null,
+      showErrorText: false,
+      errorText: null,
+    }
+  },
+
+  methods: {
+
+    toggleErrorText(payload) {
+
+      switch(payload.component) {
+        
+        case 1: 
+          this.errorText = 'Du måste välja minst en biljett..'
+          this.showErrorText = true
+          break;
+        case 2:
+          this.errorText = `Du måste välja minst ${payload.numberOfTickets} plats(er)..`
+          this.showErrorText = true
+          break;
+        case 3:
+          this.errorText = 'Du måste skriva in en giltig email..'
+          this.showErrorText = true
+          break;
+      }
+      
+      setTimeout(() => {
+        this.showErrorText = false
+      },2000)
+
+    },
+    
+    changeNavText(value) {
+      this.navText = value
+    },
+
+    back() {
+      switch (this.navText) {
+        case this.$store.state.navTexts[1]:
+          this.$store.state.bookingObject.adultTickets = 0
+          this.$store.state.bookingObject.childTickets = 0
+          this.$store.state.bookingObject.seniorTickets = 0
+          this.$router.push({name: 'Home'})
+          break
+        case this.$store.state.navTexts[2]:
+          this.$refs.contentView.goBackToSelectTickets()
+          break
+        case this.$store.state.navTexts[3]:
+          this.$refs.contentView.backToSelectSeats()
+          break
+      }
+    },
+
+    forward() {
+      switch (this.navText) {
+        case this.$store.state.navTexts[1]:
+          this.$refs.contentView.continueToSelectSeats()
+          break
+        case this.$store.state.navTexts[2]:
+          this.$refs.contentView.goToConfirmDetails()
+          break
+        case this.$store.state.navTexts[3]:
+          this.$refs.contentView.confirmBooking()
+          break
+      }
+    }
+  },
+
+  computed: {
+
+    showOrNot() {
+      return this.navText !== this.$store.state.navTexts[4]
+    },
+
+    after() {
+      let index = this.$store.state.navTexts.indexOf(this.navText)
+
+      if(index === 4) {
+        return this.$store.state.navTexts[index]
+      }
+        return this.$store.state.navTexts[index + 1]
+    },
+
+    before() {
+      let index = this.$store.state.navTexts.indexOf(this.navText)
+      return this.$store.state.navTexts[index - 1]
+    }
+  },
+
+  beforeDestroy() {
+   let obj = {
+      adultTickets: 0,
+      seniorTickets: 0,
+      childTickets: 0,
+      screeningId: null
+   }
+   this.$store.commit('setBookingObject', obj)
+  },
+}
 </script>
 
-<style scoped>
+<style>
+.booking{
+  min-height: 80px;
+}
+.nav-choices {
+  display: block;
+  margin: 1rem 0 0 !important;
+}
+.nav-choices h5 {
+  font-weight: bold;
+}
+.nav-buttons h6 {
+  margin: 0;
+}
+.nav-buttons {
+  color: grey;
+  cursor: pointer;
+}
 .row {
-  padding-top: 2rem;
   margin: 2rem 0;
 }
 .breadcrumb:before {

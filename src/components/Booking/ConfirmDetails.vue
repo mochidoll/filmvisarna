@@ -16,10 +16,8 @@
         <p v-if="bookingObject.adultTickets">Vuxenbiljetter: {{ bookingObject.adultTickets}}</p>
         <p v-if="bookingObject.childTickets">Barnbiljetter: {{ bookingObject.childTickets }}</p>
         <p v-if="bookingObject.seniorTickets">Pensionärsbiljetter: {{bookingObject.seniorTickets }}</p>
-        <p
-          v-for="(seat, id) in bookingObject.seatPositions"
-          :key="id"
-        >Parkett: rad {{ seat.y + 1 }}, plats {{ seat.x}}</p>
+        <p v-for="(seat, id) in bookingObject.seatPositions" :key="id">Parkett: rad {{ seat.y + 1 }}, plats {{ seat.x}}</p>
+        <p><b>Totalt pris: {{ bookingObject.totalTicketPrice}} kr</b></p>
       </div>
 
       <div v-if="!user.uid" class="extra-info col s12">
@@ -75,9 +73,7 @@ export default {
         }
       }
       return null
-    }
-  },
-
+    }},
   props: {
     bookingObject: {
       type: Object,
@@ -99,7 +95,6 @@ export default {
       } else {
         this.bookingObject.email = this.emailInput;
       }
-
       db.collection("bookings")
         .add({
           adultTickets: this.bookingObject.adultTickets,
@@ -108,19 +103,21 @@ export default {
           numberOfTickets: this.bookingObject.numberOfTickets,
           screeningId: this.bookingObject.screeningId,
           email: this.bookingObject.email,
-          seats: this.bookingObject.seatPositions
+          seats: this.bookingObject.seatPositions,
+          timeStamp: new Date()
         })
         .then(ref => {
           this.bookingObject.id = ref.id;
+          console.log('test ' + this.user.bookings)
           if (this.user.uid) {
             this.user.bookings.push(this.bookingObject.id);
-            window.console.log(this.user);
 
             db.collection("users")
               .doc(this.user.uid)
               .update({
                 bookings: this.user.bookings
               });
+              
 
             this.bookingUser.bookings.push(this.bookingObject.id)
 
@@ -131,36 +128,35 @@ export default {
             params: { bookingObject: this.bookingObject }
           });
         });
-    }
-  },
+    }},
 
   created() {
     this.onAuthStateChangedUnsubscribe = auth.onAuthStateChanged(async user => {
       if (user != null) {
         let doc = await db.collection("users").doc(user.uid);
 
-        doc = await doc.get();
+      doc = await doc.get();
         let tempUser = {};
         Object.assign(tempUser, doc.data(), user);
         this.user = tempUser;
 
-        window.console.log(this.user);
       } else {
         this.user = {};
       }
-    });
+    })
+ this.$emit('changeNavText', this.$store.state.navTexts[3]);
   },
   beforeDestroy() {
     this.onAuthStateChangedUnsubscribe();
   }
-};
+}
 </script>
 <style>
 .confirm-booking .inner-container {
   border: 2px solid rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   margin-top: 1rem;
-  padding: 1rem;
+  padding: 3rem 1rem 1rem;
 }
 .confirm-booking h4 {
   margin: 1rem 0 1.5rem !important;
