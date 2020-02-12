@@ -12,6 +12,7 @@ import SelectTickets from '@/components/Booking/SelectTickets'
 import SelectSeats from '@/components/Booking/SelectSeats'
 import ConfirmDetails from '@/components/Booking/ConfirmDetails'
 import BookingComplete from '@/components/Booking/BookingComplete'
+import Register from '@/components/Register'
 
 
 Vue.use(VueRouter)
@@ -37,6 +38,12 @@ const routes = [
     name: 'login',
     component: Login
   },
+  {
+    path: '/register',
+    name: 'register',
+    component: Register
+  }
+  ,
   {
     path: '/allMovies/:movie',
     name: 'movie',
