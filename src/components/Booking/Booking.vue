@@ -5,22 +5,22 @@
 
         <div v-if="!showErrorText" class="row nav-choices valign-wrapper">
 
-          <div @click="back" class="row col s4 nav-buttons backwards left-align valign-wrapper">
+          <div @click="back" class="row col s2 m4 nav-buttons backwards left-align valign-wrapper">
             <i class="col s2 material-icons left-align">arrow_back_ios</i>
             <h6 class="col s10 hide-on-small-only">{{ before }}</h6>
           </div>
 
-          <h4 class="col s12 m4 nav-text center">{{navText}}</h4>
+          <h4 class="col s8 m4 nav-text center">{{navText}}</h4>
 
-          <div @click="forward" class="row col s4 nav-buttons forward right-align">
+          <div @click="forward" class="row col s2 m4 nav-buttons forward right-align">
             <h6 class="col s10 hide-on-small-only">{{ after }}</h6>
-            <i class="col s2 material-icons right-align">arrow_forward_ios</i>
+            <i class="col s2 material-icons">arrow_forward_ios</i>
           </div>
 
         </div>
 
         <div v-if="showErrorText" class="row nav-choices valign-wrapper">
-          <h5 class="col s12 nav-text">{{ errorText }}</h5>
+          <h5 class="col s12 nav-text red-text">{{ errorText }}</h5>
         </div>
         
         <div class="divider"></div>
@@ -133,14 +133,13 @@ export default {
 
 <style>
 .booking{
-  min-height: 70px;
+  min-height: 80px;
 }
 .nav-choices {
   display: block;
   margin: 1rem 0 0 !important;
 }
 .nav-choices h5 {
-  color: red;
   font-weight: bold;
 }
 .nav-buttons h6 {
