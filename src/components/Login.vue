@@ -47,7 +47,6 @@ export default {
     },
     async login() {
       this.isActive=false
-      M.toast({html: 'Kontrollerar dina uppgifter...'})
       let user = await auth
         .signInWithEmailAndPassword(this.username, this.password)
         .catch(error => {error.message="Felaktigt användarnamn eller lösenord.";M.toast({ html: error.message })})
