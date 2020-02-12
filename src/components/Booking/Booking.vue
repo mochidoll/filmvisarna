@@ -1,9 +1,9 @@
 <template>
   <div class="container center">
     <div class="row z-depth-1 white">
-      <div class="nav-wrapper">
+      <div class="booking nav-wrapper">
 
-        <div class="row nav-choices valign-wrapper">
+        <div v-if="!showErrorText" class="row nav-choices valign-wrapper">
 
           <div @click="back" class="row col s4 nav-buttons backwards left-align valign-wrapper">
             <i class="col s2 material-icons left-align">arrow_back_ios</i>
@@ -18,10 +18,14 @@
           </div>
 
         </div>
+
+        <div v-if="showErrorText" class="row nav-choices valign-wrapper">
+          <h5 class="col s12 nav-text">{{ errorText }}</h5>
+        </div>
         
         <div class="divider"></div>
       </div>
-      <router-view @showFeedback="toggleFeedback" ref="contentView" @changeNavText="changeNavText"></router-view>
+      <router-view @toggleErrorText="toggleErrorText" ref="contentView" @changeNavText="changeNavText"></router-view>
     </div>
   </div>
 </template>
@@ -37,16 +41,37 @@ export default {
     return {
       navText: null,
       feedback: null,
+      showErrorText: false,
+      errorText: null
     }
   },
 
   methods: {
-    toggleFeedback(val) {
-      if(val === 1) {
-        this.feedback = 'Tickets'
-        window.console.log('FeedbackText')
+
+    toggleErrorText(payload) {
+
+      switch(payload.component) {
+        
+        case 1: 
+          this.errorText = 'Du måste välja minst en biljett..'
+          this.showErrorText = true
+          break;
+        case 2:
+          this.errorText = `Du måste välja minst ${payload.numberOfTickets} plats(er)..`
+          this.showErrorText = true
+          break;
+        case 3:
+          this.errorText = 'Du måste skriva in en giltig email..'
+          this.showErrorText = true
+          break;
       }
+      
+      setTimeout(() => {
+        this.showErrorText = false
+      },2000)
+
     },
+    
     changeNavText(value) {
       this.navText = value
     },
@@ -107,9 +132,16 @@ export default {
 </script>
 
 <style>
+.booking{
+  min-height: 70px;
+}
 .nav-choices {
   display: block;
   margin: 1rem 0 0 !important;
+}
+.nav-choices h5 {
+  color: red;
+  font-weight: bold;
 }
 .nav-buttons h6 {
   margin: 0;

@@ -94,7 +94,8 @@ export default {
           this.$router.push({name: 'BookingComplete', params: {bookingObject: this.bookingObject}})
         })
       } else {
-        alert('Du måste skriva in en giltig emailadress för att gå vidare.')
+        let payload = {component: 3}
+        this.$emit('toggleErrorText', payload)
       }
     }
   },
