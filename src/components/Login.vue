@@ -5,7 +5,7 @@
         <h4 class>Logga in</h4>
         <div class="col s12">
           <div class="input-field">
-            <input type="text" id="login" class="active" v-model="username" />
+            <input type="text" id="login" class="active validate" v-model="username" />
             <label for="login">Email</label>
           </div>
         </div>
@@ -50,8 +50,8 @@
 </template>
 
 <script>
-import { auth } from "@/firebase/firebase";
-import { db } from "@/firebase/firebase";
+import { auth, db } from "@/firebase/firebase";
+import M from "materialize-css"
 
 export default {
   data() {
@@ -61,7 +61,8 @@ export default {
       signUpFirstName: "",
       signUpLastName: "",
       signUpEmail: "",
-      signUpPassword: ""
+      signUpPassword: "",
+      errorMessage: ""
     };
   },
   methods: {
@@ -69,7 +70,8 @@ export default {
       let user = await auth
         .signInWithEmailAndPassword(this.username, this.password)
         .catch(error => {
-          alert(error.message);
+          this.errorMessage = error.message
+          M.toast({html: this.errorMessage})
         });
 
       if (user) {
@@ -113,7 +115,7 @@ export default {
 <style scoped>
 .input-field input[type="text"]:focus,
 input[type="password"]:focus {
-  border-bottom: 1px solid #000 !important;
+   border-bottom: 1px solid #000 !important;
   box-shadow: 0 1px 0 0 #000 !important;
 }
 

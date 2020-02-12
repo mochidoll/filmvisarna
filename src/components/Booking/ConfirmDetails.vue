@@ -67,6 +67,14 @@ export default {
     },
     enableContinueButton() {
       return this.validEmail || this.user;
+    },
+    bookingUser() {
+      for (let user of this.$store.state.users) {
+        if (auth.currentUser.uid === user.id) {
+          return user;
+        }
+      }
+      return null
     }
   },
 
@@ -104,16 +112,19 @@ export default {
         })
         .then(ref => {
           this.bookingObject.id = ref.id;
-          if (this.user.uid) { 
-            this.user.bookings.push(this.bookingObject.id)
-            window.console.log(this.user)
-          
+          if (this.user.uid) {
+            this.user.bookings.push(this.bookingObject.id);
+            window.console.log(this.user);
+
             db.collection("users")
               .doc(this.user.uid)
               .update({
-                bookings: this.user.bookings 
-              })
-              this.$store.commit('setBookings', this.user.bookings);
+                bookings: this.user.bookings
+              });
+
+            this.bookingUser.bookings.push(this.bookingObject.id)
+
+            this.$store.commit("setBookings", this.user.bookings);
           }
           this.$router.push({
             name: "BookingComplete",
@@ -126,23 +137,21 @@ export default {
   created() {
     this.onAuthStateChangedUnsubscribe = auth.onAuthStateChanged(async user => {
       if (user != null) {
-        let doc = await db.collection("users")
-              .doc(user.uid)
+        let doc = await db.collection("users").doc(user.uid);
 
-        doc = await doc.get()
-        let tempUser = {}
-        Object.assign(tempUser, doc.data(), user) 
+        doc = await doc.get();
+        let tempUser = {};
+        Object.assign(tempUser, doc.data(), user);
         this.user = tempUser;
 
-        window.console.log(this.user)
-
+        window.console.log(this.user);
       } else {
         this.user = {};
       }
     });
   },
   beforeDestroy() {
-    this.onAuthStateChangedUnsubscribe()
+    this.onAuthStateChangedUnsubscribe();
   }
 };
 </script>
