@@ -136,15 +136,12 @@ export default {
           params: { bookingObject: this.bookingObject }
         });
       } else {
-        this.$emit('showFeedback', 1)
-        alert('Du måste välja minst en biljett för att gå vidare.')
+        let payload = {component: 1}
+        this.$emit('toggleErrorText', payload)
       }
     },
 
     goBackToHome() {
-      this.$store.state.bookingObject.adultTickets = 0
-      this.$store.state.bookingObject.childTickets = 0
-      this.$store.state.bookingObject.seniorTickets = 0
       this.$router.push({ name: "Home" });
     },
   },
