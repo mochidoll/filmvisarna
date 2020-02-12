@@ -1,30 +1,37 @@
 <template>
-    <div class="row col s12 m6">
+<div class="container center z-depth-1">
+    <div class="container row">
         <h4>Registrera</h4>
-        <div class="col s12 l6">
+        <div class="col s12 m6">
           <div class="input-field">
-            <input type="text" id="signUpFirstName" v-model="signUpFirstName" class="active" />
+            <input type="text" id="signUpFirstName" v-model="signUpFirstName" required="" aria-required="true" class="active validate" />
             <label for="signUpFirstName">Förnamn</label>
-          </div>
+            <span class="helper-text" data-error="Ange ditt förnamn"></span>
         </div>
-        <div class="col s12 l6">
+        </div>
+        <div class="col s12 m6">
           <div class="input-field">
-            <input type="text" id="signUpLastName" v-model="signUpLastName" class="active" />
+            <input type="text" id="signUpLastName" v-model="signUpLastName" required="" aria-required="true" class="active validate" />
             <label for="signUpLastName">Efternamn</label>
+            <span class="helper-text" data-error="Ange ditt efternamn"></span>
           </div>
         </div>
         <div class="input-field col s12">
-          <input type="text" id="signUpEmail" v-model="signUpEmail" class="active" />
+          <input type="email" id="signUpEmail" v-model="signUpEmail" class="active validate" />
           <label for="signUpEmail">Email</label>
+          <span class="helper-text" data-error="Felaktig email"></span>
         </div>
         <div class="input-field col s12">
-          <input type="password" id="signUpPassword" v-model="signUpPassword" class="active" />
+          <input type="password" id="signUpPassword" @blur="validatePassword" v-model="signUpPassword" required="" aria-required="true" class="active validate" />
           <label for="signUpPassword">Lösenord</label>
+          <span class="helper-text" data-error="Lösenordet måste vara minst 6 karaktärer"></span>
         </div>
-        <div class="col s12 left-align">
+        <div class=" buttons col s12">
           <a class="btn waves-effect waves-light red darken-4" @click="signUp()">Registrera</a>
           <router-link to="/Login" class="btn waves-effect waves-light red darken-4" >Redan Medlem?</router-link>
-        </div>
+      </div>
+
+      </div>
       </div>
 </template>
 
@@ -45,17 +52,25 @@ export default {
     };
   },
   methods: {
+    validatePassword(e) {
+      if(this.signUpPassword.length < 6) {
+        e.target.classList.remove('valid')
+        e.target.classList.add('invalid')
+      }
+    },
     async signUp() {
-      if (this.signUpFirstName === "" || this.signUpLastName === "") {
-        alert("Please enter your name");
-      } else {
+      if (this.signUpFirstName === "" ||
+          this.signUpLastName === "" ||
+          this.signUpEmail === "" ||
+          this.signUpPassword === "") {
+            M.toast({html: 'Fyll i alla fält för att slutföra registreringen'})
+            } 
+      else if(this.signUpPassword != "" & this.signUpPassword.length < 6) {
+          return;
+        }else {
         let cred = await auth
           .createUserWithEmailAndPassword(this.signUpEmail, this.signUpPassword)
-          .catch(error => {
-            this.errorMessage = error.message
-          M.toast({html: this.errorMessage})
-          });
-
+          .catch(error => {error.message = 'Email-adressen finns redan registrerad', M.toast({html: error.message})})
         await cred.user.updateProfile({
           displayName: this.signUpFirstName + " " + this.signUpLastName
         });
@@ -80,22 +95,26 @@ export default {
 </script>
 <style scoped>
 .input-field input[type="text"]:focus,
-input[type="password"]:focus {
-   border-bottom: 1px solid #000 !important;
-  box-shadow: 0 1px 0 0 #000 !important;
+input[type="email"]:focus, input[type="password"]:focus{
+  border-bottom: 1px solid #000 !important;
 }
-
-.input-field {
+ .input-field input:focus + label {
+   color:black !important;
+ }
+.input-field{
   color: black !important;
-}
-label {
-  color: #3f3f3f !important;
 }
 .container {
   margin-top: 2rem;
   margin-bottom: 2rem;
 }
+.label{
+  color: black !important;
+}
 .col {
   padding: 1 !important;
+}
+.btn{
+margin: 2%;  
 }
 </style>
