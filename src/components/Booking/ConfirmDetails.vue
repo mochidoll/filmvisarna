@@ -92,10 +92,9 @@ export default {
     },
 
     confirmBooking() {
-      this.bookingObject.email = this.emailInput;
-
-      db.collection("bookings")
-        .add({
+      if(this.validEmail){ 
+        this.bookingObject.email = this.emailInput
+        db.collection("bookings").add({
           adultTickets: this.bookingObject.adultTickets,
           childTickets: this.bookingObject.childTickets,
           seniorTickets: this.bookingObject.seniorTickets,
@@ -104,16 +103,13 @@ export default {
           email: this.bookingObject.email,
           seats: this.bookingObject.seatPositions,
           timeStamp: new Date()
+        }).then( ref => {
+          this.bookingObject.id = ref.id
+          this.$router.push({name: 'BookingComplete', params: {bookingObject: this.bookingObject}})
         })
-        .then(ref => {
-          this.bookingObject.id = ref.id;
-          window.console.log("In Confirm", this.bookingObject.id);
-          this.$router.push({
-            name: "BookingComplete",
-            params: { bookingObject: this.bookingObject }
-          });
-        });
-    },
+      } else {
+        alert('Du måste skriva in en giltig emailadress för att gå vidare.')
+      }
     updateBookedSeats() {
       //UPPDATERAR BOOKEDSEATS
       //If you can optimize this, pls fix
@@ -145,6 +141,10 @@ export default {
         return null;
       })*/
     }
+  },
+
+  created() {
+    this.$emit('changeNavText', this.$store.state.navTexts[3])
   }
 };
 </script>
@@ -153,7 +153,7 @@ export default {
   border: 2px solid rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   margin-top: 1rem;
-  padding: 1rem;
+  padding: 3rem 1rem 1rem;
 }
 .confirm-booking h4 {
   margin: 1rem 0 1.5rem !important;

@@ -16,6 +16,13 @@ export default new Vuex.Store({
       childTickets: 0,
       screeningId: null
     },
+    navTexts: [
+      'Hem',
+      'Välj biljetter',
+      'Välj platser',
+      'Bekräfta',
+      'Genomför bokning'
+    ]
   },
   mutations: {
     setMovies(state, data) {

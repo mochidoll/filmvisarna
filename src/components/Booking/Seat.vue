@@ -50,6 +50,10 @@ export default {
         this.$emit("removeFromPositions", this.position);
       }
     }
+  },
+
+  created() {
+    
   }
 };
 </script>

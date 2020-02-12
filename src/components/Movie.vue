@@ -14,15 +14,15 @@
         <img :src="movie.image" alt="Movie poster" />
       </div>
       <div class="left col s12 m6 right">
-        <h4>Summary</h4>
-        <p class="grey-text">{{movie.length}} minutes</p>
+        <h4>Sammanfattning</h4>
+        <p class="grey-text">{{movie.length}} minuter</p>
         <p>{{movie.description}}</p>
       </div>
       <div class="col s12 m6 right">
-        <span>Actors: {{movie.actors.join(", ")}}</span>
+        <span>Skådespelare: {{movie.actors.join(", ")}}</span>
       </div>
       <div class="col s12 m6 right">
-        <span>Directors: {{movie.directors.join(", ")}}</span>
+        <span>Regissörer: {{movie.directors.join(", ")}}</span>
       </div>
       <div class="col s12 m6 right">
         <span>Genre: {{movie.genre.join(", ")}}</span>
@@ -33,7 +33,7 @@
         class="options"
         :selected="chosenDate"
         v-on:updateOption="updateChosenDate"
-        :placeholder="'Select an Date'"
+        :placeholder="'Select a Date'"
       ></dropdown>
 
       <div v-for="time in times" :key="time.id">
@@ -55,10 +55,10 @@ export default {
   data() {
     return {
       chosenDate: {
-        name: "Choose Date"
+        name: "Välj Datum"
       },
       chosenTime: {
-        name: "Choose Time"
+        name: "Välj Tid"
       }
     };
   },
