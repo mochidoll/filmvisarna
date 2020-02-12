@@ -92,59 +92,50 @@ export default {
     },
 
     confirmBooking() {
-      if(this.validEmail){ 
-        this.bookingObject.email = this.emailInput
-        db.collection("bookings").add({
-          adultTickets: this.bookingObject.adultTickets,
-          childTickets: this.bookingObject.childTickets,
-          seniorTickets: this.bookingObject.seniorTickets,
-          numberOfTickets: this.bookingObject.numberOfTickets,
-          screeningId: this.bookingObject.screeningId,
-          email: this.bookingObject.email,
-          seats: this.bookingObject.seatPositions,
-          timeStamp: new Date()
-        }).then( ref => {
-          this.bookingObject.id = ref.id
-          this.$router.push({name: 'BookingComplete', params: {bookingObject: this.bookingObject}})
-        })
+      if (this.validEmail) {
+        this.bookingObject.email = this.emailInput;
+        db.collection("bookings")
+          .add({
+            adultTickets: this.bookingObject.adultTickets,
+            childTickets: this.bookingObject.childTickets,
+            seniorTickets: this.bookingObject.seniorTickets,
+            numberOfTickets: this.bookingObject.numberOfTickets,
+            screeningId: this.bookingObject.screeningId,
+            email: this.bookingObject.email,
+            seats: this.bookingObject.seatPositions,
+            timeStamp: new Date()
+          })
+          .then(ref => {
+            this.bookingObject.id = ref.id;
+            this.$router.push({
+              name: "BookingComplete",
+              params: { bookingObject: this.bookingObject }
+            });
+          });
       } else {
-        alert('Du måste skriva in en giltig emailadress för att gå vidare.')
+        alert("Du måste skriva in en giltig emailadress för att gå vidare.");
       }
+    },
     updateBookedSeats() {
       //UPPDATERAR BOOKEDSEATS
       //If you can optimize this, pls fix
       //Got now the seat and the bookedSeat, now got to check what row and generate that row to replace
       this.bookingObject.seatPositions.forEach(seat => {
-        window.console.log(seat);
         window.console.log(`X: ${seat.x} Y: ${seat.y}`);
 
         this.getBookedSeats.forEach(col => {
-          /*window.console.log("bookedSeat from seat 2");
-          window.console.log(bookedSeat[2]);
-          window.console.log("ALL BOOKEDSEAT")
-          window.console.log(bookedSeat)*/
           let bookedSeats = Object.values(col);
-          /*bookedSeatsRow.forEach((bookedSeat, i) => {
-            window.console.log(`ROW ${i}`)
-            window.console.log(bookedSeat)
-          });*/
 
-          window.console.log("Seat y");
-          window.console.log(bookedSeats[seat.y]);
-          window.console.log(bookedSeats.length);
           bookedSeats.forEach(bookedSeat => {
-            window.console.log(bookedSeat) //THIS WORKS -- CODE GOES HERE
+            window.console.log(bookedSeat); //THIS WORKS -- CODE GOES HERE
           });
         });
       });
-      /*this.bookingObject.seatPositions.forEach((seat => {
-        return null;
-      })*/
     }
   },
 
   created() {
-    this.$emit('changeNavText', this.$store.state.navTexts[3])
+    this.$emit("changeNavText", this.$store.state.navTexts[3]);
   }
 };
 </script>
