@@ -51,6 +51,7 @@ export default {
         .signInWithEmailAndPassword(this.username, this.password)
         .catch(error => {error.message="Felaktigt användarnamn eller lösenord.";M.toast({ html: error.message })})
       if (user) {
+        
         this.$router.push("secure");
       }
     },

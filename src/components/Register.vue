@@ -68,6 +68,7 @@ export default {
       else if(this.signUpPassword != "" & this.signUpPassword.length < 6) {
           return;
         }else {
+          M.toast({html: 'Kontrollerar dina uppgifter...'})
         let cred = await auth
           .createUserWithEmailAndPassword(this.signUpEmail, this.signUpPassword)
           .catch(error => {error.message = 'Email-adressen finns redan registrerad', M.toast({html: error.message})})

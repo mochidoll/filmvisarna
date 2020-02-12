@@ -20,6 +20,7 @@
 <script>
 import { auth } from "@/firebase/firebase";
 import UserBooking from "./UserBooking.vue";
+import M from "materialize-css"
 export default {
   name: "Secure",
   components: {
@@ -38,6 +39,7 @@ export default {
   },
   methods: {
     logout() {
+      M.toast({html: 'Logged out'})
       auth.signOut().then(this.$router.push("Login"));
     }
   },
