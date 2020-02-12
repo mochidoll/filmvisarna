@@ -1,32 +1,33 @@
-<template>
+  <template>
   <div class="container center z-depth-1">
-    <div class="row">
-      <div class="col center s12 m6">
+    <div class="container row">
+      <div class="col s12">
         <h4 class>Logga in</h4>
         <div class="col s12">
           <div class="input-field">
-            <input type="text" id="login" class="active validate" v-model="username" />
+            <input type="email" id="login" class="validate" v-model="username" />
             <label for="login">Email</label>
+            <span class="helper-text" data-error="Felaktig format."></span>
           </div>
         </div>
         <div class="col s12">
           <div class="input-field">
             <label for="password">Lösenord</label>
-            <input type="password" id="password" class="active" v-model="password" />
+            <input type="password" id="password" v-on:blur="jumpOffInput" :class="{focus:isActive}" v-model="password" />
           </div>
         </div>
-        <div class="col s12 left-align">
+        <div class="col center s12 left-align">
           <a class="btn waves-effect waves-light red darken-4" @click="login()">Logga In</a>
-          <router-link to="/Register" class="btn waves-effect waves-light red darken-4" >Registrera</router-link>
+          <router-link to="/Register" class="btn waves-effect waves-light red darken-4">Registrera</router-link>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-import { auth, db } from "@/firebase/firebase";
-import M from "materialize-css"
+  <script>
+import { auth} from "@/firebase/firebase";
+import M from "materialize-css";
 
 export default {
   data() {
@@ -37,47 +38,22 @@ export default {
       signUpLastName: "",
       signUpEmail: "",
       signUpPassword: "",
-      errorMessage: ""
+      isActive: true
     };
   },
   methods: {
+    jumpOffInput() {
+      
+    },
     async login() {
+      this.isActive=false
       let user = await auth
         .signInWithEmailAndPassword(this.username, this.password)
-        .catch(error => {
-          this.errorMessage = error.message
-          M.toast({html: this.errorMessage})
-        });
-
+        .catch(error => {error.message="Felaktigt användarnamn eller lösenord.";M.toast({ html: error.message })})
       if (user) {
         this.$router.push("secure");
       }
     },
-    async signUp() {
-      if (this.signUpFirstName === "" || this.signUpLastName === "") {
-        alert("Please enter your name");
-      } else {
-        let cred = await auth
-          .createUserWithEmailAndPassword(this.signUpEmail, this.signUpPassword)
-          .catch(error => {
-            // Handle Errors here.
-            alert(error.message);
-          });
-
-        await cred.user.updateProfile({
-          displayName: this.signUpFirstName + " " + this.signUpLastName
-        });
-        await db
-          .collection("users")
-          .doc(cred.user.uid)
-          .set({
-            bookings: []
-          });
-        await this.$store.dispatch("getUsers");
-
-        this.$router.push("allMovies");
-      }
-    }
   },
   computed: {
     users() {
@@ -87,10 +63,10 @@ export default {
 };
 </script>
 
-<style scoped>
+  <style scoped>
 .input-field input[type="text"]:focus,
 input[type="password"]:focus {
-   border-bottom: 1px solid #000 !important;
+  border-bottom: 1px solid #000 !important;
   box-shadow: 0 1px 0 0 #000 !important;
 }
 
@@ -106,5 +82,8 @@ label {
 }
 .col {
   padding: 1 !important;
+}
+.btn {
+  margin: 2%;
 }
 </style>
