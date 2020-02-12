@@ -56,7 +56,7 @@
                         class="btn col red darken-4 s12 z-depth-0.5"
                         @click="bookMovie(screen.screeningId)"
                         v-if="screen.date.name === chosenDate.name"
-                      >Book time - {{screen.time}}</div>
+                      >Boka Tid - {{screen.time}}</div>
                     </div>
                   </div>
                 </div>
@@ -81,15 +81,6 @@
               </div>
             </div>
           </div>
-          <!-- <div class="col m3">
-            <div v-for="screen in screeningMovies" :key="screen.id">
-              <div v-if="screen.movieId == movie">
-                <div class="btn col red" v-if="screen.date.name === chosenDate.name">{{screen.time}}
-                  
-                </div>
-              </div>
-            </div>
-          </div>-->
         </div>
       </div>
     </div>
@@ -143,22 +134,6 @@ export default {
       genresName.unshift({name:"Alla genres"});
       return genresName;
     },
-    /* dates() {
-      let screenings = [];
-      for (let screening of this.$store.state.screenings) {
-        screenings.push(
-          screening.startTime.toDate().toLocaleDateString("sv-SV", {
-            year: "numeric",
-            month: "numeric",
-            day: "numeric"
-            // weekday: "long"
-          })
-        );
-      }
-      screenings = [...new Set(screenings)];
-      screenings.sort();
-      return screenings;
-    }, */
     filteredMovies() {
       // filter movies where the movieID is
       // in the filtered array of movieIDs
