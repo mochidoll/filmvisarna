@@ -42,7 +42,7 @@ export default {
       navText: null,
       feedback: null,
       showErrorText: false,
-      errorText: null
+      errorText: null,
     }
   },
 
@@ -127,6 +127,16 @@ export default {
       let index = this.$store.state.navTexts.indexOf(this.navText)
       return this.$store.state.navTexts[index - 1]
     }
+  },
+
+  beforeDestroy() {
+   let obj = {
+      adultTickets: 0,
+      seniorTickets: 0,
+      childTickets: 0,
+      screeningId: null
+   }
+   this.$store.commit('setBookingObject', obj)
   },
 }
 </script>
