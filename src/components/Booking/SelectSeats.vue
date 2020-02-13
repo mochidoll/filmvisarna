@@ -135,15 +135,7 @@ export default {
       return this.$store.state.auditoriums;
     },
     bookedSeats() {
-      let bookedSeats = this.$store.state.screenings;
-      let bookeauditoriumSeats = [];
-
-      bookedSeats.forEach(bookedSeat => {
-        if (bookedSeat.id === this.bookingObject.screeningId) {
-          bookeauditoriumSeats = bookedSeat.bookedSeats;
-        }
-      });
-      return bookeauditoriumSeats;
+      return this.bookingObject.screening.bookedSeats;
     }
   },
 

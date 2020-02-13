@@ -117,10 +117,6 @@ export default {
         tempBooked[seat.y][seat.x] = true;
       });
 
-      tempBooked.forEach(seat => {
-        window.console.log(seat);
-      });
-
       db.collection("screenings")
         .doc(this.bookingObject.screeningId)
         .update({
