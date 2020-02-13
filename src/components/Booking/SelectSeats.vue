@@ -114,7 +114,7 @@ export default {
     },
     goBackToSelectTickets() {
       this.bookingObject.seatPositions = null;
-      this.$router.push({ name: "SelectTickets" });
+      this.$router.push({ path: "/booking/selectTickets/" + this.bookingObject.screeningId });
     },
     writeSomething() {
       window.console.log("Successin select seats!");
