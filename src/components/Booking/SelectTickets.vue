@@ -1,19 +1,19 @@
 <template>
   <div>
     <div>{{movieId}}</div>
-    <section class="select-tickets-wrapper row">
+    <!-- <section class="select-tickets-wrapper row">
       
       
-      <h5 class="col s12 m12 l12">Välj Biljetter</h5> -->
+       <h5 class="col s12 m12 l12">Välj Biljetter</h5>
 
       <div class="col s12 m6 l6 movie-info-wrapper valign-wrapper left-align">
         
         <div class="col l6 m6 s6 movie-image">
-          <img :src="movieId.image" alt class="responsive-img" />
+          <img :src="movieChosen.image" alt class="responsive-img" />
         </div>
         <div class="col s6 m6 l6 movie-info">
-          <p>Titel: {{ movieId.title }}</p>
-          <p>Längd: {{ movieId.length }} min</p>
+          <p>Titel: {{ movieChosen.title }}</p>
+          <p>Längd: {{ movieChosen.length }} min</p>
           <p>Datum: {{ screeningChosen.startTime.toDate().toLocaleDateString() }}</p>
           <p>Tid: {{ screeningChosen.startTime.toDate().getHours() }}:00</p>
           <p>Salong: {{ auditorium.name }}</p>
@@ -83,7 +83,7 @@
         >Gå vidare</button>
       </div>
 
-    </section>
+    </section> -->
   </div>
 </template>
 
@@ -98,6 +98,7 @@ export default {
       adultTicketPrice: 85,
       seniorTicketPrice: 75,
       childTicketPrice: 65,
+      movieChosen: null,
       screeningChosen: null,
       auditorium: null,
       payload: null,
@@ -125,7 +126,7 @@ export default {
     },
     continueToSelectSeats() {
       if(this.numberOfTickets !== 0){   
-        this.bookingObject.movie = this.movieId;
+        this.bookingObject.movie = this.movieChosen;
         this.bookingObject.screening = this.screeningChosen;
         this.bookingObject.auditorium = this.auditorium;
         this.bookingObject.adultTickets = this.adultTickets;
@@ -194,12 +195,14 @@ export default {
     this.screeningChosen = this.$store.state.screenings.filter(screening => {
       return screening.id === this.bookingObject.screeningId;
     })[0];
-    window.console.log("booking: "+this.bookingObject)
-    window.console.log("screeningChosen: " + this.screeningChosen)
 
     this.auditorium = this.$store.state.auditoriums.filter(auditorium => {
       return auditorium.id === this.screeningChosen.auditoriumId;
     })[0];
+
+    // this.movieChosen = this.$store.state.movies.filter(movie => {
+    //   return movie.id === this.screeningChosen.movieId;
+    // })[0];
 
     this.adultTickets = this.bookingObject.adultTickets
     this.childTickets = this.bookingObject.childTickets
