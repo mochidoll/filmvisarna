@@ -68,7 +68,6 @@ const routes = [
       {
         path: 'selectTickets/:screeningId',
         name: 'SelectTickets',
-        props: true,
         component: SelectTickets
       },
       {
