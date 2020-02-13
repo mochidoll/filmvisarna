@@ -1,8 +1,8 @@
 <template>
-  <section>
-    <section class="select-tickets-wrapper row">
-      <!-- <h5 class="col s12 m12 l12">Välj Biljetter</h5> -->
+  <div>
+    <p class="white-text hide">{{movieId.length}}</p>
 
+    <section class="select-tickets-wrapper row">
       <div class="col s12 m6 l6 movie-info-wrapper valign-wrapper left-align">
         <div class="col l6 m6 s6 movie-image">
           <img :src="movieChosen.image" alt class="responsive-img" />
@@ -85,7 +85,7 @@
         >{{availableSeats}} platser kvar!</p>
       </div>
     </section>
-  </section>
+  </div>
 </template>
 
 <script>
@@ -98,10 +98,8 @@ export default {
       adultTicketPrice: 85,
       seniorTicketPrice: 75,
       childTicketPrice: 65,
-      movieChosen: null,
-      screeningChosen: null,
-      auditorium: null,
-      payload: null
+      payload: null,
+      screeningIDS: null
     };
   },
   methods: {
@@ -132,24 +130,61 @@ export default {
         this.bookingObject.seniorTickets = this.seniorTickets;
         this.bookingObject.childTickets = this.childTickets;
         this.bookingObject.numberOfTickets = this.numberOfTickets;
+        this.bookingObject.totalTicketPrice = this.totalTicketPrice;
 
         this.$router.push({
           name: "SelectSeats",
           params: { bookingObject: this.bookingObject }
         });
       } else {
-        alert("Du måste välja minst en biljett för att gå vidare.");
+        let payload = { component: 1 };
+        this.$emit("toggleErrorText", payload);
       }
     },
 
     goBackToHome() {
-      this.$store.state.bookingObject.adultTickets = 0;
-      this.$store.state.bookingObject.childTickets = 0;
-      this.$store.state.bookingObject.seniorTickets = 0;
       this.$router.push({ name: "Home" });
     }
   },
   computed: {
+    screeningIDs() {
+      return this.$route.params.screeningId;
+    },
+    movies() {
+      return this.$store.state.movies;
+    },
+     movieId() {
+      for (let screening of this.$store.state.screenings) {
+        if (screening.id == this.$route.params.screeningId) {
+          for (let movie of this.movies) {
+            if (movie.id === screening.movieId) {
+              return movie;
+            }
+          }
+        }
+      }
+      return null;
+    },
+    screeningChosen() {
+      let screening = this.$store.state.screenings.filter(screening => {
+        return screening.id === this.$route.params.screeningId;
+      })[0];
+      return screening;
+    },
+    auditorium() {
+      return this.$store.state.auditoriums.filter(auditorium => {
+        return auditorium.id === this.screeningChosen.auditoriumId;
+      })[0];
+    },
+    movieChosen() {
+      return this.$store.state.movies.filter(movie => {
+        return movie.id === this.screeningChosen.movieId;
+      })[0];
+    },
+
+    screenings() {
+      return this.$store.state.screenings;
+    },
     numberOfTickets() {
       return this.adultTickets + this.childTickets + this.seniorTickets;
     },
@@ -184,18 +219,6 @@ export default {
     }
   }, */
   created() {
-    this.screeningChosen = this.$store.state.screenings.filter(screening => {
-      return screening.id === this.bookingObject.screeningId;
-    })[0];
-
-    this.auditorium = this.$store.state.auditoriums.filter(auditorium => {
-      return auditorium.id === this.screeningChosen.auditoriumId;
-    })[0];
-
-    this.movieChosen = this.$store.state.movies.filter(movie => {
-      return movie.id === this.screeningChosen.movieId;
-    })[0];
-
     this.adultTickets = this.bookingObject.adultTickets;
     this.childTickets = this.bookingObject.childTickets;
     this.seniorTickets = this.bookingObject.seniorTickets;
@@ -240,10 +263,19 @@ export default {
 @media screen and (min-width: 600px) {
   .select-tickets-wrapper .select-tickets-container {
     display: block;
+    position: absolute;
+    top: 100px;
+    left: 275px !important;
+  } 
+}
+@media screen and (min-width: 600px) {
+  .select-tickets-wrapper .select-tickets-container {
+    display: block;
     position: relative;
     top: 30px;
     left: 0px !important;
   }
+
 }
 
 @media screen and (min-width: 750px) {

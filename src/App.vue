@@ -22,7 +22,12 @@
           <li>
             <router-link to="/contact">Kontakt</router-link>
           </li>
-          
+          <li v-if="user === null">
+            <router-link to="/login">Logga in</router-link>
+          </li>
+          <li v-else>
+            <router-link to="/secure">Min Sida</router-link>
+          </li>
         </ul>
 
         <ul id="slide-out" class="sidenav">
@@ -35,14 +40,19 @@
           <li>
             <router-link to="/contact">Kontakt</router-link>
           </li>
-          <li>
+          <li v-if="user === null">
             <router-link to="/login">Logga in</router-link>
+          </li>
+          <li v-else>
+            <router-link to="/secure">Min Sida</router-link>
           </li>
         </ul>
       </div>
     </nav>
 
-  <div id="main"><router-view></router-view></div>
+    <div id="main">
+      <router-view></router-view>
+    </div>
 
     <footer class="page-footer black">
       <div class="container center">
@@ -67,14 +77,33 @@
 </template>
 
 <script>
-  export default {
-    created() {
-      this.$store.dispatch("getMovies");
-      this.$store.dispatch("getScreenings");
-      this.$store.dispatch("getAuditoriums");
-      this.$store.dispatch("getBookings");
+import { auth } from "@/firebase/firebase";
+export default {
+  data() {
+    return {
+      user: {}
     }
-  };
+  },
+  computed: {
+    logUser() {
+      return auth.currentUser;
+    }
+  },
+  created() {
+    this.$store.dispatch("getMovies");
+    this.$store.dispatch("getScreenings");
+    this.$store.dispatch("getAuditoriums");
+    this.$store.dispatch("getUsers");
+
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        this.user = user;
+      } else {
+        this.user = null;
+      }
+    });
+  }
+};
 </script>
 
 <style>

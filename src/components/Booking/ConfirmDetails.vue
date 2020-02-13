@@ -1,8 +1,7 @@
 <template>
   <div class="container confirm-booking center">
     <div class="row inner-container">
-      <h4 class="center col s12">Kontrollera din bokning..</h4>
-      <!-- <button class="btn" @click="updateBookedSeats">CHECK FOR BOOKED</button> -->
+      <h4 class="center col s12">Kontrollera din bokning.</h4>
 
       <div class="col l6 m6 s12 image-container">
         <img :src="bookingObject.movie.image" alt class="responsive-img" />
@@ -17,13 +16,11 @@
         <p v-if="bookingObject.adultTickets">Vuxenbiljetter: {{ bookingObject.adultTickets}}</p>
         <p v-if="bookingObject.childTickets">Barnbiljetter: {{ bookingObject.childTickets }}</p>
         <p v-if="bookingObject.seniorTickets">Pensionärsbiljetter: {{bookingObject.seniorTickets }}</p>
-        <p
-          v-for="(seat, id) in bookingObject.seatPositions"
-          :key="id"
-        >Parkett: rad {{ seat.y + 1 }}, plats {{ seat.x}}</p>
+        <p v-for="(seat, id) in bookingObject.seatPositions" :key="id">Parkett: rad {{ seat.y + 1 }}, plats {{ seat.x}}</p>
+        <p><b>Totalt pris: {{ bookingObject.totalTicketPrice}} kr</b></p>
       </div>
 
-      <div class="extra-info col s12">
+      <div v-if="!user.uid" class="extra-info col s12">
         <p class="span">Ange din email för att slutföra bokningen.</p>
 
         <div class="input-field col m7 offset-m2">
@@ -41,8 +38,8 @@
         class="btn waves-effect waves-light red darken-4 col s3 offset-s1"
       >Tillbaka</button>
       <button
-        :class="{disabled: !validEmail }"
-        @click="confirmBooking(); updateBookedSeats();"
+        :class="{disabled: !enableContinueButton}"
+        @click="confirmBooking"
         class="btn waves-effect waves-light red darken-4 col s3 offset-s4"
       >Bekräfta</button>
     </div>
@@ -50,12 +47,14 @@
 </template>
 
 <script>
-import { db } from "@/firebase/firebase";
+import { db, auth } from "@/firebase/firebase";
 
 export default {
   data() {
     return {
-      emailInput: null
+      emailInput: null,
+      user: {},
+      onAuthStateChangedUnsubscribe: null
     };
   },
 
@@ -64,11 +63,17 @@ export default {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(this.emailInput);
     },
-    bookedSeats() {
-      return this.bookingObject.screening.bookedSeats;
-    }
-  },
-
+    enableContinueButton() {
+      return this.validEmail || this.user;
+    },
+    bookingUser() {
+      for (let user of this.$store.state.users) {
+        if (auth.currentUser.uid === user.id) {
+          return user;
+        }
+      }
+      return null
+    }},
   props: {
     bookingObject: {
       type: Object,
@@ -85,50 +90,66 @@ export default {
     },
 
     confirmBooking() {
-      if (this.validEmail) {
-        this.bookingObject.email = this.emailInput;
-        db.collection("bookings")
-          .add({
-            adultTickets: this.bookingObject.adultTickets,
-            childTickets: this.bookingObject.childTickets,
-            seniorTickets: this.bookingObject.seniorTickets,
-            numberOfTickets: this.bookingObject.numberOfTickets,
-            screeningId: this.bookingObject.screeningId,
-            email: this.bookingObject.email,
-            seats: this.bookingObject.seatPositions,
-            timeStamp: new Date()
-          })
-          .then(ref => {
-            this.bookingObject.id = ref.id;
-            this.$router.push({
-              name: "BookingComplete",
-              params: { bookingObject: this.bookingObject }
-            });
-          });
+      if (this.user.uid) {
+        this.bookingObject.email = this.user.email;
       } else {
-        alert("Du måste skriva in en giltig emailadress för att gå vidare.");
+        this.bookingObject.email = this.emailInput;
       }
-    },
-    updateBookedSeats() {
-      //updates the nestled array in the screening on Firebase
-      // with the seats that were just booked
-      let tempBooked = this.bookedSeats;
-      this.bookingObject.seatPositions.forEach(seat => {
-        tempBooked[seat.y][seat.x] = true;
-      });
+      db.collection("bookings")
+        .add({
+          adultTickets: this.bookingObject.adultTickets,
+          childTickets: this.bookingObject.childTickets,
+          seniorTickets: this.bookingObject.seniorTickets,
+          numberOfTickets: this.bookingObject.numberOfTickets,
+          screeningId: this.bookingObject.screeningId,
+          email: this.bookingObject.email,
+          seats: this.bookingObject.seatPositions,
+          timeStamp: new Date()
+        })
+        .then(ref => {
+          this.bookingObject.id = ref.id;
+          console.log('test ' + this.user.bookings)
+          if (this.user.uid) {
+            this.user.bookings.push(this.bookingObject.id);
 
-      db.collection("screenings")
-        .doc(this.bookingObject.screeningId)
-        .update({
-          bookedSeats: tempBooked
+            db.collection("users")
+              .doc(this.user.uid)
+              .update({
+                bookings: this.user.bookings
+              });
+              
+
+            this.bookingUser.bookings.push(this.bookingObject.id)
+
+            this.$store.commit("setBookings", this.user.bookings);
+          }
+          this.$router.push({
+            name: "BookingComplete",
+            params: { bookingObject: this.bookingObject }
+          });
         });
-    }
-  },
+    }},
 
   created() {
-    this.$emit("changeNavText", this.$store.state.navTexts[3]);
+    this.onAuthStateChangedUnsubscribe = auth.onAuthStateChanged(async user => {
+      if (user != null) {
+        let doc = await db.collection("users").doc(user.uid);
+
+      doc = await doc.get();
+        let tempUser = {};
+        Object.assign(tempUser, doc.data(), user);
+        this.user = tempUser;
+
+      } else {
+        this.user = {};
+      }
+    })
+ this.$emit('changeNavText', this.$store.state.navTexts[3]);
+  },
+  beforeDestroy() {
+    this.onAuthStateChangedUnsubscribe();
   }
-};
+}
 </script>
 <style>
 .confirm-booking .inner-container {
@@ -139,7 +160,6 @@ export default {
 }
 .confirm-booking h4 {
   margin: 1rem 0 1.5rem !important;
-  /* margin-top: 2rem !important; */
 }
 .confirm-booking .text-container p {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);

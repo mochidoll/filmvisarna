@@ -110,12 +110,13 @@ export default {
             params: { bookingObject: this.bookingObject }
           });
         } else {
-          alert('Du måste välja ' + this.bookingObject.numberOfTickets + ' biljett(er) för att gå vidare.')
+          let payload = {component: 2, numberOfTickets: this.bookingObject.numberOfTickets}
+          this.$emit('toggleErrorText', payload)
         }
     },
     goBackToSelectTickets() {
       this.bookingObject.seatPositions = null;
-      this.$router.push({ name: "SelectTickets" });
+      this.$router.push({ path: "/booking/selectTickets/" + this.bookingObject.screeningId });
     },
     writeSomething() {
       window.console.log("Successin select seats!");
