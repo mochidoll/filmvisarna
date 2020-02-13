@@ -2,7 +2,7 @@
   <div class="container confirm-booking center">
     <div class="row inner-container">
       <h4 class="center col s12">Kontrollera din bokning..</h4>
-      <button class="btn" @click="updateBookedSeats">CHECK FOR BOOKED</button>
+      <!-- <button class="btn" @click="updateBookedSeats">CHECK FOR BOOKED</button> -->
 
       <div class="col l6 m6 s12 image-container">
         <img :src="bookingObject.movie.image" alt class="responsive-img" />
@@ -42,7 +42,7 @@
       >Tillbaka</button>
       <button
         :class="{disabled: !validEmail }"
-        @click="confirmBooking"
+        @click="confirmBooking(); updateBookedSeats();"
         class="btn waves-effect waves-light red darken-4 col s3 offset-s4"
       >Bekräfta</button>
     </div>
@@ -110,11 +110,10 @@ export default {
       }
     },
     updateBookedSeats() {
+      //updates the nestled array in the screening on Firebase
+      // with the seats that were just booked
       let tempBooked = this.bookedSeats;
       this.bookingObject.seatPositions.forEach(seat => {
-        //  window.console.log(`X: ${seat.x} Y: ${seat.y}`);
-
-        window.console.log(this.bookedSeats[seat.y][seat.x]);
         tempBooked[seat.y][seat.x] = true;
       });
 
@@ -122,16 +121,11 @@ export default {
         window.console.log(seat);
       });
 
-      window.console.log(tempBooked);
-     
-
       db.collection("screenings")
         .doc(this.bookingObject.screeningId)
         .update({
           bookedSeats: tempBooked
         });
-
-     
     }
   },
 

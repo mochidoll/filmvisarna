@@ -8,7 +8,7 @@
       'red lighten-2': hover && !disableSeat && !bookedSeat, 
       'red accent-2':isSelected && hover && !bookedSeat, 
       'red darken-4': isSelected && !hover,
-      'blue': bookedSeat,
+      'grey lighten-1': bookedSeat,
       black: !isSelected && !disableSeat && !bookedSeat,
       'grey lighten-2': disableSeat && !isSelected && !bookedSeat}"
     class="white-text seats"
