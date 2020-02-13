@@ -71,7 +71,7 @@ input[type="password"]:focus {
   box-shadow: 0 1px 0 0 #000 !important;
 }
 
-.input-field {
+.input-field label {
   color: black !important;
 }
 label {
