@@ -1,11 +1,9 @@
 <template>
   <section>
     <section class="select-tickets-wrapper row">
-
       <!-- <h5 class="col s12 m12 l12">Välj Biljetter</h5> -->
 
       <div class="col s12 m6 l6 movie-info-wrapper valign-wrapper left-align">
-
         <div class="col l6 m6 s6 movie-image">
           <img :src="movieChosen.image" alt class="responsive-img" />
         </div>
@@ -15,13 +13,13 @@
           <p>Datum: {{ screeningChosen.startTime.toDate().toLocaleDateString() }}</p>
           <p>Tid: {{ screeningChosen.startTime.toDate().getHours() }}:00</p>
           <p>Salong: {{ auditorium.name }}</p>
-           <p><b>Totalt pris: {{ totalTicketPrice }}:-</b></p>
+          <p>
+            <b>Totalt pris: {{ totalTicketPrice }}:-</b>
+          </p>
         </div>
-
       </div>
 
       <div class="col s12 m6 l6 select-tickets-container">
-
         <div class="col s12 select-tickets valign-wrapper">
           <span class="col s12 m5 type-of-tickets">Vuxen: {{adultTicketPrice}}:-</span>
           <div class="col s12 m7 buttons">
@@ -69,18 +67,23 @@
             </a>
           </div>
         </div>
-
       </div>
 
       <div class="row col s12 nav-buttons">
-        <button @click="goBackToHome" class="col s5 m3 l2 offset-m1 offset-l1 btn waves-effect waves-light red darken-4 white-text">Avbryt</button>
+        <button
+          @click="goBackToHome"
+          class="col s5 m3 l2 offset-m1 offset-l1 btn waves-effect waves-light red darken-4 white-text"
+        >Avbryt</button>
         <button
           class="col s5 m3 l2 offset-s2 offset-l6 offset-m4 btn waves-effect waves-light red darken-4 white-text"
           :class="{disabled:numberOfTickets === 0}"
           @click="continueToSelectSeats"
         >Gå vidare</button>
+        <p
+          :class="{'red-text': availableSeats < 5}"
+          class="disable"
+        >{{availableSeats}} platser kvar!</p>
       </div>
-
     </section>
   </section>
 </template>
@@ -121,7 +124,7 @@ export default {
       this.seniorTickets--;
     },
     continueToSelectSeats() {
-      if(this.numberOfTickets !== 0){   
+      if (this.numberOfTickets !== 0) {
         this.bookingObject.movie = this.movieChosen;
         this.bookingObject.screening = this.screeningChosen;
         this.bookingObject.auditorium = this.auditorium;
@@ -135,16 +138,16 @@ export default {
           params: { bookingObject: this.bookingObject }
         });
       } else {
-        alert('Du måste välja minst en biljett för att gå vidare.')
+        alert("Du måste välja minst en biljett för att gå vidare.");
       }
     },
 
     goBackToHome() {
-      this.$store.state.bookingObject.adultTickets = 0
-      this.$store.state.bookingObject.childTickets = 0
-      this.$store.state.bookingObject.seniorTickets = 0
+      this.$store.state.bookingObject.adultTickets = 0;
+      this.$store.state.bookingObject.childTickets = 0;
+      this.$store.state.bookingObject.seniorTickets = 0;
       this.$router.push({ name: "Home" });
-    },
+    }
   },
   computed: {
     numberOfTickets() {
@@ -160,7 +163,26 @@ export default {
         this.seniorTickets * this.seniorTicketPrice
       );
     },
+    availableSeats() {
+      let bookedSeats = this.screeningChosen.bookedSeats;
+      let currentBookedSeats = 0;
+      bookedSeats.forEach(seat => {
+        if(!bookedSeats[seat.x][seat.y]){
+          currentBookedSeats++
+        }
+      })
+      return currentBookedSeats;
+    }
   },
+  /* watch: {
+    availableSeats(val) {
+      let bookedSeats = this.bookingObject.screening.bookedSeats;
+      bookedSeats.forEach(seat => {
+        if(!bookedSeats[seat.x][seat.y]){
+        }
+      })
+    }
+  }, */
   created() {
     this.screeningChosen = this.$store.state.screenings.filter(screening => {
       return screening.id === this.bookingObject.screeningId;
@@ -174,11 +196,11 @@ export default {
       return movie.id === this.screeningChosen.movieId;
     })[0];
 
-    this.adultTickets = this.bookingObject.adultTickets
-    this.childTickets = this.bookingObject.childTickets
-    this.seniorTickets = this.bookingObject.seniorTickets
-    
-    this.$emit('changeNavText', this.$store.state.navTexts[1])
+    this.adultTickets = this.bookingObject.adultTickets;
+    this.childTickets = this.bookingObject.childTickets;
+    this.seniorTickets = this.bookingObject.seniorTickets;
+
+    this.$emit("changeNavText", this.$store.state.navTexts[1]);
   }
 };
 </script>
@@ -196,7 +218,7 @@ export default {
   margin: 2rem 0;
 }
 .select-tickets-wrapper .select-tickets {
-  margin: 1rem 0 0
+  margin: 1rem 0 0;
 }
 .select-tickets-wrapper p {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -215,97 +237,75 @@ export default {
   margin: 2rem 0 1rem !important;
 }
 
-/* @media screen and (max-width: 599px) {
-  .select-tickets-wrapper p {
-    font-size: 0.9rem;
-  }
-  .select-tickets-wrapper .select-tickets {
-    margin-top: 1rem;
-  }
-  .select-tickets-wrapper .type-of-tickets {
-    font-size: 0.9rem;
-  }
-}
-
-
 @media screen and (min-width: 600px) {
   .select-tickets-wrapper .select-tickets-container {
     display: block;
-    position: absolute;
-    top: 100px;
-    left: 275px !important;
-  } 
-}*/
-
-@media screen and (min-width: 600px) {
-  .select-tickets-wrapper .select-tickets-container {
-  display: block;
-  position: relative;
-  top: 30px;
-  left: 0px!important;
-  } 
+    position: relative;
+    top: 30px;
+    left: 0px !important;
+  }
 }
 
 @media screen and (min-width: 750px) {
   .select-tickets-wrapper .select-tickets-container {
-  display: block;
-  position: relative;
-  top: 30px;
-  left: 40px!important;
-    }
+    display: block;
+    position: relative;
+    top: 30px;
+    left: 40px !important;
+  }
 }
 
 @media screen and (min-width: 850px) {
   .select-tickets-wrapper .select-tickets-container {
-  display: block;
-  position: relative;
-  top: 30px;
-  left: 40px!important;
-  } 
-} 
+    display: block;
+    position: relative;
+    top: 30px;
+    left: 40px !important;
+  }
+}
 
 @media screen and (min-width: 950px) {
   .select-tickets-wrapper .select-tickets-container {
-  display: block;
-  position: relative;
-  top: 40px;
-  left: 50px!important;
-  } 
+    display: block;
+    position: relative;
+    top: 40px;
+    left: 50px !important;
+  }
 }
 
 @media screen and (min-width: 1150px) {
   .select-tickets-wrapper .select-tickets-container {
-  display: block;
-  position: relative;
-  top: 50px;
-  left: 50px!important;
-  } 
+    display: block;
+    position: relative;
+    top: 50px;
+    left: 50px !important;
+  }
 }
 
 @media screen and (min-width: 1250px) {
   .select-tickets-wrapper .select-tickets-container {
-  display: block;
-  position: relative;
-  top: 60px;
-  left: 50px!important;
-  } 
+    display: block;
+    position: relative;
+    top: 60px;
+    left: 50px !important;
+  }
 }
 
 @media screen and (min-width: 1350px) {
   .select-tickets-wrapper .select-tickets-container {
-  display: block;
-  position: relative;
-  top: 70px;
-  left: 50px!important;
-  } 
-} 
+    display: block;
+    position: relative;
+    top: 70px;
+    left: 50px !important;
+  }
+}
 
 @media screen and (min-width: 1450px) {
   .select-tickets-wrapper .select-tickets-container {
-  display: block;
-  position: relative;
-  top: 85px;
-  left: 50px !important;
-  } 
-} 
+    display: block;
+    position: relative;
+    top: 85px;
+    left: 50px !important;
+  }
+}
 </style>
