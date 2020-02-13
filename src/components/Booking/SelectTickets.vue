@@ -1,11 +1,11 @@
 <template>
-  <section>
+  <div>
     <section class="select-tickets-wrapper row">
-
+      <div>{{screeningIDs}}</div>
       <!-- <h5 class="col s12 m12 l12">Välj Biljetter</h5> -->
 
       <div class="col s12 m6 l6 movie-info-wrapper valign-wrapper left-align">
-
+        
         <div class="col l6 m6 s6 movie-image">
           <img :src="movieChosen.image" alt class="responsive-img" />
         </div>
@@ -82,11 +82,12 @@
       </div>
 
     </section>
-  </section>
+  </div>
 </template>
 
 <script>
 export default {
+  
   data() {
     return {
       adultTickets: 0,
@@ -98,7 +99,8 @@ export default {
       movieChosen: null,
       screeningChosen: null,
       auditorium: null,
-      payload: null
+      payload: null,
+      screeningIDS: null
     };
   },
   methods: {
@@ -146,6 +148,31 @@ export default {
     },
   },
   computed: {
+    screeningIDs(){
+      return this.$route.params.screeningId
+    },
+    movieId() {
+      window.console.log(this.movieChosen.id)
+      window.console.log(this.$route.params.screeningId)
+      window.console.log(this.movieChosen.movieId == this.$route.params.screeningId)
+      // window.console.log(this.$store.state.screenings)
+
+      for(let screening of this.$store.state.screenings) {
+        // window.console.log(screening)
+        if(screening.id == this.$route.params.screeningId) {
+          window.console.log(screening.movieId)
+          if(this.movieChosen.id == screening.movieId) {
+            window.console.log(this.movieChosen)
+            return this.movieChosen
+          }
+          
+        }
+      }
+      return null
+    },
+    screenings() {
+      return this.$store.state.screenings;
+    },
     numberOfTickets() {
       return this.adultTickets + this.childTickets + this.seniorTickets;
     },

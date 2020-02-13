@@ -39,7 +39,6 @@
 
       <div v-for="time in times" :key="time.id">
         <div
-          to="/booking/selectTickets"
           class="col timeButton btn red darken-2"
           @click="bookMovie(time.screening)"
         >{{time.time}}</div>
@@ -69,6 +68,7 @@ export default {
   components: {
     dropdown: dropdown
   },
+  
 
   methods: {
     updateChosenDate(date) {
@@ -79,9 +79,9 @@ export default {
     },
     bookMovie(screenId) {
       this.$store.state.bookingObject.screeningId = screenId;
-      this.$router.push({
-        path: "/booking/selectTickets"
-      });
+      this.$router.push(
+        "/booking/selectTickets/" + screenId
+      );
     }
   },
   computed: {
