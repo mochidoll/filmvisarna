@@ -65,14 +65,16 @@ export default {
       return re.test(this.emailInput);
     },
     getBookedSeats() {
-      let screenings = this.$store.state.screenings;
       let tempBookedSeats = [];
-      screenings.forEach(screening => {
+      this.screenings.forEach(screening => {
         if (screening.id === this.bookingObject.screeningId) {
           tempBookedSeats = screening.bookedSeats;
         }
       });
       return tempBookedSeats;
+    },
+    screenings(){
+      return this.$store.state.screenings;
     }
   },
 
@@ -122,14 +124,24 @@ export default {
       //Got now the seat and the bookedSeat, now got to check what row and generate that row to replace
       this.bookingObject.seatPositions.forEach(seat => {
         window.console.log(`X: ${seat.x} Y: ${seat.y}`);
-
-        this.getBookedSeats.forEach(col => {
-          let bookedSeats = Object.values(col);
-
-          bookedSeats.forEach(bookedSeat => {
-            window.console.log(bookedSeat); //THIS WORKS -- CODE GOES HERE
-          });
-        });
+          
+          for (let col = 0; col < this.getBookedSeats.length; col++){
+            let bookedSeats = Object.values(this.getBookedSeats[col]);
+            for (let row = 0; row < bookedSeats.length; row++){
+              window.console.log("col, seat.y"); 
+              window.console.log(col, seat.y)
+              window.console.log("row, seat.x") //WHY IS SEAT.X A STRING!!????????
+              window.console.log(row, seat.x)
+              if (col === seat.y && row == seat.x) { 
+                window.console.log("%c HELLO ELLO", "color: blue; font-style: italic")
+                //update screening array bookedSeats[col][row] with TRUE
+                db.collection("screenings")
+                //.doc(screening.id)
+                window.console.log(this.bookingObject.screeningId)
+                //.update(screening.bookedSeats[col][row] = true)
+              }
+            }
+          }
       });
     }
   },
