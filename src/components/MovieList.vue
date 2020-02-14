@@ -239,8 +239,10 @@ export default {
       this.$router.push("/allMovies/" + movie.title);
     },
     bookMovie(screenId){
-      this.$store.state.bookingObject.screeningId = screenId
-      this.$router.push({path: '/booking/selectTickets'})
+      this.$store.state.bookingObject.screeningId = screenId;
+      this.$router.push(
+        "/booking/selectTickets/" + screenId
+      );
     }
   },
   mounted() {
