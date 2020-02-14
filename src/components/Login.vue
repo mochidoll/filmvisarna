@@ -51,6 +51,7 @@ export default {
         .signInWithEmailAndPassword(this.username, this.password)
         .catch(error => {error.message="Felaktigt användarnamn eller lösenord.";M.toast({ html: error.message })})
       if (user) {
+        
         this.$router.push("secure");
       }
     },
@@ -70,7 +71,7 @@ input[type="password"]:focus {
   box-shadow: 0 1px 0 0 #000 !important;
 }
 
-.input-field {
+.input-field label {
   color: black !important;
 }
 label {

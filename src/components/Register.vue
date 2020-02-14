@@ -68,6 +68,7 @@ export default {
       else if(this.signUpPassword != "" & this.signUpPassword.length < 6) {
           return;
         }else {
+          M.toast({html: 'Kontrollerar dina uppgifter...'})
         let cred = await auth
           .createUserWithEmailAndPassword(this.signUpEmail, this.signUpPassword)
           .catch(error => {error.message = 'Email-adressen finns redan registrerad', M.toast({html: error.message})})
@@ -101,7 +102,7 @@ input[type="email"]:focus, input[type="password"]:focus{
  .input-field input:focus + label {
    color:black !important;
  }
-.input-field{
+.input-field label{
   color: black !important;
 }
 .container {
@@ -109,7 +110,7 @@ input[type="email"]:focus, input[type="password"]:focus{
   margin-bottom: 2rem;
 }
 .label{
-  color: black !important;
+  color: #3f3f3f !important;
 }
 .col {
   padding: 1 !important;
