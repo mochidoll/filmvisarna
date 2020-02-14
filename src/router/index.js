@@ -21,6 +21,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
+    props: true,
     component: Home
   },
   {
@@ -47,6 +48,7 @@ const routes = [
   {
     path: '/allMovies/:movie',
     name: 'movie',
+    props:true,
     component: Movie
   },
   {

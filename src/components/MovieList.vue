@@ -236,7 +236,8 @@ export default {
       this.chosenGenre.name = genre.name;
     },
     goToMovie(movie) {
-      this.$router.push("/allMovies/" + movie.title);
+      this.$router.push({params:{filteredChosenDate:"Warning"}, path:"/allMovies/" + movie.title });
+      
     },
     bookMovie(screenId){
       this.$store.state.bookingObject.screeningId = screenId;
