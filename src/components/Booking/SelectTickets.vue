@@ -166,11 +166,23 @@ export default {
     availableSeats() {
       let bookedSeats = this.screeningChosen.bookedSeats;
       let currentBookedSeats = 0;
-      bookedSeats.forEach(seat => {
-        if(!bookedSeats[seat.x][seat.y]){
-          currentBookedSeats++
-        }
-      })
+      window.console.log("bookedSeats", bookedSeats);
+      for (let seatRow in bookedSeats) {
+        window.console.log("bookedRow", bookedSeats[seatRow]);
+        window.console.log(
+          "VALUES IN OBJECT",
+          Object.values(bookedSeats[seatRow])
+        );
+        Object.values(bookedSeats[seatRow]).forEach(seat => {
+          if (seat) {
+            window.console.log("THIS IS TRUE");
+          } else if (!seat) {
+            window.console.log("THIS IS FALSE");
+          } else {
+            window.console.log("SEAT", seat)
+          }
+        });
+      }
       return currentBookedSeats;
     }
   },
