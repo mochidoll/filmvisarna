@@ -37,7 +37,7 @@
               <i class="material-icons">remove</i>
             </a>
             <span class="show-nr-of-tickets">{{ adultTickets }}</span>
-            <a class="btn-floating red btn-small darken-4" @click="addAdultTicket()">
+            <a class="btn-floating red btn-small darken-4" @click="addAdultTicket()" :class="{disabled: numberOfTickets === emptyAvailableSeats}">
               <i class="material-icons">add</i>
             </a>
           </div>
@@ -53,7 +53,7 @@
               <i class="material-icons">remove</i>
             </a>
             <span class="show-nr-of-tickets">{{ childTickets }}</span>
-            <a class="btn-floating red btn-small darken-4" @click="addChildTicket()">
+            <a class="btn-floating red btn-small darken-4" @click="addChildTicket()" :class="{disabled: numberOfTickets === emptyAvailableSeats}">
               <i class="material-icons">add</i>
             </a>
           </div>
@@ -69,7 +69,7 @@
               <i class="material-icons">remove</i>
             </a>
             <span class="show-nr-of-tickets">{{ seniorTickets }}</span>
-            <a class="btn-floating red btn-small darken-4" @click="addSeniorTicket()">
+            <a class="btn-floating red btn-small darken-4" @click="addSeniorTicket()" :class="{disabled: numberOfTickets === emptyAvailableSeats}">
               <i class="material-icons">add</i>
             </a>
           </div>
@@ -248,14 +248,6 @@ export default {
   margin: 2rem 0 1rem !important;
 }
 
-@media screen and (min-width: 600px) {
-  .select-tickets-wrapper .select-tickets-container {
-    display: block;
-    position: absolute;
-    top: 100px;
-    left: 275px !important;
-  }
-}
 @media screen and (min-width: 600px) {
   .select-tickets-wrapper .select-tickets-container {
     display: block;
