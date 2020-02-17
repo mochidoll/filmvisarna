@@ -253,14 +253,6 @@ export default {
 @media screen and (min-width: 600px) {
   .select-tickets-wrapper .select-tickets-container {
     display: block;
-    position: absolute;
-    top: 100px;
-    left: 275px !important;
-  }
-}
-@media screen and (min-width: 600px) {
-  .select-tickets-wrapper .select-tickets-container {
-    display: block;
     position: relative;
     top: 30px;
     left: 0px !important;
