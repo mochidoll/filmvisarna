@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { filterItemFromList, includeItemsFromList } from "./utils/logicUtils.js"
 import { auth } from "@/firebase/firebase";
 import UserBooking from "./UserBooking.vue";
 import M from "materialize-css"
@@ -34,7 +35,6 @@ export default {
   watch:{
     userBookings(){
       console.log('Watched')
-
     }
   },
   methods: {
@@ -51,18 +51,10 @@ export default {
       return this.$store.state.users;
     },
     bookingUser() {
-      return this.users.filter(user => {
-        if (auth.currentUser.uid === user.id) {
-          return user;
-        }
-      })[0];
+      return filterItemFromList(this.users, auth.currentUser.uid)
     },
     userBookings() {
-      return this.bookings.filter(booking => {
-        if (this.bookingUser.bookings.includes(booking.id)) {
-          return booking;
-        }
-      });
+      return includeItemsFromList(this.bookings, this.bookingUser.bookings)
     }
   },
   created() {
@@ -75,10 +67,6 @@ export default {
     });
     this.$store.dispatch("getBookings");
   },
-  mounted() {
-      console.log(this.bookingUser.bookings.includes('g3DTwsVnQLTX6W01jk1s'), this.bookingUser.bookings)
-
-  }
 };
 </script>
 

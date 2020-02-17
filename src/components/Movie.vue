@@ -1,9 +1,8 @@
 <template>
   <div class="container">
+    <youtube class="trailer-container" :video-id="movie.videoId"></youtube>
 
-      <youtube class="trailer-container" :video-id="movie.videoId"></youtube>
-
-    <div class=" movie-info-container row">
+    <div id="transparent" class="movie-info-container row">
       <div class="left col s12 center">
         <h3 class="center">
           {{movie.title}}
@@ -28,42 +27,99 @@
       <div class="col s12 m6 right">
         <span>Genre: {{movie.genre.join(", ")}}</span>
       </div>
+    </div>
 
+    <div class="row time-choices-large hide-on-small-only">
       <dropdown
         :options="dates"
-        class="options"
+        class="options col s4 offset-s1"
         :selected="chosenDate"
         v-on:updateOption="updateChosenDate"
         :placeholder="'Select a Date'"
       ></dropdown>
 
       <div v-for="time in times" :key="time.id">
-        <div
-          to="/booking/selectTickets"
-          class="col timeButton btn red darken-2"
-          @click="bookMovie(time.screening)"
-        >{{time.time}}</div>
-        <div class="col">{{time.auditorium}}</div>
+        <div class="booking-choice col s10 offset-s1 red darken-4 white-text valign-wrapper">
+          <div class="booking-info col s9 white-text">
+            <p>
+              <span class="span-time">{{time.time}}</span> |
+              <span class="span-audi">{{ time.auditorium }}</span> -
+              <span class="span-seats">{{ emptyAvailableSeats(time.screening) }} platser kvar</span>
+            </p>
+          </div>
+
+          <div
+            class="col s3 time-button btn black right"
+            :class="{disabled: emptyAvailableSeats(time.screening) === 0}"
+            @click="bookMovie(time.screening)"
+          >Boka</div>
+        </div>
       </div>
     </div>
+<!-- -------------------------------------------------------------------------- -->
+
+      <div class="row time-choices hide-on-med-and-up">
+
+        <div class="col s12">
+          <dropdown
+            :options="dates"
+            class="options col s4"
+            :selected="chosenDate"
+            v-on:updateOption="updateChosenDate"
+            :placeholder="'Select a Date'"
+          ></dropdown>
+        </div>
+
+        <div v-for="time in times" :key="time.id">
+          <div class="booking-choice col s12 red darken-4 white-text valign-wrapper">
+            <div class=" col s3 booking-info-time-small">
+              <p>
+                <span class="span-time-small">{{time.time}}</span>
+              </p>
+            </div>
+
+            <div class="booking-info-audi-seat-small col s6 white-text center">
+                <div>
+                  <span class="span-audi-small">{{ time.auditorium }}</span>
+                </div>
+                <div>
+                  <span class="span-seats-small">{{ emptyAvailableSeats(time.screening) }} platser kvar</span>
+                </div>
+            </div>
+
+            <div
+              class="col s3 time-button btn black right"
+              :class="{disabled: emptyAvailableSeats(time.screening) === 0}"
+              @click="bookMovie(time.screening)"
+            >Boka
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
   </div>
 </template>
 
 <script>
 import dropdown from "vue-dropdowns";
-import Vue from 'vue'
-import VueYouTubeEmbed from 'vue-youtube-embed' 
-Vue.use(VueYouTubeEmbed)
+import Vue from "vue";
+import VueYouTubeEmbed from "vue-youtube-embed";
+Vue.use(VueYouTubeEmbed);
+import {
+  returnSumOfEmptySeats,
+  filterItemFromList
+} from "./utils/logicUtils.js";
 
 export default {
+  props: ["movieTitle", "filteredChosenDate"],
   data() {
     return {
-      chosenDate: {
-        name: "Välj Datum"
-      },
       chosenTime: {
         name: "Välj Tid"
-      }
+      },
+      dataChosenDate: ""
     };
   },
   components: {
@@ -79,16 +135,21 @@ export default {
     },
     bookMovie(screenId) {
       this.$store.state.bookingObject.screeningId = screenId;
-      this.$router.push({
-        path: "/booking/selectTickets/" + screenId
-      });
+      this.$router.push("/booking/selectTickets/" + screenId);
+    },
+    emptyAvailableSeats(screening) {
+      let bookedSeats = filterItemFromList(
+        this.$store.state.screenings,
+        screening
+      ).bookedSeats;
+      return returnSumOfEmptySeats(bookedSeats);
     }
   },
   computed: {
     movie() {
       let movies = this.movies;
       for (let movie of movies) {
-        if (movie.title == this.$route.params.movie) return movie;
+        if (movie.title == this.movieTitle) return movie;
       }
       return null;
     },
@@ -147,7 +208,22 @@ export default {
         a.time > b.time ? 1 : b.time > a.time ? -1 : 0
       );
       return timeSorted;
+    },
+    chosenDate: {
+      get() {
+        if (this.dataChosenDate) {
+          return { name: this.dataChosenDate };
+        } else {
+          return { name: "Välj Datum" };
+        }
+      },
+      set(newVal) {
+        this.dataChosenDate = newVal.name;
+      }
     }
+  },
+  created() {
+    this.dataChosenDate = this.filteredChosenDate;
   }
 };
 </script>
@@ -156,21 +232,76 @@ export default {
 * {
   box-sizing: border-box;
 }
-.trailer-container{
+.time-choices-large {
+  display: block;
+}
+.time-choices-large .booking-choice {
+  border-radius: 10px;
+}
+.time-choices .booking-choice {
+  border-radius: 10px;
+}
+.time-choices-large p {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+}
+.booking-choice .time-button {
+  border-radius: 10px;
+  margin: 0 -0.5rem 0 0;
+}
+.time-choices-large .span-seats {
+  font-size: 0.8rem !important;
+}
+
+
+
+
+.span-seats-small{
+  font-size: 0.8rem;
+}
+
+.booking-info-time-small{
+  font-size: 1.5rem;
+}
+.booking-info-time-small p{
+  margin: 0;
+}
+.booking-info-audi-seat-small{
+  margin: 0 !important;
+}
+
+
+
+
+
+
+#transparent {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+}
+.dropdown-toggle {
+  color: white !important;
+}
+.dropdown-toggle:hover {
+  background-color: rgb(51, 50, 50) !important;
+}
+.trailer-container {
   display: block;
   margin: 2rem 0 1rem;
   padding-bottom: 56.25%;
-  padding-top: 30px; height: 0; overflow: hidden;
+  padding-top: 30px;
+  height: 0;
+  overflow: hidden;
   position: relative;
 }
-.trailer-container iframe{
+.trailer-container iframe {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
 }
-.movie-info-container{
+.movie-info-container {
   margin-top: 0 !important;
 }
 h3 {
@@ -189,7 +320,6 @@ h4 {
 
 .image img {
   width: 100%;
-  padding-right: 10% !important;
 }
 .dropdown-menu {
   height: 200px !important;

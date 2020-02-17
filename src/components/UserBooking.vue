@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import {filterItemFromList} from './utils/logicUtils.js'
+
 export default {
   props: {
     bookingObject: {
@@ -36,25 +38,13 @@ export default {
 
   computed: {
     screening() {
-      return this.$store.state.screenings.filter(filterScreening => {
-        if (filterScreening.id === this.bookingObject.screeningId) {
-          return filterScreening;
-        }
-      })[0];
+      return filterItemFromList(this.$store.state.screenings, this.bookingObject.screeningId)
     },
     movie() {
-      return this.$store.state.movies.filter(filterMovie => {
-        if (filterMovie.id === this.screening.movieId) {
-          return filterMovie;
-        }
-      })[0];
+      return filterItemFromList(this.$store.state.movies, this.screening.movieId)
     },
     auditorium() {
-      return this.$store.state.auditoriums.filter(filterAuditorium => {
-        if (filterAuditorium.id === this.screening.auditoriumId) {
-          return filterAuditorium;
-        }
-      })[0];
+      return filterItemFromList(this.$store.state.auditoriums, this.screening.auditoriumId)
     }
   }
 };

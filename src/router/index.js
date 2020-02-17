@@ -21,11 +21,13 @@ const routes = [
   {
     path: '/',
     name: 'Home',
+    props: true,
     component: Home
   },
   {
     path: '/allMovies',
     name: 'allMovies',
+    props: true,
     component: AllMovies
   },
   {
@@ -45,8 +47,9 @@ const routes = [
   }
   ,
   {
-    path: '/allMovies/:movie',
+    path: '/allMovies/:movieTitle',
     name: 'movie',
+    props: true,
     component: Movie
   },
   {

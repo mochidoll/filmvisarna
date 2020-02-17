@@ -102,7 +102,7 @@ input[type="email"]:focus, input[type="password"]:focus{
  .input-field input:focus + label {
    color:black !important;
  }
-.input-field{
+.input-field label{
   color: black !important;
 }
 .container {
@@ -110,7 +110,7 @@ input[type="email"]:focus, input[type="password"]:focus{
   margin-bottom: 2rem;
 }
 .label{
-  color: black !important;
+  color: #3f3f3f !important;
 }
 .col {
   padding: 1 !important;
