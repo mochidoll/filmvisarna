@@ -75,7 +75,7 @@
             <img class="col s12 responsive-img movie-image" :src="movie.image" />
           </div>
 
-          <div class="movieCard col s9 white">
+          <div class="movieCard col s9">
             <h6 class="flow-text movie-title">
               <strong>{{ movie.title }}</strong>
             </h6>
@@ -297,43 +297,22 @@ export default {
   font-size: 2rem;
   font-weight: bold;
 }
-.movie .card-content {
-  margin-left: 2%;
-  width: 100%;
-}
-.movie .card-image {
-  max-width: 10rem !important;
-}
-.movie-buttons button {
-  border-radius: 10px;
-  margin: 0.5rem;
-}
-.movie .movie-container {
-  align-items: center;
-}
 .movie .movie-title {
   font-weight: bold;
 }
 .movie {
-  cursor: pointer;
+  margin: 0px !important;
 }
-.mobile {
-  margin: 1% !important;
-}
-.mobile-img {
-  position: relative;
-  bottom: -10px;
-  width: 75%;
-  border-radius: 5px;
-}
-.btn {
-  padding-right: 5%;
+h2 {
+  margin: 0.6rem;
 }
 .row .col {
   padding: 0px !important;
 }
 .row {
   width: 100%;
+  margin: 0.2rem;
+  border-radius: 15px;
 }
 .movieCard {
   width: 100%;
@@ -350,6 +329,9 @@ export default {
 }
 .btn-small{
   margin-left: 0.5rem !important;
+}
+.movie-image{
+  cursor: pointer;
 }
 
 @media only screen and (min-width: 893px) {
