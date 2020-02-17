@@ -4,7 +4,7 @@
       <div class="container">
         <router-link class="brand-logo" to="/">
           <div>
-            <img class="logo responsive-img" src="@/assets/images/Clapperboard.png" alt />
+            <img class="logo responsive-img" src="@/assets/images/Cinemalogo.png" alt />
           </div>
         </router-link>
 
@@ -14,46 +14,54 @@
 
         <ul class="right hide-on-med-and-down">
           <li>
-            <router-link to="/">Now Showing</router-link>
+            <router-link to="/">Dagens visningar</router-link>
           </li>
           <li>
-            <router-link to="/allMovies">All Movies</router-link>
+            <router-link to="/allMovies">Alla Filmer</router-link>
           </li>
           <li>
-            <router-link to="/contact">Contact</router-link>
+            <router-link to="/contact">Kontakt</router-link>
           </li>
-          <li>
-            <router-link to="/login">Login</router-link>
+          <li v-if="user === null">
+            <router-link to="/login">Logga in</router-link>
+          </li>
+          <li v-else>
+            <router-link to="/secure">Min Sida</router-link>
           </li>
         </ul>
 
         <ul id="slide-out" class="sidenav">
           <li>
-            <router-link to="/">Now Showing</router-link>
+            <router-link to="/">Dagens visningar</router-link>
           </li>
           <li>
-            <router-link to="/allMovies">All Movies</router-link>
+            <router-link to="/allMovies">Alla Filmer</router-link>
           </li>
           <li>
-            <router-link to="/contact">Contact</router-link>
+            <router-link to="/contact">Kontakt</router-link>
           </li>
-          <li>
-            <router-link to="/login">Login</router-link>
+          <li v-if="user === null">
+            <router-link to="/login">Logga in</router-link>
+          </li>
+          <li v-else>
+            <router-link to="/secure">Min Sida</router-link>
           </li>
         </ul>
       </div>
     </nav>
 
-  <div id="main"><router-view></router-view></div>
+    <div id="main">
+      <router-view></router-view>
+    </div>
 
     <footer class="page-footer black">
       <div class="container center">
         <div>
-          <span class="logo-text">B-Filmer AB</span>
+          <span class="logo-text">Filmvisarna AB</span>
         </div>
         <div class="footer-text">
           <i class="material-icons tiny">map</i>
-          <span>Gladafilmersvägen 69, 225 89 Skärmen, Sverige</span>
+          <span>Gladafilmersvägen 123, 225 89 Småstad, Sverige</span>
         </div>
         <div class="footer-text">
           <i class="material-icons tiny">email</i>
@@ -69,13 +77,33 @@
 </template>
 
 <script>
-  export default {
-    created() {
+import { auth } from "@/firebase/firebase";
+export default {
+  data() {
+    return {
+      user: {}
+    }
+  },
+  computed: {
+    logUser() {
+      return auth.currentUser;
+    }
+  },
+  created() {
     this.$store.dispatch("getMovies");
     this.$store.dispatch("getScreenings");
     this.$store.dispatch("getAuditoriums");
+    this.$store.dispatch("getUsers");
+
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        this.user = user;
+      } else {
+        this.user = null;
+      }
+    });
   }
-  };
+};
 </script>
 
 <style>
@@ -86,9 +114,15 @@
   #app {
     min-height: 100vh;
     background: #ececec;
+    display: flex;
+    flex-direction: column;
+  
+  }
+  #main {
+    flex: 1 0 auto;
   }
   .logo {
-    width: 5rem;
+    width: 11rem;
   }
   .logo-text{
     font-size: 1rem;

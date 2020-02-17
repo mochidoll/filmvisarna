@@ -17,11 +17,11 @@
               {{movie.title}}
               <i class="material-icons right">close</i>
             </span>
-            <p>{{movie.description}}</p>
+            <p>{{movie.shortDescription}}</p>
             <a
               class="btn waves-effect waves-light center red darken-4"
               @click="goToMovie(movie)"
-            >More information</a>
+            >Mer information</a>
           </div>
         </div>
       </div>

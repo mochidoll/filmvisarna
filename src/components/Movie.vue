@@ -1,10 +1,11 @@
 <template>
   <div class="container">
-    <div class="trailer-container"></div>
 
-    <div class="row">
-      <div class="left col s12 center flex">
-        <h3 class="left">
+      <youtube class="trailer-container" :video-id="movie.videoId"></youtube>
+
+    <div class=" movie-info-container row">
+      <div class="left col s12 center">
+        <h3 class="center">
           {{movie.title}}
           <span class="movie-year">({{movie.productionYear}})</span>
         </h3>
@@ -14,15 +15,15 @@
         <img :src="movie.image" alt="Movie poster" />
       </div>
       <div class="left col s12 m6 right">
-        <h4>Summary</h4>
-        <p class="grey-text">{{movie.length}} minutes</p>
+        <h4>Sammanfattning</h4>
+        <p class="grey-text">{{movie.length}} minuter</p>
         <p>{{movie.description}}</p>
       </div>
       <div class="col s12 m6 right">
-        <span>Actors: {{movie.actors.join(", ")}}</span>
+        <span>Skådespelare: {{movie.actors.join(", ")}}</span>
       </div>
       <div class="col s12 m6 right">
-        <span>Directors: {{movie.directors.join(", ")}}</span>
+        <span>Regissörer: {{movie.directors.join(", ")}}</span>
       </div>
       <div class="col s12 m6 right">
         <span>Genre: {{movie.genre.join(", ")}}</span>
@@ -33,13 +34,16 @@
         class="options"
         :selected="chosenDate"
         v-on:updateOption="updateChosenDate"
-        :placeholder="'Select an Date'"
+        :placeholder="'Select a Date'"
       ></dropdown>
 
       <div v-for="time in times" :key="time.id">
-
-        <div class="col timeButton btn red darken-2" on-click="bookMovie(time)">{{time.screeningTime.time}}</div>
-        <div class="col">{{time.screeningTime.auditorium}}</div>
+        <div
+          to="/booking/selectTickets"
+          class="col timeButton btn red darken-2"
+          @click="bookMovie(time.screening)"
+        >{{time.time}}</div>
+        <div class="col">{{time.auditorium}}</div>
       </div>
     </div>
   </div>
@@ -47,15 +51,18 @@
 
 <script>
 import dropdown from "vue-dropdowns";
+import Vue from 'vue'
+import VueYouTubeEmbed from 'vue-youtube-embed' 
+Vue.use(VueYouTubeEmbed)
 
 export default {
   data() {
     return {
       chosenDate: {
-        name: "Choose Date"
+        name: "Välj Datum"
       },
       chosenTime: {
-        name: "Choose Time"
+        name: "Välj Tid"
       }
     };
   },
@@ -70,8 +77,11 @@ export default {
     updateChosenTime(time) {
       this.chosenTime = time;
     },
-    bookMovie(time) {
-      this.$store.state.movieChosen = time;
+    bookMovie(screenId) {
+      this.$store.state.bookingObject.screeningId = screenId;
+      this.$router.push({
+        path: "/booking/selectTickets"
+      });
     }
   },
   computed: {
@@ -92,6 +102,8 @@ export default {
           this.$store.state.auditoriums.forEach(item => {
             if (screening.auditoriumId === item.id) {
               screenings.push({
+                name: this.movie.title,
+                image: this.movie.image,
                 auditorium: item.name,
                 screening: screening.id,
                 date: {
@@ -103,14 +115,10 @@ export default {
                       day: "numeric"
                     })
                 },
-                time: 
-                  screening.startTime
-                    .toDate()
-                    .toLocaleTimeString("sv-SV", {
-                      hour: "numeric",
-                      minute: "numeric"
-                    })
-                
+                time: screening.startTime.toDate().toLocaleTimeString("sv-SV", {
+                  hour: "numeric",
+                  minute: "numeric"
+                })
               });
             }
           });
@@ -132,13 +140,7 @@ export default {
       let timeSorted = [];
       this.screeningMovies.forEach(screeningMovie => {
         if (screeningMovie.date.name == this.chosenDate.name) {
-          timeSorted.push({
-            screeningTime: {
-              time: screeningMovie.time,
-              auditorium: screeningMovie.auditorium,
-              screening: screeningMovie.screening
-            }
-          });
+          timeSorted.push(screeningMovie);
         }
       });
       timeSorted.sort((a, b) =>
@@ -153,6 +155,23 @@ export default {
 <style>
 * {
   box-sizing: border-box;
+}
+.trailer-container{
+  display: block;
+  margin: 2rem 0 1rem;
+  padding-bottom: 56.25%;
+  padding-top: 30px; height: 0; overflow: hidden;
+  position: relative;
+}
+.trailer-container iframe{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.movie-info-container{
+  margin-top: 0 !important;
 }
 h3 {
   margin: 0rem !important;
@@ -176,8 +195,4 @@ h4 {
   height: 200px !important;
   overflow: auto !important;
 }
-/* .timeButton {
-  margin-top: 1.5rem;
-  margin-right: 1rem;
-} */
 </style>
