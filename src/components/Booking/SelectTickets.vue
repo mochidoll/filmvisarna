@@ -13,6 +13,14 @@
           <p>Datum: {{ screeningChosen.startTime.toDate().toLocaleDateString() }}</p>
           <p>Tid: {{ screeningChosen.startTime.toDate().getHours() }}:00</p>
           <p>Salong: {{ auditorium.name }}</p>
+          <p
+            v-if="emptyAvailableSeats > 0"
+            :class="{'red-text': emptyAvailableSeats < 5}"
+            class="disable"
+          >{{emptyAvailableSeats}} platser kvar!</p>
+          <p v-else class="red-text">
+            <b>Fullbokat</b>
+          </p>
           <p>
             <b>Totalt pris: {{ totalTicketPrice }}:-</b>
           </p>
@@ -79,16 +87,14 @@
           :class="{disabled:(numberOfTickets === 0 || numberOfTickets > emptyAvailableSeats)}"
           @click="continueToSelectSeats"
         >Gå vidare</button>
-        <p
-          :class="{'red-text': emptyAvailableSeats < 5}"
-          class="disable"
-        >{{emptyAvailableSeats}} platser kvar!</p>
       </div>
     </section>
   </div>
 </template>
 
 <script>
+import { returnSumOfEmptySeats } from "../../utils/logicUtils.js";
+
 export default {
   data() {
     return {
@@ -199,17 +205,7 @@ export default {
       );
     },
     emptyAvailableSeats() {
-      let bookedSeats = this.screeningChosen.bookedSeats;
-      let emptySeats = 0;
-      for (let seatRow in bookedSeats) {
-        Object.values(bookedSeats[seatRow]).forEach(isBookedSeat => {
-          if (!isBookedSeat) {
-            //Converts each Object 'seatRow' in Array bookedSeats as an Array then loop through to check for booked Seats
-            emptySeats++;
-          }
-        });
-      }
-      return emptySeats;
+      return returnSumOfEmptySeats(this.screeningChosen.bookedSeats);
     }
   },
   created() {
