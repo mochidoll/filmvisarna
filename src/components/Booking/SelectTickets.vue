@@ -1,7 +1,6 @@
 <template>
   <div>
     <p class="white-text hide">{{movieId.length}}</p>
-
     <section class="select-tickets-wrapper row">
       <div class="col s12 m6 l6 movie-info-wrapper valign-wrapper left-align">
         <div class="col l6 m6 s6 movie-image">
@@ -17,7 +16,7 @@
             v-if="emptyAvailableSeats > 0"
             :class="{'red-text': emptyAvailableSeats < 5}"
             class="disable"
-          >{{emptyAvailableSeats}} platser kvar!</p>
+          >{{emptyAvailableSeats}} platser kvar</p>
           <p v-else class="red-text">
             <b>Fullbokat</b>
           </p>
@@ -93,7 +92,10 @@
 </template>
 
 <script>
-import { returnSumOfEmptySeats } from "../utils/logicUtils.js";
+import {
+  filterItemFromList,
+  returnSumOfEmptySeats
+} from "../utils/logicUtils.js";
 
 export default {
   data() {
@@ -160,32 +162,28 @@ export default {
       return this.$store.state.movies;
     },
     movieId() {
-      for (let screening of this.$store.state.screenings) {
-        if (screening.id == this.$route.params.screeningId) {
-          for (let movie of this.movies) {
-            if (movie.id === screening.movieId) {
-              return movie;
-            }
-          }
-        }
-      }
-      return null;
+      return filterItemFromList(
+        this.$store.state.screenings,
+        this.$route.params.screeningId
+      );
     },
     screeningChosen() {
-      let screening = this.$store.state.screenings.filter(screening => {
-        return screening.id === this.$route.params.screeningId;
-      })[0];
-      return screening;
+      return filterItemFromList(
+        this.$store.state.screenings,
+        this.$route.params.screeningId
+      );
     },
     auditorium() {
-      return this.$store.state.auditoriums.filter(auditorium => {
-        return auditorium.id === this.screeningChosen.auditoriumId;
-      })[0];
+      return filterItemFromList(
+        this.$store.state.auditoriums,
+        this.screeningChosen.auditoriumId
+      );
     },
     movieChosen() {
-      return this.$store.state.movies.filter(movie => {
-        return movie.id === this.screeningChosen.movieId;
-      })[0];
+      return filterItemFromList(
+        this.$store.state.movies,
+        this.screeningChosen.movieId
+      );
     },
 
     screenings() {

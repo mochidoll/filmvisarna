@@ -119,9 +119,6 @@ export default {
         path: "/booking/selectTickets/" + this.bookingObject.screeningId
       });
     },
-    writeSomething() {
-      window.console.log("Successin select seats!");
-    }
   },
 
   computed: {
