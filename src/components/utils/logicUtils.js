@@ -11,10 +11,18 @@ export function returnSumOfEmptySeats(bookedSeats) {
   return emptySeats;
 }
 
-export function getItemFromStore(items, id) {
+export function filterItemFromList(items, id) {
   return items.filter(filteredItem => {
     if (filteredItem.id === id) {
       return filteredItem
     }
   })[0];
+}
+
+export function includeItemsFromList(items1, items2) {
+ return items1.filter(filteredItem => {
+    if (items2.includes(filteredItem.id)) {
+      return filteredItem
+    }
+  }); 
 }

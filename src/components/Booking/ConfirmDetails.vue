@@ -62,6 +62,12 @@ export default {
       onAuthStateChangedUnsubscribe: null
     };
   },
+  props: {
+    bookingObject: {
+      type: Object,
+      required: true
+    }
+  },
 
   computed: {
     validEmail() {
@@ -78,12 +84,6 @@ export default {
         }
       }
       return null;
-    }
-  },
-  props: {
-    bookingObject: {
-      type: Object,
-      required: true
     }
   },
 

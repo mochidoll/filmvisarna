@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import {getItemFromStore} from './utils/logicUtils.js'
+import {filterItemFromList} from './utils/logicUtils.js'
 
 export default {
   props: {
@@ -38,13 +38,13 @@ export default {
 
   computed: {
     screening() {
-      return getItemFromStore(this.$store.state.screenings, this.bookingObject.screeningId)
+      return filterItemFromList(this.$store.state.screenings, this.bookingObject.screeningId)
     },
     movie() {
-      return getItemFromStore(this.$store.state.movies, this.screening.movieId)
+      return filterItemFromList(this.$store.state.movies, this.screening.movieId)
     },
     auditorium() {
-      return getItemFromStore(this.$store.state.auditoriums, this.screening.auditoriumId)
+      return filterItemFromList(this.$store.state.auditoriums, this.screening.auditoriumId)
     }
   }
 };

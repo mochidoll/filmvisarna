@@ -176,6 +176,7 @@ export default {
         return screening.id === this.$route.params.screeningId;
       })[0];
       return screening;
+      /* return filterItemFromList(this.$store.state.screenings, this.$router.params.screeningId) */
     },
     auditorium() {
       return this.$store.state.auditoriums.filter(auditorium => {
