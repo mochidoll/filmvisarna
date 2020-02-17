@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <nav class="nav-wrapper red darken-4">
+    <nav class="nav-wrapper black">
       <div class="container">
         <router-link class="brand-logo" to="/">
           <div>
