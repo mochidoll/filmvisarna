@@ -103,7 +103,7 @@ export default {
       },
       chosenGenre:{
         name: "Alla genres"
-      }
+      },
     };
   },
   components: {
@@ -236,7 +236,16 @@ export default {
       this.chosenGenre.name = genre.name;
     },
     goToMovie(movie) {
-      this.$router.push({params:{filteredChosenDate:"Warning"}, path:"/allMovies/" + movie.title });
+      console.log(this.chosenDate)
+      this.$router.push({
+        name: 'movie',
+        params: {
+          movieTitle: movie.title,
+          filteredChosenDate: this.chosenDate.name
+        }
+      });
+      // this.$router.push({ params: {filteredChosenDate: this.chosenDate.name}, name: 'movie' });
+      // this.$router.push({ params: {filteredChosenDate: this.chosenDate.name}, name: 'movie' });
       
     },
     bookMovie(screenId){

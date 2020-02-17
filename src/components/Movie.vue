@@ -55,20 +55,13 @@ import VueYouTubeEmbed from "vue-youtube-embed";
 Vue.use(VueYouTubeEmbed);
 
 export default {
-  props: {
-    filteredChosenDate: {
-      type: Object,
-      required: true
-    }
-  },
+  props: ['movieTitle', 'filteredChosenDate'],
   data() {
     return {
-      chosenDate: {
-        name: "Välj Datum"
-      },
       chosenTime: {
         name: "Välj Tid"
-      }
+      },
+      dataChosenDate: ''
     };
   },
   components: {
@@ -91,7 +84,7 @@ export default {
     movie() {
       let movies = this.movies;
       for (let movie of movies) {
-        if (movie.title == this.$route.params.movie) return movie;
+        if (movie.title == this.movieTitle) return movie;
       }
       return null;
     },
@@ -150,11 +143,26 @@ export default {
         a.time > b.time ? 1 : b.time > a.time ? -1 : 0
       );
       return timeSorted;
+    },
+    chosenDate: {
+
+      get() {
+        if(this.dataChosenDate){
+          return { name: this.dataChosenDate }
+        } else {
+          return { name: 'Välj Datum' }
+        }
+      },
+      set(newVal) {
+        this.dataChosenDate = newVal.name
+      }
+
     }
   },
-  created(){
-    window.console.log(this.filteredChosenDate)
+  created() {
+    this.dataChosenDate = this.filteredChosenDate
   }
+  
 };
 </script>
 
@@ -197,7 +205,6 @@ h4 {
 
 .image img {
   width: 100%;
-  padding-right: 10% !important;
 }
 .dropdown-menu {
   height: 200px !important;
