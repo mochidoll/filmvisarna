@@ -69,7 +69,7 @@ export default {
       return re.test(this.emailInput);
     },
     enableContinueButton() {
-      return this.validEmail || this.user;
+      return this.validEmail || this.user.uid;
     },
     bookingUser() {
       for (let user of this.$store.state.users) {
@@ -146,27 +146,25 @@ export default {
         .update({
           bookedSeats: tempSeats
         });
-    },
-    created() {
-      this.onAuthStateChangedUnsubscribe = auth.onAuthStateChanged(
-        async user => {
-          if (user != null) {
-            let doc = await db.collection("users").doc(user.uid);
-
-            doc = await doc.get();
-            let tempUser = {};
-            Object.assign(tempUser, doc.data(), user);
-            this.user = tempUser;
-          } else {
-            this.user = {};
-          }
-        }
-      );
-      this.$emit("changeNavText", this.$store.state.navTexts[3]);
-    },
-    beforeDestroy() {
-      this.onAuthStateChangedUnsubscribe();
     }
+  },
+  created() {
+    this.onAuthStateChangedUnsubscribe = auth.onAuthStateChanged(async user => {
+      if (user != null) {
+        let doc = await db.collection("users").doc(user.uid);
+
+        doc = await doc.get();
+        let tempUser = {};
+        Object.assign(tempUser, doc.data(), user);
+        this.user = tempUser;
+      } else {
+        this.user = {};
+      }
+    });
+    this.$emit("changeNavText", this.$store.state.navTexts[3]);
+  },
+  beforeDestroy() {
+    this.onAuthStateChangedUnsubscribe();
   }
 };
 </script>
