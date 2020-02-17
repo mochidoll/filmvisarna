@@ -78,11 +78,11 @@ export default {
       return this.validEmail || this.user.uid;
     },
     bookingUser() {
-      for (let user of this.$store.state.users) {
+      this.$store.state.users.forEach( user => {
         if (auth.currentUser.uid === user.id) {
           return user;
         }
-      }
+      });
       return null;
     }
   },
