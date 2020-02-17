@@ -116,13 +116,10 @@ export default {
     background: #ececec;
     display: flex;
     flex-direction: column;
-  
   }
   #main {
     flex: 1 0 auto;
   }
-    
-    
 
   .logo {
     width: 11rem;

@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="movie">
     <youtube class="trailer-container" :video-id="movie.videoId"></youtube>
 
     <div class="movie-info-container row">
@@ -54,6 +54,21 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="valign-wrapper" id="loadingmovie" v-else>
+    <div class="preloader-wrapper active big">
+        <div class="spinner-layer spinner-red-only center">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div>
+          <div class="gap-patch">
+            <div class="circle"></div>
+          </div>
+          <div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
   </div>
 </template>
 
@@ -206,6 +221,11 @@ export default {
 .movie-info-container {
   margin-top: 0 !important;
 }
+#loadingmovie {
+  height: 60vh;
+  justify-content: center;
+}
+
 h3 {
   margin: 0rem !important;
   padding-bottom: 2%;
