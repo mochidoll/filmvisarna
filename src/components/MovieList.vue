@@ -69,7 +69,7 @@
     <div class="">
       <div class="movie" v-for="movie in filteredMovies" :key="movie.id">
         <div class="row white">
-          <div class="col s3 margin" @click="goToMovie(movie)">
+          <div class="col s3" @click="goToMovie(movie)">
             <img class="responsive-img movie-image" :src="movie.image" />
           </div>
 
@@ -349,7 +349,7 @@ export default {
   margin:2%;
 }
 .btn-small{
-  margin-left: 4% !important;
+  margin-left: 0.5rem !important;
 }
 
 @media only screen and (min-width: 893px) {
