@@ -38,11 +38,20 @@
           :placeholder="'Select a Date'"
         ></dropdown>
 
-        <div v-for="time in times" :key="time.id" class="col s12">
+      <div v-for="time in times" :key="time.id">
+        <div
+          class="col timeButton btn red darken-2"
+          :class="{disabled: emptyAvailableSeats(time.screening) === 0}"
+          @click="bookMovie(time.screening)"
+        >{{time.time}}</div>
+        <div class="col">
+          <div>{{time.auditorium}}</div>
           <div
-            class=" col s12 timeButton red darken-2"
-            @click="bookMovie(time.screening)"
-          >{{time.time}} | {{ time.auditorium }} - {{ emptyAvailableSeats() }}
+            v-if="emptyAvailableSeats(time.screening) > 0"
+            :class="{'red-text': emptyAvailableSeats(time.screening) < 5}"
+          >{{emptyAvailableSeats(time.screening)}} platser</div>
+          <div v-else class="red-text">
+            <b>Fullbokat</b>
           </div>
         </div>
       </div>
@@ -56,15 +65,19 @@ import dropdown from "vue-dropdowns";
 import Vue from "vue";
 import VueYouTubeEmbed from "vue-youtube-embed";
 Vue.use(VueYouTubeEmbed);
+import {
+  returnSumOfEmptySeats,
+  filterItemFromList
+} from "./utils/logicUtils.js";
 
 export default {
-  props: ['movieTitle', 'filteredChosenDate'],
+  props: ["movieTitle", "filteredChosenDate"],
   data() {
     return {
       chosenTime: {
         name: "Välj Tid"
       },
-      dataChosenDate: ''
+      dataChosenDate: ""
     };
   },
   components: {
@@ -82,9 +95,12 @@ export default {
       this.$store.state.bookingObject.screeningId = screenId;
       this.$router.push("/booking/selectTickets/" + screenId);
     },
-
-    emptyAvailableSeats() {
-      return returnSumOfEmptySeats(this.screeningMovies.bookedSeats);
+    emptyAvailableSeats(screening) {
+      let bookedSeats = filterItemFromList(
+        this.$store.state.screenings,
+        screening
+      ).bookedSeats;
+      return returnSumOfEmptySeats(bookedSeats);
     }
   },
   computed: {
@@ -153,24 +169,21 @@ export default {
       return timeSorted;
     },
     chosenDate: {
-
       get() {
-        if(this.dataChosenDate){
-          return { name: this.dataChosenDate }
+        if (this.dataChosenDate) {
+          return { name: this.dataChosenDate };
         } else {
-          return { name: 'Välj Datum' }
+          return { name: "Välj Datum" };
         }
       },
       set(newVal) {
-        this.dataChosenDate = newVal.name
+        this.dataChosenDate = newVal.name;
       }
-
     }
   },
   created() {
-    this.dataChosenDate = this.filteredChosenDate
+    this.dataChosenDate = this.filteredChosenDate;
   }
-  
 };
 </script>
 
