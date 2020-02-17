@@ -127,6 +127,18 @@ export default {
             name: "BookingComplete",
             params: { bookingObject: this.bookingObject }
           });
+    },
+    updateBookedSeats() {
+      //updates the nestled array in the screening on Firebase
+      // with the seats that were just booked
+      let bookedSeatsData = this.bookedSeats;
+      this.bookingObject.seatPositions.forEach(seat => {
+        bookedSeatsData[seat.y][seat.x] = true;
+      });
+      db.collection("screenings")
+        .doc(this.bookingObject.screeningId)
+        .update({
+          bookedSeats: bookedSeatsData
         });
     }},
 

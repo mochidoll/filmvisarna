@@ -80,9 +80,9 @@
           @click="continueToSelectSeats"
         >Gå vidare</button>
         <p
-          :class="{'red-text': availableSeats < 5}"
+          :class="{'red-text': emptyAvailableSeats < 5}"
           class="disable"
-        >{{availableSeats}} platser kvar!</p>
+        >{{emptyAvailableSeats}} platser kvar!</p>
       </div>
     </section>
   </div>
@@ -198,28 +198,19 @@ export default {
         this.seniorTickets * this.seniorTicketPrice
       );
     },
-    availableSeats() {
-      let bookedSeats = this.screeningChosen.bookedSeats;
-      let currentBookedSeats = 0;
+    emptyAvailableSeats() {
+      let bookedSeats = this.screeningChosen.bookedSeats
+      let emptySeats = 0;
       for (let seatRow in bookedSeats) {
-        Object.values(bookedSeats[seatRow]).forEach(seat => {
-          if (!seat) {
-            currentBookedSeats++;
+        Object.values(bookedSeats[seatRow]).forEach(isBookedSeat => {
+          if (!isBookedSeat) { //Converts each Object 'seatRow' in Array bookedSeats as an Array then loop through to check for booked Seats
+            emptySeats++;
           }
         });
       }
-      return currentBookedSeats;
+      return emptySeats;
     }
   },
-  /* watch: {
-    availableSeats(val) {
-      let bookedSeats = this.bookingObject.screening.bookedSeats;
-      bookedSeats.forEach(seat => {
-        if(!bookedSeats[seat.x][seat.y]){
-        }
-      })
-    }
-  }, */
   created() {
     this.adultTickets = this.bookingObject.adultTickets;
     this.childTickets = this.bookingObject.childTickets;
