@@ -130,7 +130,6 @@ export default {
       genres = [...new Set(genres)];
       // Sort alphanumeric
       genres.sort().forEach(genre => genresName.push({name:genre}))
-      // window.console.log(genresName)
       genresName.unshift({name:"Alla genres"});
       return genresName;
     },
@@ -236,7 +235,6 @@ export default {
       this.chosenGenre.name = genre.name;
     },
     goToMovie(movie) {
-      console.log(this.chosenDate)
       this.$router.push({
         name: 'movie',
         params: {
