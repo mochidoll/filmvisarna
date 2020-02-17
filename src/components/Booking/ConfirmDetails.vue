@@ -146,27 +146,25 @@ export default {
         .update({
           bookedSeats: tempSeats
         });
-    },
-    created() {
-      this.onAuthStateChangedUnsubscribe = auth.onAuthStateChanged(
-        async user => {
-          if (user != null) {
-            let doc = await db.collection("users").doc(user.uid);
-
-            doc = await doc.get();
-            let tempUser = {};
-            Object.assign(tempUser, doc.data(), user);
-            this.user = tempUser;
-          } else {
-            this.user = {};
-          }
-        }
-      );
-      this.$emit("changeNavText", this.$store.state.navTexts[3]);
-    },
-    beforeDestroy() {
-      this.onAuthStateChangedUnsubscribe();
     }
+  },
+  created() {
+    this.onAuthStateChangedUnsubscribe = auth.onAuthStateChanged(async user => {
+      if (user != null) {
+        let doc = await db.collection("users").doc(user.uid);
+
+        doc = await doc.get();
+        let tempUser = {};
+        Object.assign(tempUser, doc.data(), user);
+        this.user = tempUser;
+      } else {
+        this.user = {};
+      }
+    });
+    this.$emit("changeNavText", this.$store.state.navTexts[3]);
+  },
+  beforeDestroy() {
+    this.onAuthStateChangedUnsubscribe();
   }
 };
 </script>
