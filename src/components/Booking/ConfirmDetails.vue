@@ -16,8 +16,13 @@
         <p v-if="bookingObject.adultTickets">Vuxenbiljetter: {{ bookingObject.adultTickets}}</p>
         <p v-if="bookingObject.childTickets">Barnbiljetter: {{ bookingObject.childTickets }}</p>
         <p v-if="bookingObject.seniorTickets">Pensionärsbiljetter: {{bookingObject.seniorTickets }}</p>
-        <p v-for="(seat, id) in bookingObject.seatPositions" :key="id">Parkett: rad {{ seat.y + 1 }}, plats {{ seat.x}}</p>
-        <p><b>Totalt pris: {{ bookingObject.totalTicketPrice}} kr</b></p>
+        <p
+          v-for="(seat, id) in bookingObject.seatPositions"
+          :key="id"
+        >Parkett: rad {{ seat.y + 1 }}, plats {{ seat.x}}</p>
+        <p>
+          <b>Totalt pris: {{ bookingObject.totalTicketPrice}} kr</b>
+        </p>
       </div>
 
       <div v-if="!user.uid" class="extra-info col s12">
@@ -39,7 +44,7 @@
       >Tillbaka</button>
       <button
         :class="{disabled: !enableContinueButton}"
-        @click="confirmBooking"
+        @click="confirmBooking(); updateBookedSeats()"
         class="btn waves-effect waves-light red darken-4 col s3 offset-s4"
       >Bekräfta</button>
     </div>
@@ -72,8 +77,9 @@ export default {
           return user;
         }
       }
-      return null
-    }},
+      return null;
+    }
+  },
   props: {
     bookingObject: {
       type: Object,
@@ -108,7 +114,7 @@ export default {
         })
         .then(ref => {
           this.bookingObject.id = ref.id;
-          console.log('test ' + this.user.bookings)
+          console.log("test " + this.user.bookings);
           if (this.user.uid) {
             this.user.bookings.push(this.bookingObject.id);
 
@@ -117,9 +123,8 @@ export default {
               .update({
                 bookings: this.user.bookings
               });
-              
 
-            this.bookingUser.bookings.push(this.bookingObject.id)
+            this.bookingUser.bookings.push(this.bookingObject.id);
 
             this.$store.commit("setBookings", this.user.bookings);
           }
@@ -127,42 +132,45 @@ export default {
             name: "BookingComplete",
             params: { bookingObject: this.bookingObject }
           });
+        });
     },
     updateBookedSeats() {
       //updates the nestled array in the screening on Firebase
       // with the seats that were just booked
-      let bookedSeatsData = this.bookedSeats;
+      let tempSeats = this.bookingObject.screening.bookedSeats;
       this.bookingObject.seatPositions.forEach(seat => {
-        bookedSeatsData[seat.y][seat.x] = true;
+        tempSeats[seat.y][seat.x] = true;
       });
       db.collection("screenings")
         .doc(this.bookingObject.screeningId)
         .update({
-          bookedSeats: bookedSeatsData
+          bookedSeats: tempSeats
         });
-    }},
+    },
+    created() {
+      this.onAuthStateChangedUnsubscribe = auth.onAuthStateChanged(
+        async user => {
+          if (user != null) {
+            let doc = await db.collection("users").doc(user.uid);
 
-  created() {
-    this.onAuthStateChangedUnsubscribe = auth.onAuthStateChanged(async user => {
-      if (user != null) {
-        let doc = await db.collection("users").doc(user.uid);
-
-      doc = await doc.get();
-        let tempUser = {};
-        Object.assign(tempUser, doc.data(), user);
-        this.user = tempUser;
-
-      } else {
-        this.user = {};
-      }
-    })
- this.$emit('changeNavText', this.$store.state.navTexts[3]);
-  },
-  beforeDestroy() {
-    this.onAuthStateChangedUnsubscribe();
+            doc = await doc.get();
+            let tempUser = {};
+            Object.assign(tempUser, doc.data(), user);
+            this.user = tempUser;
+          } else {
+            this.user = {};
+          }
+        }
+      );
+      this.$emit("changeNavText", this.$store.state.navTexts[3]);
+    },
+    beforeDestroy() {
+      this.onAuthStateChangedUnsubscribe();
+    }
   }
-}
+};
 </script>
+
 <style>
 .confirm-booking .inner-container {
   border: 2px solid rgba(0, 0, 0, 0.2);
