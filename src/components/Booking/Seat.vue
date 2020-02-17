@@ -1,23 +1,31 @@
 <template>
-    <button
-      @click="onClick()"
-      @mouseover="hover = true"
-      @mouseleave="hover = false"
-      :disabled='disableSeat && !isSelected'
-      :class="{'red darken-4': isSelected, black: !isSelected && !disableSeat,
-       'red lighten-2': hover && !disableSeat, 'grey lighten-2': !isSelected && disableSeat}"
-      class="white-text seats"
-    ></button>
+  <button
+    @click="onClick()"
+    @mouseover="hover = true"
+    @mouseleave="hover = false"
+    :disabled="bookedSeat || (disableSeat && !isSelected)"
+    :class="{
+      'red lighten-2': hover && !disableSeat && !bookedSeat, 
+      'red accent-2':isSelected && hover && !bookedSeat, 
+      'red darken-4': isSelected && !hover,
+      'grey lighten-1': bookedSeat,
+      black: !isSelected && !disableSeat && !bookedSeat,
+      'grey lighten-2': disableSeat && !isSelected && !bookedSeat}"
+    class="white-text seats"
+  >
+  </button>
 </template>
 
 <script>
 export default {
-  props: ["position", "disableSeat"],
+  props: ["position", "disableSeat", "bookedSeat"],
   data() {
     return {
       isSelected: false,
       hover: false
     };
+  },
+  computed: {
   },
   methods: {
     onClick() {
@@ -57,14 +65,14 @@ export default {
   width: 5vmin;
   height: 5vmin;
 }
-button{
+button {
   border-style: none;
+  
 }
 @media screen and (min-width: 900px) and (max-width: 1100px) {
-  .seats{
-   width: 4vmin;
-  height: 4vmin;
+  .seats {
+    width: 4vmin;
+    height: 4vmin;
   }
 }
-
 </style>

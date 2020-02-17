@@ -36,7 +36,6 @@ export default new Vuex.Store({
     setAuditoriums(state, data) {
       state.auditoriums = data
     },
-
     setBookingObject(state, data) {
       state.bookingObject = data
     },

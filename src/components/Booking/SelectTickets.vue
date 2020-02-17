@@ -13,6 +13,14 @@
           <p>Datum: {{ screeningChosen.startTime.toDate().toLocaleDateString() }}</p>
           <p>Tid: {{ screeningChosen.startTime.toDate().getHours() }}:00</p>
           <p>Salong: {{ auditorium.name }}</p>
+          <p
+            v-if="emptyAvailableSeats > 0"
+            :class="{'red-text': emptyAvailableSeats < 5}"
+            class="disable"
+          >{{emptyAvailableSeats}} platser kvar!</p>
+          <p v-else class="red-text">
+            <b>Fullbokat</b>
+          </p>
           <p>
             <b>Totalt pris: {{ totalTicketPrice }}:-</b>
           </p>
@@ -76,7 +84,7 @@
         >Avbryt</button>
         <button
           class="col s5 m3 l2 offset-s2 offset-l6 offset-m4 btn waves-effect waves-light red darken-4 white-text"
-          :class="{disabled:numberOfTickets === 0}"
+          :class="{disabled:(numberOfTickets === 0 || numberOfTickets > emptyAvailableSeats)}"
           @click="continueToSelectSeats"
         >Gå vidare</button>
       </div>
@@ -85,6 +93,8 @@
 </template>
 
 <script>
+import { returnSumOfEmptySeats } from "../utils/logicUtils.js";
+
 export default {
   data() {
     return {
@@ -149,7 +159,7 @@ export default {
     movies() {
       return this.$store.state.movies;
     },
-     movieId() {
+    movieId() {
       for (let screening of this.$store.state.screenings) {
         if (screening.id == this.$route.params.screeningId) {
           for (let movie of this.movies) {
@@ -193,6 +203,9 @@ export default {
         this.childTickets * this.childTicketPrice +
         this.seniorTickets * this.seniorTicketPrice
       );
+    },
+    emptyAvailableSeats() {
+      return returnSumOfEmptySeats(this.screeningChosen.bookedSeats);
     }
   },
   created() {
@@ -237,28 +250,14 @@ export default {
   margin: 2rem 0 1rem !important;
 }
 
-/* @media screen and (max-width: 599px) {
-  .select-tickets-wrapper p {
-    font-size: 0.9rem;
-  }
-  .select-tickets-wrapper .select-tickets {
-    margin-top: 1rem;
-  }
-  .select-tickets-wrapper .type-of-tickets {
-    font-size: 0.9rem;
-  }
-}
-
-
 @media screen and (min-width: 600px) {
   .select-tickets-wrapper .select-tickets-container {
     display: block;
     position: absolute;
     top: 100px;
     left: 275px !important;
-  } 
-}*/
-
+  }
+}
 @media screen and (min-width: 600px) {
   .select-tickets-wrapper .select-tickets-container {
     display: block;
