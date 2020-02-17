@@ -3,7 +3,7 @@
     <h5>{{ bookingObject.auditorium.name }}</h5>
     <p>Bokade biljetter: {{ bookingObject.numberOfTickets }} st</p>
     <div class="center">
-      <img src="@/assets/images/cinema.png" alt="cinema-screen" />
+      <img src="@/assets/images/cinema.png" alt="cinema-screen" class="s12"/>
     </div>
 
     <div class="row seat-wrapper" v-if="auditoriums">

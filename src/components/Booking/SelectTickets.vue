@@ -76,7 +76,7 @@
         >Avbryt</button>
         <button
           class="col s5 m3 l2 offset-s2 offset-l6 offset-m4 btn waves-effect waves-light red darken-4 white-text"
-          :class="{disabled:numberOfTickets === 0}"
+          :class="{disabled:(numberOfTickets === 0 || numberOfTickets > emptyAvailableSeats)}"
           @click="continueToSelectSeats"
         >Gå vidare</button>
         <p
@@ -153,7 +153,7 @@ export default {
     movies() {
       return this.$store.state.movies;
     },
-     movieId() {
+    movieId() {
       for (let screening of this.$store.state.screenings) {
         if (screening.id == this.$route.params.screeningId) {
           for (let movie of this.movies) {
@@ -199,11 +199,12 @@ export default {
       );
     },
     emptyAvailableSeats() {
-      let bookedSeats = this.screeningChosen.bookedSeats
+      let bookedSeats = this.screeningChosen.bookedSeats;
       let emptySeats = 0;
       for (let seatRow in bookedSeats) {
         Object.values(bookedSeats[seatRow]).forEach(isBookedSeat => {
-          if (!isBookedSeat) { //Converts each Object 'seatRow' in Array bookedSeats as an Array then loop through to check for booked Seats
+          if (!isBookedSeat) {
+            //Converts each Object 'seatRow' in Array bookedSeats as an Array then loop through to check for booked Seats
             emptySeats++;
           }
         });
@@ -259,7 +260,7 @@ export default {
     position: absolute;
     top: 100px;
     left: 275px !important;
-  } 
+  }
 }
 @media screen and (min-width: 600px) {
   .select-tickets-wrapper .select-tickets-container {
@@ -268,7 +269,6 @@ export default {
     top: 30px;
     left: 0px !important;
   }
-
 }
 
 @media screen and (min-width: 750px) {
