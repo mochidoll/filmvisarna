@@ -66,7 +66,7 @@ const routes = [
     component: Booking,
     children: [
       {
-        path: 'selectTickets',
+        path: 'selectTickets/:screeningId',
         name: 'SelectTickets',
         component: SelectTickets
       },

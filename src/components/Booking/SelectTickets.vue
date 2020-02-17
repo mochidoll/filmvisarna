@@ -1,11 +1,9 @@
 <template>
-  <section>
+  <div>
+    <p class="white-text hide">{{movieId.length}}</p>
+
     <section class="select-tickets-wrapper row">
-
-      <!-- <h5 class="col s12 m12 l12">Välj Biljetter</h5> -->
-
       <div class="col s12 m6 l6 movie-info-wrapper valign-wrapper left-align">
-
         <div class="col l6 m6 s6 movie-image">
           <img :src="movieChosen.image" alt class="responsive-img" />
         </div>
@@ -15,13 +13,21 @@
           <p>Datum: {{ screeningChosen.startTime.toDate().toLocaleDateString() }}</p>
           <p>Tid: {{ screeningChosen.startTime.toDate().getHours() }}:00</p>
           <p>Salong: {{ auditorium.name }}</p>
-           <p><b>Totalt pris: {{ totalTicketPrice }}:-</b></p>
+          <p
+            v-if="emptyAvailableSeats > 0"
+            :class="{'red-text': emptyAvailableSeats < 5}"
+            class="disable"
+          >{{emptyAvailableSeats}} platser kvar!</p>
+          <p v-else class="red-text">
+            <b>Fullbokat</b>
+          </p>
+          <p>
+            <b>Totalt pris: {{ totalTicketPrice }}:-</b>
+          </p>
         </div>
-
       </div>
 
       <div class="col s12 m6 l6 select-tickets-container">
-
         <div class="col s12 select-tickets valign-wrapper">
           <span class="col s12 m5 type-of-tickets">Vuxen: {{adultTicketPrice}}:-</span>
           <div class="col s12 m7 buttons">
@@ -69,23 +75,26 @@
             </a>
           </div>
         </div>
-
       </div>
 
       <div class="row col s12 nav-buttons">
-        <button @click="goBackToHome" class="col s5 m3 l2 offset-m1 offset-l1 btn waves-effect waves-light red darken-4 white-text">Avbryt</button>
+        <button
+          @click="goBackToHome"
+          class="col s5 m3 l2 offset-m1 offset-l1 btn waves-effect waves-light red darken-4 white-text"
+        >Avbryt</button>
         <button
           class="col s5 m3 l2 offset-s2 offset-l6 offset-m4 btn waves-effect waves-light red darken-4 white-text"
-          :class="{disabled:numberOfTickets === 0}"
+          :class="{disabled:(numberOfTickets === 0 || numberOfTickets > emptyAvailableSeats)}"
           @click="continueToSelectSeats"
         >Gå vidare</button>
       </div>
-
     </section>
-  </section>
+  </div>
 </template>
 
 <script>
+import { returnSumOfEmptySeats } from "../utils/logicUtils.js";
+
 export default {
   data() {
     return {
@@ -95,10 +104,8 @@ export default {
       adultTicketPrice: 85,
       seniorTicketPrice: 75,
       childTicketPrice: 65,
-      movieChosen: null,
-      screeningChosen: null,
-      auditorium: null,
-      payload: null
+      payload: null,
+      screeningIDS: null
     };
   },
   methods: {
@@ -121,7 +128,7 @@ export default {
       this.seniorTickets--;
     },
     continueToSelectSeats() {
-      if(this.numberOfTickets !== 0){   
+      if (this.numberOfTickets !== 0) {
         this.bookingObject.movie = this.movieChosen;
         this.bookingObject.screening = this.screeningChosen;
         this.bookingObject.auditorium = this.auditorium;
@@ -136,16 +143,54 @@ export default {
           params: { bookingObject: this.bookingObject }
         });
       } else {
-        let payload = {component: 1}
-        this.$emit('toggleErrorText', payload)
+        let payload = { component: 1 };
+        this.$emit("toggleErrorText", payload);
       }
     },
 
     goBackToHome() {
       this.$router.push({ name: "Home" });
-    },
+    }
   },
   computed: {
+    screeningIDs() {
+      return this.$route.params.screeningId;
+    },
+    movies() {
+      return this.$store.state.movies;
+    },
+    movieId() {
+      for (let screening of this.$store.state.screenings) {
+        if (screening.id == this.$route.params.screeningId) {
+          for (let movie of this.movies) {
+            if (movie.id === screening.movieId) {
+              return movie;
+            }
+          }
+        }
+      }
+      return null;
+    },
+    screeningChosen() {
+      let screening = this.$store.state.screenings.filter(screening => {
+        return screening.id === this.$route.params.screeningId;
+      })[0];
+      return screening;
+    },
+    auditorium() {
+      return this.$store.state.auditoriums.filter(auditorium => {
+        return auditorium.id === this.screeningChosen.auditoriumId;
+      })[0];
+    },
+    movieChosen() {
+      return this.$store.state.movies.filter(movie => {
+        return movie.id === this.screeningChosen.movieId;
+      })[0];
+    },
+
+    screenings() {
+      return this.$store.state.screenings;
+    },
     numberOfTickets() {
       return this.adultTickets + this.childTickets + this.seniorTickets;
     },
@@ -159,25 +204,16 @@ export default {
         this.seniorTickets * this.seniorTicketPrice
       );
     },
+    emptyAvailableSeats() {
+      return returnSumOfEmptySeats(this.screeningChosen.bookedSeats);
+    }
   },
   created() {
-    this.screeningChosen = this.$store.state.screenings.filter(screening => {
-      return screening.id === this.bookingObject.screeningId;
-    })[0];
+    this.adultTickets = this.bookingObject.adultTickets;
+    this.childTickets = this.bookingObject.childTickets;
+    this.seniorTickets = this.bookingObject.seniorTickets;
 
-    this.auditorium = this.$store.state.auditoriums.filter(auditorium => {
-      return auditorium.id === this.screeningChosen.auditoriumId;
-    })[0];
-
-    this.movieChosen = this.$store.state.movies.filter(movie => {
-      return movie.id === this.screeningChosen.movieId;
-    })[0];
-
-    this.adultTickets = this.bookingObject.adultTickets
-    this.childTickets = this.bookingObject.childTickets
-    this.seniorTickets = this.bookingObject.seniorTickets
-    
-    this.$emit('changeNavText', this.$store.state.navTexts[1])
+    this.$emit("changeNavText", this.$store.state.navTexts[1]);
   }
 };
 </script>
@@ -195,7 +231,7 @@ export default {
   margin: 2rem 0;
 }
 .select-tickets-wrapper .select-tickets {
-  margin: 1rem 0 0
+  margin: 1rem 0 0;
 }
 .select-tickets-wrapper p {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -214,97 +250,83 @@ export default {
   margin: 2rem 0 1rem !important;
 }
 
-/* @media screen and (max-width: 599px) {
-  .select-tickets-wrapper p {
-    font-size: 0.9rem;
-  }
-  .select-tickets-wrapper .select-tickets {
-    margin-top: 1rem;
-  }
-  .select-tickets-wrapper .type-of-tickets {
-    font-size: 0.9rem;
-  }
-}
-
-
 @media screen and (min-width: 600px) {
   .select-tickets-wrapper .select-tickets-container {
     display: block;
     position: absolute;
     top: 100px;
     left: 275px !important;
-  } 
-}*/
-
+  }
+}
 @media screen and (min-width: 600px) {
   .select-tickets-wrapper .select-tickets-container {
-  display: block;
-  position: relative;
-  top: 30px;
-  left: 0px!important;
-  } 
+    display: block;
+    position: relative;
+    top: 30px;
+    left: 0px !important;
+  }
 }
 
 @media screen and (min-width: 750px) {
   .select-tickets-wrapper .select-tickets-container {
-  display: block;
-  position: relative;
-  top: 30px;
-  left: 40px!important;
-    }
+    display: block;
+    position: relative;
+    top: 30px;
+    left: 40px !important;
+  }
 }
 
 @media screen and (min-width: 850px) {
   .select-tickets-wrapper .select-tickets-container {
-  display: block;
-  position: relative;
-  top: 30px;
-  left: 40px!important;
-  } 
-} 
+    display: block;
+    position: relative;
+    top: 30px;
+    left: 40px !important;
+  }
+}
 
 @media screen and (min-width: 950px) {
   .select-tickets-wrapper .select-tickets-container {
-  display: block;
-  position: relative;
-  top: 40px;
-  left: 50px!important;
-  } 
+    display: block;
+    position: relative;
+    top: 40px;
+    left: 50px !important;
+  }
 }
 
 @media screen and (min-width: 1150px) {
   .select-tickets-wrapper .select-tickets-container {
-  display: block;
-  position: relative;
-  top: 50px;
-  left: 50px!important;
-  } 
+    display: block;
+    position: relative;
+    top: 50px;
+    left: 50px !important;
+  }
 }
 
 @media screen and (min-width: 1250px) {
   .select-tickets-wrapper .select-tickets-container {
-  display: block;
-  position: relative;
-  top: 60px;
-  left: 50px!important;
-  } 
+    display: block;
+    position: relative;
+    top: 60px;
+    left: 50px !important;
+  }
 }
 
 @media screen and (min-width: 1350px) {
   .select-tickets-wrapper .select-tickets-container {
-  display: block;
-  position: relative;
-  top: 70px;
-  left: 50px!important;
-  } 
-} 
+    display: block;
+    position: relative;
+    top: 70px;
+    left: 50px !important;
+  }
+}
 
 @media screen and (min-width: 1450px) {
   .select-tickets-wrapper .select-tickets-container {
-  display: block;
-  position: relative;
-  top: 85px;
-  left: 50px !important;
-  } 
-} 
+    display: block;
+    position: relative;
+    top: 85px;
+    left: 50px !important;
+  }
+}
 </style>
