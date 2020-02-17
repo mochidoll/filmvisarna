@@ -9,22 +9,23 @@
 
     <div class="center">
       <div class="filters">
-          <div class="">
-            <dropdown class="dropdowns"
-              :options="dates"
-              :selected="chosenDate.name"
-              v-on:updateOption="updateChosenDate"
-              :placeholder="chosenDate.name"
-            ></dropdown>
-          </div>
-          <div class="">
-            <dropdown
-              :options="genres"
-              :selected="chosenGenre.name"
-              v-on:updateOption="updateChosenGenre"
-              :placeholder="chosenGenre.name"
-            ></dropdown>
-          </div>
+        <div class>
+          <dropdown
+            class="dropdowns"
+            :options="dates"
+            :selected="chosenDate.name"
+            v-on:updateOption="updateChosenDate"
+            :placeholder="chosenDate.name"
+          ></dropdown>
+        </div>
+        <div class>
+          <dropdown
+            :options="genres"
+            :selected="chosenGenre.name"
+            v-on:updateOption="updateChosenGenre"
+            :placeholder="chosenGenre.name"
+          ></dropdown>
+        </div>
       </div>
     </div>
 
@@ -69,34 +70,35 @@
       </div>
     </div>-->
 
-    
-      <div class="movie" v-for="movie in filteredMovies" :key="movie.id">
-        <!-- medium & small view -->
-        <div class="row white valign-wrapper">
-          <div class="col s3 container" @click="goToMovie(movie)">
-            <img class="col s12 responsive-img" :src="movie.image" />
-          </div>
-          <div class="movieCard col s9">
-            <h6 class="flow-text movie-title">
-              <strong>{{ movie.title }}</strong>
-            </h6>
-            <p class="movie-genre">{{movie.genre.join(", ")}} | {{ movie.length }} min</p>
-            <p class="movie-description hide-on-small-only">{{ movie.shortDescription }}</p>
+    <div class="movie" v-for="movie in filteredMovies" :key="movie.id">
+      <!-- medium & small view -->
+      <div class="row valign-wrapper">
+        <div class="col s3 container" @click="goToMovie(movie)">
+          <img class="col s12 responsive-img" :src="movie.image" />
+        </div>
+        <div class="movieCard col s9">
+          <h6 class="flow-text movie-title">
+            <strong>{{ movie.title }}</strong>
+          </h6>
+          <p class="movie-genre">{{movie.genre.join(", ")}} | {{ movie.length }} min</p>
+          <p class="movie-description hide-on-small-only">{{ movie.shortDescription }}</p>
 
-            <div v-for="screen in screeningMovies" :key="screen.id">
-              <div class="timeButton col" v-if="screen.movieId == movie">
-                <div
-                  class="btn-small red darken-4"
-                  v-if="screen.date.name === chosenDate.name"
-                  @click="bookMovie(screen.screeningId)"
-                >{{screen.time}}</div>
+          <div v-for="screen in screeningMovies" :key="screen.id">
+            <div class="timeButton col" v-if="screen.movieId == movie">
+              <div
+                class="btn-small"
+                v-if="screen.date.name === chosenDate.name"
+                @click="bookMovie(screen.screeningId)"
+              >
+                <strong>{{screen.time}}</strong>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- large view -->
-        <!-- <div class="row valign-wrapper hide-on-med-and-down">
+      <!-- large view -->
+      <!-- <div class="row valign-wrapper hide-on-med-and-down">
           <div class="white valign-wrapper col s10 offset-s1">
             <div class="col s3 container" @click="goToMovie(movie)">
               <img class="col s12 responsive-img movie-image" :src="movie.image" />
@@ -122,9 +124,8 @@
               </div>
             </div>
           </div>
-        </div> -->
-      </div>
-    
+      </div>-->
+    </div>
   </div>
 </template>
 
@@ -321,7 +322,7 @@ export default {
   font-weight: bold;
 }
 .filters {
- align-self: center;
+  align-self: center;
 }
 h2 {
   margin: 0.6rem;
@@ -329,16 +330,19 @@ h2 {
 .row .col {
   padding: 0px !important;
 }
+.col {
+  margin: 0px !important;
+}
 .row {
   width: 100%;
   margin: 0.8rem;
   border-radius: 15px;
+  background-color: #e7c3a6;
 }
 .movieCard {
   width: 100%;
   padding-left: 5% !important;
 }
-
 .movie-description {
   margin: 2%;
 }
@@ -351,6 +355,7 @@ h2 {
 .btn-small {
   margin-left: 0.5rem !important;
   border-radius: 12px;
+  background-color: black;
 }
 .movie-image {
   cursor: pointer;
@@ -358,7 +363,7 @@ h2 {
 .card2 {
   width: 55vw;
 }
-.dropdowns{
+.dropdowns {
   min-width: 120px !important;
   margin: 0px !important;
 }
@@ -383,7 +388,7 @@ h2 {
 @media only screen and (min-width: 540px) {
 }
 
-@media only screen and (max-width: 540px) {
+@media (max-width: 606px) {
   .movie-title {
     font-size: 1.5rem !important;
   }
@@ -391,6 +396,10 @@ h2 {
     font-size: 0.8rem;
     line-height: 1rem;
     margin: 3%;
+  }
+  .movie-description {
+    font-size: 0.9rem !important;
+    line-height: 1.1rem !important;
   }
 }
 </style>
