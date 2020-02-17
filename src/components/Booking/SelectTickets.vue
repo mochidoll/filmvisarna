@@ -16,7 +16,7 @@
             v-if="emptyAvailableSeats > 0"
             :class="{'red-text': emptyAvailableSeats < 5}"
             class="disable"
-          >{{emptyAvailableSeats}} platser kvar!</p>
+          >{{emptyAvailableSeats}} platser kvar</p>
           <p v-else class="red-text">
             <b>Fullbokat</b>
           </p>

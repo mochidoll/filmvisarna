@@ -22,7 +22,6 @@
             :placeholder="chosenGenre.name"
           ></dropdown>
         </div>
-        
       </div>
     </div>
 
@@ -89,9 +88,10 @@
 
 <script>
 import moment from "moment";
-import 'moment/locale/sv'  // without this line it didn't work
-moment.locale('sv')
+import "moment/locale/sv"; // without this line it didn't work
+moment.locale("sv");
 import dropdown from "vue-dropdowns";
+import { filterItemFromList } from "./utils/logicUtils";
 
 export default {
   data() {
@@ -101,7 +101,7 @@ export default {
       chosenDate: {
         name: "Sortera på datum"
       },
-      chosenGenre:{
+      chosenGenre: {
         name: "Alla genres"
       }
     };
@@ -129,9 +129,9 @@ export default {
       // Remove duplicates from genres array
       genres = [...new Set(genres)];
       // Sort alphanumeric
-      genres.sort().forEach(genre => genresName.push({name:genre}))
+      genres.sort().forEach(genre => genresName.push({ name: genre }));
       // window.console.log(genresName)
-      genresName.unshift({name:"Alla genres"});
+      genresName.unshift({ name: "Alla genres" });
       return genresName;
     },
     filteredMovies() {
@@ -153,10 +153,13 @@ export default {
       // add the movie to each screening
       // if we have movies in array called movies we could
       // do it like this
-      screens.forEach(screening => {
+      /*       screens.forEach(screening => {
         screening.movie = this.movies.filter(movie => {
           return movie.id === screening.movieId;
         })[0];
+      }); */
+      screens.forEach(screening => {
+        filterItemFromList(this.movies, screening.movieId);
       });
 
       // filters array on date
@@ -238,9 +241,9 @@ export default {
     goToMovie(movie) {
       this.$router.push("/allMovies/" + movie.title);
     },
-    bookMovie(screenId){
-      this.$store.state.bookingObject.screeningId = screenId
-      this.$router.push({path: '/booking/selectTickets'})
+    bookMovie(screenId) {
+      this.$store.state.bookingObject.screeningId = screenId;
+      this.$router.push({ path: "/booking/selectTickets" });
     }
   },
   mounted() {
@@ -261,7 +264,7 @@ export default {
       }
     }, 50);
   }
-}
+};
 </script>
 
 <style scoped>
