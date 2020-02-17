@@ -10,3 +10,11 @@ export function returnSumOfEmptySeats(bookedSeats) {
 
   return emptySeats;
 }
+
+export function getItemFromStore(items, id) {
+  return items.filter(filteredItem => {
+    if (filteredItem.id === id) {
+      return filteredItem
+    }
+  })[0];
+}
