@@ -7,24 +7,24 @@
       <strong>VISAS NU</strong>
     </h2>
 
-    <div class="filters">
-      <div class="row">
-        <div class="col">
-          <dropdown
-            :options="dates"
-            :selected="chosenDate.name"
-            v-on:updateOption="updateChosenDate"
-            :placeholder="chosenDate.name"
-          ></dropdown>
-        </div>
-        <div class="col">
-          <dropdown
-            :options="genres"
-            :selected="chosenGenre.name"
-            v-on:updateOption="updateChosenGenre"
-            :placeholder="chosenGenre.name"
-          ></dropdown>
-        </div>
+    <div class="center">
+      <div class="filters">
+          <div class="">
+            <dropdown class="dropdowns"
+              :options="dates"
+              :selected="chosenDate.name"
+              v-on:updateOption="updateChosenDate"
+              :placeholder="chosenDate.name"
+            ></dropdown>
+          </div>
+          <div class="">
+            <dropdown
+              :options="genres"
+              :selected="chosenGenre.name"
+              v-on:updateOption="updateChosenGenre"
+              :placeholder="chosenGenre.name"
+            ></dropdown>
+          </div>
       </div>
     </div>
 
@@ -69,22 +69,19 @@
       </div>
     </div>-->
 
-    <div class>
+    
       <div class="movie" v-for="movie in filteredMovies" :key="movie.id">
-        <div class="row white valign-wrapper container">
+        <!-- medium & small view -->
+        <div class="row white valign-wrapper">
           <div class="col s3 container" @click="goToMovie(movie)">
-            <img class="col s12 responsive-img movie-image" :src="movie.image" />
+            <img class="col s12 responsive-img" :src="movie.image" />
           </div>
-
           <div class="movieCard col s9">
             <h6 class="flow-text movie-title">
               <strong>{{ movie.title }}</strong>
             </h6>
             <p class="movie-genre">{{movie.genre.join(", ")}} | {{ movie.length }} min</p>
-            <p
-              class="movie-description hide-on-small-only hide-on-large-only"
-            >{{ movie.shortDescription }}</p>
-            <p class="movie-description hide-on-med-and-down">{{ movie.shortDescription }}</p>
+            <p class="movie-description hide-on-small-only">{{ movie.shortDescription }}</p>
 
             <div v-for="screen in screeningMovies" :key="screen.id">
               <div class="timeButton col" v-if="screen.movieId == movie">
@@ -97,8 +94,37 @@
             </div>
           </div>
         </div>
+
+        <!-- large view -->
+        <!-- <div class="row valign-wrapper hide-on-med-and-down">
+          <div class="white valign-wrapper col s10 offset-s1">
+            <div class="col s3 container" @click="goToMovie(movie)">
+              <img class="col s12 responsive-img movie-image" :src="movie.image" />
+            </div>
+            <div class="movieCard2 col s9">
+              <h6 class="flow-text movie-title">
+                <strong>{{ movie.title }}</strong>
+              </h6>
+              <p class="movie-genre">{{movie.genre.join(", ")}} | {{ movie.length }} min</p>
+              <p
+                class="movie-description hide-on-small-only hide-on-large-only"
+              >{{ movie.shortDescription }}</p>
+              <p class="movie-description hide-on-med-and-down">{{ movie.shortDescription }}</p>
+
+              <div v-for="screen in screeningMovies" :key="screen.id">
+                <div class="timeButton col" v-if="screen.movieId == movie">
+                  <div
+                    class="btn-small red darken-4"
+                    v-if="screen.date.name === chosenDate.name"
+                    @click="bookMovie(screen.screeningId)"
+                  >{{screen.time}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
       </div>
-    </div>
+    
   </div>
 </template>
 
@@ -255,7 +281,7 @@ export default {
     },
     bookMovie(screenId) {
       this.$store.state.bookingObject.screeningId = screenId;
-      this.$router.push({ path: "/booking/selectTickets/" + screenId});
+      this.$router.push({ path: "/booking/selectTickets/" + screenId });
     }
   },
   mounted() {
@@ -283,19 +309,9 @@ export default {
 * {
   box-sizing: border-box;
 }
-.small-movie-margin {
-  padding-top: 45px;
-  padding-bottom: 45px;
-}
-.movie .card {
-  border-radius: 5px !important;
-}
 .movie .card-image img {
   width: 100%;
   min-height: 185px !important;
-}
-.card-stacked {
-  display: inline-block;
 }
 .movie .movie-title {
   font-size: 2rem;
@@ -304,8 +320,8 @@ export default {
 .movie .movie-title {
   font-weight: bold;
 }
-.movie {
-  margin: 0px !important;
+.filters {
+ align-self: center;
 }
 h2 {
   margin: 0.6rem;
@@ -322,6 +338,7 @@ h2 {
   width: 100%;
   padding-left: 5% !important;
 }
+
 .movie-description {
   margin: 2%;
 }
@@ -333,9 +350,17 @@ h2 {
 }
 .btn-small {
   margin-left: 0.5rem !important;
+  border-radius: 12px;
 }
 .movie-image {
   cursor: pointer;
+}
+.card2 {
+  width: 55vw;
+}
+.dropdowns{
+  min-width: 120px !important;
+  margin: 0px !important;
 }
 
 @media only screen and (min-width: 893px) {
@@ -343,10 +368,16 @@ h2 {
     background-color: white;
   }
   .movie-image {
-  cursor: pointer;
-  max-height: 19rem;
-  max-width: 13rem;
-}
+    cursor: pointer;
+    max-height: 19rem;
+    max-width: 13rem;
+  }
+  .movieCard {
+    margin: 3rem;
+  }
+  .movie-description {
+    margin-right: 4rem;
+  }
 }
 
 @media only screen and (min-width: 540px) {
@@ -357,8 +388,8 @@ h2 {
     font-size: 1.5rem !important;
   }
   .movie-genre {
-    font-size: 1rem;
-    line-height: 1.1rem;
+    font-size: 0.8rem;
+    line-height: 1rem;
     margin: 3%;
   }
 }
