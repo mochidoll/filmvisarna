@@ -36,7 +36,7 @@
         @changeNavText="changeNavText"
       ></router-view>
     </div>
-    <div v-else class="valign-wrapper">
+    <div v-else class="valign-wrapper wait-spinner">
       <div class="preloader-wrapper big active">
         <div class="spinner-layer spinner-red-only">
           <div class="circle-clipper left">
@@ -168,7 +168,7 @@ export default {
 </script>
 
 <style>
-.valign-wrapper {
+.wait-spinner {
  height: 60vh;
 justify-content: center;
 }
