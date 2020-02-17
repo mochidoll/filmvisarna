@@ -115,7 +115,6 @@ export default {
         })
         .then(ref => {
           this.bookingObject.id = ref.id;
-          console.log("test " + this.user.bookings);
           if (this.user.uid) {
             this.user.bookings.push(this.bookingObject.id);
 
