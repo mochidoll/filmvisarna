@@ -110,7 +110,6 @@ export default {
   * {
     box-sizing: border-box;
   }
-  
   #app {
     min-height: 100vh;
     background: #ececec;
@@ -120,6 +119,8 @@ export default {
   }
   #main {
     flex: 1 0 auto;
+    background-image: url("./assets/images/movie-background-picture.jpg");
+    background-size: cover;
   }
     
     

@@ -2,7 +2,7 @@
   <div class="container">
     <youtube class="trailer-container" :video-id="movie.videoId"></youtube>
 
-    <div class="movie-info-container row">
+    <div id="transparent" class="movie-info-container row">
       <div class="left col s12 center">
         <h3 class="center">
           {{movie.title}}
@@ -27,28 +27,31 @@
       <div class="col s12 m6 right">
         <span>Genre: {{movie.genre.join(", ")}}</span>
       </div>
-
-      
-      <dropdown
-        :options="dates"
-        class="options"
-        :selected="chosenDate"
-        v-on:updateOption="updateChosenDate"
-        :placeholder="'Select a Date'"
-      ></dropdown>
-
-      <div v-for="time in times" :key="time.id">
-        <div
-          class="col timeButton btn red darken-2"
-          @click="bookMovie(time.screening)"
-        >{{time.time}}</div>
-        <div class="col">{{time.auditorium}} </div>
-      </div>
     </div>
+
+      <div class="row">
+        <dropdown
+          :options="dates"
+          class="options col s4"
+          :selected="chosenDate"
+          v-on:updateOption="updateChosenDate"
+          :placeholder="'Select a Date'"
+        ></dropdown>
+
+        <div v-for="time in times" :key="time.id" class="col s12">
+          <div
+            class=" col s12 timeButton red darken-2"
+            @click="bookMovie(time.screening)"
+          >{{time.time}} | {{ time.auditorium }} - {{ emptyAvailableSeats() }}
+          </div>
+        </div>
+      </div>
+    
   </div>
 </template>
 
 <script>
+import { returnSumOfEmptySeats } from "@/components/utils/logicUtils.js";
 import dropdown from "vue-dropdowns";
 import Vue from "vue";
 import VueYouTubeEmbed from "vue-youtube-embed";
@@ -78,9 +81,14 @@ export default {
     bookMovie(screenId) {
       this.$store.state.bookingObject.screeningId = screenId;
       this.$router.push("/booking/selectTickets/" + screenId);
+    },
+
+    emptyAvailableSeats() {
+      return returnSumOfEmptySeats(this.screeningMovies.bookedSeats);
     }
   },
   computed: {
+
     movie() {
       let movies = this.movies;
       for (let movie of movies) {
@@ -170,6 +178,16 @@ export default {
 * {
   box-sizing: border-box;
 }
+#transparent {
+  background-color: rgba(0,0,0,0.6);
+  color: white;
+}
+.dropdown-toggle{
+  color: white !important;
+}
+.dropdown-toggle:hover{
+  background-color: rgb(51, 50, 50) !important;
+}
 .trailer-container {
   display: block;
   margin: 2rem 0 1rem;
@@ -188,7 +206,7 @@ export default {
 }
 .movie-info-container {
   margin-top: 0 !important;
-}
+  }
 h3 {
   margin: 0rem !important;
   padding-bottom: 2%;
