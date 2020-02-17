@@ -2,16 +2,12 @@
   <div class="container">
     <h5>{{ bookingObject.auditorium.name }}</h5>
     <p>Bokade biljetter: {{ bookingObject.numberOfTickets }} st</p>
-    <div class="center">
-      <img src="@/assets/images/cinema.png" alt="cinema-screen" class="s12"/>
+    <div class="row">
+      <img src="@/assets/images/cinema.png" alt="cinema-screen" class="col s12" />
     </div>
 
     <div class="row seat-wrapper" v-if="auditoriums">
-      <div
-        class="center col s12"
-        v-for="(row, y, id) in bookedSeats"
-        :key="'row' + y + id"
-      >
+      <div class="center col s12" v-for="(row, y, id) in bookedSeats" :key="'row' + y + id">
         <Seat
           v-for="(seat, x, id) in row"
           :key="'seat' + id"
@@ -103,20 +99,25 @@ export default {
       });
     },
     goToConfirmDetails() {
-        if(this.positions.length === this.bookingObject.numberOfTickets){   
-          this.bookingObject.seatPositions = this.positions;
-          this.$router.push({
-            name: "ConfirmDetails",
-            params: { bookingObject: this.bookingObject }
-          });
-        } else {
-          let payload = {component: 2, numberOfTickets: this.bookingObject.numberOfTickets}
-          this.$emit('toggleErrorText', payload)
-        }
+      if (this.positions.length === this.bookingObject.numberOfTickets) {
+        this.bookingObject.seatPositions = this.positions;
+        this.$router.push({
+          name: "ConfirmDetails",
+          params: { bookingObject: this.bookingObject }
+        });
+      } else {
+        let payload = {
+          component: 2,
+          numberOfTickets: this.bookingObject.numberOfTickets
+        };
+        this.$emit("toggleErrorText", payload);
+      }
     },
     goBackToSelectTickets() {
       this.bookingObject.seatPositions = null;
-      this.$router.push({ path: "/booking/selectTickets/" + this.bookingObject.screeningId });
+      this.$router.push({
+        path: "/booking/selectTickets/" + this.bookingObject.screeningId
+      });
     },
     writeSomething() {
       window.console.log("Successin select seats!");
