@@ -31,9 +31,8 @@
     </div>
 
     <div class="movie" v-for="movie in filteredMovies" :key="movie.id">
-
       <!-- medium & small view -->
-      <div class="row valign-wrapper">
+      <div class="row mediumrow valign-wrapper hide-on-large-only">
         <div class="col s3 container" @click="goToMovie(movie)">
           <img class="col s12 responsive-img" :src="movie.image" />
         </div>
@@ -42,8 +41,10 @@
             <strong>{{ movie.title }}</strong>
           </h6>
           <p class="movie-genre">{{movie.genre.join(", ")}} | {{ movie.length }} min</p>
-          <p class="movie-description hide-on-small-only hide-on-large-only">{{ movie.shortDescription }}</p>
-          <p class="movie-description hide-on-med-and-down">{{ movie.description }}</p>
+          <p
+            class="movie-description hide-on-small-only hide-on-large-only"
+          >{{ movie.shortDescription }}</p>
+          <!-- <p class="movie-description hide-on-med-and-down">{{ movie.description }}</p> -->
 
           <div v-for="screen in screeningMovies" :key="screen.id">
             <div class="timeButton col" v-if="screen.movieId == movie">
@@ -60,33 +61,35 @@
       </div>
 
       <!-- large view -->
-      <!-- <div class="row valign-wrapper hide-on-med-and-down">
-          <div class="white valign-wrapper col s10 offset-s1">
-            <div class="col s3 container" @click="goToMovie(movie)">
-              <img class="col s12 responsive-img movie-image" :src="movie.image" />
-            </div>
-            <div class="movieCard2 col s9">
-              <h6 class="flow-text movie-title">
-                <strong>{{ movie.title }}</strong>
-              </h6>
-              <p class="movie-genre">{{movie.genre.join(", ")}} | {{ movie.length }} min</p>
-              <p
-                class="movie-description hide-on-small-only hide-on-large-only"
-              >{{ movie.shortDescription }}</p>
-              <p class="movie-description hide-on-med-and-down">{{ movie.shortDescription }}</p>
+      <div class="row valign-wrapper hide-on-med-and-down">
+        <div class="valign-wrapper col s11 offset-s1">
+          <div class="col s3 container" @click="goToMovie(movie)">
+            <img class="col s12 responsive-img movie-image" :src="movie.image" />
+          </div>
+          <div class="movieCard2 col s9">
+            <h6 class="flow-text movie-title">
+              <strong>{{ movie.title }}</strong>
+            </h6>
+            <p class="movie-genre">{{movie.genre.join(", ")}} | {{ movie.length }} min</p>
+            <p
+              class="movie-description hide-on-small-only hide-on-large-only"
+            >{{ movie.shortDescription }}</p>
+            <p class="movie-description hide-on-med-and-down">{{ movie.description }}</p>
 
-              <div v-for="screen in screeningMovies" :key="screen.id">
-                <div class="timeButton col" v-if="screen.movieId == movie">
-                  <div
-                    class="btn-small red darken-4"
-                    v-if="screen.date.name === chosenDate.name"
-                    @click="bookMovie(screen.screeningId)"
-                  >{{screen.time}}</div>
+            <div v-for="screen in screeningMovies" :key="screen.id">
+              <div class="timeButton col" v-if="screen.movieId == movie">
+                <div
+                  class="btn-small"
+                  v-if="screen.date.name === chosenDate.name"
+                  @click="bookMovie(screen.screeningId)"
+                >
+                  <strong>{{screen.time}}</strong>
                 </div>
               </div>
             </div>
           </div>
-      </div>-->
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -340,7 +343,9 @@ li .dropdown-toggle {
   background-image: none !important;
   background-image: none !important;
 }
-
+.mediumrow {
+  background-color: ;
+}
 @media only screen and (min-width: 893px) {
   .movie-image {
     cursor: pointer;
@@ -351,18 +356,26 @@ li .dropdown-toggle {
     margin: 3rem;
   }
   .movie-description {
-    margin-right: 3rem;
+    margin-right: 1rem;
     line-height: 1.4rem;
   }
-  .movie-genre{
+  .movie-genre {
     font-size: 0.8rem;
   }
-  .btn-small{
+  .btn-small {
     width: 8rem;
   }
 }
 
-@media only screen and (min-width: 540px) {
+@media (max-width: 1100px) {
+  .movie-title {
+    font-size: 1.6rem !important;
+  }
+  .movie-description {
+    font-size: 1rem;
+    margin-right: 1rem;
+    line-height: 1.1rem;
+  }
 }
 
 @media (max-width: 670px) {
