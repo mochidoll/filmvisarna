@@ -52,7 +52,7 @@ export default {
         .catch(error => {error.message="Felaktigt användarnamn eller lösenord.";M.toast({ html: error.message })})
       if (user) {
         
-        this.$router.push("secure");
+        this.$router.replace("secure");
       }
     },
   },

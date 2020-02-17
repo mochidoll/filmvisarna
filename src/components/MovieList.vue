@@ -22,7 +22,6 @@
             :placeholder="chosenGenre.name"
           ></dropdown>
         </div>
-        
       </div>
     </div>
 
@@ -89,9 +88,10 @@
 
 <script>
 import moment from "moment";
-import 'moment/locale/sv'  // without this line it didn't work
-moment.locale('sv')
+import "moment/locale/sv"; // without this line it didn't work
+moment.locale("sv");
 import dropdown from "vue-dropdowns";
+import { filterItemFromList, includeItemsFromList } from "./utils/logicUtils";
 
 export default {
   data() {
@@ -101,7 +101,7 @@ export default {
       chosenDate: {
         name: "Sortera på datum"
       },
-      chosenGenre:{
+      chosenGenre: {
         name: "Alla genres"
       },
     };
@@ -136,11 +136,7 @@ export default {
     filteredMovies() {
       // filter movies where the movieID is
       // in the filtered array of movieIDs
-      return this.movies.filter(movie => {
-        if (this.filteredScreens.includes(movie.id)) {
-          return movie;
-        }
-      });
+      return includeItemsFromList(this.movies, this.filteredScreens);
     },
     filteredScreens() {
       let date = new Date(this.chosenDate.name);
@@ -153,9 +149,7 @@ export default {
       // if we have movies in array called movies we could
       // do it like this
       screens.forEach(screening => {
-        screening.movie = this.movies.filter(movie => {
-          return movie.id === screening.movieId;
-        })[0];
+        screening.movie = filterItemFromList(this.movies, screening.movieId);
       });
 
       // filters array on date
@@ -271,7 +265,7 @@ export default {
       }
     }, 50);
   }
-}
+};
 </script>
 
 <style scoped>
