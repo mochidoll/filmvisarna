@@ -1,7 +1,6 @@
 <template>
   <div>
     <p class="white-text hide">{{movieId.length}}</p>
-
     <section class="select-tickets-wrapper row">
       <div class="col s12 m6 l6 movie-info-wrapper valign-wrapper left-align">
         <div class="col l6 m6 s6 movie-image">
@@ -13,6 +12,14 @@
           <p>Datum: {{ screeningChosen.startTime.toDate().toLocaleDateString() }}</p>
           <p>Tid: {{ screeningChosen.startTime.toDate().getHours() }}:00</p>
           <p>Salong: {{ auditorium.name }}</p>
+          <p
+            v-if="emptyAvailableSeats > 0"
+            :class="{'red-text': emptyAvailableSeats < 5}"
+            class="disable"
+          >{{emptyAvailableSeats}} platser kvar</p>
+          <p v-else class="red-text">
+            <b>Fullbokat</b>
+          </p>
           <p>
             <b>Totalt pris: {{ totalTicketPrice }}:-</b>
           </p>
@@ -30,7 +37,7 @@
               <i class="material-icons">remove</i>
             </a>
             <span class="show-nr-of-tickets">{{ adultTickets }}</span>
-            <a class="btn-floating red btn-small darken-4" @click="addAdultTicket()">
+            <a class="btn-floating red btn-small darken-4" @click="addAdultTicket()" :class="{disabled: numberOfTickets === emptyAvailableSeats}">
               <i class="material-icons">add</i>
             </a>
           </div>
@@ -46,7 +53,7 @@
               <i class="material-icons">remove</i>
             </a>
             <span class="show-nr-of-tickets">{{ childTickets }}</span>
-            <a class="btn-floating red btn-small darken-4" @click="addChildTicket()">
+            <a class="btn-floating red btn-small darken-4" @click="addChildTicket()" :class="{disabled: numberOfTickets === emptyAvailableSeats}">
               <i class="material-icons">add</i>
             </a>
           </div>
@@ -62,7 +69,7 @@
               <i class="material-icons">remove</i>
             </a>
             <span class="show-nr-of-tickets">{{ seniorTickets }}</span>
-            <a class="btn-floating red btn-small darken-4" @click="addSeniorTicket()">
+            <a class="btn-floating red btn-small darken-4" @click="addSeniorTicket()" :class="{disabled: numberOfTickets === emptyAvailableSeats}">
               <i class="material-icons">add</i>
             </a>
           </div>
@@ -76,7 +83,7 @@
         >Avbryt</button>
         <button
           class="col s5 m3 l2 offset-s2 offset-l6 offset-m4 btn waves-effect waves-light red darken-4 white-text"
-          :class="{disabled:numberOfTickets === 0}"
+          :class="{disabled:(numberOfTickets === 0 || numberOfTickets > emptyAvailableSeats)}"
           @click="continueToSelectSeats"
         >Gå vidare</button>
       </div>
@@ -85,6 +92,11 @@
 </template>
 
 <script>
+import {
+  filterItemFromList,
+  returnSumOfEmptySeats
+} from "../utils/logicUtils.js";
+
 export default {
   data() {
     return {
@@ -149,33 +161,29 @@ export default {
     movies() {
       return this.$store.state.movies;
     },
-     movieId() {
-      for (let screening of this.$store.state.screenings) {
-        if (screening.id == this.$route.params.screeningId) {
-          for (let movie of this.movies) {
-            if (movie.id === screening.movieId) {
-              return movie;
-            }
-          }
-        }
-      }
-      return null;
+    movieId() {
+      return filterItemFromList(
+        this.$store.state.screenings,
+        this.$route.params.screeningId
+      );
     },
     screeningChosen() {
-      let screening = this.$store.state.screenings.filter(screening => {
-        return screening.id === this.$route.params.screeningId;
-      })[0];
-      return screening;
+      return filterItemFromList(
+        this.$store.state.screenings,
+        this.$route.params.screeningId
+      );
     },
     auditorium() {
-      return this.$store.state.auditoriums.filter(auditorium => {
-        return auditorium.id === this.screeningChosen.auditoriumId;
-      })[0];
+      return filterItemFromList(
+        this.$store.state.auditoriums,
+        this.screeningChosen.auditoriumId
+      );
     },
     movieChosen() {
-      return this.$store.state.movies.filter(movie => {
-        return movie.id === this.screeningChosen.movieId;
-      })[0];
+      return filterItemFromList(
+        this.$store.state.movies,
+        this.screeningChosen.movieId
+      );
     },
 
     screenings() {
@@ -193,6 +201,9 @@ export default {
         this.childTickets * this.childTicketPrice +
         this.seniorTickets * this.seniorTicketPrice
       );
+    },
+    emptyAvailableSeats() {
+      return returnSumOfEmptySeats(this.screeningChosen.bookedSeats);
     }
   },
   created() {
@@ -236,28 +247,6 @@ export default {
 .select-tickets-wrapper .nav-buttons {
   margin: 2rem 0 1rem !important;
 }
-
-/* @media screen and (max-width: 599px) {
-  .select-tickets-wrapper p {
-    font-size: 0.9rem;
-  }
-  .select-tickets-wrapper .select-tickets {
-    margin-top: 1rem;
-  }
-  .select-tickets-wrapper .type-of-tickets {
-    font-size: 0.9rem;
-  }
-}
-
-
-@media screen and (min-width: 600px) {
-  .select-tickets-wrapper .select-tickets-container {
-    display: block;
-    position: absolute;
-    top: 100px;
-    left: 275px !important;
-  } 
-}*/
 
 @media screen and (min-width: 600px) {
   .select-tickets-wrapper .select-tickets-container {

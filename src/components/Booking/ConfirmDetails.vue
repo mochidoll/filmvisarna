@@ -16,8 +16,13 @@
         <p v-if="bookingObject.adultTickets">Vuxenbiljetter: {{ bookingObject.adultTickets}}</p>
         <p v-if="bookingObject.childTickets">Barnbiljetter: {{ bookingObject.childTickets }}</p>
         <p v-if="bookingObject.seniorTickets">Pensionärsbiljetter: {{bookingObject.seniorTickets }}</p>
-        <p v-for="(seat, id) in bookingObject.seatPositions" :key="id">Parkett: rad {{ seat.y + 1 }}, plats {{ seat.x}}</p>
-        <p><b>Totalt pris: {{ bookingObject.totalTicketPrice}} kr</b></p>
+        <p
+          v-for="(seat, id) in bookingObject.seatPositions"
+          :key="id"
+        >Parkett: rad {{ seat.y + 1 }}, plats {{ seat.x}}</p>
+        <p>
+          <b>Totalt pris: {{ bookingObject.totalTicketPrice}} kr</b>
+        </p>
       </div>
 
       <div v-if="!user.uid" class="extra-info col s12">
@@ -39,7 +44,7 @@
       >Tillbaka</button>
       <button
         :class="{disabled: !enableContinueButton}"
-        @click="confirmBooking"
+        @click="confirmBooking(); updateBookedSeats()"
         class="btn waves-effect waves-light red darken-4 col s3 offset-s4"
       >Bekräfta</button>
     </div>
@@ -57,6 +62,12 @@ export default {
       onAuthStateChangedUnsubscribe: null
     };
   },
+  props: {
+    bookingObject: {
+      type: Object,
+      required: true
+    }
+  },
 
   computed: {
     validEmail() {
@@ -64,20 +75,15 @@ export default {
       return re.test(this.emailInput);
     },
     enableContinueButton() {
-      return this.validEmail || this.user;
+      return this.validEmail || this.user.uid;
     },
     bookingUser() {
-      for (let user of this.$store.state.users) {
+      this.$store.state.users.forEach( user => {
         if (auth.currentUser.uid === user.id) {
           return user;
         }
-      }
-      return null
-    }},
-  props: {
-    bookingObject: {
-      type: Object,
-      required: true
+      });
+      return null;
     }
   },
 
@@ -90,7 +96,8 @@ export default {
     },
 
     confirmBooking() {
-      if (this.user.uid) {
+      if(this.enableContinueButton) {
+        if (this.user.uid) {
         this.bookingObject.email = this.user.email;
       } else {
         this.bookingObject.email = this.emailInput;
@@ -108,7 +115,6 @@ export default {
         })
         .then(ref => {
           this.bookingObject.id = ref.id;
-          console.log('test ' + this.user.bookings)
           if (this.user.uid) {
             this.user.bookings.push(this.bookingObject.id);
 
@@ -117,9 +123,8 @@ export default {
               .update({
                 bookings: this.user.bookings
               });
-              
 
-            this.bookingUser.bookings.push(this.bookingObject.id)
+            this.bookingUser.bookings.push(this.bookingObject.id);
 
             this.$store.commit("setBookings", this.user.bookings);
           }
@@ -127,30 +132,47 @@ export default {
             name: "BookingComplete",
             params: { bookingObject: this.bookingObject }
           });
+        })
+        } else {
+          let payload = { component: 3 };
+          this.$emit("toggleErrorText", payload);
+        }
+    },
+    updateBookedSeats() {
+      //updates the nestled array in the screening on Firebase
+      // with the seats that were just booked
+      let tempSeats = this.bookingObject.screening.bookedSeats;
+      this.bookingObject.seatPositions.forEach(seat => {
+        tempSeats[seat.y][seat.x] = true;
+      });
+      db.collection("screenings")
+        .doc(this.bookingObject.screeningId)
+        .update({
+          bookedSeats: tempSeats
         });
-    }},
-
+    }
+  },
   created() {
     this.onAuthStateChangedUnsubscribe = auth.onAuthStateChanged(async user => {
       if (user != null) {
         let doc = await db.collection("users").doc(user.uid);
 
-      doc = await doc.get();
+        doc = await doc.get();
         let tempUser = {};
         Object.assign(tempUser, doc.data(), user);
         this.user = tempUser;
-
       } else {
         this.user = {};
       }
-    })
- this.$emit('changeNavText', this.$store.state.navTexts[3]);
+    });
+    this.$emit("changeNavText", this.$store.state.navTexts[3]);
   },
   beforeDestroy() {
     this.onAuthStateChangedUnsubscribe();
   }
-}
+};
 </script>
+
 <style>
 .confirm-booking .inner-container {
   border: 2px solid rgba(0, 0, 0, 0.2);
