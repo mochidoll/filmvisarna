@@ -2,20 +2,17 @@
   <div class="container">
     <h5>{{ bookingObject.auditorium.name }}</h5>
     <p>Bokade biljetter: {{ bookingObject.numberOfTickets }} st</p>
-    <div class="center">
-      <img src="@/assets/images/cinema.png" alt="cinema-screen" />
+    <div class="row">
+      <img src="@/assets/images/cinema.png" alt="cinema-screen" class="col s12" />
     </div>
 
     <div class="row seat-wrapper" v-if="auditoriums">
-      <div
-        class="center col s12"
-        v-for="(row, y, id) in bookingObject.auditorium.seatsPerRow"
-        :key="'row' + y + id"
-      >
+      <div class="center col s12" v-for="(row, y, id) in bookedSeats" :key="'row' + y + id">
         <Seat
-          v-for="(seat, id) in row"
+          v-for="(seat, x, id) in row"
           :key="'seat' + id"
-          :position="{x: seat, y: y}"
+          :position="{x: x, y: y}"
+          :bookedSeat="seat"
           :disableSeat="hasAllSeatsSelected"
           @addToCurrentTicket="addToCurrentTicket"
           @removeFromCurrentTicket="removeFromCurrentTicket"
@@ -58,6 +55,7 @@
 
 <script>
 import Seat from "@/components/Booking/Seat";
+//import { db } from "@/firebase/firebase";
 export default {
   components: {
     Seat
@@ -101,19 +99,25 @@ export default {
       });
     },
     goToConfirmDetails() {
-        if(this.positions.length === this.bookingObject.numberOfTickets){   
-          this.bookingObject.seatPositions = this.positions;
-          this.$router.push({
-            name: "ConfirmDetails",
-            params: { bookingObject: this.bookingObject }
-          });
-        } else {
-          alert('Du måste välja ' + this.bookingObject.numberOfTickets + ' biljett(er) för att gå vidare.')
-        }
+      if (this.positions.length === this.bookingObject.numberOfTickets) {
+        this.bookingObject.seatPositions = this.positions;
+        this.$router.push({
+          name: "ConfirmDetails",
+          params: { bookingObject: this.bookingObject }
+        });
+      } else {
+        let payload = {
+          component: 2,
+          numberOfTickets: this.bookingObject.numberOfTickets
+        };
+        this.$emit("toggleErrorText", payload);
+      }
     },
     goBackToSelectTickets() {
       this.bookingObject.seatPositions = null;
-      this.$router.push({ name: "SelectTickets" });
+      this.$router.push({
+        path: "/booking/selectTickets/" + this.bookingObject.screeningId
+      });
     },
     writeSomething() {
       window.console.log("Successin select seats!");
@@ -131,6 +135,9 @@ export default {
     },
     auditoriums() {
       return this.$store.state.auditoriums;
+    },
+    bookedSeats() {
+      return this.bookingObject.screening.bookedSeats;
     }
   },
 

@@ -1,10 +1,9 @@
 <template>
   <div class="container confirm-booking center">
-
     <div class="row inner-container">
-      <!-- <h4 class="center col s12">Kontrollera din bokning..</h4> -->
+      <h4 class="center col s12">Kontrollera din bokning.</h4>
 
-      <div class="col l6 m6 s12 image-container   ">
+      <div class="col l6 m6 s12 image-container">
         <img :src="bookingObject.movie.image" alt class="responsive-img" />
       </div>
 
@@ -17,50 +16,70 @@
         <p v-if="bookingObject.adultTickets">Vuxenbiljetter: {{ bookingObject.adultTickets}}</p>
         <p v-if="bookingObject.childTickets">Barnbiljetter: {{ bookingObject.childTickets }}</p>
         <p v-if="bookingObject.seniorTickets">Pensionärsbiljetter: {{bookingObject.seniorTickets }}</p>
-        <p v-for="(seat, id) in bookingObject.seatPositions" :key="id">Parkett: rad {{ seat.y + 1 }}, plats {{ seat.x}}</p>
+        <p
+          v-for="(seat, id) in bookingObject.seatPositions"
+          :key="id"
+        >Parkett: rad {{ seat.y + 1 }}, plats {{ seat.x}}</p>
+        <p>
+          <b>Totalt pris: {{ bookingObject.totalTicketPrice}} kr</b>
+        </p>
       </div>
 
-        <div class=" extra-info col s12">
-        
-          <p class="span">Ange din email för att slutföra bokningen.</p>
+      <div v-if="!user.uid" class="extra-info col s12">
+        <p class="span">Ange din email för att slutföra bokningen.</p>
 
-          <div class="input-field col m7 offset-m2">
-            <i class="material-icons prefix">email</i>
-            <input v-model="emailInput" id="icon_prefix" class="" type="email">
-            <label for="icon_prefix">Email</label>
-            <span class="helper-text" data-error="Felaktig email, var god skriv in igen."></span>
-          </div>
-
+        <div class="input-field col m7 offset-m2">
+          <i class="material-icons prefix">email</i>
+          <input v-model="emailInput" id="icon_prefix" class type="email" />
+          <label for="icon_prefix">Email</label>
+          <span class="helper-text" data-error="Felaktig email, var god skriv in igen."></span>
         </div>
-
+      </div>
     </div>
 
     <div class="nav-buttons col s12">
-      <button @click="backToSelectSeats" class="btn waves-effect waves-light red darken-4 col s3 offset-s1">Tillbaka</button>
-      <button :class="{disabled: !validEmail }" @click="confirmBooking" class="btn waves-effect waves-light red darken-4 col s3 offset-s4">Bekräfta</button>
+      <button
+        @click="backToSelectSeats"
+        class="btn waves-effect waves-light red darken-4 col s3 offset-s1"
+      >Tillbaka</button>
+      <button
+        :class="{disabled: !enableContinueButton}"
+        @click="confirmBooking(); updateBookedSeats()"
+        class="btn waves-effect waves-light red darken-4 col s3 offset-s4"
+      >Bekräfta</button>
     </div>
-
   </div>
 </template>
 
 <script>
-import { db } from "@/firebase/firebase"
+import { db, auth } from "@/firebase/firebase";
 
 export default {
-
   data() {
     return {
-      emailInput: null
-    }
+      emailInput: null,
+      user: {},
+      onAuthStateChangedUnsubscribe: null
+    };
   },
 
   computed: {
     validEmail() {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(this.emailInput);
+    },
+    enableContinueButton() {
+      return this.validEmail || this.user.uid;
+    },
+    bookingUser() {
+      for (let user of this.$store.state.users) {
+        if (auth.currentUser.uid === user.id) {
+          return user;
+        }
+      }
+      return null;
     }
   },
-
   props: {
     bookingObject: {
       type: Object,
@@ -77,9 +96,14 @@ export default {
     },
 
     confirmBooking() {
-      if(this.validEmail){ 
-        this.bookingObject.email = this.emailInput
-        db.collection("bookings").add({
+      if(this.enableContinueButton) {
+        if (this.user.uid) {
+        this.bookingObject.email = this.user.email;
+      } else {
+        this.bookingObject.email = this.emailInput;
+      }
+      db.collection("bookings")
+        .add({
           adultTickets: this.bookingObject.adultTickets,
           childTickets: this.bookingObject.childTickets,
           seniorTickets: this.bookingObject.seniorTickets,
@@ -88,22 +112,67 @@ export default {
           email: this.bookingObject.email,
           seats: this.bookingObject.seatPositions,
           timeStamp: new Date()
-        }).then( ref => {
-          this.bookingObject.id = ref.id
-          this.$router.push({name: 'BookingComplete', params: {bookingObject: this.bookingObject}})
         })
-      } else {
-        alert('Du måste skriva in en giltig emailadress för att gå vidare.')
-      }
+        .then(ref => {
+          this.bookingObject.id = ref.id;
+          if (this.user.uid) {
+            this.user.bookings.push(this.bookingObject.id);
+
+            db.collection("users")
+              .doc(this.user.uid)
+              .update({
+                bookings: this.user.bookings
+              });
+
+            this.bookingUser.bookings.push(this.bookingObject.id);
+
+            this.$store.commit("setBookings", this.user.bookings);
+          }
+          this.$router.push({
+            name: "BookingComplete",
+            params: { bookingObject: this.bookingObject }
+          });
+        })
+        } else {
+          let payload = { component: 3 };
+          this.$emit("toggleErrorText", payload);
+        }
+    },
+    updateBookedSeats() {
+      //updates the nestled array in the screening on Firebase
+      // with the seats that were just booked
+      let tempSeats = this.bookingObject.screening.bookedSeats;
+      this.bookingObject.seatPositions.forEach(seat => {
+        tempSeats[seat.y][seat.x] = true;
+      });
+      db.collection("screenings")
+        .doc(this.bookingObject.screeningId)
+        .update({
+          bookedSeats: tempSeats
+        });
     }
   },
-
   created() {
-    this.$emit('changeNavText', this.$store.state.navTexts[3])
-  }
+    this.onAuthStateChangedUnsubscribe = auth.onAuthStateChanged(async user => {
+      if (user != null) {
+        let doc = await db.collection("users").doc(user.uid);
 
+        doc = await doc.get();
+        let tempUser = {};
+        Object.assign(tempUser, doc.data(), user);
+        this.user = tempUser;
+      } else {
+        this.user = {};
+      }
+    });
+    this.$emit("changeNavText", this.$store.state.navTexts[3]);
+  },
+  beforeDestroy() {
+    this.onAuthStateChangedUnsubscribe();
+  }
 };
 </script>
+
 <style>
 .confirm-booking .inner-container {
   border: 2px solid rgba(0, 0, 0, 0.2);
@@ -113,7 +182,6 @@ export default {
 }
 .confirm-booking h4 {
   margin: 1rem 0 1.5rem !important;
-  /* margin-top: 2rem !important; */
 }
 .confirm-booking .text-container p {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);

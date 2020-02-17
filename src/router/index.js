@@ -6,11 +6,13 @@ import Contact from '@/components/Contact'
 import Login from '@/components/Login'
 import Movie from '@/components/Movie'
 import CreateScreenings from '@/components/CreateScreenings'
+import Secure from '@/components/Secure'
 import Booking from '@/components/Booking/Booking'
 import SelectTickets from '@/components/Booking/SelectTickets'
 import SelectSeats from '@/components/Booking/SelectSeats'
 import ConfirmDetails from '@/components/Booking/ConfirmDetails'
 import BookingComplete from '@/components/Booking/BookingComplete'
+import Register from '@/components/Register'
 
 
 Vue.use(VueRouter)
@@ -19,11 +21,13 @@ const routes = [
   {
     path: '/',
     name: 'Home',
+    props: true,
     component: Home
   },
   {
     path: '/allMovies',
     name: 'allMovies',
+    props: true,
     component: AllMovies
   },
   {
@@ -37,8 +41,15 @@ const routes = [
     component: Login
   },
   {
-    path: '/allMovies/:movie',
+    path: '/register',
+    name: 'register',
+    component: Register
+  }
+  ,
+  {
+    path: '/allMovies/:movieTitle',
     name: 'movie',
+    props: true,
     component: Movie
   },
   {
@@ -47,12 +58,18 @@ const routes = [
     component: CreateScreenings
   },
   {
+    path: '/secure',
+    name: 'secure',
+    component: Secure
+  },
+
+  {
     path: '/booking',
     name: 'booking',
     component: Booking,
     children: [
       {
-        path: 'selectTickets',
+        path: 'selectTickets/:screeningId',
         name: 'SelectTickets',
         component: SelectTickets
       },
