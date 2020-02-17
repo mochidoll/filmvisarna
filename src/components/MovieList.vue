@@ -103,7 +103,7 @@ export default {
       },
       chosenGenre:{
         name: "Alla genres"
-      }
+      },
     };
   },
   components: {
@@ -236,11 +236,23 @@ export default {
       this.chosenGenre.name = genre.name;
     },
     goToMovie(movie) {
-      this.$router.push("/allMovies/" + movie.title);
+      console.log(this.chosenDate)
+      this.$router.push({
+        name: 'movie',
+        params: {
+          movieTitle: movie.title,
+          filteredChosenDate: this.chosenDate.name
+        }
+      });
+      // this.$router.push({ params: {filteredChosenDate: this.chosenDate.name}, name: 'movie' });
+      // this.$router.push({ params: {filteredChosenDate: this.chosenDate.name}, name: 'movie' });
+      
     },
     bookMovie(screenId){
-      this.$store.state.bookingObject.screeningId = screenId
-      this.$router.push({path: '/booking/selectTickets'})
+      this.$store.state.bookingObject.screeningId = screenId;
+      this.$router.push(
+        "/booking/selectTickets/" + screenId
+      );
     }
   },
   mounted() {

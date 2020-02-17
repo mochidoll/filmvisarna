@@ -1,9 +1,8 @@
 <template>
   <div class="container">
+    <youtube class="trailer-container" :video-id="movie.videoId"></youtube>
 
-      <youtube class="trailer-container" :video-id="movie.videoId"></youtube>
-
-    <div class=" movie-info-container row">
+    <div class="movie-info-container row">
       <div class="left col s12 center">
         <h3 class="center">
           {{movie.title}}
@@ -29,6 +28,7 @@
         <span>Genre: {{movie.genre.join(", ")}}</span>
       </div>
 
+      
       <dropdown
         :options="dates"
         class="options"
@@ -42,7 +42,7 @@
           class="col timeButton btn red darken-2"
           @click="bookMovie(time.screening)"
         >{{time.time}}</div>
-        <div class="col">{{time.auditorium}}</div>
+        <div class="col">{{time.auditorium}} </div>
       </div>
     </div>
   </div>
@@ -50,25 +50,23 @@
 
 <script>
 import dropdown from "vue-dropdowns";
-import Vue from 'vue'
-import VueYouTubeEmbed from 'vue-youtube-embed' 
-Vue.use(VueYouTubeEmbed)
+import Vue from "vue";
+import VueYouTubeEmbed from "vue-youtube-embed";
+Vue.use(VueYouTubeEmbed);
 
 export default {
+  props: ['movieTitle', 'filteredChosenDate'],
   data() {
     return {
-      chosenDate: {
-        name: "Välj Datum"
-      },
       chosenTime: {
         name: "Välj Tid"
-      }
+      },
+      dataChosenDate: ''
     };
   },
   components: {
     dropdown: dropdown
   },
-  
 
   methods: {
     updateChosenDate(date) {
@@ -79,16 +77,14 @@ export default {
     },
     bookMovie(screenId) {
       this.$store.state.bookingObject.screeningId = screenId;
-      this.$router.push(
-        "/booking/selectTickets/" + screenId
-      );
+      this.$router.push("/booking/selectTickets/" + screenId);
     }
   },
   computed: {
     movie() {
       let movies = this.movies;
       for (let movie of movies) {
-        if (movie.title == this.$route.params.movie) return movie;
+        if (movie.title == this.movieTitle) return movie;
       }
       return null;
     },
@@ -147,8 +143,26 @@ export default {
         a.time > b.time ? 1 : b.time > a.time ? -1 : 0
       );
       return timeSorted;
+    },
+    chosenDate: {
+
+      get() {
+        if(this.dataChosenDate){
+          return { name: this.dataChosenDate }
+        } else {
+          return { name: 'Välj Datum' }
+        }
+      },
+      set(newVal) {
+        this.dataChosenDate = newVal.name
+      }
+
     }
+  },
+  created() {
+    this.dataChosenDate = this.filteredChosenDate
   }
+  
 };
 </script>
 
@@ -156,21 +170,23 @@ export default {
 * {
   box-sizing: border-box;
 }
-.trailer-container{
+.trailer-container {
   display: block;
   margin: 2rem 0 1rem;
   padding-bottom: 56.25%;
-  padding-top: 30px; height: 0; overflow: hidden;
+  padding-top: 30px;
+  height: 0;
+  overflow: hidden;
   position: relative;
 }
-.trailer-container iframe{
+.trailer-container iframe {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
 }
-.movie-info-container{
+.movie-info-container {
   margin-top: 0 !important;
 }
 h3 {
@@ -189,7 +205,6 @@ h4 {
 
 .image img {
   width: 100%;
-  padding-right: 10% !important;
 }
 .dropdown-menu {
   height: 200px !important;
