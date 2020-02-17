@@ -15,14 +15,15 @@
             :placeholder="chosenDate.name"
           ></dropdown>
         </div>
-        <div class="col s12 m6">
-          <div class="genre-selector">
-            <select name="genre" id="choose-genre" v-model="selectedGenre">
-              <option value selected disabled hidden>Genre</option>
-              <option v-for="(genre, id) in genres" :key="id">{{ genre }}</option>
-            </select>
-          </div>
+        <div class="col">
+          <dropdown
+            :options="genres"
+            :selected="chosenGenre.name"
+            v-on:updateOption="updateChosenGenre"
+            :placeholder="chosenGenre.name"
+          ></dropdown>
         </div>
+        
       </div>
     </div>
 
@@ -32,7 +33,7 @@
           <div class="card white small-movie-margin">
             <div class="col s12">
               <div class="card-img">
-                <img class="responive-img mobile-img" :src="movie.image" />
+                <img @click="goToMovie(movie)" class="responive-img mobile-img" :src="movie.image" />
               </div>
             </div>
             <div class="card-stacked">
@@ -42,7 +43,7 @@
                 </div>
                 <div class="col s12">
                   <div>
-                    <span>{{ movie.genre.toString() }} | {{ movie.length }} min</span>
+                    <span>{{movie.genre.join(", ")}} | {{ movie.length }} min</span>
                   </div>
                 </div>
                 <div class="col s12">
@@ -53,9 +54,10 @@
                   <div v-for="screen in screeningMovies" :key="screen.id">
                     <div v-if="screen.movieId == movie">
                       <div
-                        class="btn red darken-4"
+                        class="btn col red darken-4 s12 z-depth-0.5"
+                        @click="bookMovie(screen.screeningId)"
                         v-if="screen.date.name === chosenDate.name"
-                      >Boka - {{screen.time}}</div>
+                      >Boka Tid - {{screen.time}}</div>
                     </div>
                   </div>
                 </div>
@@ -98,6 +100,8 @@
 
 <script>
 import moment from "moment";
+import 'moment/locale/sv'  // without this line it didn't work
+moment.locale('sv')
 import dropdown from "vue-dropdowns";
 
 export default {
@@ -106,9 +110,11 @@ export default {
       selectedDate: "",
       movieTime: "",
       chosenDate: {
-        name: "Sort by Day"
+        name: "Sortera på datum"
       },
-      selectedGenre: "All genres"
+      chosenGenre:{
+        name: "Alla genres"
+      }
     };
   },
   components: {
@@ -119,13 +125,14 @@ export default {
       return moment().format("dddd");
     },
     dateToday() {
-      return moment().format("MMM Do YY");
+      return moment().format("ll");
     },
     movies() {
       return this.$store.state.movies;
     },
     genres() {
       let genres = [];
+      let genresName = [];
       // Add genres from each movie to the genres array
       for (let movie of this.movies) {
         genres = [...genres, ...movie.genre];
@@ -133,33 +140,16 @@ export default {
       // Remove duplicates from genres array
       genres = [...new Set(genres)];
       // Sort alphanumeric
-      genres.sort();
-      // Add All genres at the top
-      genres.unshift("All genres");
-      return genres;
+      genres.sort().forEach(genre => genresName.push({name:genre}))
+      // window.console.log(genresName)
+      genresName.unshift({name:"Alla genres"});
+      return genresName;
     },
-    /* dates() {
-      let screenings = [];
-      for (let screening of this.$store.state.screenings) {
-        screenings.push(
-          screening.startTime.toDate().toLocaleDateString("sv-SV", {
-            year: "numeric",
-            month: "numeric",
-            day: "numeric"
-            // weekday: "long"
-          })
-        );
-      }
-      screenings = [...new Set(screenings)];
-      screenings.sort();
-      return screenings;
-    }, */
     filteredMovies() {
       // filter movies where the movieID is
       // in the filtered array of movieIDs
       return this.movies.filter(movie => {
         if (this.filteredScreens.includes(movie.id)) {
-          window.console.log(movie);
           return movie;
         }
       });
@@ -188,8 +178,8 @@ export default {
             sDate.getMonth() === month &&
             sDate.getDate() === day) ||
             !year) &&
-          (this.selectedGenre === "All genres" ||
-            screen.movie.genre.includes(this.selectedGenre))
+          (this.chosenGenre.name === "Alla genres" ||
+            screen.movie.genre.includes(this.chosenGenre.name))
         ) {
           return screen;
         }
@@ -204,10 +194,10 @@ export default {
           if (movie.id == screening.movieId) {
             this.$store.state.auditoriums.forEach(item => {
               if (screening.auditoriumId == item.id) {
-                window.console.log(item.id);
                 screenings.push({
                   movieId: movie,
                   name: movie.title,
+                  screeningId: screening.id,
                   date: {
                     name: screening.startTime
                       .toDate()
@@ -253,8 +243,15 @@ export default {
     updateChosenDate(date) {
       this.chosenDate.name = date.name;
     },
+    updateChosenGenre(genre) {
+      this.chosenGenre.name = genre.name;
+    },
     goToMovie(movie) {
       this.$router.push("/allMovies/" + movie.title);
+    },
+    bookMovie(screenId){
+      this.$store.state.bookingObject.screeningId = screenId
+      this.$router.push({path: '/booking/selectTickets'})
     }
   },
   mounted() {
@@ -275,7 +272,7 @@ export default {
       }
     }, 50);
   }
-};
+}
 </script>
 
 <style scoped>
@@ -316,6 +313,9 @@ export default {
 }
 .movie .movie-title {
   font-weight: bold;
+}
+.movie {
+  cursor: pointer;
 }
 .mobile {
   margin: 1% !important;
