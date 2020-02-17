@@ -38,7 +38,7 @@
               <i class="material-icons">remove</i>
             </a>
             <span class="show-nr-of-tickets">{{ adultTickets }}</span>
-            <a class="btn-floating red btn-small darken-4" @click="addAdultTicket()">
+            <a class="btn-floating red btn-small darken-4" @click="addAdultTicket()" :class="{disabled: numberOfTickets === emptyAvailableSeats}">
               <i class="material-icons">add</i>
             </a>
           </div>
@@ -54,7 +54,7 @@
               <i class="material-icons">remove</i>
             </a>
             <span class="show-nr-of-tickets">{{ childTickets }}</span>
-            <a class="btn-floating red btn-small darken-4" @click="addChildTicket()">
+            <a class="btn-floating red btn-small darken-4" @click="addChildTicket()" :class="{disabled: numberOfTickets === emptyAvailableSeats}">
               <i class="material-icons">add</i>
             </a>
           </div>
@@ -70,7 +70,7 @@
               <i class="material-icons">remove</i>
             </a>
             <span class="show-nr-of-tickets">{{ seniorTickets }}</span>
-            <a class="btn-floating red btn-small darken-4" @click="addSeniorTicket()">
+            <a class="btn-floating red btn-small darken-4" @click="addSeniorTicket()" :class="{disabled: numberOfTickets === emptyAvailableSeats}">
               <i class="material-icons">add</i>
             </a>
           </div>
