@@ -93,7 +93,7 @@
 </template>
 
 <script>
-import { returnSumOfEmptySeats } from "../../utils/logicUtils.js";
+import { returnSumOfEmptySeats } from "../utils/logicUtils.js";
 
 export default {
   data() {
