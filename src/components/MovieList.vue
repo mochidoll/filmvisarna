@@ -22,7 +22,6 @@
             :placeholder="chosenGenre.name"
           ></dropdown>
         </div>
-        
       </div>
     </div>
 
@@ -89,9 +88,10 @@
 
 <script>
 import moment from "moment";
-import 'moment/locale/sv'  // without this line it didn't work
-moment.locale('sv')
+import "moment/locale/sv"; // without this line it didn't work
+moment.locale("sv");
 import dropdown from "vue-dropdowns";
+import { filterItemFromList, includeItemsFromList } from "./utils/logicUtils";
 
 export default {
   data() {
@@ -101,9 +101,9 @@ export default {
       chosenDate: {
         name: "Sortera på datum"
       },
-      chosenGenre:{
+      chosenGenre: {
         name: "Alla genres"
-      }
+      },
     };
   },
   components: {
@@ -130,18 +130,13 @@ export default {
       genres = [...new Set(genres)];
       // Sort alphanumeric
       genres.sort().forEach(genre => genresName.push({name:genre}))
-      // window.console.log(genresName)
       genresName.unshift({name:"Alla genres"});
       return genresName;
     },
     filteredMovies() {
       // filter movies where the movieID is
       // in the filtered array of movieIDs
-      return this.movies.filter(movie => {
-        if (this.filteredScreens.includes(movie.id)) {
-          return movie;
-        }
-      });
+      return includeItemsFromList(this.movies, this.filteredScreens);
     },
     filteredScreens() {
       let date = new Date(this.chosenDate.name);
@@ -154,9 +149,7 @@ export default {
       // if we have movies in array called movies we could
       // do it like this
       screens.forEach(screening => {
-        screening.movie = this.movies.filter(movie => {
-          return movie.id === screening.movieId;
-        })[0];
+        screening.movie = filterItemFromList(this.movies, screening.movieId);
       });
 
       // filters array on date
@@ -236,11 +229,22 @@ export default {
       this.chosenGenre.name = genre.name;
     },
     goToMovie(movie) {
-      this.$router.push("/allMovies/" + movie.title);
+      this.$router.push({
+        name: 'movie',
+        params: {
+          movieTitle: movie.title,
+          filteredChosenDate: this.chosenDate.name
+        }
+      });
+      // this.$router.push({ params: {filteredChosenDate: this.chosenDate.name}, name: 'movie' });
+      // this.$router.push({ params: {filteredChosenDate: this.chosenDate.name}, name: 'movie' });
+      
     },
     bookMovie(screenId){
-      this.$store.state.bookingObject.screeningId = screenId
-      this.$router.push({path: '/booking/selectTickets'})
+      this.$store.state.bookingObject.screeningId = screenId;
+      this.$router.push(
+        "/booking/selectTickets/" + screenId
+      );
     }
   },
   mounted() {
@@ -261,7 +265,7 @@ export default {
       }
     }, 50);
   }
-}
+};
 </script>
 
 <style scoped>
