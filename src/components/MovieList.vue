@@ -2,8 +2,10 @@
   <div class="movie-list">
     <!-- <div class="date">
       <p>Today's date: ({{ dayToday }}, {{ dateToday }})</p>
-    </div> -->
-    <h2 class="center"><strong>VISAS NU</strong></h2>
+    </div>-->
+    <h2 class="center">
+      <strong>VISAS NU</strong>
+    </h2>
 
     <div class="filters">
       <div class="row">
@@ -23,11 +25,10 @@
             :placeholder="chosenGenre.name"
           ></dropdown>
         </div>
-        
       </div>
     </div>
 
-<!--     <div class="hide-on-med-and-up">
+    <!--     <div class="hide-on-med-and-up">
       <div class="movie" v-for="movie in filteredMovies" :key="movie.id">
         <div class="row center">
           <div class="card white small-movie-margin">
@@ -66,11 +67,11 @@
           </div>
         </div>
       </div>
-    </div> -->
+    </div>-->
 
-    <div class="">
+    <div class>
       <div class="movie" v-for="movie in filteredMovies" :key="movie.id">
-        <div class="row white">
+        <div class="row white valign-wrapper container">
           <div class="col s3 container" @click="goToMovie(movie)">
             <img class="col s12 responsive-img movie-image" :src="movie.image" />
           </div>
@@ -80,7 +81,9 @@
               <strong>{{ movie.title }}</strong>
             </h6>
             <p class="movie-genre">{{movie.genre.join(", ")}} | {{ movie.length }} min</p>
-            <p class="movie-description hide-on-small-only hide-on-large-only">{{ movie.shortDescription }}</p>
+            <p
+              class="movie-description hide-on-small-only hide-on-large-only"
+            >{{ movie.shortDescription }}</p>
             <p class="movie-description hide-on-med-and-down">{{ movie.shortDescription }}</p>
 
             <div v-for="screen in screeningMovies" :key="screen.id">
@@ -88,6 +91,7 @@
                 <div
                   class="btn-small red darken-4"
                   v-if="screen.date.name === chosenDate.name"
+                  @click="bookMovie(screen.screeningId)"
                 >{{screen.time}}</div>
               </div>
             </div>
@@ -100,8 +104,8 @@
 
 <script>
 import moment from "moment";
-import 'moment/locale/sv'  // without this line it didn't work
-moment.locale('sv')
+import "moment/locale/sv"; // without this line it didn't work
+moment.locale("sv");
 import dropdown from "vue-dropdowns";
 
 export default {
@@ -112,7 +116,7 @@ export default {
       chosenDate: {
         name: "Sortera på datum"
       },
-      chosenGenre:{
+      chosenGenre: {
         name: "Alla genres"
       }
     };
@@ -140,9 +144,9 @@ export default {
       // Remove duplicates from genres array
       genres = [...new Set(genres)];
       // Sort alphanumeric
-      genres.sort().forEach(genre => genresName.push({name:genre}))
+      genres.sort().forEach(genre => genresName.push({ name: genre }));
       // window.console.log(genresName)
-      genresName.unshift({name:"Alla genres"});
+      genresName.unshift({ name: "Alla genres" });
       return genresName;
     },
     filteredMovies() {
@@ -249,9 +253,9 @@ export default {
     goToMovie(movie) {
       this.$router.push("/allMovies/" + movie.title);
     },
-    bookMovie(screenId){
-      this.$store.state.bookingObject.screeningId = screenId
-      this.$router.push({path: '/booking/selectTickets'})
+    bookMovie(screenId) {
+      this.$store.state.bookingObject.screeningId = screenId;
+      this.$router.push({ path: "/booking/selectTickets/" + screenId});
     }
   },
   mounted() {
@@ -272,7 +276,7 @@ export default {
       }
     }, 50);
   }
-}
+};
 </script>
 
 <style scoped>
@@ -311,26 +315,26 @@ h2 {
 }
 .row {
   width: 100%;
-  margin: 0.2rem;
+  margin: 0.8rem;
   border-radius: 15px;
 }
 .movieCard {
   width: 100%;
   padding-left: 5% !important;
 }
-.movie-description{
+.movie-description {
   margin: 2%;
 }
-.movie-title{
+.movie-title {
   margin: 2%;
 }
-.movie-genre{
-  margin:2%;
+.movie-genre {
+  margin: 2%;
 }
-.btn-small{
+.btn-small {
   margin-left: 0.5rem !important;
 }
-.movie-image{
+.movie-image {
   cursor: pointer;
 }
 
@@ -338,21 +342,24 @@ h2 {
   .white-bg {
     background-color: white;
   }
+  .movie-image {
+  cursor: pointer;
+  max-height: 19rem;
+  max-width: 13rem;
+}
 }
 
 @media only screen and (min-width: 540px) {
-
 }
 
 @media only screen and (max-width: 540px) {
   .movie-title {
     font-size: 1.5rem !important;
   }
-  .movie-genre{
+  .movie-genre {
     font-size: 1rem;
     line-height: 1.1rem;
     margin: 3%;
   }
 }
-
 </style>

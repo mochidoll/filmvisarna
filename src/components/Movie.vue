@@ -80,7 +80,7 @@ export default {
     bookMovie(screenId) {
       this.$store.state.bookingObject.screeningId = screenId;
       this.$router.push({
-        path: "/booking/selectTickets"
+        path: "/booking/selectTickets/" + screenId
       });
     }
   },
