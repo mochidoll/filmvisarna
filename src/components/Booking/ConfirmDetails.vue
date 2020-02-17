@@ -96,7 +96,8 @@ export default {
     },
 
     confirmBooking() {
-      if (this.user.uid) {
+      if(this.enableContinueButton) {
+        if (this.user.uid) {
         this.bookingObject.email = this.user.email;
       } else {
         this.bookingObject.email = this.emailInput;
@@ -132,7 +133,11 @@ export default {
             name: "BookingComplete",
             params: { bookingObject: this.bookingObject }
           });
-        });
+        })
+        } else {
+          let payload = { component: 3 };
+          this.$emit("toggleErrorText", payload);
+        }
     },
     updateBookedSeats() {
       //updates the nestled array in the screening on Firebase
