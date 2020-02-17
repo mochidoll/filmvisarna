@@ -1,8 +1,9 @@
 <template>
   <div class="movie-list">
-    <div class="date">
+    <!-- <div class="date">
       <p>Today's date: ({{ dayToday }}, {{ dateToday }})</p>
-    </div>
+    </div> -->
+    <h2 class="center"><strong>VISAS NU</strong></h2>
 
     <div class="filters">
       <div class="row">
@@ -25,7 +26,7 @@
       </div>
     </div>
 
-    <div class="hide-on-med-and-up">
+<!--     <div class="hide-on-med-and-up">
       <div class="movie" v-for="movie in filteredMovies" :key="movie.id">
         <div class="row center">
           <div class="card white small-movie-margin">
@@ -52,7 +53,7 @@
                   <div v-for="screen in screeningMovies" :key="screen.id">
                     <div v-if="screen.movieId == movie">
                       <div
-                        class="btn col red darken-4 s12 z-depth-0.5"
+                        class="btn red darken-4"
                         v-if="screen.date.name === chosenDate.name"
                       >Boka - {{screen.time}}</div>
                     </div>
@@ -63,27 +64,29 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="hide-on-small-only">
-      <div class="movie col m7" v-for="movie in filteredMovies" :key="movie.id">
-        <div @click="goToMovie(movie)" class="card horizontal white">
-          <div class="card-image">
-            <img class="responsive-img" :src="movie.image" />
+    </div> -->
+
+    <div class="">
+      <div class="movie" v-for="movie in filteredMovies" :key="movie.id">
+        <div class="row white">
+          <div class="col s3 margin" @click="goToMovie(movie)">
+            <img class="responsive-img movie-image" :src="movie.image" />
           </div>
-          <div class="card-stacked">
-            <div class="card-content valign-wrapper">
-              <div>
-                <p class="movie-title">{{ movie.title }}</p>
-                <p>{{ movie.genre.toString() }} | {{ movie.length }} min</p>
-                <p>{{ movie.description }}</p>
-              </div>
-            </div>
-          </div>
-          <div class="col m3">
+
+          <div class="movieCard col s9 white">
+            <h6 class="flow-text movie-title">
+              <strong>{{ movie.title }}</strong>
+            </h6>
+            <p class="movie-genre">{{movie.genre.join(", ")}} | {{ movie.length }} min</p>
+            <p class="movie-description hide-on-small-only hide-on-large-only">{{ movie.shortDescription }}</p>
+            <p class="movie-description hide-on-med-and-down">{{ movie.shortDescription }}</p>
+
             <div v-for="screen in screeningMovies" :key="screen.id">
-              <div v-if="screen.movieId == movie">
-                <div class="btn col red darken-4" v-if="screen.date.name === chosenDate.name">Boka - {{screen.time}}
-                </div>
+              <div class="timeButton col" v-if="screen.movieId == movie">
+                <div
+                  class="btn-small red darken-4"
+                  v-if="screen.date.name === chosenDate.name"
+                >{{screen.time}}</div>
               </div>
             </div>
           </div>
@@ -288,6 +291,7 @@ export default {
 }
 .movie .card-image img {
   width: 100%;
+  min-height: 185px !important;
 }
 .card-stacked {
   display: inline-block;
@@ -297,25 +301,20 @@ export default {
   font-weight: bold;
 }
 .movie .card-content {
-  display: flex;
-  justify-content: space-between;
+  margin-left: 2%;
+  width: 100%;
 }
 .movie .card-image {
   max-width: 10rem !important;
 }
 .movie-buttons button {
   border-radius: 10px;
-  display: flex;
-  flex-direction: column;
   margin: 0.5rem;
 }
 .movie .movie-container {
   align-items: center;
-  display: flex;
-  justify-content: space-between;
 }
 .movie .movie-title {
-  font-size: 2rem;
   font-weight: bold;
 }
 .mobile {
@@ -328,6 +327,50 @@ export default {
   border-radius: 5px;
 }
 .btn {
-  margin-top: 7%;
+  padding-right: 5%;
 }
+.row .col {
+  padding: 0px !important;
+}
+.row {
+  width: 100%;
+}
+.movieCard {
+  width: 100%;
+  padding-left: 5% !important;
+}
+.movie-description{
+  margin: 2%;
+}
+.movie-title{
+  margin: 2%;
+}
+.movie-genre{
+  margin:2%;
+}
+.btn-small{
+  margin-left: 4% !important;
+}
+
+@media only screen and (min-width: 893px) {
+  .white-bg {
+    background-color: white;
+  }
+}
+
+@media only screen and (min-width: 540px) {
+
+}
+
+@media only screen and (max-width: 540px) {
+  .movie-title {
+    font-size: 1.5rem !important;
+  }
+  .movie-genre{
+    font-size: 1rem;
+    line-height: 1.1rem;
+    margin: 3%;
+  }
+}
+
 </style>

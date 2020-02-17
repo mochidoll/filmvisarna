@@ -87,9 +87,6 @@
     min-height: 100vh;
     background: #ececec;
   }
-  #main {
-    flex: 1 0 auto;
-  }
   .logo {
     width: 5rem;
   }
