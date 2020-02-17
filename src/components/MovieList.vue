@@ -71,7 +71,7 @@
     <div class="">
       <div class="movie" v-for="movie in filteredMovies" :key="movie.id">
         <div class="row white">
-          <div class="col s3" @click="goToMovie(movie)">
+          <div class="col s3 container" @click="goToMovie(movie)">
             <img class="col s12 responsive-img movie-image" :src="movie.image" />
           </div>
 
