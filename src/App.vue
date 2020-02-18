@@ -30,7 +30,9 @@
           </li>
         </ul>
 
-        <ul id="slide-out" class="sidenav">
+        <ul id="slide-out" class="sidenav black center">
+          <img class="logo responsive-img sidebarlogo" src="@/assets/images/Cinemalogo.png" alt />
+
           <li>
             <router-link to="/">Dagens visningar</router-link>
           </li>
@@ -82,7 +84,7 @@ export default {
   data() {
     return {
       user: {}
-    }
+    };
   },
   computed: {
     logUser() {
@@ -107,39 +109,50 @@ export default {
 </script>
 
 <style>
-  * {
-    box-sizing: border-box;
-  }
-  #app {
-    min-height: 100vh;
-    background: #ececec;
-    display: flex;
-    flex-direction: column;
-  
-  }
-  #main {
-    flex: 1 0 auto;
-    background-image: url("./assets/images/movie-background-picture.jpg");
-    background-size: cover;
-  }
-  .logo {
-    width: 11rem;
-  }
-  .logo-text{
-    font-size: 1rem;
-  }
-  footer span {
-    font-size: 0.8rem;
-    margin: 0;
-    padding: 0;
-  }
-  footer i {
-    margin-right: 0.5rem;
-    display: inline-block;
-    position: relative;
-    bottom:-2px;
-  }
-  .page-footer {
-    padding-bottom: 20px;
-  }
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI";
+}
+#app {
+  min-height: 100vh;
+  background: #ececec;
+  display: flex;
+  flex-direction: column;
+}
+#main {
+  flex: 1 0 auto;
+  background-image: url("./assets/images/movie-background-picture.jpg");
+  background-size: cover;
+}
+#slide-out {
+  background-color: black;
+}
+.sidenav li > a {
+  color: white !important;
+  font-size: 1.3rem !important;
+}
+.logo {
+  width: 11rem;
+}
+.logo-text {
+  font-size: 1rem;
+}
+.sidebarlogo {
+  margin: 1rem;
+  margin-top: 5rem;
+}
+footer span {
+  font-size: 0.8rem;
+  margin: 0;
+  padding: 0;
+}
+footer i {
+  margin-right: 0.5rem;
+  display: inline-block;
+  position: relative;
+  bottom: -2px;
+}
+.page-footer {
+  padding-bottom: 20px;
+}
 </style>

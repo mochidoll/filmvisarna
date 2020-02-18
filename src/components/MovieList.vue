@@ -11,6 +11,7 @@
       <div class="filters">
         <div class>
           <dropdown
+            class="black"
             id="dropdowns"
             :options="dates"
             :selected="chosenDate.name"
@@ -20,6 +21,7 @@
         </div>
         <div class>
           <dropdown
+            class="black"
             id="dropdowns"
             :options="genres"
             :selected="chosenGenre.name"
@@ -333,20 +335,16 @@ h2 {
 #dropdowns {
   min-width: 120px !important;
   margin: 4px !important;
-  background-color: black;
   border-radius: 15px;
   background-image: none !important;
   padding: 0px;
 }
 
-li .dropdown-toggle {
+.dropdown-toggle {
   background-image: none !important;
-  background-image: none !important;
+  border-radius: 15px !important;
 }
 
-.mediumrow {
-  /* background-color: ; */
-}
 @media only screen and (min-width: 893px) {
   .movie-image {
     cursor: pointer;
@@ -365,11 +363,10 @@ li .dropdown-toggle {
   }
   .btn-small {
     width: 8rem;
-
   }
   .btn-small:hover {
-  background-color: red !important;
-}
+    background-color: red !important;
+  }
 }
 
 @media (max-width: 1100px) {
