@@ -1,5 +1,5 @@
 <template>
-<div class="container center z-depth-1">
+<div class="container center z-depth-1 white">
     <div class="container row">
         <h4>Registrera</h4>
         <div class="col s12 m6">

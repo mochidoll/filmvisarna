@@ -2,7 +2,7 @@
   <div class="container" v-if="movie">
     <youtube class="trailer-container" :video-id="movie.videoId"></youtube>
 
-    <div class="movie-info-container row">
+    <div id="transparent" class="movie-info-container row">
       <div class="left col s12 center">
         <h3 class="center">
           {{movie.title}}
@@ -27,33 +27,80 @@
       <div class="col s12 m6 right">
         <span>Genre: {{movie.genre.join(", ")}}</span>
       </div>
+    </div>
 
+    <div class="row time-choices large hide-on-small-only">
       <dropdown
         :options="dates"
-        class="options"
+        class="options col s4 push-s1"
         :selected="chosenDate"
         v-on:updateOption="updateChosenDate"
         :placeholder="'Select a Date'"
       ></dropdown>
 
       <div v-for="time in times" :key="time.id">
-        <div
-          class="col timeButton btn red darken-2"
-          :class="{disabled: emptyAvailableSeats(time.screening) === 0}"
-          @click="bookMovie(time.screening)"
-        >{{time.time}}</div>
-        <div class="col">
-          <div>{{time.auditorium}}</div>
-          <div
-            v-if="emptyAvailableSeats(time.screening) > 0"
-            :class="{'red-text': emptyAvailableSeats(time.screening) < 5}"
-          >{{emptyAvailableSeats(time.screening)}} platser</div>
-          <div v-else class="red-text">
-            <b>Fullbokat</b>
+        <div class="booking-choice col s10 push-s1 red darken-4 white-text valign-wrapper">
+          <div class="booking-info col s9 white-text">
+            <p class="">
+              <span class="span-time-large">{{time.time}} | </span>
+              <span class="span-audi-large">{{ time.auditorium }}</span> -
+              <span class="span-seats-large">{{ emptyAvailableSeats(time.screening) }} platser kvar</span>
+            </p>
           </div>
+
+          <div
+            class="col s3 time-button btn black right"
+            :class="{disabled: emptyAvailableSeats(time.screening) === 0}"
+            @click="bookMovie(time.screening)"
+          >Boka</div>
         </div>
       </div>
     </div>
+<!-- -------------------------------------------------------------------------- -->
+
+      <div class="row time-choices small hide-on-med-and-up">
+
+        <div class="col s12 dropdown-wrapper">
+          <dropdown
+            :options="dates"
+            class="options col s4"
+            :selected="chosenDate"
+            v-on:updateOption="updateChosenDate"
+            :placeholder="'Select a Date'"
+          ></dropdown>
+        </div>
+
+        <div v-for="time in times" :key="time.id">
+          <div 
+            class="booking-choice col s12 red darken-4 white-text valign-wrapper"
+            @click="bookMovie(time.screening)"
+          >
+            <div class=" col s2 booking-info-time-small">
+              <p>
+                <span class="span-time-small">{{time.time}}</span>
+              </p>
+            </div>
+
+            <div class="booking-info-audi-seat-small col s7 white-text center">
+                <div>
+                  <span class="span-audi-small">{{ time.auditorium }}</span>
+                </div>
+                <div>
+                  <span class="span-seats-small">{{ emptyAvailableSeats(time.screening) }} platser kvar</span>
+                </div>
+            </div>
+
+            <div
+              class="col s3 time-button btn black right"
+              :class="{disabled: emptyAvailableSeats(time.screening) === 0}"
+            >Boka
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
   </div>
   <div class="valign-wrapper" id="loadingmovie" v-else>
     <div class="preloader-wrapper active big">
@@ -201,6 +248,73 @@ export default {
 <style>
 * {
   box-sizing: border-box;
+}
+.time-choices {
+  display: block;
+  margin-top: 0 !important;
+}
+.booking-choice {
+  border-radius: 10px;
+  line-height: 1;
+  margin: 0.5rem 0 !important;
+  padding: 0.5rem !important;
+}
+.booking-choice .time-button {
+  border-radius: 10px;
+  margin: 0;
+  padding: 0 !important;
+}
+.span-seats-small, .span-seats-large{
+ color: lightgray;
+}
+.large .dropdown-toggle, .small .dropdown-toggle {
+  background-color: black !important;
+} 
+
+.large .booking-choice p{
+  margin: 0.5rem 0!important;
+}
+.span-time-large{
+  font-size: 1.4rem;
+}
+.span-audi-large{
+  font-size: 1.2rem;
+}
+.span-seats-large{
+  font-size: 0.8rem;
+}
+
+.small .booking-choice{
+  cursor: pointer;
+}
+.span-seats-small{
+  font-size: 0.8rem;
+}
+.span-audi-small{
+  font-size: 1.2rem;
+}
+.booking-info-time-small{
+  font-size: 1.6rem;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.booking-info-time-small p{
+  margin: 0;
+}
+.booking-info-audi-seat-small{
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#transparent {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+}
+.dropdown-toggle {
+  color: white !important;
+}
+.dropdown-toggle:hover {
+  background-color: rgb(51, 50, 50) !important;
 }
 .trailer-container {
   display: block;

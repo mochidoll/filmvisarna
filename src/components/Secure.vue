@@ -1,13 +1,13 @@
 <template>
   <div id="secure">
-    <div class="container center-align">
+    <div class="container center-align" id="transparent">
       <h4>{{this.user.displayName}}</h4>
-      <div class="divider"></div>
+      <div class="divider black"></div>
       <h5 class="center" v-if="this.userBookings.length">Dina bokningar</h5>
       <h5 class="center" v-else>Inga bokningar att visa</h5>
 
       <ul>
-        <li v-for="booking in userBookings" :key="booking.id">
+        <li id="transparent" class="" v-for="booking in userBookings" :key="booking.id">
           <user-booking :booking-object="booking" />
         </li>
       </ul>
@@ -71,6 +71,10 @@ export default {
 </script>
 
 <style scoped>
+#transparent {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+}
 .btn {
   margin-bottom: 1%;
 }
