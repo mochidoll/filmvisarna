@@ -1,7 +1,7 @@
 <template>
   <div class="container center">
     <div class="booking-wrapper row z-depth-1 white" v-if="loadTicketContent">
-      <div class="booking nav-wrapper">
+      <div v-if="showOrNot" class="booking nav-wrapper">
         <div v-if="!showErrorText" class="row nav-choices valign-wrapper">
           <div
             @click="back"
