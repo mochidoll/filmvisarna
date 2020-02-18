@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="row z-depth-2">
+    <div class="row z-depth-2 white black-text">
       <div class="col s12 m6 l5 left">
         <h5>Kontakt</h5>
         <div class="aside-text">

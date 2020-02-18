@@ -1,15 +1,17 @@
 <template>
   <div id="secure">
-    <div class="container center-align" id="transparent">
-      <h4>{{this.user.displayName}}</h4>
-      <div class="divider black"></div>
+    <div class="outer-container container" id="transparent">
+      <h4 class="center">{{this.user.displayName}}</h4>
+      <div class="divider"></div>
       <h5 class="center" v-if="this.userBookings.length">Dina bokningar</h5>
       <h5 class="center" v-else>Inga bokningar att visa</h5>
 
       <ul>
-        <li id="transparent" class="" v-for="booking in userBookings" :key="booking.id">
+        <div id="transparent">
+        <li class="center" v-for="booking in userBookings" :key="booking.id">
           <user-booking :booking-object="booking" />
         </li>
+         </div>
       </ul>
 
       <a class="btn red darken-4" @click="logout()">Logga ut</a>
@@ -77,5 +79,9 @@ export default {
 }
 .btn {
   margin-bottom: 1%;
+}
+.outer-container {
+  margin-top: 2%;
+  padding-top: 2%;
 }
 </style>
