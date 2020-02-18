@@ -6,17 +6,18 @@
       <h5 class="center" v-if="this.userBookings.length">Dina bokningar</h5>
       <h5 class="center" v-else>Inga bokningar att visa</h5>
 
-      <ul>
-        <div id="transparent">
-        <li class="center-align" v-for="booking in userBookings" :key="booking.id">
-          <user-booking :booking-object="booking" />
-        </li>
-         </div>
-      </ul>
+     <div >
+        <div  v-for="booking in userBookings" :key="booking.id">
+          <user-booking class="valign-wrapper row" :booking-object="booking" />
+        
+  
+        </div>
+      </div>
+  </div>
 
       <a class="btn red darken-4" @click="logout()">Logga ut</a>
     </div>
-  </div>
+  
 </template>
 
 <script>
@@ -33,11 +34,6 @@ export default {
     return {
       user: {},
     };
-  },
-  watch:{
-    userBookings(){
-      console.log('Watched')
-    }
   },
   methods: {
     logout() {
@@ -80,8 +76,5 @@ export default {
 .btn {
   margin-bottom: 1%;
 }
-.outer-container {
-  margin-top: 2%;
-  padding-top: 2%;
-}
+
 </style>
