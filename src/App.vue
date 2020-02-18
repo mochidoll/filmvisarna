@@ -171,4 +171,9 @@ footer i {
 .page-footer {
   padding-bottom: 20px;
 }
+.dropdown-toggle{
+  background-image: none !important;
+  min-width: 10px !important;
+  width: 9.8rem;
+}
 </style>
