@@ -32,7 +32,7 @@
 
     <div class="movie" v-for="movie in filteredMovies" :key="movie.id">
       <!-- medium & small view -->
-      <div class="row mediumrow valign-wrapper hide-on-large-only">
+      <div class="row mediumrow valign-wrapper hide-on-large-only cardHoverFX">
         <div class="col s3 container" @click="goToMovie(movie)">
           <img class="col s12 responsive-img" :src="movie.image" />
         </div>
@@ -61,7 +61,7 @@
       </div>
 
       <!-- large view -->
-      <div class="row valign-wrapper hide-on-med-and-down hoverFX">
+      <div class="row valign-wrapper hide-on-med-and-down cardHoverFX">
         <div class="valign-wrapper col s11 offset-s1">
           <div class="col s3 container" @click="goToMovie(movie)">
             <img class="col s12 responsive-img movie-image" :src="movie.image" />
@@ -292,12 +292,12 @@ export default {
   align-self: center;
 }
 
-.row, .valign-wrapper, .hide-on-med-and-down, .hoverFX:hover {
-  background-color: #820E0C
+.cardHoverFX:hover {
+  background-color: #F7EBE2
 }
 
-.row .hoverFX:hover{
-  background-color: greenyellow
+.hoverFX:hover{
+  background-color: #820E0C
 }
 
 h2 {
