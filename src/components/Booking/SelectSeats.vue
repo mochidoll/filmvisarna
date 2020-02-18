@@ -116,7 +116,7 @@ export default {
     goBackToSelectTickets() {
       this.bookingObject.seatPositions = null;
       this.$router.push({
-        path: "/booking/selectTickets/" + this.bookingObject.screeningId
+        path: "/booking/selectTickets/" + this.$route.params.screeningId
       });
     }
   },
