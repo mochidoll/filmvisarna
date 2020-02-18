@@ -8,9 +8,10 @@
     </h2>
 
     <div class="center">
-      <div class="filters">
-        <div class>
+      <div class="filters valign-wrapper">
+        <div class="drop">
           <dropdown
+            class="black"
             id="dropdowns"
             :options="dates"
             :selected="chosenDate.name"
@@ -18,8 +19,9 @@
             :placeholder="chosenDate.name"
           ></dropdown>
         </div>
-        <div class>
+        <div class="drop">
           <dropdown
+            class="black"
             id="dropdowns"
             :options="genres"
             :selected="chosenGenre.name"
@@ -293,11 +295,11 @@ export default {
 }
 
 .cardHoverFX:hover {
-  background-color: #F7EBE2
+  background-color: #f7ebe2;
 }
 
-.hoverFX:hover{
-  background-color: #820E0C
+.hoverFX:hover {
+  background-color: #820e0c;
 }
 
 h2 {
@@ -339,23 +341,19 @@ h2 {
 .card2 {
   width: 55vw;
 }
-#dropdowns {
-  min-width: 120px !important;
-  margin: 4px !important;
-  background-color: black;
+#dropdowns{
+  margin-top: 0.8rem !important;
+  margin-bottom: 0rem !important;
   border-radius: 15px;
-  background-image: none !important;
   padding: 0px;
 }
-
-li .dropdown-toggle {
-  background-image: none !important;
-  background-image: none !important;
+.btn-group{
+  min-width: 10px !important;
+  width: 9.8rem;
+  text-align: left;
 }
 
-.mediumrow {
-  /* background-color: ; */
-}
+
 @media only screen and (min-width: 893px) {
   .movie-image {
     cursor: pointer;
@@ -374,6 +372,9 @@ li .dropdown-toggle {
   }
   .btn-small {
     width: 8rem;
+  }
+  .btn-small:hover {
+    background-color: red !important;
   }
 }
 
