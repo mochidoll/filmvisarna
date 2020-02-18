@@ -49,7 +49,7 @@
           <div v-for="screen in screeningMovies" :key="screen.id">
             <div class="timeButton col" v-if="screen.movieId == movie">
               <div
-                class="btn-small"
+                class="btn-small hoverFX"
                 v-if="screen.date.name === chosenDate.name"
                 @click="bookMovie(screen.screeningId)"
               >
@@ -61,7 +61,7 @@
       </div>
 
       <!-- large view -->
-      <div class="row valign-wrapper hide-on-med-and-down">
+      <div class="row valign-wrapper hide-on-med-and-down hoverFX">
         <div class="valign-wrapper col s11 offset-s1">
           <div class="col s3 container" @click="goToMovie(movie)">
             <img class="col s12 responsive-img movie-image" :src="movie.image" />
@@ -79,7 +79,7 @@
             <div v-for="screen in screeningMovies" :key="screen.id">
               <div class="timeButton col" v-if="screen.movieId == movie">
                 <div
-                  class="btn-small"
+                  class="btn-small hoverFX"
                   v-if="screen.date.name === chosenDate.name"
                   @click="bookMovie(screen.screeningId)"
                 >
@@ -291,6 +291,15 @@ export default {
 .filters {
   align-self: center;
 }
+
+.row, .valign-wrapper, .hide-on-med-and-down, .hoverFX:hover {
+  background-color: #820E0C
+}
+
+.row .hoverFX:hover{
+  background-color: greenyellow
+}
+
 h2 {
   margin: 0.6rem;
   color: white;
