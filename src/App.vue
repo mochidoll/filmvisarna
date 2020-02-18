@@ -115,13 +115,13 @@ export default {
     background: #ececec;
     display: flex;
     flex-direction: column;
-  
   }
   #main {
     flex: 1 0 auto;
     background-image: url("./assets/images/movie-background-picture.jpg");
     background-size: cover;
   }
+
   .logo {
     width: 11rem;
   }

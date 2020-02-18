@@ -1,6 +1,5 @@
 <template>
   <div>
-    <p class="white-text hide">{{movieId.length}}</p>
     <section class="select-tickets-wrapper row">
       <div class="col s12 m6 l6 movie-info-wrapper valign-wrapper left-align">
         <div class="col l6 m6 s6 movie-image">
@@ -161,12 +160,6 @@ export default {
     movies() {
       return this.$store.state.movies;
     },
-    movieId() {
-      return filterItemFromList(
-        this.$store.state.screenings,
-        this.$route.params.screeningId
-      );
-    },
     screeningChosen() {
       return filterItemFromList(
         this.$store.state.screenings,
@@ -184,10 +177,6 @@ export default {
         this.$store.state.movies,
         this.screeningChosen.movieId
       );
-    },
-
-    screenings() {
-      return this.$store.state.screenings;
     },
     numberOfTickets() {
       return this.adultTickets + this.childTickets + this.seniorTickets;
