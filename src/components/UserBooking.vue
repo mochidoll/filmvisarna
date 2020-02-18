@@ -3,28 +3,30 @@
   <div class="container my-bookings" >
      <div class="row inner-container white black-text" @click="isHidden = true" v-if="!isHidden">   
       <div class="col s5 image-container">
-        <img :src="movie.image" alt class="responsive-img" />
+        <img :src="movie.image" alt class="responsive-img image" />
       </div>
 
       <div class="left-align text-container colcenter">
         <h5 class="col s7"> <b>{{ movie.title}} </b></h5>
-        <p class="col s6">Datum: {{ screening.startTime.toDate().toLocaleDateString() }}</p>
-        <p class="col s6">Tid: {{ screening.startTime.toDate().getHours() }}:00</p>
-       <p class="center col s6">Bokningsnummer: {{ bookingObject.id.slice(-6) }}</p>
- 
+        <span class="col s7">Datum: {{ screening.startTime.toDate().toLocaleDateString() }}</span>
+        <span class="col s7">Tid: {{ screening.startTime.toDate().getHours() }}:00</span>
+       <span class="col s7">Bokningsnummer: {{ bookingObject.id.slice(-6) }}</span>
+      <span class="col s7">Pris: {{ bookingObject.totalTicketPrice }}</span>
     </div>
 
 </div>
     </div> 
     <div>
-    <div class="row inner-container white black-text test" v-if="isHidden" @click="isHidden = false"> 
-  
-      <h5 class="col s12 left ">Biljetter</h5>
-       <span class="col s12" v-if="bookingObject.adultTickets">{{ bookingObject.adultTickets}} x vuxenbiljetter, </span>
-        <span class="col s12" v-if="bookingObject.childTickets">{{ bookingObject.childTickets }}</span>
-        <span class="col s7" v-if="bookingObject.seniorTickets">Pensionärsbiljetter: {{bookingObject.seniorTickets }}</span>
-        <h5 class="col s12">Platser</h5>
-        <span class="col s12"
+    <div class="row inner-container white black-text test left-align" v-if="isHidden" @click="isHidden = false"> 
+  <div class="col s5 image-container right">
+        <img :src="movie.image" alt class="responsive-img hidden-img"  />
+      </div>
+      <h5 class="col s7 ">Biljetter</h5>
+       <span class="col s7" v-if="bookingObject.adultTickets">{{ bookingObject.adultTickets}} x vuxenbiljett, </span>
+        <span class="col s7" v-if="bookingObject.childTickets">{{ bookingObject.childTickets }} x barnbiljett</span>
+        <span class="col s7" v-if="bookingObject.seniorTickets">{{bookingObject.seniorTickets }} x pensionär</span>
+        <h5 class="col s7">Platser</h5>
+        <span class="col s7"
           v-for="(seat, id) in bookingObject.seats"
           :key="id"
         >Parkett: rad {{ seat.y + 1 }}, plats {{ seat.x}}</span>
@@ -62,8 +64,9 @@ export default {
   },
   computed: {
     screening() {
+      window.console.log(this.bookingObject)
       return filterItemFromList(this.$store.state.screenings, this.bookingObject.screeningId)
-    },
+  },
     movie() {
       return filterItemFromList(this.$store.state.movies, this.screening.movieId)
     },
@@ -76,16 +79,28 @@ export default {
 <style scoped>
 .my-bookings{
   border: red 2px solid;
+ 
 }
 .image{
-size: 50% !important;
+width: 100% !important;
+
 
 }
 .inner-container{
-  margin-left: 0;
+  border-radius: 10px;
+  margin: 0;
+  max-height: 50% !important;
 }
 .test{
   border: goldenrod 2px solid;
+}
+.hidden-img{
+  opacity: 0;
+  width: 5%;
+}
+.image-container{
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 </style>

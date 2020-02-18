@@ -111,6 +111,7 @@ export default {
           screeningId: this.bookingObject.screeningId,
           email: this.bookingObject.email,
           seats: this.bookingObject.seatPositions,
+          totalTicketPrice: this.bookingObject.totalTicketPrice,
           timeStamp: new Date()
         })
         .then(ref => {

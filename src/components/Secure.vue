@@ -8,7 +8,7 @@
 
       <ul>
         <div id="transparent">
-        <li class="center" v-for="booking in userBookings" :key="booking.id">
+        <li class="center-align" v-for="booking in userBookings" :key="booking.id">
           <user-booking :booking-object="booking" />
         </li>
          </div>
