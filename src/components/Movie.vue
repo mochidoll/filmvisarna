@@ -29,7 +29,7 @@
       </div>
     </div>
 
-    <div class="row time-choices-large hide-on-small-only">
+    <div class="row time-choices large hide-on-small-only">
       <dropdown
         :options="dates"
         class="options col s4 offset-s1"
@@ -58,9 +58,9 @@
     </div>
 <!-- -------------------------------------------------------------------------- -->
 
-      <div class="row time-choices hide-on-med-and-up">
+      <div class="row time-choices small hide-on-med-and-up">
 
-        <div class="col s12">
+        <div class="col s12 dropdown-wrapper">
           <dropdown
             :options="dates"
             class="options col s4"
@@ -71,14 +71,17 @@
         </div>
 
         <div v-for="time in times" :key="time.id">
-          <div class="booking-choice col s12 red darken-4 white-text valign-wrapper">
-            <div class=" col s3 booking-info-time-small">
+          <div 
+            class="booking-choice col s12 red darken-4 white-text valign-wrapper"
+            @click="bookMovie(time.screening)"
+          >
+            <div class=" col s2 booking-info-time-small">
               <p>
                 <span class="span-time-small">{{time.time}}</span>
               </p>
             </div>
 
-            <div class="booking-info-audi-seat-small col s6 white-text center">
+            <div class="booking-info-audi-seat-small col s7 white-text center">
                 <div>
                   <span class="span-audi-small">{{ time.auditorium }}</span>
                 </div>
@@ -90,7 +93,6 @@
             <div
               class="col s3 time-button btn black right"
               :class="{disabled: emptyAvailableSeats(time.screening) === 0}"
-              @click="bookMovie(time.screening)"
             >Boka
             </div>
 
@@ -232,8 +234,9 @@ export default {
 * {
   box-sizing: border-box;
 }
-.time-choices-large {
+.time-choices {
   display: block;
+  margin-top: 0 !important;
 }
 .time-choices-large .booking-choice {
   border-radius: 10px;
@@ -247,32 +250,40 @@ export default {
 }
 .booking-choice .time-button {
   border-radius: 10px;
-  margin: 0 -0.5rem 0 0;
+  margin: 0;
 }
 .time-choices-large .span-seats {
   font-size: 0.8rem !important;
 }
+.booking-choice{
+  margin: 0.5rem 0 !important;
+}
 
 
-
-
+.small .booking-choice{
+  cursor: pointer;
+}
+.small .time-button{
+  padding: 0 !important;
+}
 .span-seats-small{
   font-size: 0.8rem;
 }
-
+.span-audi-small{
+  font-size: 1.3rem;
+}
 .booking-info-time-small{
   font-size: 1.5rem;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 .booking-info-time-small p{
   margin: 0;
 }
 .booking-info-audi-seat-small{
   margin: 0 !important;
+  padding: 0 !important;
 }
-
-
-
-
 
 
 #transparent {
