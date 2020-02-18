@@ -1,57 +1,59 @@
 <template>
   <div class="container center">
     <div class="container row z-depth-1 white registration-container">
-      <h4>Registrera</h4>
-      <div class="col s12 m6">
-        <div class="input-field">
+      <div class="col s12">
+        <h4>Registrera</h4>
+        <div class="col s12 m6">
+          <div class="input-field">
+            <input
+              type="text"
+              id="signUpFirstName"
+              v-model="signUpFirstName"
+              required
+              aria-required="true"
+              class="active validate"
+            />
+            <label for="signUpFirstName">Förnamn</label>
+          </div>
+        </div>
+        <div class="col s12 m6">
+          <div class="input-field">
+            <input
+              type="text"
+              id="signUpLastName"
+              v-model="signUpLastName"
+              required
+              aria-required="true"
+              class="active validate"
+            />
+            <label for="signUpLastName">Efternamn</label>
+          </div>
+        </div>
+        <div class="input-field col s12">
+          <input type="email" id="signUpEmail" v-model="signUpEmail" class="active validate" />
+          <label for="signUpEmail">Email</label>
+        </div>
+        <div class="input-field col s12">
           <input
-            type="text"
-            id="signUpFirstName"
-            v-model="signUpFirstName"
+            type="password"
+            id="signUpPassword"
+            @blur="validatePassword"
+            v-model="signUpPassword"
             required
             aria-required="true"
             class="active validate"
           />
-          <label for="signUpFirstName">Förnamn</label>
+          <label for="signUpPassword">Lösenord</label>
+        </div>
+        <div class="buttons col s12 hide-on-small-only">
+          <a class="btn waves-effect waves-light black" @click="signUp()">Registrera</a>
+          <router-link to="/Login" class="btn waves-effect waves-light black">Tillbaka</router-link>
+        </div>
+        <div class="buttons col s12 hide-on-med-and-up">
+          <a class="btn-small waves-effect waves-light black" @click="signUp()">Registrera</a>
+          <router-link to="/Login" class="btn-small waves-effect waves-light black">Tillbaka</router-link>
         </div>
       </div>
-      <div class="col s12 m6">
-        <div class="input-field">
-          <input
-            type="text"
-            id="signUpLastName"
-            v-model="signUpLastName"
-            required
-            aria-required="true"
-            class="active validate"
-          />
-          <label for="signUpLastName">Efternamn</label>
-        </div>
-      </div>
-      <div class="input-field col s12">
-        <input type="email" id="signUpEmail" v-model="signUpEmail" class="active validate" />
-        <label for="signUpEmail">Email</label>
-      </div>
-      <div class="input-field col s12">
-        <input
-          type="password"
-          id="signUpPassword"
-          @blur="validatePassword"
-          v-model="signUpPassword"
-          required
-          aria-required="true"
-          class="active validate"
-        />
-        <label for="signUpPassword">Lösenord</label>
-      </div>
-      <div class="buttons col s12 hide-on-small">
-        <a class="btn waves-effect waves-light black" @click="signUp()">Registrera</a>
-        <router-link to="/Login" class="btn waves-effect waves-light black">Redan Medlem?</router-link>
-      </div>
-     <!--  <div class="buttons col s12 hide-on-med-and-up">
-        <a class="btn waves-effect waves-light black" @click="signUp()">Registrera</a>
-        <router-link to="/Login" class="btn-small waves-effect waves-light black">Redan Medlem?</router-link>
-      </div> -->
     </div>
   </div>
 </template>
@@ -134,6 +136,7 @@ h4 {
 
 .btn {
   border-radius: 12px;
+  margin: 2%;
 }
 
 .btn-small {
@@ -143,7 +146,7 @@ h4 {
   margin-bottom: 15px;
 }
 
-.input-field{
+.input-field {
   margin-top: 6px;
   margin-bottom: 6px;
 }
@@ -159,17 +162,14 @@ input[type="password"]:focus {
 .input-field label {
   color: black !important;
 }
+.label {
+  color: #3f3f3f !important;
+}
 .container {
   margin-top: 2rem;
   margin-bottom: 2rem;
 }
-.label {
-  color: #3f3f3f !important;
-}
 .col {
   padding: 1 !important;
-}
-.btn {
-  margin: 2%;
 }
 </style>

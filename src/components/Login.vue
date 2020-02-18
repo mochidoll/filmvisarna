@@ -86,6 +86,7 @@ h4 {
 
 .btn {
   border-radius: 12px;
+  margin: 2%;
 }
 
 .btn-small {
@@ -118,8 +119,5 @@ label {
 }
 .col {
   padding: 1 !important;
-}
-.btn {
-  margin: 2%;
 }
 </style>
