@@ -34,7 +34,7 @@
 
     <div class="movie" v-for="movie in filteredMovies" :key="movie.id">
       <!-- medium & small view -->
-      <div class="row mediumrow valign-wrapper hide-on-large-only">
+      <div class="row mediumrow valign-wrapper hide-on-large-only cardHoverFX">
         <div class="col s3 container" @click="goToMovie(movie)">
           <img class="col s12 responsive-img" :src="movie.image" />
         </div>
@@ -51,7 +51,7 @@
           <div v-for="screen in screeningMovies" :key="screen.id">
             <div class="timeButton col" v-if="screen.movieId == movie">
               <div
-                class="btn-small black"
+                class="btn-small hoverFX"
                 v-if="screen.date.name === chosenDate.name"
                 @click="bookMovie(screen.screeningId)"
               >
@@ -63,7 +63,7 @@
       </div>
 
       <!-- large view -->
-      <div class="row valign-wrapper hide-on-med-and-down">
+      <div class="row valign-wrapper hide-on-med-and-down cardHoverFX">
         <div class="valign-wrapper col s11 offset-s1">
           <div class="col s3 container" @click="goToMovie(movie)">
             <img class="col s12 responsive-img movie-image" :src="movie.image" />
@@ -81,7 +81,7 @@
             <div v-for="screen in screeningMovies" :key="screen.id">
               <div class="timeButton col" v-if="screen.movieId == movie">
                 <div
-                  class="btn-small"
+                  class="btn-small hoverFX"
                   v-if="screen.date.name === chosenDate.name"
                   @click="bookMovie(screen.screeningId)"
                 >
@@ -293,6 +293,15 @@ export default {
 .filters {
   align-self: center;
 }
+
+.cardHoverFX:hover {
+  background-color: #F7EBE2
+}
+
+.hoverFX:hover{
+  background-color: #820E0C
+}
+
 h2 {
   margin: 0.6rem;
   color: white;
