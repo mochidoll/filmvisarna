@@ -116,9 +116,9 @@ export default {
     goBackToSelectTickets() {
       this.bookingObject.seatPositions = null;
       this.$router.push({
-        path: "/booking/selectTickets/" + this.bookingObject.screeningId
+        path: "/booking/selectTickets/" + this.$route.params.screeningId
       });
-    },
+    }
   },
 
   computed: {
@@ -139,6 +139,11 @@ export default {
   },
 
   created() {
+    if (!this.bookingObject) {
+      this.$router.replace({
+        path: "/booking/selectTickets/" + this.$route.params.screeningId
+      });
+    }
     this.$emit("changeNavText", this.$store.state.navTexts[2]);
   },
 
