@@ -1,5 +1,5 @@
   <template>
-  <div class="container center z-depth-1">
+  <div class="container center z-depth-1 white">
     <div class="container row">
       <div class="col s12">
         <h4 class>Logga in</h4>
