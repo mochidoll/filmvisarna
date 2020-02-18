@@ -1,21 +1,28 @@
 <template>
   <div class="movie-list">
-    <div class="date">
-      <p>Dagens datum: ({{ dayToday }}, {{ dateToday }})</p>
-    </div>
+    <!-- <div class="date">
+      <p>Today's date: ({{ dayToday }}, {{ dateToday }})</p>
+    </div>-->
+    <h2 class="center">
+      <strong>VISAS NU</strong>
+    </h2>
 
-    <div class="filters">
-      <div class="row">
-        <div class="col">
+    <div class="center">
+      <div class="filters valign-wrapper">
+        <div class="drop">
           <dropdown
+            class="black"
+            id="dropdowns"
             :options="dates"
             :selected="chosenDate.name"
             v-on:updateOption="updateChosenDate"
             :placeholder="chosenDate.name"
           ></dropdown>
         </div>
-        <div class="col">
+        <div class="drop">
           <dropdown
+            class="black"
+            id="dropdowns"
             :options="genres"
             :selected="chosenGenre.name"
             v-on:updateOption="updateChosenGenre"
@@ -25,58 +32,61 @@
       </div>
     </div>
 
-    <div class="hide-on-med-and-up">
-      <div class="movie" v-for="movie in filteredMovies" :key="movie.id">
-        <div class="row center">
-          <div class="card white small-movie-margin">
-            <div class="col s12">
-              <div class="card-img">
-                <img @click="goToMovie(movie)" class="responive-img mobile-img" :src="movie.image" />
-              </div>
-            </div>
-            <div class="card-stacked">
-              <div class="card-contact">
-                <div class="col s12">
-                  <span class="movie-title center">{{ movie.title }}</span>
-                </div>
-                <div class="col s12">
-                  <div>
-                    <span>{{movie.genre.join(", ")}} | {{ movie.length }} min</span>
-                  </div>
-                </div>
-                <div class="col s12">
-                  <p>{{ movie.description }}</p>
-                </div>
-                <div class="col s12"></div>
-                <div class="col s6 offset-s3">
-                  <div v-for="screen in screeningMovies" :key="screen.id">
-                    <div v-if="screen.movieId == movie">
-                      <div
-                        class="btn col red darken-4 s12 z-depth-0.5"
-                        @click="bookMovie(screen.screeningId)"
-                        v-if="screen.date.name === chosenDate.name"
-                      >Boka Tid - {{screen.time}}</div>
-                    </div>
-                  </div>
-                </div>
+    <div class="movie" v-for="movie in filteredMovies" :key="movie.id">
+      <!-- medium & small view -->
+      <div class="row mediumrow valign-wrapper hide-on-large-only cardHoverFX">
+        <div class="col s3 container" @click="goToMovie(movie)">
+          <img class="col s12 responsive-img" :src="movie.image" />
+        </div>
+        <div class="movieCard col s9">
+          <h6 class="flow-text movie-title">
+            <strong>{{ movie.title }}</strong>
+          </h6>
+          <p class="movie-genre">{{movie.genre.join(", ")}} | {{ movie.length }} min</p>
+          <p
+            class="movie-description hide-on-small-only hide-on-large-only"
+          >{{ movie.shortDescription }}</p>
+          <!-- <p class="movie-description hide-on-med-and-down">{{ movie.description }}</p> -->
+
+          <div v-for="screen in screeningMovies" :key="screen.id">
+            <div class="timeButton col" v-if="screen.movieId == movie">
+              <div
+                class="btn-small hoverFX"
+                v-if="screen.date.name === chosenDate.name"
+                @click="bookMovie(screen.screeningId)"
+              >
+                <strong>{{screen.time}}</strong>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="hide-on-small-only">
-      <div class="movie col m7" v-for="movie in filteredMovies" :key="movie.id">
-        <div @click="goToMovie(movie)" class="hoverable card horizontal white">
-          <div class="card-image">
-            <img class="responsive-img" :src="movie.image" />
+
+      <!-- large view -->
+      <div class="row valign-wrapper hide-on-med-and-down cardHoverFX">
+        <div class="valign-wrapper col s11 offset-s1">
+          <div class="col s3 container" @click="goToMovie(movie)">
+            <img class="col s12 responsive-img movie-image" :src="movie.image" />
           </div>
-          <div class="card-stacked">
-            <div class="card-content valign-wrapper">
-              <div>
-                <p class="movie-title">{{ movie.title }}</p>
-                <p>{{movie.genre.join(", ")}} | {{ movie.length }} min</p>
-                <p>{{ movie.shortDescription }}</p>
+          <div class="movieCard2 col s9">
+            <h6 class="flow-text movie-title">
+              <strong>{{ movie.title }}</strong>
+            </h6>
+            <p class="movie-genre">{{movie.genre.join(", ")}} | {{ movie.length }} min</p>
+            <p
+              class="movie-description hide-on-small-only hide-on-large-only"
+            >{{ movie.shortDescription }}</p>
+            <p class="movie-description hide-on-med-and-down">{{ movie.shortDescription }}</p>
+
+            <div v-for="screen in screeningMovies" :key="screen.id">
+              <div class="timeButton col" v-if="screen.movieId == movie">
+                <div
+                  class="btn-small hoverFX"
+                  v-if="screen.date.name === chosenDate.name"
+                  @click="bookMovie(screen.screeningId)"
+                >
+                  <strong>{{screen.time}}</strong>
+                </div>
               </div>
             </div>
           </div>
@@ -103,7 +113,7 @@ export default {
       },
       chosenGenre: {
         name: "Alla genres"
-      },
+      }
     };
   },
   components: {
@@ -129,8 +139,8 @@ export default {
       // Remove duplicates from genres array
       genres = [...new Set(genres)];
       // Sort alphanumeric
-      genres.sort().forEach(genre => genresName.push({name:genre}))
-      genresName.unshift({name:"Alla genres"});
+      genres.sort().forEach(genre => genresName.push({ name: genre }));
+      genresName.unshift({ name: "Alla genres" });
       return genresName;
     },
     filteredMovies() {
@@ -230,7 +240,7 @@ export default {
     },
     goToMovie(movie) {
       this.$router.push({
-        name: 'movie',
+        name: "movie",
         params: {
           movieTitle: movie.title,
           filteredChosenDate: this.chosenDate.name
@@ -238,13 +248,10 @@ export default {
       });
       // this.$router.push({ params: {filteredChosenDate: this.chosenDate.name}, name: 'movie' });
       // this.$router.push({ params: {filteredChosenDate: this.chosenDate.name}, name: 'movie' });
-      
     },
-    bookMovie(screenId){
+    bookMovie(screenId) {
       this.$store.state.bookingObject.screeningId = screenId;
-      this.$router.push(
-        "/booking/selectTickets/" + screenId
-      );
+      this.$router.push("/booking/selectTickets/" + screenId);
     }
   },
   mounted() {
@@ -272,58 +279,128 @@ export default {
 * {
   box-sizing: border-box;
 }
-.small-movie-margin {
-  padding-top: 45px;
-  padding-bottom: 45px;
-}
-.movie .card {
-  border-radius: 5px !important;
-}
 .movie .card-image img {
   width: 100%;
-}
-.card-stacked {
-  display: inline-block;
+  min-height: 185px !important;
 }
 .movie .movie-title {
   font-size: 2rem;
   font-weight: bold;
 }
-.movie .card-content {
-  display: flex;
-  justify-content: space-between;
-}
-.movie .card-image {
-  max-width: 10rem !important;
-}
-.movie-buttons button {
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  margin: 0.5rem;
-}
-.movie .movie-container {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-}
 .movie .movie-title {
-  font-size: 2rem;
   font-weight: bold;
 }
-.movie {
+.filters {
+  align-self: center;
+}
+
+.cardHoverFX:hover {
+  background-color: #f7ebe2;
+}
+
+.hoverFX:hover {
+  background-color: #820e0c;
+}
+
+h2 {
+  margin: 0.6rem;
+  color: white;
+}
+.row .col {
+  padding: 0px !important;
+}
+.col {
+  margin: 0px !important;
+}
+.row {
+  margin: 0.8rem;
+  border-radius: 15px;
+  background-color: #e7c3a6;
+}
+.movieCard {
+  width: 100%;
+  padding-left: 5% !important;
+}
+.movie-description {
+  margin: 2%;
+}
+.movie-title {
+  margin: 2%;
+}
+.movie-genre {
+  margin: 2%;
+}
+.btn-small {
+  margin-left: 1rem !important;
+  border-radius: 12px;
+  background-color: black;
+}
+.movie-image {
   cursor: pointer;
 }
-.mobile {
-  margin: 1% !important;
+.card2 {
+  width: 55vw;
 }
-.mobile-img {
-  position: relative;
-  bottom: -10px;
-  width: 75%;
-  border-radius: 5px;
+#dropdowns{
+  margin-top: 0.8rem !important;
+  margin-bottom: 0rem !important;
+  border-radius: 15px;
+  padding: 0px;
 }
-.btn {
-  margin-top: 7%;
+.btn-group{
+  min-width: 10px !important;
+  width: 9.8rem;
+  text-align: left;
+}
+
+
+@media only screen and (min-width: 893px) {
+  .movie-image {
+    cursor: pointer;
+    max-height: 19rem;
+    max-width: 13rem;
+  }
+  .movieCard {
+    margin: 3rem;
+  }
+  .movie-description {
+    margin-right: 1rem;
+    line-height: 1.4rem;
+  }
+  .movie-genre {
+    font-size: 0.8rem;
+  }
+  .btn-small {
+    width: 8rem;
+  }
+  .btn-small:hover {
+    background-color: red !important;
+  }
+}
+
+@media (max-width: 1100px) {
+  .movie-title {
+    font-size: 1.6rem !important;
+  }
+  .movie-description {
+    font-size: 1rem;
+    margin-right: 1rem;
+    line-height: 1.1rem;
+  }
+}
+
+@media (max-width: 670px) {
+  .movie-title {
+    font-size: 1.2rem !important;
+  }
+  .movie-genre {
+    font-size: 0.8rem;
+    line-height: 1rem;
+    margin: 3%;
+  }
+  .movie-description {
+    font-size: 0.9rem !important;
+    line-height: 1.1rem !important;
+  }
 }
 </style>

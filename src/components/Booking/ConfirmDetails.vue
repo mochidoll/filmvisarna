@@ -154,6 +154,11 @@ export default {
     }
   },
   created() {
+    if(!this.bookingObject) {
+      this.$router.replace({
+        path: "/booking/selectTickets/" + this.$route.params.screeningId
+      });
+    }
     this.onAuthStateChangedUnsubscribe = auth.onAuthStateChanged(async user => {
       if (user != null) {
         let doc = await db.collection("users").doc(user.uid);

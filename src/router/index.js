@@ -74,19 +74,19 @@ const routes = [
         component: SelectTickets
       },
       {
-        path: 'selectSeats',
+        path: 'selectSeats/:screeningId',
         name: 'SelectSeats',
         props: true,
         component: SelectSeats
       },
       {
-        path: 'confirmDetails', 
+        path: 'confirmDetails/:screeningId', 
         name: 'ConfirmDetails',
         props: true,
         component: ConfirmDetails
       },
       {
-        path: 'bookingComplete',
+        path: 'bookingComplete/:screeningId',
         name: 'BookingComplete',
         props: true,
         component: BookingComplete
