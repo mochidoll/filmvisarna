@@ -225,7 +225,7 @@ export default {
   padding: 0 !important;
 }
 .select-tickets-wrapper .movie-info{
-  line-height: 0.8;
+  line-height: 1;
   margin: 0 0 0 0 !important;
   padding: 0 0 0 0 !important;
 }
