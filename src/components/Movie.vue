@@ -255,7 +255,9 @@ export default {
 }
 .booking-choice {
   border-radius: 10px;
+  line-height: 1;
   margin: 0.5rem 0 !important;
+  padding: 0.5rem !important;
 }
 .booking-choice .time-button {
   border-radius: 10px;
@@ -265,7 +267,9 @@ export default {
 .span-seats-small, .span-seats-large{
  color: lightgray;
 }
-
+.large .dropdown-toggle, .small .dropdown-toggle {
+  background-color: black !important;
+} 
 
 .large .booking-choice p{
   margin: 0.5rem 0!important;
@@ -279,9 +283,6 @@ export default {
 .span-seats-large{
   font-size: 0.8rem;
 }
-
-
-
 
 .small .booking-choice{
   cursor: pointer;
@@ -304,9 +305,6 @@ export default {
   margin: 0 !important;
   padding: 0 !important;
 }
-
-
-
 
 #transparent {
   background-color: rgba(0, 0, 0, 0.6);
