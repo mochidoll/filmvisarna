@@ -74,7 +74,7 @@
             <p
               class="movie-description hide-on-small-only hide-on-large-only"
             >{{ movie.shortDescription }}</p>
-            <p class="movie-description hide-on-med-and-down">{{ movie.description }}</p>
+            <p class="movie-description hide-on-med-and-down">{{ movie.shortDescription }}</p>
 
             <div v-for="screen in screeningMovies" :key="screen.id">
               <div class="timeButton col" v-if="screen.movieId == movie">
@@ -343,6 +343,7 @@ li .dropdown-toggle {
   background-image: none !important;
   background-image: none !important;
 }
+
 .mediumrow {
   /* background-color: ; */
 }
