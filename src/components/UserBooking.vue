@@ -10,8 +10,8 @@
         <h5 class="col s7"> <b>{{ movie.title}} </b></h5>
         <span class="col s7">Datum: {{ screening.startTime.toDate().toLocaleDateString() }}</span>
         <span class="col s7">Tid: {{ screening.startTime.toDate().getHours() }}:00</span>
-       <span class="col s7">Bokningsnummer: {{ bookingObject.id.slice(-6) }}</span>
-      <span class="col s7">Pris: {{ bookingObject.totalTicketPrice }}</span>
+      <span class="col s7">Pris: {{ bookingObject.totalTicketPrice }} kronor</span>
+       <span class="col s7"><b>Bokningsnummer: {{ bookingObject.id.slice(-6) }}</b></span>
     </div>
 
 </div>
