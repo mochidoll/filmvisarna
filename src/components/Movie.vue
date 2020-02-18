@@ -32,19 +32,19 @@
     <div class="row time-choices large hide-on-small-only">
       <dropdown
         :options="dates"
-        class="options col s4 offset-s1"
+        class="options col s4 push-s1"
         :selected="chosenDate"
         v-on:updateOption="updateChosenDate"
         :placeholder="'Select a Date'"
       ></dropdown>
 
       <div v-for="time in times" :key="time.id">
-        <div class="booking-choice col s10 offset-s1 red darken-4 white-text valign-wrapper">
+        <div class="booking-choice col s10 push-s1 red darken-4 white-text valign-wrapper">
           <div class="booking-info col s9 white-text">
-            <p>
-              <span class="span-time">{{time.time}}</span> |
-              <span class="span-audi">{{ time.auditorium }}</span> -
-              <span class="span-seats">{{ emptyAvailableSeats(time.screening) }} platser kvar</span>
+            <p class="">
+              <span class="span-time-large">{{time.time}} | </span>
+              <span class="span-audi-large">{{ time.auditorium }}</span> -
+              <span class="span-seats-large">{{ emptyAvailableSeats(time.screening) }} platser kvar</span>
             </p>
           </div>
 
@@ -238,42 +238,47 @@ export default {
   display: block;
   margin-top: 0 !important;
 }
-.time-choices-large .booking-choice {
+.booking-choice {
   border-radius: 10px;
-}
-.time-choices .booking-choice {
-  border-radius: 10px;
-}
-.time-choices-large p {
-  font-size: 1.2rem;
-  margin: 0.5rem 0;
+  margin: 0.5rem 0 !important;
 }
 .booking-choice .time-button {
   border-radius: 10px;
   margin: 0;
+  padding: 0 !important;
 }
-.time-choices-large .span-seats {
-  font-size: 0.8rem !important;
+.span-seats-small, .span-seats-large{
+ color: lightgray;
 }
-.booking-choice{
-  margin: 0.5rem 0 !important;
+
+
+.large .booking-choice p{
+  margin: 0.5rem 0!important;
 }
+.span-time-large{
+  font-size: 1.4rem;
+}
+.span-audi-large{
+  font-size: 1.2rem;
+}
+.span-seats-large{
+  font-size: 0.8rem;
+}
+
+
 
 
 .small .booking-choice{
   cursor: pointer;
 }
-.small .time-button{
-  padding: 0 !important;
-}
 .span-seats-small{
   font-size: 0.8rem;
 }
 .span-audi-small{
-  font-size: 1.3rem;
+  font-size: 1.2rem;
 }
 .booking-info-time-small{
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   margin: 0 !important;
   padding: 0 !important;
 }
@@ -284,6 +289,8 @@ export default {
   margin: 0 !important;
   padding: 0 !important;
 }
+
+
 
 
 #transparent {
