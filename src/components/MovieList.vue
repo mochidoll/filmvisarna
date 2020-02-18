@@ -49,7 +49,7 @@
           <div v-for="screen in screeningMovies" :key="screen.id">
             <div class="timeButton col" v-if="screen.movieId == movie">
               <div
-                class="btn-small"
+                class="btn-small black"
                 v-if="screen.date.name === chosenDate.name"
                 @click="bookMovie(screen.screeningId)"
               >
@@ -362,7 +362,11 @@ li .dropdown-toggle {
   }
   .btn-small {
     width: 8rem;
+
   }
+  .btn-small:hover {
+  background-color: red !important;
+}
 }
 
 @media (max-width: 1100px) {
