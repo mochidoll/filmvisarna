@@ -344,7 +344,7 @@ li .dropdown-toggle {
   background-image: none !important;
 }
 .mediumrow {
-  background-color: ;
+  /* background-color: ; */
 }
 @media only screen and (min-width: 893px) {
   .movie-image {
