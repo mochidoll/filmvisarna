@@ -1,6 +1,6 @@
 <template>
   <div class="container confirm-booking center">
-    <div class="row inner-container">
+    <div class="row inner-container white black-text">
       <h5 class="center col s12">Bokningsnummer: {{ bookingObject.id.slice(-6) }}</h5>
 
       <div class="col l6 m6 s12 image-container">

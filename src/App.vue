@@ -1,12 +1,13 @@
 <template>
   <div id="app">
-    <nav class="nav-wrapper red darken-4">
+    <nav class="nav-wrapper black">
       <div class="container">
         <router-link class="brand-logo" to="/">
           <div>
             <img class="logo responsive-img" src="@/assets/images/Cinemalogo.png" alt />
           </div>
         </router-link>
+  
 
         <a href="#" data-target="slide-out" class="sidenav-trigger">
           <i class="material-icons">menu</i>
@@ -29,6 +30,7 @@
             <router-link to="/secure">Min Sida</router-link>
           </li>
         </ul>
+        
 
         <ul id="slide-out" class="sidenav">
           <li>
@@ -47,7 +49,16 @@
             <router-link to="/secure">Min Sida</router-link>
           </li>
         </ul>
+        
       </div>
+      <ul class="hide-on-large-only right">
+           <li v-if="user === null">
+            <router-link to="/login"><i class="material-icons white-text large">exit_to_app</i></router-link>
+          </li>
+          <li v-else>
+            <router-link to="/"><i class="material-icons large" @click="logOut">arrow_back</i></router-link>
+          </li>
+        </ul>
     </nav>
 
     <div id="main">
@@ -87,6 +98,11 @@ export default {
   computed: {
     logUser() {
       return auth.currentUser;
+    }
+  },
+  methods:{
+    logOut(){
+       auth.signOut().then(this.$router.push("Login"));
     }
   },
   created() {
