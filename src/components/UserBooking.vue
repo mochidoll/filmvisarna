@@ -6,17 +6,19 @@
       </div>
 
       <div class="text-container">
-        <h5 class="col s7">
-          <b>{{ movie.title}}</b>
+        <h5 class=""><b>
+          {{ movie.title}}
+          </b>
         </h5>
-        <span class="col s7">Datum: {{ screening.startTime.toDate().toLocaleDateString() }}</span>
-        <span class="col s7">Tid: {{ screening.startTime.toDate().getHours() }}:00</span>
-        <span class="col s7">Pris: {{ bookingObject.totalTicketPrice }} kronor</span>
-        <span class="col s7 bookingnr">
+        <p class="col s7">Datum: {{ screening.startTime.toDate().toLocaleDateString() }}</p>
+        <p class="col s7">Tid: {{ screening.startTime.toDate().getHours() }}:00</p>
+        <p class="col s7">Pris: {{ bookingObject.totalTicketPrice }} kronor</p>
+        <p class="col s7 bookingnr">
           <b>Bokningsnummer: {{ bookingObject.id.slice(-6) }}</b>
-        </span>
+        </p>
       </div>
     </div>
+        <i v-if="!isHidden" @click="toggleInfo" class="material-icons medium col s2 black-text test">navigate_next</i>
 
     <div
       class="inner-container white black-text test left-align"
@@ -44,6 +46,7 @@
         :key="id"
       >rad {{ seat.y + 1 }}, plats {{ seat.x}}</span>
     </div>
+    <i v-if="isHidden" @click="toggleInfo" class="material-icons medium col s2 black-text left">navigate_before</i>
   </div>
 </template>
 
@@ -113,8 +116,10 @@ export default {
   border-radius: 15px;
   padding-right: 0 !important;
 }
-.text-container span {
+.text-container p {
   padding-right: 0 !important;
+  padding-left: 3% !important;
+  margin: 0 !important;
 }
 .outer-container {
   border-radius: 15px;
@@ -146,6 +151,13 @@ export default {
 h5 {
   margin-top: 1% !important;
   margin-bottom: 0.5% !important;
+  padding-left: 3% !important;
+}
+h5 b{
+   padding-left: 3% !important;
+}
+.test{
+  padding-left: 0 !important;
 }
 
 .bookingnr{
@@ -164,7 +176,7 @@ h5 {
    height: calc(100vh / 5);
   }
 }
-@media screen and (max-width: 370px) {
+@media screen and (max-width: 376px) {
   .my-bookings {
     font-size: 0.7rem;
   }
