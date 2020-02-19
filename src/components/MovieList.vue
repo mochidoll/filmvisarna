@@ -1,14 +1,14 @@
 <template>
   <div class="movie-list">
-    <h2 class="center" v-if="dateToday === chosenDate.name">
-      <strong>Visas Idag</strong>
-    </h2>
-    <h2 class="center" v-else-if="chosenDate.name < dateToday">
-      <strong>Visades {{chosenDate.name}}</strong>
-    </h2>
-    <h2 class="center" v-else>
-      <strong>Visas {{chosenDate.name}}</strong>
-    </h2>
+    <h4 class="center" v-if="dateToday === chosenDate.name">
+      <strong>Visas Idag, {{ dateChosenWeekday }}en den {{chosenDate.name}}</strong>
+    </h4>
+    <h4 class="center" v-else-if="chosenDate.name < dateToday">
+      <strong>Visades {{ dateChosenWeekday }}en den {{chosenDate.name}}</strong>
+    </h4>
+    <h4 class="center" v-else>
+      <strong>Visas {{ dateChosenWeekday }}en den {{chosenDate.name}}</strong>
+    </h4>
     <!-- <div class="date white-text center">
       <p>Dagens datum: ({{ dayToday }}, {{ dateToday }})</p>
     </div> -->
@@ -126,6 +126,28 @@ export default {
     dropdown: dropdown
   },
   computed: {
+    dateChosenWeekday(){
+      let weekDayNr = new Date(this.chosenDate.name).getDay()
+
+      switch(weekDayNr){
+        case 0:
+          return 'Söndag'
+        case 1:
+          return 'Måndag'
+        case 2:
+          return 'Tisdag'
+        case 3:
+          return 'Onsdag'
+        case 4:
+          return 'Torsdag'
+        case 5:
+          return 'Fredag'
+        case 6:
+          return 'Lördag'
+        default:
+          return null
+      } 
+    },
     dayToday() {
       return moment().format("dddd");
     },
@@ -310,7 +332,7 @@ export default {
 .movie{
   cursor: pointer;
 }
-h2 {
+h4 {
   margin: 0.6rem;
   color: white;
 }
