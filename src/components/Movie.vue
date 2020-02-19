@@ -64,7 +64,7 @@
       <div class="col s12 dropdown-wrapper">
         <dropdown
           :options="dates"
-          class="options col s4"
+          class="options col"
           :selected="chosenDate"
           v-on:updateOption="updateChosenDate"
           :placeholder="'Select a Date'"
