@@ -6,7 +6,7 @@
       <img src="@/assets/images/cinema.png" alt="cinema-screen" class="col s12" />
     </div>
 
-    <div class="row seat-wrapper" v-if="auditoriums">
+    <div class="row seat-wrapper">
       <div class="center col s12" v-for="(row, y, id) in bookedSeats" :key="'row' + y + id">
         <Seat
           v-for="(seat, x, id) in row"
@@ -25,29 +25,13 @@
       <div class="nav-buttons row col s12">
         <button
           @click="goBackToSelectTickets"
-          class="col s5 m3 l3 offset-m1 offset-l1 btn waves-effect waves-light red darken-4 white-text"
+          class="col s5 m3 l3 offset-m1 offset-l1 btn waves-effect waves-light black select-seats-buttons"
         >Tillbaka</button>
         <button
           @click="goToConfirmDetails"
-          class="col s5 m3 l3 offset-s2 offset-l4 offset-m4 btn waves-effect waves-light red darken-4 white-text"
+          class="col s5 m3 l3 offset-s2 offset-l4 offset-m4 btn waves-effect waves-light black select-seats-buttons"
           :class="{disabled:!hasAllSeatsSelected}"
         >Gå vidare</button>
-      </div>
-    </div>
-
-    <div class="center" v-else>
-      <div class="preloader-wrapper active big">
-        <div class="spinner-layer spinner-red-only center">
-          <div class="circle-clipper left">
-            <div class="circle"></div>
-          </div>
-          <div class="gap-patch">
-            <div class="circle"></div>
-          </div>
-          <div class="circle-clipper right">
-            <div class="circle"></div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -165,6 +149,10 @@ export default {
 <style>
 .seat-wrapper {
   user-select: none;
+}
+
+.select-seats-buttons{
+  border-radius: 12px !important;
 }
 
 .nav-buttons {
