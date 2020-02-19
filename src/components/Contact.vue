@@ -10,7 +10,7 @@
 
         <div class="aside-text">
           <i class="material-icons tiny left">email</i>
-          <p>info@bfilmvisarna.com</p>
+          <p>info@filmvisarna.com</p>
         </div>
 
         <div class="aside-text">
