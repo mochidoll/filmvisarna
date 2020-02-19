@@ -174,6 +174,10 @@ export default {
 .booking-wrapper{
   border-radius: 15px;
 }
+.forward i{
+  padding: 0 0 0 0 !important;
+  margin: 0 0 0 -0.5em !important; 
+}
 .wait-spinner {
  height: 60vh;
 justify-content: center;
