@@ -1,11 +1,17 @@
 <template>
   <div class="movie-list">
-    <!-- <div class="date">
-      <p>Today's date: ({{ dayToday }}, {{ dateToday }})</p>
-    </div>-->
-    <h2 class="center">
-      <strong>VISAS NU</strong>
+    <h2 class="center" v-if="dateToday === chosenDate.name">
+      <strong>Visas Idag</strong>
     </h2>
+    <h2 class="center" v-else-if="chosenDate.name < dateToday">
+      <strong>Visades {{chosenDate.name}}</strong>
+    </h2>
+    <h2 class="center" v-else>
+      <strong>Visas {{chosenDate.name}}</strong>
+    </h2>
+    <!-- <div class="date white-text center">
+      <p>Dagens datum: ({{ dayToday }}, {{ dateToday }})</p>
+    </div> -->
 
     <div class="center">
       <div class="filters valign-wrapper">
@@ -38,7 +44,7 @@
         <div class="col s3 container" @click="goToMovie(movie)">
           <img class="col s12 responsive-img" :src="movie.image" />
         </div>
-        <div class="movieCard col s9">
+        <div class="movieCard col s9" @click="goToMovie(movie)">
           <h6 class="flow-text movie-title">
             <strong>{{ movie.title }}</strong>
           </h6>
@@ -53,7 +59,7 @@
               <div
                 class="btn-small hoverFX"
                 v-if="screen.date.name === chosenDate.name"
-                @click="bookMovie(screen.screeningId)"
+                @click.stop="bookMovie(screen.screeningId)"
               >
                 <strong>{{screen.time}}</strong>
               </div>
@@ -68,7 +74,7 @@
           <div class="col s3 container" @click="goToMovie(movie)">
             <img class="col s12 responsive-img movie-image" :src="movie.image" />
           </div>
-          <div class="movieCard2 col s9">
+          <div class="movieCard2 col s9" @click="goToMovie(movie)">
             <h6 class="flow-text movie-title">
               <strong>{{ movie.title }}</strong>
             </h6>
@@ -83,7 +89,7 @@
                 <div
                   class="btn-small hoverFX"
                   v-if="screen.date.name === chosenDate.name"
-                  @click="bookMovie(screen.screeningId)"
+                  @click.stop="bookMovie(screen.screeningId)"
                 >
                   <strong>{{screen.time}}</strong>
                 </div>
@@ -124,7 +130,7 @@ export default {
       return moment().format("dddd");
     },
     dateToday() {
-      return moment().format("ll");
+      return moment().format("L");
     },
     movies() {
       return this.$store.state.movies;
@@ -301,7 +307,9 @@ export default {
 .hoverFX:hover {
   background-color: #820e0c;
 }
-
+.movie{
+  cursor: pointer;
+}
 h2 {
   margin: 0.6rem;
   color: white;
