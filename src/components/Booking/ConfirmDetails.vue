@@ -85,11 +85,11 @@ export default {
       return this.validEmail || this.user.uid;
     },
     bookingUser() {
-      this.$store.state.users.forEach( user => {
+         for (let user of this.$store.state.users) {
         if (auth.currentUser.uid === user.id) {
           return user;
         }
-      });
+      }
       return null;
     }
   },
@@ -118,6 +118,7 @@ export default {
           screeningId: this.bookingObject.screeningId,
           email: this.bookingObject.email,
           seats: this.bookingObject.seatPositions,
+          totalTicketPrice: this.bookingObject.totalTicketPrice,
           timeStamp: new Date()
         })
         .then(ref => {
