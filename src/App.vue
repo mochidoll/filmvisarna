@@ -32,7 +32,7 @@
         </ul>
         
 
-        <ul id="slide-out" class="sidenav black center">
+        <ul id="slide-out" class="sidenav sidenav-close black center">
           <img class="logo responsive-img sidebarlogo" src="@/assets/images/Cinemalogo.png" alt />
 
           <li>
