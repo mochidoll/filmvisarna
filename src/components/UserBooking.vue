@@ -1,8 +1,8 @@
 <template>
-  <div class="my-bookings" >
+  <div class="my-bookings white" >
 
-     <div class="white black-text" @click="isHidden = true" v-if="!isHidden">   
-      <div class="col s5 image-container">
+     <div class=" outer-container white black-text" @click="isHidden = true" v-if="!isHidden">   
+      <div class="col s3 image-container">
         <img :src="movie.image" alt class="responsive-img image" />
       </div>
 
@@ -17,10 +17,13 @@
 </div>
    
     <div class="inner-container white black-text test left-align" v-if="isHidden" @click="isHidden = false">
+       <div class="col s3 image-container hidden-image right">
+        <img :src="movie.image" alt class="responsive-img image" />
+      </div>
       <h5 class="col s9 ">Biljetter</h5>
-       <span class="col s9" v-if="bookingObject.adultTickets">{{ bookingObject.adultTickets}} x vuxenbiljett, </span>
-        <span class="col s9" v-if="bookingObject.childTickets">{{ bookingObject.childTickets }} x barnbiljett</span>
-        <span class="col s9" v-if="bookingObject.seniorTickets">{{bookingObject.seniorTickets }} x pensionär</span>
+       <p class="col s9" v-if="bookingObject.adultTickets">{{ bookingObject.adultTickets}} x vuxenbiljett </p>
+        <p class="col s9" v-if="bookingObject.childTickets">{{ bookingObject.childTickets }} x barnbiljett</p>
+        <p class="col s9" v-if="bookingObject.seniorTickets">{{bookingObject.seniorTickets }} x pensionär</p>
         <h5 class="col s9">Platser</h5>
         <span class="col s9"
           v-for="(seat, id) in bookingObject.seats"
@@ -73,29 +76,30 @@ export default {
 </script>
 <style scoped>
 .my-bookings{
-  border: red 2px solid;
+  border-radius: 15px;
  
+}
+.outer-container{
+  border-radius: 15px;
 }
 .image{
 width: 100%;
-min-height: 185px !important;
 
-
+}
+.hidden-image{
+opacity: 0;
 }
 .inner-container{
-  border-radius: 10px;
-  max-height: 50% !important;
-}
-.test{
-  border: goldenrod 2px solid;
-}
-.hidden-img{
-  opacity: 0;
-  width: 5%;
+ border-radius: 15px;
 }
 .image-container{
   margin: 0 !important;
   padding: 0 !important;
+ 
+}
+.row{
+  padding: 0 !important;
+  margin: 1rem !important;
 }
 
 </style>

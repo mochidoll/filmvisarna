@@ -1,5 +1,5 @@
 <template>
-  <div id="secure">
+  <div id="secure center">
     <div class="outer-container container" id="transparent">
       <h4 class="center">{{this.user.displayName}}</h4>
       <div class="divider"></div>
@@ -9,8 +9,6 @@
      <div >
         <div  v-for="booking in userBookings" :key="booking.id">
           <user-booking class="valign-wrapper row" :booking-object="booking" />
-        
-  
         </div>
       </div>
   </div>
