@@ -1,16 +1,15 @@
 <template>
-  <div>
     <section class="select-tickets-wrapper row">
+
       <div class="col s12 m6 l6 movie-info-wrapper valign-wrapper left-align">
-        <div class="col l6 m6 s6 movie-image">
+        <div class="col s6 m6 l6 movie-image">
           <img :src="movieChosen.image" alt class="responsive-img" />
         </div>
         <div class="col s6 m6 l6 movie-info">
-          <p>Titel: {{ movieChosen.title }}</p>
-          <p>Längd: {{ movieChosen.length }} min</p>
+          <p class="movie-title">{{ movieChosen.title }}</p>
           <p>Datum: {{ screeningChosen.startTime.toDate().toLocaleDateString() }}</p>
           <p>Tid: {{ screeningChosen.startTime.toDate().getHours() }}:00</p>
-          <p>Salong: {{ auditorium.name }}</p>
+          <p>{{ auditorium.name }}</p>
           <p
             v-if="emptyAvailableSeats > 0"
             :class="{'red-text': emptyAvailableSeats < 5}"
@@ -19,75 +18,72 @@
           <p v-else class="red-text">
             <b>Fullbokat</b>
           </p>
-          <p>
-            <b>Totalt pris: {{ totalTicketPrice }}:-</b>
-          </p>
         </div>
       </div>
 
       <div class="col s12 m6 l6 select-tickets-container">
+
         <div class="col s12 select-tickets valign-wrapper">
-          <span class="col s12 m5 type-of-tickets">Vuxen: {{adultTicketPrice}}:-</span>
-          <div class="col s12 m7 buttons">
+          <span class="col s6 m5 type-of-tickets">Vuxen: {{adultTicketPrice}}:-</span>
+          <div class="col s6 m7 buttons">
             <a class="btn-floating disabled btn-small" v-if="adultTickets === 0">
               <i class="material-icons">remove</i>
             </a>
-            <a class="btn-floating red btn-small darken-4" v-else @click="removeAdultTicket()">
+            <a class="btn-floating black btn-small" v-else @click="removeAdultTicket()">
               <i class="material-icons">remove</i>
             </a>
             <span class="show-nr-of-tickets">{{ adultTickets }}</span>
-            <a class="btn-floating red btn-small darken-4" @click="addAdultTicket()" :class="{disabled: numberOfTickets === emptyAvailableSeats}">
+            <a class="btn-floating black btn-small" @click="addAdultTicket()" :class="{disabled: numberOfTickets === emptyAvailableSeats}">
               <i class="material-icons">add</i>
             </a>
           </div>
         </div>
 
         <div class="col s12 select-tickets valign-wrapper">
-          <span class="col s12 m5 type-of-tickets">Barn: {{childTicketPrice}}:-</span>
-          <div class="col s12 m7 buttons">
+          <span class="col s6 m5 type-of-tickets">Barn: {{childTicketPrice}}:-</span>
+          <div class="col s6 m7 buttons">
             <a class="btn-floating disabled btn-small" v-if="childTickets === 0">
               <i class="material-icons">remove</i>
             </a>
-            <a class="btn-floating red btn-small darken-4" v-else @click="removeChildTicket()">
+            <a class="btn-floating black btn-small" v-else @click="removeChildTicket()">
               <i class="material-icons">remove</i>
             </a>
             <span class="show-nr-of-tickets">{{ childTickets }}</span>
-            <a class="btn-floating red btn-small darken-4" @click="addChildTicket()" :class="{disabled: numberOfTickets === emptyAvailableSeats}">
+            <a class="btn-floating black btn-small" @click="addChildTicket()" :class="{disabled: numberOfTickets === emptyAvailableSeats}">
               <i class="material-icons">add</i>
             </a>
           </div>
         </div>
 
         <div class="col s12 select-tickets valign-wrapper">
-          <span class="col s12 m5 type-of-tickets">Pensionär: {{seniorTicketPrice}}:-</span>
-          <div class="col s12 m7 buttons">
+          <span class="col s6 m5 type-of-tickets">Pensionär: {{seniorTicketPrice}}:-</span>
+          <div class="col s6 m7 buttons">
             <a class="btn-floating disabled btn-small" v-if="seniorTickets === 0">
               <i class="material-icons">remove</i>
             </a>
-            <a class="btn-floating red btn-small darken-4" v-else @click="removeSeniorTicket()">
+            <a class="btn-floating black btn-small" v-else @click="removeSeniorTicket()">
               <i class="material-icons">remove</i>
             </a>
             <span class="show-nr-of-tickets">{{ seniorTickets }}</span>
-            <a class="btn-floating red btn-small darken-4" @click="addSeniorTicket()" :class="{disabled: numberOfTickets === emptyAvailableSeats}">
+            <a class="btn-floating black btn-small" @click="addSeniorTicket()" :class="{disabled: numberOfTickets === emptyAvailableSeats}">
               <i class="material-icons">add</i>
             </a>
           </div>
         </div>
       </div>
 
+        <div class="col s12 total-price">
+          <p class="col s12 m4 push-m8"> Totalpris: <b>{{ totalTicketPrice }}:-</b></p>
+        </div>
+
       <div class="row col s12 nav-buttons">
         <button
-          @click="goBackToHome"
-          class="col s5 m3 l2 offset-m1 offset-l1 btn waves-effect waves-light red darken-4 white-text"
-        >Avbryt</button>
-        <button
-          class="col s5 m3 l2 offset-s2 offset-l6 offset-m4 btn waves-effect waves-light red darken-4 white-text"
+          class="col s12 m4 l4 push-m8 push-l8  btn waves-effect waves-light black white-text"
           :class="{disabled:(numberOfTickets === 0 || numberOfTickets > emptyAvailableSeats)}"
           @click="continueToSelectSeats"
         >Gå vidare</button>
       </div>
     </section>
-  </div>
 </template>
 
 <script>
@@ -207,94 +203,135 @@ export default {
 
 <style>
 .select-tickets-wrapper {
-  margin-top: 3rem;
+  margin: 1rem 0 0 0 !important;
   position: relative;
   user-select: none;
-}
-.movie-image img {
-  border-radius: 5px;
 }
 .select-tickets-wrapper h5 {
   margin: 2rem 0;
 }
-.select-tickets-wrapper .select-tickets {
-  margin: 1rem 0 0;
-}
 .select-tickets-wrapper p {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  font-size: 0.8rem;
   margin: 0 0 0.5rem 0;
 }
-
+ .select-tickets-wrapper .select-tickets-container {
+   padding: 0 !important;
+ }
+ .select-tickets-wrapper .select-tickets-container div, .select-tickets-wrapper .select-tickets-container span {
+   padding: 0 !important;
+ }
+.select-tickets-wrapper .movie-info-wrapper{
+  margin: 0 0 2em 0!important;
+  padding: 0 !important;
+}
+.select-tickets-wrapper .movie-info{
+  line-height: 1;
+  margin: 0 0 0 0 !important;
+  padding: 0 0 0 0 !important;
+}
+.select-tickets-wrapper .movie-title{
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1.3rem;
+}
+.select-tickets-wrapper .movie-image{
+  margin: 0 1.5rem 0 0 !important;
+  padding: 0 0 0 2rem !important;
+}
 .select-tickets-wrapper .show-nr-of-tickets {
   margin: 0 0.5rem;
 }
-
 .select-tickets-wrapper .select-tickets .buttons {
   padding: 0;
 }
-
 .select-tickets-wrapper .nav-buttons {
-  margin: 2rem 0 1rem !important;
+  margin: 0.5rem 0 0 !important;
 }
+.select-tickets-wrapper .nav-buttons button {
+   border-radius: 12px;
+}
+.select-tickets-wrapper .total-price p{
+  font-size: 1.5em;
+  margin: 1rem 0 0 0 !important;
+}
+.movie-image img {
+  border-radius: 5px;
+}
+
 
 @media screen and (min-width: 600px) {
   .select-tickets-wrapper .select-tickets-container {
     display: block;
     position: relative;
-    top: 30px;
+    top: 20px;
     left: 0px !important;
+  }
+  .select-tickets-wrapper .movie-title{
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1.3rem;
+  }
+  .select-tickets-wrapper p {
+  font-size: 0.8rem;
+  margin: 0 0 0.5rem 0;
   }
 }
 
 @media screen and (min-width: 750px) {
   .select-tickets-wrapper .select-tickets-container {
-    display: block;
-    position: relative;
-    top: 30px;
-    left: 40px !important;
+    top: 40px;
+    left: 10px !important;
+  }
+  .select-tickets-wrapper .movie-title{
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.3rem;
+  }
+  .select-tickets-wrapper p {
+  font-size: 1rem;
+  margin: 0 0 0.5rem 0;
   }
 }
 
 @media screen and (min-width: 850px) {
   .select-tickets-wrapper .select-tickets-container {
-    display: block;
-    position: relative;
-    top: 30px;
-    left: 40px !important;
+    top: 60px;
+    left: 30px !important;
   }
+  .select-tickets-wrapper p {
+  font-size: 1.2rem;
+  line-height: 1;
+  }
+  .select-tickets-wrapper .type-of-tickets{
+    font-size: 1.2rem;
+  }
+  .select-tickets-wrapper .show-nr-of-tickets {
+    font-size: 1.2rem;
+}
 }
 
 @media screen and (min-width: 950px) {
   .select-tickets-wrapper .select-tickets-container {
-    display: block;
-    position: relative;
-    top: 40px;
-    left: 50px !important;
+    top: 70px;
+    left: 20px !important;
   }
 }
-
 @media screen and (min-width: 1150px) {
   .select-tickets-wrapper .select-tickets-container {
-    display: block;
-    position: relative;
-    top: 50px;
-    left: 50px !important;
+    top: 75px;
+    left: 20px !important;
   }
 }
 
 @media screen and (min-width: 1250px) {
   .select-tickets-wrapper .select-tickets-container {
-    display: block;
-    position: relative;
-    top: 60px;
-    left: 50px !important;
+    top: 85px;
+    left: 30px !important;
   }
 }
 
 @media screen and (min-width: 1350px) {
   .select-tickets-wrapper .select-tickets-container {
-    display: block;
-    position: relative;
     top: 70px;
     left: 50px !important;
   }
@@ -302,9 +339,7 @@ export default {
 
 @media screen and (min-width: 1450px) {
   .select-tickets-wrapper .select-tickets-container {
-    display: block;
-    position: relative;
-    top: 85px;
+    top: 115px;
     left: 50px !important;
   }
 }

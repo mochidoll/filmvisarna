@@ -1,18 +1,18 @@
 <template>
   <div class="container center">
-    <div class="row z-depth-1 white" v-if="loadTicketContent">
-      <div class="booking nav-wrapper">
+    <div class="booking-wrapper row z-depth-1 white" v-if="loadTicketContent">
+      <div v-if="showOrNot" class="booking nav-wrapper">
         <div v-if="!showErrorText" class="row nav-choices valign-wrapper">
           <div
             @click="back"
-            v-if="showOrNot"
+            v-if="(showOrNot && !hideArrow)"
             class="row col s2 m4 nav-buttons backwards left-align valign-wrapper"
           >
             <i class="col s2 material-icons left-align">arrow_back_ios</i>
             <h6 class="col s10 hide-on-small-only">{{ before }}</h6>
           </div>
 
-          <h4 v-if="showOrNot" class="col s8 m4 nav-text center">{{navText}}</h4>
+          <h4 v-if="showOrNot" class="col s8 m4 nav-text">{{navText}}</h4>
 
           <div
             @click="forward"
@@ -129,6 +129,9 @@ export default {
   },
 
   computed: {
+    hideArrow() {
+      return this.navText === this.$store.state.navTexts[1]
+    },
     loadTicketContent() {
       return (
         this.$store.state.screenings[0] &&
@@ -168,6 +171,9 @@ export default {
 </script>
 
 <style>
+.booking-wrapper{
+  border-radius: 15px;
+}
 .wait-spinner {
  height: 60vh;
 justify-content: center;

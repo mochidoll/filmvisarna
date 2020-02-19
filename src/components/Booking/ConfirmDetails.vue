@@ -1,37 +1,44 @@
 <template>
-  <div class="container confirm-booking center">
+  <div class="container confirm-booking">
     <div class="row inner-container">
-      <h4 class="center col s12">Kontrollera din bokning.</h4>
+   
+      <div class="movie-info-wrapper valign-wrapper">
+        <div class="col s5 image-wrapper">
+          <img :src="bookingObject.movie.image" alt class="responsive-img" />
+        </div>
 
-      <div class="col l6 m6 s12 image-container">
-        <img :src="bookingObject.movie.image" alt class="responsive-img" />
+        <div class="text-wrapper col s7">
+          <p class="movie-title">{{ bookingObject.movie.title }}</p>
+          <p>Datum: {{ bookingObject.screening.startTime.toDate().toLocaleDateString() }}</p>
+          <p>Tid: {{ bookingObject.screening.startTime.toDate().getHours() }}:00</p>
+          <p>{{ bookingObject.auditorium.name }}</p>
+          <p><b>Totalt pris: {{ bookingObject.totalTicketPrice}} kr</b></p> 
+        </div>
       </div>
 
-      <div class="left-align text-container col l6 m6 s12 center">
-        <p>Titel: {{ bookingObject.movie.title }}</p>
-        <p>Längd: {{ bookingObject.movie.length }} min</p>
-        <p>Datum: {{ bookingObject.screening.startTime.toDate().toLocaleDateString() }}</p>
-        <p>Tid: {{ bookingObject.screening.startTime.toDate().getHours() }}:00</p>
-        <p>Salong: {{ bookingObject.auditorium.name }}</p>
-        <p v-if="bookingObject.adultTickets">Vuxenbiljetter: {{ bookingObject.adultTickets}}</p>
-        <p v-if="bookingObject.childTickets">Barnbiljetter: {{ bookingObject.childTickets }}</p>
-        <p v-if="bookingObject.seniorTickets">Pensionärsbiljetter: {{bookingObject.seniorTickets }}</p>
-        <p
-          v-for="(seat, id) in bookingObject.seatPositions"
-          :key="id"
-        >Parkett: rad {{ seat.y + 1 }}, plats {{ seat.x}}</p>
-        <p>
-          <b>Totalt pris: {{ bookingObject.totalTicketPrice}} kr</b>
-        </p>
+      <div class="booking-detail-wrapper left-align col s12">
+        <div class="ticket-details col s6">
+          <p class="tickets"><b>Biljetter:</b></p>
+          <p v-if="bookingObject.adultTickets">Vuxenbiljetter: {{ bookingObject.adultTickets}}</p>
+          <p v-if="bookingObject.childTickets">Barnbiljetter: {{ bookingObject.childTickets }}</p>
+          <p v-if="bookingObject.seniorTickets">Pensionärsbiljetter: {{bookingObject.seniorTickets }}</p>
+        </div>
+        <div class="seat-details col s6">
+          <p class="seats"><b>Platser:</b></p>
+          <p
+            v-for="(seat, id) in bookingObject.seatPositions"
+            :key="id"
+          >
+          Rad {{ seat.y + 1 }}, Plats {{ seat.x}}
+          </p>
+        </div>
       </div>
 
       <div v-if="!user.uid" class="extra-info col s12">
-        <p class="span">Ange din email för att slutföra bokningen.</p>
-
         <div class="input-field col m7 offset-m2">
           <i class="material-icons prefix">email</i>
           <input v-model="emailInput" id="icon_prefix" class type="email" />
-          <label for="icon_prefix">Email</label>
+          <label for="icon_prefix"><i>Skriv in din email här</i></label>
           <span class="helper-text" data-error="Felaktig email, var god skriv in igen."></span>
         </div>
       </div>
@@ -40,12 +47,12 @@
     <div class="nav-buttons col s12">
       <button
         @click="backToSelectSeats"
-        class="btn waves-effect waves-light red darken-4 col s3 offset-s1"
+        class="btn b1 waves-effect waves-light black col s6 m4"
       >Tillbaka</button>
       <button
         :class="{disabled: !enableContinueButton}"
         @click="confirmBooking(); updateBookedSeats()"
-        class="btn waves-effect waves-light red darken-4 col s3 offset-s4"
+        class="btn b2 waves-effect waves-light black col s6 m4 push-m4"
       >Bekräfta</button>
     </div>
   </div>
@@ -177,31 +184,67 @@ export default {
   }
 };
 </script>
-
 <style>
-.confirm-booking .inner-container {
-  border: 2px solid rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  margin-top: 1rem;
-  padding: 3rem 1rem 1rem;
-}
-.confirm-booking h4 {
-  margin: 1rem 0 1.5rem !important;
-}
-.confirm-booking .text-container p {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  font-size: 1rem !important;
-  margin: 0 0 0.5rem 0;
-}
-.confirm-booking img {
-  border-radius: 5px;
-  max-height: 40vh;
-}
 
-.confirm-booking .nav-buttons {
-  margin-bottom: 1rem;
-}
-.span {
-  margin: 1rem 0 0 !important;
-}
+  .confirm-booking .text-wrapper {
+    text-align: left;
+  }
+  .confirm-booking .text-wrapper p {
+    font-size: 0.8em;
+    margin: 0;
+  }
+
+  .confirm-booking .text-wrapper .movie-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    line-height: 1;
+    margin-bottom: 0.3em;
+  }
+  .confirm-booking .booking-detail-wrapper p {
+    font-size: 0.8em;
+    margin: 0 !important;
+  }
+  .confirm-booking input {
+    margin-bottom: 0!important;
+  }
+  .confirm-booking .input-field {
+    margin-bottom: 0!important;
+  }
+  .confirm-booking .nav-buttons{
+    margin-top: 0 !important;
+  }
+  .confirm-booking .b1{
+    border-radius: 12px 0 0 12px;
+  }
+  .confirm-booking .b2{
+    border-radius: 0 12px 12px 0;
+    border-left: solid 1px lightgray
+  }
+
+  @media screen and (min-width: 600px) {
+    .confirm-booking .text-wrapper {
+      text-align: center;
+    }
+    .confirm-booking .text-wrapper p {
+      font-size: 1.5em;
+    }
+    .confirm-booking .text-wrapper .movie-title {
+      font-size: 2.5em;
+    }
+    .confirm-booking .booking-detail-wrapper {
+      margin-top: 1em;
+      text-align: center
+    }
+    .confirm-booking .booking-detail-wrapper p {
+      font-size: 1.5em;
+    }
+    .confirm-booking .b1{
+      border-radius: 12px;
+      border-right: none
+    }
+    .confirm-booking .b2{
+      border-radius: 12px;
+      border-left: none;
+    }
+  }
 </style>
