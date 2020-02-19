@@ -74,15 +74,15 @@
         </div>
         <div class="footer-text">
           <i class="material-icons tiny">map</i>
-          <span>Gladafilmersvägen 123, 225 89 Småstad, Sverige</span>
+          <span>Kalkstensvägen 3, 225 89 Småstad, Sverige</span>
         </div>
         <div class="footer-text">
           <i class="material-icons tiny">email</i>
-          <span>bfilmer.info@bfilmer.com</span>
+          <span>info@filmvisarna.com</span>
         </div>
         <div class="footer-text">
           <i class="material-icons tiny">phone</i>
-          <span>+467012346789</span>
+          <span>+46 70 12 346 789</span>
         </div>
       </div>
     </footer>
