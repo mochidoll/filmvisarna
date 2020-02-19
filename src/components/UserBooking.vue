@@ -1,48 +1,60 @@
 <template>
-  <div class="my-bookings white" >
-
-     <div class=" outer-container white black-text" @click="isHidden = true" v-if="!isHidden">   
-      <div class="col s3 image-container">
+  <div class="my-bookings white">
+    <div class="outer-container white black-text" @click="toggleInfo" v-if="!isHidden">
+      <div  class="col s3 image-container">
         <img :src="movie.image" alt class="responsive-img image" />
       </div>
 
-      <div class="left-align text-container">
-        <h5 class="col s7"> <b>{{ movie.title}} </b></h5>
+      <div class="text-container">
+        <h5 class="col s7">
+          <b>{{ movie.title}}</b>
+        </h5>
         <span class="col s7">Datum: {{ screening.startTime.toDate().toLocaleDateString() }}</span>
         <span class="col s7">Tid: {{ screening.startTime.toDate().getHours() }}:00</span>
-      <span class="col s7">Pris: {{ bookingObject.totalTicketPrice }} kronor</span>
-       <span class="col s7"><b>Bokningsnummer: {{ bookingObject.id.slice(-6) }}</b></span>
+        <span class="col s7">Pris: {{ bookingObject.totalTicketPrice }} kronor</span>
+        <span class="col s7 bookingnr">
+          <b>Bokningsnummer: {{ bookingObject.id.slice(-6) }}</b>
+        </span>
+      </div>
     </div>
 
-</div>
-   
-    <div class="inner-container white black-text test left-align" v-if="isHidden" @click="isHidden = false">
-       <div class="col s3 image-container hidden-image right">
-        <img :src="movie.image" alt class="responsive-img image" />
-      </div>
-      <h5 class="col s9 ">Biljetter</h5>
-       <p class="col s9" v-if="bookingObject.adultTickets">{{ bookingObject.adultTickets}} x vuxenbiljett </p>
-        <p class="col s9" v-if="bookingObject.childTickets">{{ bookingObject.childTickets }} x barnbiljett</p>
-        <p class="col s9" v-if="bookingObject.seniorTickets">{{bookingObject.seniorTickets }} x pensionär</p>
-        <h5 class="col s9">Platser</h5>
-        <span class="col s9"
-          v-for="(seat, id) in bookingObject.seats"
-          :key="id"
-        >Parkett: rad {{ seat.y + 1 }}, plats {{ seat.x}}</span>
+    <div
+      class="inner-container white black-text test left-align"
+      v-if="isHidden"
+      @click="toggleInfo"
+    >
+     
+      <h5 class="col s9">Biljetter</h5>
+      <span
+        class="col s9"
+        v-if="bookingObject.adultTickets"
+      >{{ bookingObject.adultTickets}}x vuxenbiljett</span>
+      <span
+        class="col s9"
+        v-if="bookingObject.childTickets"
+      >{{ bookingObject.childTickets }}x barnbiljett</span>
+      <span
+        class="col s9"
+        v-if="bookingObject.seniorTickets"
+      >{{bookingObject.seniorTickets }}x pensionär</span>
+      <h5 class="col s9">Platser</h5>
+      <span
+        class="col s9"
+        v-for="(seat, id) in bookingObject.seats"
+        :key="id"
+      >rad {{ seat.y + 1 }}, plats {{ seat.x}}</span>
+    </div>
   </div>
-  </div>
- 
-  
 </template>
 
 <script>
-import {filterItemFromList} from './utils/logicUtils.js'
+import { filterItemFromList } from "./utils/logicUtils.js";
 
 export default {
-  data(){
-    return{
+  data() {
+    return {
       isHidden: false
-    }
+    };
   },
   props: {
     bookingObject: {
@@ -50,56 +62,118 @@ export default {
       required: true
     }
   },
-  methods:{
-    hideInfo(){
-      window.console.log("State " + this.isHidden)
-      if(this.isHidden == false){
-    this.isHidden = true;
-    }
-    else if (this.isHidden == true){
-      this.isHidden = false
-    }
+  methods: {
+    toggleInfo() {
+      this.isHidden = !this.isHidden;
+
+      /* if (!this.isHidden) {
+        setTimeout(() => {
+          this.$refs.cardImage.style.setProperty(
+            "background-image",
+            `url(${this.movie.image})`
+          );
+        }, 5);
+      } */
     }
   },
   computed: {
     screening() {
-      return filterItemFromList(this.$store.state.screenings, this.bookingObject.screeningId)
-  },
+      return filterItemFromList(
+        this.$store.state.screenings,
+        this.bookingObject.screeningId
+      );
+    },
     movie() {
-      return filterItemFromList(this.$store.state.movies, this.screening.movieId)
+      return filterItemFromList(
+        this.$store.state.movies,
+        this.screening.movieId
+      );
     },
     auditorium() {
-      return filterItemFromList(this.$store.state.auditoriums, this.screening.auditoriumId)
+      return filterItemFromList(
+        this.$store.state.auditoriums,
+        this.screening.auditoriumId
+      );
     }
+  },
+  mounted() {
+    /* this.$refs.cardImage.style.setProperty(
+      "background-image",
+      `url(${this.movie.image})`
+    ); */
   }
-}
+};
 </script>
 <style scoped>
-.my-bookings{
-  border-radius: 15px;
- 
-}
-.outer-container{
-  border-radius: 15px;
-}
-.image{
-width: 100%;
+/* *{
+  box-sizing: border-box;
+} */
 
+.my-bookings {
+  border-radius: 15px;
+  padding-right: 0 !important;
 }
-.hidden-image{
-opacity: 0;
+.text-container span {
+  padding-right: 0 !important;
 }
-.inner-container{
- border-radius: 15px;
+.outer-container {
+  border-radius: 15px;
 }
-.image-container{
+.image {
+  height: 100% !important;
+  min-height: 100px;
+  display: block;
+}
+.hidden-div{
+  width: 0px;
+}
+
+.inner-container {
+  border-radius: 15px;
+}
+.image-container {
   margin: 0 !important;
   padding: 0 !important;
- 
+   height: calc(100vh / 4);
+   width: auto !important;
+ /* background-size: cover;
+  background-position: center; */
 }
-.row{
+.row {
   padding: 0 !important;
   margin: 1rem !important;
 }
+h5 {
+  margin-top: 1% !important;
+  margin-bottom: 0.5% !important;
+}
 
+.bookingnr{
+  margin-bottom: 0px;
+  padding-bottom: 2%;
+}
+@media screen and (max-width: 520px) {
+  .my-bookings {
+    font-size: 0.8rem;
+  }
+  h5 {
+    font-size: 1.1rem;
+    margin-bottom: 2% !important;
+  }
+  .image-container {
+   height: calc(100vh / 5);
+  }
+}
+@media screen and (max-width: 370px) {
+  .my-bookings {
+    font-size: 0.7rem;
+  }
+  h5 {
+    font-size: 0.9rem;
+    margin-bottom: 3% !important;
+  }
+  .image-container {
+   height: calc(100vh / 5);
+  }
+}
 </style>
