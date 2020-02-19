@@ -14,6 +14,7 @@
               class="active validate"
             />
             <label for="signUpFirstName">Förnamn</label>
+            <span class="helper-text" data-error="Skriv in ditt förnamn"></span>
           </div>
         </div>
         <div class="col s12 m6">
@@ -27,11 +28,13 @@
               class="active validate"
             />
             <label for="signUpLastName">Efternamn</label>
+            <span class="helper-text" data-error="Skriv in ditt efternamn"></span>
           </div>
         </div>
         <div class="input-field col s12">
           <input type="email" id="signUpEmail" v-model="signUpEmail" class="active validate" />
           <label for="signUpEmail">Email</label>
+           <span class="helper-text" data-error="Felaktig email"></span>
         </div>
         <div class="input-field col s12">
           <input
@@ -44,6 +47,7 @@
             class="active validate"
           />
           <label for="signUpPassword">Lösenord</label>
+          <span class="helper-text" data-error="Lösenordet måste vara minst 6 karaktärer"></span>
         </div>
         <div class="buttons col s12 hide-on-small-only">
           <a class="btn waves-effect waves-light black" @click="signUp()">Registrera</a>
