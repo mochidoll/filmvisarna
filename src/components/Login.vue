@@ -16,7 +16,6 @@
             <input
               type="password"
               id="password"
-              v-on:blur="jumpOffInput"
               :class="{focus:isActive}"
               v-model="password"
             />
@@ -52,7 +51,6 @@ export default {
     };
   },
   methods: {
-    jumpOffInput() {},
     async login() {
       this.isActive = false;
       let user = await auth

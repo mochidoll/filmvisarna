@@ -131,6 +131,7 @@ export default {
 <style scoped>
 .registration-container {
   border-radius: 15px;
+  overflow-y: hidden;
 }
 
 h4 {

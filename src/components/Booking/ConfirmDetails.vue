@@ -221,6 +221,9 @@ export default {
     border-radius: 0 12px 12px 0;
     border-left: solid 1px lightgray
   }
+  input{
+  color: black;
+}
 
   @media screen and (min-width: 600px) {
     .confirm-booking .text-wrapper {
