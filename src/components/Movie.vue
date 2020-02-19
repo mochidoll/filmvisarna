@@ -32,18 +32,18 @@
     <div class="row time-choices large hide-on-small-only">
       <dropdown
         :options="dates"
-        class="options col s4 push-s1"
+        class="options col push-s1"
         :selected="chosenDate"
         v-on:updateOption="updateChosenDate"
         :placeholder="'Select a Date'"
       ></dropdown>
 
       <div v-for="time in times" :key="time.id">
-        <div class="booking-choice col s10 push-s1 red darken-4 white-text valign-wrapper">
+        <div class="booking-choice col s10 push-s1 white-text valign-wrapper">
           <div class="booking-info col s9 white-text">
             <p class>
               <span class="span-time-large">{{time.time}} |</span>
-              <span class="span-audi-large">{{ time.auditorium }}</span> -
+              <span class="span-audi-large">{{" "+time.auditorium }}</span> -
               <span
                 class="span-seats-large"
               >{{ emptyAvailableSeats(time.screening) }} platser kvar</span>
@@ -73,7 +73,7 @@
 
       <div v-for="time in times" :key="time.id">
         <div
-          class="booking-choice col s12 red darken-4 white-text valign-wrapper"
+          class="booking-choice col s12 white-text valign-wrapper"
           @click="bookMovie(time.screening)"
         >
           <div class="col s2 booking-info-time-small">
@@ -84,7 +84,7 @@
 
           <div class="booking-info-audi-seat-small col s7 white-text center">
             <div>
-              <span class="span-audi-small">{{ time.auditorium }}</span>
+              <span class="span-audi-small">{{" "+time.auditorium }}</span>
             </div>
             <div>
               <span class="span-seats-small">{{ emptyAvailableSeats(time.screening) }} platser kvar</span>
@@ -251,13 +251,14 @@ export default {
   margin-top: 0 !important;
 }
 .booking-choice {
-  border-radius: 10px;
+  border-radius: 12px;
   line-height: 1;
   margin: 0.5rem 0 !important;
   padding: 0.5rem !important;
+  background-color: #820e0c;
 }
 .booking-choice .time-button {
-  border-radius: 10px;
+  border-radius: 12px;
   margin: 0;
   padding: 0 !important;
 }
@@ -267,9 +268,8 @@ export default {
 }
 .large .dropdown-toggle,
 .small .dropdown-toggle {
-  background-color: black !important;
+  background-color: #820e0c !important;
 }
-
 .large .booking-choice p {
   margin: 0.5rem 0 !important;
 }
@@ -282,7 +282,6 @@ export default {
 .span-seats-large {
   font-size: 0.8rem;
 }
-
 .small .booking-choice {
   cursor: pointer;
 }
@@ -313,7 +312,8 @@ export default {
   color: white !important;
 }
 .dropdown-toggle:hover {
-  background-color: rgb(51, 50, 50) !important;
+  background-color: #820e0c !important;
+  border-radius: 12px;
 }
 .trailer-container {
   display: block;
@@ -361,21 +361,44 @@ h4 {
   overflow: auto !important;
 }
 .large .dropdown-toggle {
-  width: 16.5rem;
-  border-radius: 15px;
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-.caret {
-  transform: scale(3, 2);
-  right: 0;
-  left: 16.5rem;
-}
-.small .dropdown-toggle {
-  width: 16.5rem;
-  border-radius: 15px;
+  border-radius: 12px;
   font-size: 1.2rem;
   font-weight: bold;
 }
 
+.small .dropdown-toggle {
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.caret {
+  /* border-top: none !important;
+  border-right: none !important;
+  border-left: none !important; */
+  right: 2rem;
+  transform: scale(2, 2);
+}
+
+@media (min-width: 540px) {
+  .caret {
+  /* border-top: none !important;
+  border-right: none !important;
+  border-left: none !important; */
+  transform: scale(2, 2);
+  margin: 0px;
+}
+.dropdown-menu {
+  width: 16rem;
+  height: 200px !important;
+  overflow: auto !important;
+}
+.large .dropdown-toggle {
+  width: 16rem;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0px !important;
+}
+}
 </style>
