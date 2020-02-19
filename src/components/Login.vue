@@ -120,4 +120,8 @@ label {
 .col {
   padding: 1 !important;
 }
+
+input{
+  color: black;
+}
 </style>
