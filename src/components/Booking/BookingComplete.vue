@@ -13,7 +13,7 @@
         </div>
 
         <div class="text-wrapper col s7">
-          <p class="movie-title">Titel: {{ bookingObject.movie.title }}</p>
+          <p class="movie-title">{{ bookingObject.movie.title }}</p>
           <p>Datum: {{ bookingObject.screening.startTime.toDate().toLocaleDateString() }}</p>
           <p>Tid: {{ bookingObject.screening.startTime.toDate().getHours() }}:00</p>
           <p>{{ bookingObject.auditorium.name }}</p>
