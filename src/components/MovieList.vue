@@ -115,7 +115,7 @@ export default {
       selectedDate: "",
       movieTime: "",
       chosenDate: {
-        name: "Sortera på datum"
+        name: "Alla datum"
       },
       chosenGenre: {
         name: "Alla genres"
