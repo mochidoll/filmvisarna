@@ -6,23 +6,26 @@
       <h5 class="center" v-if="this.userBookings.length">Dina bokningar</h5>
       <h5 class="center" v-else>Inga bokningar att visa</h5>
 
-     <div >
-        <div  v-for="booking in userBookings" :key="booking.id">
+      <div>
+        <div v-for="booking in userBookings" :key="booking.id">
           <user-booking class="valign-wrapper row" :booking-object="booking" />
         </div>
       </div>
-  </div>
-
+    </div>
+    <div class="center">
       <a class="btn red darken-4" @click="logout()">Logga ut</a>
     </div>
-  
+  </div>
 </template>
 
 <script>
-import { filterItemFromList, includeItemsFromList } from "./utils/logicUtils.js"
+import {
+  filterItemFromList,
+  includeItemsFromList
+} from "./utils/logicUtils.js";
 import { auth } from "@/firebase/firebase";
 import UserBooking from "./UserBooking.vue";
-import M from "materialize-css"
+import M from "materialize-css";
 export default {
   name: "Secure",
   components: {
@@ -30,12 +33,12 @@ export default {
   },
   data() {
     return {
-      user: {},
+      user: {}
     };
   },
   methods: {
     logout() {
-      M.toast({html: 'Logged out'})
+      M.toast({ html: "Logged out" });
       auth.signOut().then(this.$router.push("Login"));
     }
   },
@@ -47,10 +50,10 @@ export default {
       return this.$store.state.users;
     },
     bookingUser() {
-      return filterItemFromList(this.users, auth.currentUser.uid)
+      return filterItemFromList(this.users, auth.currentUser.uid);
     },
     userBookings() {
-      return includeItemsFromList(this.bookings, this.bookingUser.bookings)
+      return includeItemsFromList(this.bookings, this.bookingUser.bookings);
     }
   },
   created() {
@@ -62,7 +65,7 @@ export default {
       }
     });
     this.$store.dispatch("getBookings");
-  },
+  }
 };
 </script>
 
@@ -72,7 +75,7 @@ export default {
   color: white;
 }
 .btn {
+  border-radius: 12px;
   margin-bottom: 1%;
 }
-
 </style>
