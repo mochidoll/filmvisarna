@@ -41,10 +41,12 @@
       <div v-for="time in times" :key="time.id">
         <div class="booking-choice col s10 push-s1 red darken-4 white-text valign-wrapper">
           <div class="booking-info col s9 white-text">
-            <p class="">
-              <span class="span-time-large">{{time.time}} | </span>
+            <p class>
+              <span class="span-time-large">{{time.time}} |</span>
               <span class="span-audi-large">{{ time.auditorium }}</span> -
-              <span class="span-seats-large">{{ emptyAvailableSeats(time.screening) }} platser kvar</span>
+              <span
+                class="span-seats-large"
+              >{{ emptyAvailableSeats(time.screening) }} platser kvar</span>
             </p>
           </div>
 
@@ -56,66 +58,61 @@
         </div>
       </div>
     </div>
-<!-- -------------------------------------------------------------------------- -->
+    <!-- -------------------------------------------------------------------------- -->
 
-      <div class="row time-choices small hide-on-med-and-up">
-
-        <div class="col s12 dropdown-wrapper">
-          <dropdown
-            :options="dates"
-            class="options col s4"
-            :selected="chosenDate"
-            v-on:updateOption="updateChosenDate"
-            :placeholder="'Select a Date'"
-          ></dropdown>
-        </div>
-
-        <div v-for="time in times" :key="time.id">
-          <div 
-            class="booking-choice col s12 red darken-4 white-text valign-wrapper"
-            @click="bookMovie(time.screening)"
-          >
-            <div class=" col s2 booking-info-time-small">
-              <p>
-                <span class="span-time-small">{{time.time}}</span>
-              </p>
-            </div>
-
-            <div class="booking-info-audi-seat-small col s7 white-text center">
-                <div>
-                  <span class="span-audi-small">{{ time.auditorium }}</span>
-                </div>
-                <div>
-                  <span class="span-seats-small">{{ emptyAvailableSeats(time.screening) }} platser kvar</span>
-                </div>
-            </div>
-
-            <div
-              class="col s3 time-button btn black right"
-              :class="{disabled: emptyAvailableSeats(time.screening) === 0}"
-            >Boka
-            </div>
-
-          </div>
-        </div>
-
+    <div class="row time-choices small hide-on-med-and-up">
+      <div class="col s12 dropdown-wrapper">
+        <dropdown
+          :options="dates"
+          class="options col s4"
+          :selected="chosenDate"
+          v-on:updateOption="updateChosenDate"
+          :placeholder="'Select a Date'"
+        ></dropdown>
       </div>
 
+      <div v-for="time in times" :key="time.id">
+        <div
+          class="booking-choice col s12 red darken-4 white-text valign-wrapper"
+          @click="bookMovie(time.screening)"
+        >
+          <div class="col s2 booking-info-time-small">
+            <p>
+              <span class="span-time-small">{{time.time}}</span>
+            </p>
+          </div>
+
+          <div class="booking-info-audi-seat-small col s7 white-text center">
+            <div>
+              <span class="span-audi-small">{{ time.auditorium }}</span>
+            </div>
+            <div>
+              <span class="span-seats-small">{{ emptyAvailableSeats(time.screening) }} platser kvar</span>
+            </div>
+          </div>
+
+          <div
+            class="col s3 time-button btn black right"
+            :class="{disabled: emptyAvailableSeats(time.screening) === 0}"
+          >Boka</div>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="valign-wrapper" id="loadingmovie" v-else>
     <div class="preloader-wrapper active big">
-        <div class="spinner-layer spinner-red-only center">
-          <div class="circle-clipper left">
-            <div class="circle"></div>
-          </div>
-          <div class="gap-patch">
-            <div class="circle"></div>
-          </div>
-          <div class="circle-clipper right">
-            <div class="circle"></div>
-          </div>
+      <div class="spinner-layer spinner-red-only center">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
         </div>
       </div>
+    </div>
   </div>
 </template>
 
@@ -264,44 +261,46 @@ export default {
   margin: 0;
   padding: 0 !important;
 }
-.span-seats-small, .span-seats-large{
- color: lightgray;
+.span-seats-small,
+.span-seats-large {
+  color: lightgray;
 }
-.large .dropdown-toggle, .small .dropdown-toggle {
+.large .dropdown-toggle,
+.small .dropdown-toggle {
   background-color: black !important;
-} 
-
-.large .booking-choice p{
-  margin: 0.5rem 0!important;
 }
-.span-time-large{
+
+.large .booking-choice p {
+  margin: 0.5rem 0 !important;
+}
+.span-time-large {
   font-size: 1.4rem;
 }
-.span-audi-large{
+.span-audi-large {
   font-size: 1.2rem;
 }
-.span-seats-large{
+.span-seats-large {
   font-size: 0.8rem;
 }
 
-.small .booking-choice{
+.small .booking-choice {
   cursor: pointer;
 }
-.span-seats-small{
+.span-seats-small {
   font-size: 0.8rem;
 }
-.span-audi-small{
+.span-audi-small {
   font-size: 1.2rem;
 }
-.booking-info-time-small{
+.booking-info-time-small {
   font-size: 1.6rem;
   margin: 0 !important;
   padding: 0 !important;
 }
-.booking-info-time-small p{
+.booking-info-time-small p {
   margin: 0;
 }
-.booking-info-audi-seat-small{
+.booking-info-audi-seat-small {
   margin: 0 !important;
   padding: 0 !important;
 }
@@ -361,4 +360,22 @@ h4 {
   height: 200px !important;
   overflow: auto !important;
 }
+.large .dropdown-toggle {
+  width: 16.5rem;
+  border-radius: 15px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.caret {
+  transform: scale(3, 2);
+  right: 0;
+  left: 16.5rem;
+}
+.small .dropdown-toggle {
+  width: 16.5rem;
+  border-radius: 15px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
 </style>
