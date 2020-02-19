@@ -23,13 +23,13 @@
 
       <div class="booking-detail-wrapper left-align col s12">
         <div class="ticket-details col s6">
-          <p class="tickets"><b>Tickets:</b></p>
+          <p class="tickets"><b>Biljetter:</b></p>
           <p v-if="bookingObject.adultTickets">Vuxenbiljetter: {{ bookingObject.adultTickets}}</p>
           <p v-if="bookingObject.childTickets">Barnbiljetter: {{ bookingObject.childTickets }}</p>
           <p v-if="bookingObject.seniorTickets">Pensionärsbiljetter: {{bookingObject.seniorTickets }}</p>
         </div>
         <div class="seat-details col s6">
-          <p class="seats"><b>Seats:</b></p>
+          <p class="seats"><b>Platser:</b></p>
           <p
             v-for="(seat, id) in bookingObject.seatPositions"
             :key="id"
