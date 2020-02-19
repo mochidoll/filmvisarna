@@ -172,4 +172,8 @@ input[type="password"]:focus {
 .col {
   padding: 1 !important;
 }
+
+input{
+  color:black;
+}
 </style>
