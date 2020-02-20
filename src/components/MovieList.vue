@@ -11,7 +11,7 @@
     </h4>
     <!-- <div class="date white-text center">
       <p>Dagens datum: ({{ dayToday }}, {{ dateToday }})</p>
-    </div> -->
+    </div>-->
 
     <div class="center">
       <div class="filters valign-wrapper">
@@ -126,27 +126,27 @@ export default {
     dropdown: dropdown
   },
   computed: {
-    dateChosenWeekday(){
-      let weekDayNr = new Date(this.chosenDate.name).getDay()
+    dateChosenWeekday() {
+      let weekDayNr = new Date(this.chosenDate.name).getDay();
 
-      switch(weekDayNr){
+      switch (weekDayNr) {
         case 0:
-          return 'Söndag'
+          return "Söndag";
         case 1:
-          return 'Måndag'
+          return "Måndag";
         case 2:
-          return 'Tisdag'
+          return "Tisdag";
         case 3:
-          return 'Onsdag'
+          return "Onsdag";
         case 4:
-          return 'Torsdag'
+          return "Torsdag";
         case 5:
-          return 'Fredag'
+          return "Fredag";
         case 6:
-          return 'Lördag'
+          return "Lördag";
         default:
-          return null
-      } 
+          return null;
+      }
     },
     dayToday() {
       return moment().format("dddd");
@@ -329,7 +329,7 @@ export default {
 .hoverFX:hover {
   background-color: #820e0c;
 }
-.movie{
+.movie {
   cursor: pointer;
 }
 h4 {
@@ -371,18 +371,17 @@ h4 {
 .card2 {
   width: 55vw;
 }
-#dropdowns{
+#dropdowns {
   margin-top: 0.8rem !important;
   margin-bottom: 0rem !important;
   border-radius: 15px;
   padding: 0px;
 }
-.btn-group{
+.btn-group {
   min-width: 10px !important;
   width: 9.8rem;
   text-align: left;
 }
-
 
 @media only screen and (min-width: 893px) {
   .movie-image {

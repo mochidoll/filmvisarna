@@ -12,21 +12,23 @@
       black: !isSelected && !disableSeat && ! bookedSeat,
       'grey lighten-2': disableSeat && !isSelected && !bookedSeat}"
     class="white-text seats"
-  >
-  </button>
+  ></button>
 </template>
 
 <script>
 export default {
-  props: ["position", "disableSeat", "bookedSeat"],
+  props: {
+    position: Object,
+    disableSeat: Boolean,
+    bookedSeat: Boolean
+  },
   data() {
     return {
       isSelected: false,
       hover: false
     };
   },
-  computed: {
-  },
+  computed: {},
   methods: {
     onClick() {
       this.changeSelectedState();
@@ -50,7 +52,7 @@ export default {
         this.$emit("removeFromPositions", this.position);
       }
     }
-  },
+  }
 };
 </script>
 
@@ -63,7 +65,6 @@ export default {
 }
 button {
   border-style: none;
-  
 }
 @media screen and (min-width: 900px) and (max-width: 1251px) {
   .seats {

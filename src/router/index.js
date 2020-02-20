@@ -8,9 +8,9 @@ import Movie from '@/components/Movie'
 import CreateScreenings from '@/components/CreateScreenings'
 import Secure from '@/components/Secure'
 import Booking from '@/components/Booking/Booking'
-import SelectTickets from '@/components/Booking/SelectTickets'
-import SelectSeats from '@/components/Booking/SelectSeats'
-import ConfirmDetails from '@/components/Booking/ConfirmDetails'
+import BookingSelectTickets from '@/components/Booking/BookingSelectTickets'
+import BookingSelectSeats from '@/components/Booking/BookingSelectSeats'
+import BookingConfirmDetails from '@/components/Booking/BookingConfirmDetails'
 import BookingComplete from '@/components/Booking/BookingComplete'
 import Register from '@/components/Register'
 
@@ -71,19 +71,19 @@ const routes = [
       {
         path: 'selectTickets/:screeningId',
         name: 'SelectTickets',
-        component: SelectTickets
+        component: BookingSelectTickets
       },
       {
         path: 'selectSeats/:screeningId',
         name: 'SelectSeats',
         props: true,
-        component: SelectSeats
+        component: BookingSelectSeats
       },
       {
         path: 'confirmDetails/:screeningId', 
         name: 'ConfirmDetails',
         props: true,
-        component: ConfirmDetails
+        component: BookingConfirmDetails
       },
       {
         path: 'bookingComplete/:screeningId',
