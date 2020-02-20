@@ -38,13 +38,11 @@
 </template>
 
 <script>
-import Seat from "@/components/Booking/Seat";
-//import { db } from "@/firebase/firebase";
+import Seat from "@/components/Booking/BookingSelectSeatsSeat";
 export default {
   components: {
     Seat
   },
-
   props: {
     bookingObject: {
       type: Object,
@@ -151,7 +149,7 @@ export default {
   user-select: none;
 }
 
-.select-seats-buttons{
+.select-seats-buttons {
   border-radius: 12px !important;
 }
 

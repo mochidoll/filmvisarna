@@ -1,14 +1,13 @@
 <template>
   <div class="my-bookings white">
     <div class="outer-container white black-text" @click="toggleInfo" v-if="!isHidden">
-      <div  class="col s3 image-container">
+      <div class="col s3 image-container">
         <img :src="movie.image" alt class="responsive-img image" />
       </div>
 
       <div class="text-container">
-        <h5 class=""><b>
-          {{ movie.title}}
-          </b>
+        <h5 class>
+          <b>{{ movie.title}}</b>
         </h5>
         <p class="col s7">Datum: {{ screening.startTime.toDate().toLocaleDateString() }}</p>
         <p class="col s7">Tid: {{ screening.startTime.toDate().getHours() }}:00</p>
@@ -18,14 +17,17 @@
         </p>
       </div>
     </div>
-        <i v-if="!isHidden" @click="toggleInfo" class="material-icons medium col s2 black-text test">navigate_next</i>
+    <i
+      v-if="!isHidden"
+      @click="toggleInfo"
+      class="material-icons medium col s2 black-text test"
+    >navigate_next</i>
 
     <div
       class="inner-container white black-text test left-align"
       v-if="isHidden"
       @click="toggleInfo"
     >
-     
       <h5 class="col s9">Biljetter</h5>
       <span
         class="col s9"
@@ -46,7 +48,11 @@
         :key="id"
       >rad {{ seat.y + 1 }}, plats {{ seat.x}}</span>
     </div>
-    <i v-if="isHidden" @click="toggleInfo" class="material-icons medium col s2 black-text left">navigate_before</i>
+    <i
+      v-if="isHidden"
+      @click="toggleInfo"
+      class="material-icons medium col s2 black-text left"
+    >navigate_before</i>
   </div>
 </template>
 
@@ -68,15 +74,6 @@ export default {
   methods: {
     toggleInfo() {
       this.isHidden = !this.isHidden;
-
-      /* if (!this.isHidden) {
-        setTimeout(() => {
-          this.$refs.cardImage.style.setProperty(
-            "background-image",
-            `url(${this.movie.image})`
-          );
-        }, 5);
-      } */
     }
   },
   computed: {
@@ -98,20 +95,10 @@ export default {
         this.screening.auditoriumId
       );
     }
-  },
-  mounted() {
-    /* this.$refs.cardImage.style.setProperty(
-      "background-image",
-      `url(${this.movie.image})`
-    ); */
   }
 };
 </script>
 <style scoped>
-/* *{
-  box-sizing: border-box;
-} */
-
 .my-bookings {
   border-radius: 15px;
   padding-right: 0 !important;
@@ -129,7 +116,7 @@ export default {
   min-height: 100px;
   display: block;
 }
-.hidden-div{
+.hidden-div {
   width: 0px;
 }
 
@@ -139,10 +126,8 @@ export default {
 .image-container {
   margin: 0 !important;
   padding: 0 !important;
-   height: calc(100vh / 4);
-   width: auto !important;
- /* background-size: cover;
-  background-position: center; */
+  height: calc(100vh / 4);
+  width: auto !important;
 }
 .row {
   padding: 0 !important;
@@ -153,14 +138,14 @@ h5 {
   margin-bottom: 0.5% !important;
   padding-left: 3% !important;
 }
-h5 b{
-   padding-left: 3% !important;
+h5 b {
+  padding-left: 3% !important;
 }
-.test{
+.test {
   padding-left: 0 !important;
 }
 
-.bookingnr{
+.bookingnr {
   margin-bottom: 0px;
   padding-bottom: 2%;
 }
@@ -173,7 +158,7 @@ h5 b{
     margin-bottom: 2% !important;
   }
   .image-container {
-   height: calc(100vh / 5);
+    height: calc(100vh / 5);
   }
 }
 @media screen and (max-width: 376px) {
@@ -185,7 +170,7 @@ h5 b{
     margin-bottom: 3% !important;
   }
   .image-container {
-   height: calc(100vh / 5);
+    height: calc(100vh / 5);
   }
 }
 </style>

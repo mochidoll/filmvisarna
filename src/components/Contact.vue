@@ -4,23 +4,23 @@
       <div class="col s12 m6 l5 left">
         <h5>Kontakt</h5>
         <div class="aside-text">
-          <i class="material-icons tiny left">map</i>
+          <i class="material-icons tiny left icon">map</i>
           <p>Filmvisarna AB, Kalkstensvägen 3, 225 89 Småstad, Sverige</p>
         </div>
 
         <div class="aside-text">
-          <i class="material-icons tiny left">email</i>
+          <i class="material-icons tiny left icon">email</i>
           <p>info@filmvisarna.com</p>
         </div>
 
         <div class="aside-text">
-          <i class="material-icons tiny left">phone</i>
+          <i class="material-icons tiny left icon">phone</i>
           <p>+46 70 12 346 789</p>
         </div>
       </div>
 
       <div class="col s12 m6 l5 right">
-          <div class="col s12 m12 l12">
+          <div class="col s12">
             <h5>Öppettider</h5>
           </div>
           <div class="col">
@@ -63,7 +63,7 @@ export default {
   padding: 7%;
   margin: 2rem;
 }
-i {
+.icon {
   position: relative;
   bottom: -4px;
 }
