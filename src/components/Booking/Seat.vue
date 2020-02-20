@@ -9,7 +9,7 @@
       'red accent-2':isSelected && hover && !bookedSeat, 
       'red darken-4': isSelected && !hover,
       'grey lighten-1': bookedSeat,
-      black: !isSelected && !disableSeat && !bookedSeat,
+      black: !isSelected && !disableSeat && ! bookedSeat,
       'grey lighten-2': disableSeat && !isSelected && !bookedSeat}"
     class="white-text seats"
   >
@@ -51,10 +51,6 @@ export default {
       }
     }
   },
-
-  created() {
-    
-  }
 };
 </script>
 
