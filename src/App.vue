@@ -127,7 +127,7 @@ export default {
 <style>
 * {
   box-sizing: border-box;
-  font-family: "Segoe UI";
+  font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
 }
 #app {
   min-height: 100vh;
