@@ -1,5 +1,5 @@
 <template>
-  <div class="container center">
+  <div class="container center register-container">
     <div class="container row z-depth-1 white registration-container">
       <div class="col s12">
         <h4>Registrera</h4>
@@ -181,7 +181,7 @@ input[type="password"]:focus {
 input{
   color:black;
 }
-.container .center{
+.register-container{
   margin-bottom: 0 !important;
 }
 </style>
