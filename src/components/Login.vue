@@ -7,7 +7,7 @@
           <div class="input-field col s12">
             <input type="email" id="login" class="validate" v-model="username" />
             <label for="login">Email</label>
-           <!--  <span class="helper-text" data-error="Felaktig format."></span> -->
+           <span class="helper-text" data-error="Felaktig email"></span>
           </div>
         <!-- </div>
         <div class="col s12"> -->
@@ -16,7 +16,6 @@
             <input
               type="password"
               id="password"
-              v-on:blur="jumpOffInput"
               :class="{focus:isActive}"
               v-model="password"
             />
@@ -52,7 +51,6 @@ export default {
     };
   },
   methods: {
-    jumpOffInput() {},
     async login() {
       this.isActive = false;
       let user = await auth
@@ -119,5 +117,9 @@ label {
 }
 .col {
   padding: 1 !important;
+}
+
+input{
+  color: black;
 }
 </style>

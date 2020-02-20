@@ -8,7 +8,7 @@
         </div>
 
         <div class="text-wrapper col s7">
-          <p class="movie-title">Titel: {{ bookingObject.movie.title }}</p>
+          <p class="movie-title">{{ bookingObject.movie.title }}</p>
           <p>Datum: {{ bookingObject.screening.startTime.toDate().toLocaleDateString() }}</p>
           <p>Tid: {{ bookingObject.screening.startTime.toDate().getHours() }}:00</p>
           <p>{{ bookingObject.auditorium.name }}</p>
@@ -18,13 +18,13 @@
 
       <div class="booking-detail-wrapper left-align col s12">
         <div class="ticket-details col s6">
-          <p class="tickets"><b>Tickets:</b></p>
+          <p class="tickets"><b>Biljetter:</b></p>
           <p v-if="bookingObject.adultTickets">Vuxenbiljetter: {{ bookingObject.adultTickets}}</p>
           <p v-if="bookingObject.childTickets">Barnbiljetter: {{ bookingObject.childTickets }}</p>
           <p v-if="bookingObject.seniorTickets">Pensionärsbiljetter: {{bookingObject.seniorTickets }}</p>
         </div>
         <div class="seat-details col s6">
-          <p class="seats"><b>Seats:</b></p>
+          <p class="seats"><b>Platser:</b></p>
           <p
             v-for="(seat, id) in bookingObject.seatPositions"
             :key="id"
@@ -85,11 +85,11 @@ export default {
       return this.validEmail || this.user.uid;
     },
     bookingUser() {
-      this.$store.state.users.forEach( user => {
+         for (let user of this.$store.state.users) {
         if (auth.currentUser.uid === user.id) {
           return user;
         }
-      });
+      }
       return null;
     }
   },
@@ -118,6 +118,7 @@ export default {
           screeningId: this.bookingObject.screeningId,
           email: this.bookingObject.email,
           seats: this.bookingObject.seatPositions,
+          totalTicketPrice: this.bookingObject.totalTicketPrice,
           timeStamp: new Date()
         })
         .then(ref => {
@@ -220,6 +221,9 @@ export default {
     border-radius: 0 12px 12px 0;
     border-left: solid 1px lightgray
   }
+  input{
+  color: black;
+}
 
   @media screen and (min-width: 600px) {
     .confirm-booking .text-wrapper {

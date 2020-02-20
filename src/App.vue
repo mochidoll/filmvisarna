@@ -35,19 +35,19 @@
         <ul id="slide-out" class="sidenav sidenav-close black center">
           <img class="logo responsive-img sidebarlogo" src="@/assets/images/Cinemalogo.png" alt />
 
-          <li>
+          <li class="sidenav-close">
             <router-link to="/">Dagens visningar</router-link>
           </li>
-          <li>
+          <li class="sidenav-close">
             <router-link to="/allMovies">Alla Filmer</router-link>
           </li>
-          <li>
+          <li class="sidenav-close">
             <router-link to="/contact">Kontakt</router-link>
           </li>
-          <li v-if="user === null">
+          <li v-if="user === null" class="sidenav-close">
             <router-link to="/login">Logga in</router-link>
           </li>
-          <li v-else>
+          <li v-else class="sidenav-close">
             <router-link to="/secure">Min Sida</router-link>
           </li>
         </ul>
@@ -74,15 +74,15 @@
         </div>
         <div class="footer-text">
           <i class="material-icons tiny">map</i>
-          <span>Gladafilmersvägen 123, 225 89 Småstad, Sverige</span>
+          <span>Kalkstensvägen 3, 225 89 Småstad, Sverige</span>
         </div>
         <div class="footer-text">
           <i class="material-icons tiny">email</i>
-          <span>bfilmer.info@bfilmer.com</span>
+          <span>info@filmvisarna.com</span>
         </div>
         <div class="footer-text">
           <i class="material-icons tiny">phone</i>
-          <span>+467012346789</span>
+          <span>+46 70 12 346 789</span>
         </div>
       </div>
     </footer>
