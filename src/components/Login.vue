@@ -4,22 +4,17 @@
       <div class="col s12">
         <h4>Logga in</h4>
         <!-- <div class="col s12"> -->
-          <div class="input-field col s12">
-            <input type="email" id="login" class="validate" v-model="username" />
-            <label for="login">Email</label>
-           <span class="helper-text" data-error="Felaktig email"></span>
-          </div>
+        <div class="input-field col s12">
+          <input type="email" id="login" class="validate" v-model="username" />
+          <label for="login">Email</label>
+          <span class="helper-text" data-error="Felaktig email"></span>
+        </div>
         <!-- </div>
-        <div class="col s12"> -->
-          <div class="input-field col s12">
-            <label for="password">Lösenord</label>
-            <input
-              type="password"
-              id="password"
-              :class="{focus:isActive}"
-              v-model="password"
-            />
-         <!--  </div> -->
+        <div class="col s12">-->
+        <div class="input-field col s12">
+          <label for="password">Lösenord</label>
+          <input type="password" id="password" :class="{focus:isActive}" v-model="password" />
+          <!--  </div> -->
         </div>
         <div class="col center s12 left-align hide-on-small-only">
           <a class="btn waves-effect waves-light black" @click="login()">Logga In</a>
@@ -94,7 +89,7 @@ h4 {
   margin-bottom: 15px;
 }
 
-.input-field{
+.input-field {
   margin-top: 6px;
   margin-bottom: 6px;
 }
@@ -119,7 +114,7 @@ label {
   padding: 1 !important;
 }
 
-input{
+input {
   color: black;
 }
 </style>

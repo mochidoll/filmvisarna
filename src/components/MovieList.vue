@@ -250,7 +250,6 @@ export default {
             year: "numeric",
             month: "numeric",
             day: "numeric"
-            // weekday: "long"
           })
         )
       );
@@ -274,8 +273,6 @@ export default {
           filteredChosenDate: this.chosenDate.name
         }
       });
-      // this.$router.push({ params: {filteredChosenDate: this.chosenDate.name}, name: 'movie' });
-      // this.$router.push({ params: {filteredChosenDate: this.chosenDate.name}, name: 'movie' });
     },
     bookMovie(screenId) {
       this.$store.state.bookingObject.screeningId = screenId;

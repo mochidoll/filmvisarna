@@ -3,10 +3,7 @@
     <div class="row inner-container">
       <div class="movie-info-wrapper valign-wrapper">
         <div class="col s5 image-wrapper">
-          <img 
-          :src="bookingObject.movie.image" 
-          alt="Filmen du bokade" 
-          class="responsive-img" />
+          <img :src="bookingObject.movie.image" alt="Filmen du bokade" class="responsive-img" />
         </div>
 
         <div class="text-wrapper col s7">
@@ -45,16 +42,11 @@
       <div v-if="!user.uid" class="extra-info col s12">
         <div class="input-field col m7 offset-m2">
           <i class="material-icons prefix">email</i>
-          <input 
-          v-model="emailInput" 
-          id="icon_prefix"
-           type="email" />
+          <input v-model="emailInput" id="icon_prefix" type="email" />
           <label for="icon_prefix">
             <i>Skriv in din email här</i>
           </label>
-          <span 
-          class="helper-text" 
-          data-error="Felaktig email, var god skriv in igen."></span>
+          <span class="helper-text" data-error="Felaktig email, var god skriv in igen."></span>
         </div>
       </div>
     </div>

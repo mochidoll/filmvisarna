@@ -3,17 +3,11 @@
     <h5>{{ bookingObject.auditorium.name }}</h5>
     <p>Bokade biljetter: {{ bookingObject.numberOfTickets }} st</p>
     <div class="row">
-      <img 
-      src="@/assets/images/cinema.png" 
-      alt="cinema-screen" 
-      class="col s12" />
+      <img src="@/assets/images/cinema.png" alt="cinema-screen" class="col s12" />
     </div>
 
     <div class="row seat-wrapper">
-      <div 
-      class="center col s12" 
-      v-for="(row, y, id) in bookedSeats" 
-      :key="'row' + y + id">
+      <div class="center col s12" v-for="(row, y, id) in bookedSeats" :key="'row' + y + id">
         <Seat
           v-for="(seat, x, id) in row"
           :key="'seat' + id"
@@ -29,7 +23,7 @@
       <p v-if="feedback">{{feedback}}</p>
 
       <div class="nav-buttons row col s12">
-        <button 
+        <button
           @click="goBackToSelectTickets"
           class="col s5 m3 l3 offset-m1 offset-l1 btn waves-effect waves-light black select-seats-buttons"
         >Tillbaka</button>

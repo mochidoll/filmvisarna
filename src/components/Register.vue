@@ -34,7 +34,7 @@
         <div class="input-field col s12">
           <input type="email" id="signUpEmail" v-model="signUpEmail" class="active validate" />
           <label for="signUpEmail">Email</label>
-           <span class="helper-text" data-error="Felaktig email"></span>
+          <span class="helper-text" data-error="Felaktig email"></span>
         </div>
         <div class="input-field col s12">
           <input
@@ -178,10 +178,10 @@ input[type="password"]:focus {
   padding: 1 !important;
 }
 
-input{
-  color:black;
+input {
+  color: black;
 }
-.register-container{
+.register-container {
   margin-bottom: 0 !important;
 }
 </style>

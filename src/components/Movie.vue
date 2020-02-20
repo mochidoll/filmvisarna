@@ -373,32 +373,26 @@ h4 {
 }
 
 .caret {
-  /* border-top: none !important;
-  border-right: none !important;
-  border-left: none !important; */
   right: 2rem;
   transform: scale(2, 2);
 }
 
 @media (min-width: 540px) {
   .caret {
-  /* border-top: none !important;
-  border-right: none !important;
-  border-left: none !important; */
-  transform: scale(2, 2);
-  margin: 0px;
-}
-.dropdown-menu {
-  width: 16rem;
-  height: 200px !important;
-  overflow: auto !important;
-}
-.large .dropdown-toggle {
-  width: 16rem;
-  border-radius: 12px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin: 0px !important;
-}
+    transform: scale(2, 2);
+    margin: 0px;
+  }
+  .dropdown-menu {
+    width: 16rem;
+    height: 200px !important;
+    overflow: auto !important;
+  }
+  .large .dropdown-toggle {
+    width: 16rem;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0px !important;
+  }
 }
 </style>

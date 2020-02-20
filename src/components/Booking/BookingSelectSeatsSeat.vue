@@ -62,10 +62,10 @@ export default {
   border-radius: 5px;
   width: 5vmin;
   height: 5vmin;
-}
-button {
+
   border-style: none;
 }
+
 @media screen and (min-width: 900px) and (max-width: 1251px) {
   .seats {
     width: 4vmin;
