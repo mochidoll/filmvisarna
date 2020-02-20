@@ -181,4 +181,7 @@ input[type="password"]:focus {
 input{
   color:black;
 }
+.container .center{
+  margin-bottom: 0 !important;
+}
 </style>
